@@ -1,0 +1,375 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<game
+    id="ichigu"
+    class="com.blox.ichigu.view.IchiguGame" >
+
+    <params>
+
+        <param
+            key="provider"
+            value="com.blox.framework.v0.impl.libgdx.GdxGameProvider" />
+
+        <param
+            key="settings-key"
+            value="com.blox.ichigu" />
+
+        <param
+            key="virtual-width"
+            value="550" />
+
+        <param
+            key="virtual-height"
+            value="800" />
+
+        <param
+            key="default-font"
+            value="JetSet,0.66" />
+
+        <param
+            key="default-skin"
+            value="ppt" />
+
+        <param
+            key="default-screen"
+            value="splash" />
+
+        <param
+            key="screen-switcher"
+            value="sliding,0.5" />
+
+        <param
+            key="form-switcher"
+            value="sliding,0.25" />
+
+        <param
+            key="tutorial-page-switcher"
+            value="sliding,0.25" />
+
+        <param
+            key="allow-exit-on-back"
+            value="true" />
+    </params>
+
+    <screens>
+
+        <screen
+            id="challenge"
+            background-music="game-music"
+            class="com.blox.ichigu.view.ChallengeModeScreen" />
+
+        <screen
+            id="learning"
+            background-music="game-music"
+            class="com.blox.ichigu.view.LearningModeScreen" />
+
+        <screen
+            id="multiplayer"
+            background-music="game-music"
+            class="com.blox.ichigu.view.MultiplayerModeScreen" />
+
+        <screen
+            id="menu"
+            background-music="menu-music"
+            class="com.blox.ichigu.view.MenuScreen" />
+
+        <screen
+            id="practice"
+            background-music="game-music"
+            class="com.blox.ichigu.view.PracticeModeScreen" />
+
+        <screen
+            id="relax"
+            background-music="game-music"
+            class="com.blox.ichigu.view.RelaxModeScreen" />
+
+        <screen
+            id="splash"
+            class="com.blox.ichigu.view.SplashScreen" />
+
+        <screen
+            id="scoreBoard"
+            background-music="scoreBoard-music"
+            class="com.blox.ichigu.view.ScoreBoardScreen" />
+    </screens>
+
+    <forms>
+
+        <form id="mainMenu" >
+
+            <label
+                id="lblGameName"
+                align="CENTERED"
+                font-scale="1.2"
+                text="ichigu"
+                x="0"
+                y="26"
+                rows="2"
+                cols="16"
+                color="#56bd89ff" />
+
+            <button
+                id="btnLearning"
+                action="screen=learning"
+                text="How To Play"
+                y="21" />
+
+            <button
+                id="btnPractice"
+                action="screen=practice"
+                text="Practice"
+                y="18" />
+
+            <button
+                id="btnRelax"
+                action="screen=relax"
+                text="Relax"
+                y="15" />
+
+            <button
+                id="btnChallenge"
+                action="screen=challenge"
+                text="Challenge"
+                y="12" />
+
+            <button
+                id="btnScoreBoard"
+                action="screen=scoreBoard"
+                text="Hi Scores"
+                y="9" />
+
+            <button
+                id="btnExitGame"
+                action="exit"
+                focus-color="#d0583bff"
+                text="Exit Game"
+                y="4" />
+        </form>
+    </forms>
+
+    <animations>
+    </animations>
+
+    <resources>
+
+        <fonts>
+            <font
+                id="JetSet"
+                path="fonts/JetSet.fnt" />
+        </fonts>
+
+        <textures>
+
+            <texture
+                id="logo"
+                path="img/logo.png"
+                resource-load="primary" />
+
+            <texture
+                id="hint"
+                path="img/hint.png" />
+
+            <texture
+                id="fw_close"
+                path="img/framework/close.png" />
+
+            <texture
+                id="next"
+                path="img/next.png" />
+
+            <texture
+                id="prev"
+                path="img/prev.png" />
+
+            <texture
+                id="play"
+                path="img/play.png" />
+
+            <texture
+                id="refresh"
+                path="img/refresh.png" />
+
+            <texture
+                id="ppt-checkbox-checked"
+                path="img/ui/checkbox-checked.png" />
+
+            <texture
+                id="ppt-checkbox-unchecked"
+                path="img/ui/checkbox-unchecked.png" />
+
+            <texture
+                id="card-11"
+                path="img/cards/11.png" />
+
+            <texture
+                id="card-12"
+                path="img/cards/12.png" />
+
+            <texture
+                id="card-14"
+                path="img/cards/14.png" />
+
+            <texture
+                id="card-21"
+                path="img/cards/21.png" />
+
+            <texture
+                id="card-22"
+                path="img/cards/22.png" />
+
+            <texture
+                id="card-24"
+                path="img/cards/24.png" />
+
+            <texture
+                id="card-41"
+                path="img/cards/41.png" />
+
+            <texture
+                id="card-42"
+                path="img/cards/42.png" />
+
+            <texture
+                id="card-44"
+                path="img/cards/44.png" />
+
+            <texture
+                id="card-border"
+                path="img/cards/border.png" />
+
+            <texture
+                id="card-closed"
+                path="img/cards/closedcard.png" />
+
+            <texture
+                id="card-empty"
+                path="img/cards/emptycard.png" />
+
+            <texture
+                id="tb_back"
+                path="img/toolbar/back.png" />
+
+            <texture
+                id="tb_settings"
+                path="img/toolbar/settings.png" />
+
+            <texture
+                id="tb_music_play"
+                path="img/toolbar/music-play.png" />
+
+            <texture
+                id="tb_music_stop"
+                path="img/toolbar/music-stop.png" />
+
+            <texture
+                id="tb_sound_off"
+                path="img/toolbar/sound-off.png" />
+
+            <texture
+                id="tb_sound_on"
+                path="img/toolbar/sound-on.png" />
+
+            <texture
+                id="tb_vibration_off"
+                path="img/toolbar/vibration-off.png" />
+
+            <texture
+                id="tb_vibration_on"
+                path="img/toolbar/vibration-on.png" />
+
+            <texture
+                id="shapes"
+                path="img/tutorial/shapes.png" />
+
+            <texture
+                id="colors"
+                path="img/tutorial/colors.png" />
+
+            <texture
+                id="fills"
+                path="img/tutorial/fills.png" />
+
+            <texture
+                id="amounts"
+                path="img/tutorial/amounts.png" />
+        </textures>
+
+        <sounds>
+
+            <sound
+                id="ppt-button-click"
+                path="sound/flip.wav" />
+
+            <sound
+                id="ppt-checkbox-click"
+                path="sound/checkbox2.wav" />
+
+            <sound
+                id="success"
+                path="sound/success.wav" />
+
+            <sound
+                id="error"
+                path="sound/error.wav" />
+
+            <sound
+                id="flip"
+                path="sound/flip.wav" />
+
+            <sound
+                id="wait"
+                path="sound/wait.wav" />
+
+            <sound
+                id="time-up"
+                path="sound/time-up.wav" />
+        </sounds>
+
+        <musics>
+
+            <music
+                id="game-music"
+                path="music/game-bg.mp3"
+                resource-load="ondemand" />
+
+            <music
+                id="menu-music"
+                path="music/menu-bg.mp3"
+                resource-load="ondemand" />
+
+            <music
+                id="scoreBoard-music"
+                path="music/scoreboard-bg.mp3"
+                resource-load="ondemand" />
+        </musics>
+    </resources>
+
+    <skins>
+
+        <skin id="ppt" >
+
+            <form
+                cols="16"
+                rows="32" />
+
+            <button
+                cols="8"
+                focus-color="#3974b1ff"
+                rows="2"
+                sound-click="ppt-button-click"
+                vibrate="50"
+                x="4" />
+
+            <checkbox
+                rows="2"
+                sound-click="ppt-checkbox-click"
+                texture-checked="ppt-checkbox-checked"
+                texture-unchecked="ppt-checkbox-unchecked" />
+
+            <label
+                align="W"
+                rows="2"
+                color="#fff" />
+        </skin>
+    </skins>
+
+</game>

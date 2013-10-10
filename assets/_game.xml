@@ -1,0 +1,527 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<game
+    id="SetGame"
+    class="com.blox.setgame.view.SetGame" >
+
+    <params>
+
+        <param
+            key="provider"
+            value="com.blox.framework.v0.impl.libgdx.GdxGameProvider" />
+
+        <param
+            key="settings-key"
+            value="com.blox.SetGame" />
+
+        <param
+            key="virtual-width"
+            value="550" />
+
+        <param
+            key="virtual-height"
+            value="800" />
+
+        <param
+            key="default-font"
+            value="JetSet,36" />
+
+        <param
+            key="default-skin"
+            value="ppt" />
+
+        <param
+            key="default-screen"
+            value="splash" />
+
+        <param
+            key="screen-switcher"
+            value="sliding,0.5" />
+
+        <param
+            key="form-switcher"
+            value="sliding,0.25" />
+
+        <param
+            key="allow-exit-on-back"
+            value="false" />
+    </params>
+
+    <screens>
+
+        <screen
+            id="challenge"
+            background-music="game-music"
+            class="com.blox.setgame.view.ChallengeModeScreen" />
+
+        <screen
+            id="learning"
+            background-music="game-music"
+            class="com.blox.setgame.view.LearningModeScreen" />
+
+        <screen
+            id="multiplayer"
+            background-music="game-music"
+            class="com.blox.setgame.view.MultiplayerModeScreen" />
+
+        <screen
+            id="menu"
+            background-music="menu-music"
+            class="com.blox.setgame.view.MenuScreen" />
+
+        <screen
+            id="practice"
+            background-music="game-music"
+            class="com.blox.setgame.view.PracticeModeScreen" />
+
+        <screen
+            id="relax"
+            background-music="game-music"
+            class="com.blox.setgame.view.RelaxModeScreen" />
+
+        <screen
+            id="splash"
+            class="com.blox.setgame.view.SplashScreen" />
+
+        <screen
+            id="scoreBoard"
+            background-music="scoreBoard-music"
+            class="com.blox.setgame.view.ScoreBoardScreen" />
+    </screens>
+
+    <forms>
+
+        <form id="mainMenu" >
+
+            <button
+                id="btnPlay"
+                action="form=modeSelection"
+                text="Play"
+                y="24" />
+
+            <button
+                id="btnSetting"
+                action="form=settings"
+                text="Settings"
+                y="20" />
+
+            <button
+                id="btnLogin"
+                action="form=login"
+                text="Login"
+                y="16" />
+
+            <button
+                id="btnScoreBoard"
+                action="form=scoreBoardModeSelection"
+                text="Hi-Scores"
+                y="12" />
+
+            <button
+                id="btnExitGame"
+                action="exit"
+                focus-color="#d0583bff"
+                text="Exit Game"
+                y="4" />
+        </form>
+
+        <form id="modeSelection" >
+
+            <button
+                id="btnLearning"
+                action="screen=learning"
+                text="Learning"
+                y="26" />
+
+            <button
+                id="btnPractice"
+                action="screen=practice"
+                text="Practice"
+                y="22" />
+
+            <button
+                id="btnRelax"
+                action="screen=relax"
+                text="Relax"
+                y="18" />
+
+            <button
+                id="btnChallenge"
+                action="screen=challenge"
+                text="Challenge"
+                y="14" />
+
+            <button
+                id="btnMultiplayer"
+                action="screen=multiplayer"
+                text="Multiplayer"
+                y="10" />
+
+            <button
+                id="btnBack"
+                action="formback=mainMenu"
+                focus-color="#56ad89ff"
+                text="Back"
+                y="4" />
+        </form>
+
+        <form id="settings" >
+
+            <label
+                id="lblSounds"
+                cols="10"
+                text="Sounds"
+                x="2"
+                y="22" />
+
+            <checkbox
+                id="chkSounds"
+                action="bind=settings.sound,true"
+                cols="2"
+                x="13"
+                y="22" />
+
+            <label
+                id="lblMusic"
+                cols="10"
+                text="Music"
+                x="2"
+                y="18" />
+
+            <checkbox
+                id="chkMusic"
+                action="bind=settings.music,true"
+                cols="2"
+                x="13"
+                y="18" />
+
+            <label
+                id="lblVibration"
+                cols="10"
+                text="Vibration"
+                x="2"
+                y="14" />
+
+            <checkbox
+                id="chkVibration"
+                action="bind=settings.vibration,true"
+                cols="2"
+                x="13"
+                y="14" />
+
+            <button
+                id="btnBack"
+                action="formback=mainMenu"
+                focus-color="#56ad89ff"
+                text="Back"
+                y="4" />
+        </form>
+
+        <form id="login" >
+
+            <button
+                id="txtUsername"
+                cols="14"
+                text="Username"
+                x="1"
+                y="24" />
+
+            <button
+                id="txtPassword"
+                cols="14"
+                text="Password"
+                x="1"
+                y="21" />
+
+            <button
+                id="btnLogin"
+                action="login"
+                cols="6"
+                text="Login"
+                x="1"
+                y="17" />
+
+            <button
+                id="btnSignUp"
+                action="form=signup"
+                cols="6"
+                text="Sign Up"
+                x="9"
+                y="17" />
+
+            <button
+                id="btnLoginFacebook"
+                cols="14"
+                text="Login With Facebook"
+                x="1"
+                y="10" />
+
+            <button
+                id="btnBack"
+                action="formback=mainMenu"
+                focus-color="#56ad89ff"
+                text="Back"
+                y="4" />
+        </form>
+
+        <form id="signup" >
+
+            <button
+                id="txtUsername"
+                cols="14"
+                text="Username"
+                x="1"
+                y="24" />
+
+            <button
+                id="txtEmail"
+                cols="14"
+                text="Email"
+                x="1"
+                y="21" />
+
+            <button
+                id="txtPassword"
+                cols="14"
+                text="Password"
+                x="1"
+                y="18" />
+
+            <button
+                id="txtPasswordConfirm"
+                cols="14"
+                text="Password Confirm"
+                x="1"
+                y="15" />
+
+            <button
+                id="btnSignUp"
+                action="signup"
+                text="Sign Up"
+                y="10" />
+
+            <button
+                id="btnBack"
+                action="formback=login"
+                focus-color="#56ad89ff"
+                text="Back"
+                y="4" />
+        </form>
+
+        <form id="scoreBoardModeSelection" >
+
+            <button
+                id="btnPractice"
+                action="screen=scoreBoard"
+                text="Practice"
+                y="20" />
+
+            <button
+                id="btnChallenge"
+                action="screen=scoreBoard"
+                text="Challenge"
+                y="16" />
+
+            <button
+                id="btnMultiplayer"
+                action="screen=scoreBoard"
+                text="Multiplayer"
+                y="12" />
+
+            <button
+                id="btnBack"
+                action="formback=mainMenu"
+                focus-color="#56ad89ff"
+                text="Back"
+                y="4" />
+        </form>
+    </forms>
+
+    <animations>
+    </animations>
+
+    <resources>
+
+        <fonts>
+
+            <font
+                id="JetSet"
+                path="fonts/JetSet.ttf"
+                sizes="12,18,24,36,48,60,72" />
+        </fonts>
+
+        <textures>
+
+            <texture
+                id="logo"
+                path="img/logo.png"
+                resource-load="primary" />
+
+            <texture
+                id="ppt-checkbox-checked"
+                path="img/ui/checkbox-checked.png" />
+
+            <texture
+                id="ppt-checkbox-unchecked"
+                path="img/ui/checkbox-unchecked.png" />
+
+            <texture
+                id="card-11"
+                path="img/cards/11.png" />
+
+            <texture
+                id="card-12"
+                path="img/cards/12.png" />
+
+            <texture
+                id="card-14"
+                path="img/cards/14.png" />
+
+            <texture
+                id="card-21"
+                path="img/cards/21.png" />
+
+            <texture
+                id="card-22"
+                path="img/cards/22.png" />
+
+            <texture
+                id="card-24"
+                path="img/cards/24.png" />
+
+            <texture
+                id="card-41"
+                path="img/cards/41.png" />
+
+            <texture
+                id="card-42"
+                path="img/cards/42.png" />
+
+            <texture
+                id="card-44"
+                path="img/cards/44.png" />
+
+            <texture
+                id="card-border"
+                path="img/cards/border.png" />
+
+            <texture
+                id="card-closed"
+                path="img/cards/closedcard.png" />
+
+            <texture
+                id="card-empty"
+                path="img/cards/emptycard.png" />
+
+            <texture
+                id="tb_back"
+                path="img/toolbar/back.png" />
+            
+            <texture
+                id="tb_settings"
+                path="img/toolbar/settings.png" />
+            
+            <texture
+                id="tb_music_play"
+                path="img/toolbar/music-play.png" />
+            
+            <texture
+                id="tb_music_stop"
+                path="img/toolbar/music-stop.png" />
+            
+            <texture
+                id="tb_sound_off"
+                path="img/toolbar/sound-off.png" />
+            
+            <texture
+                id="tb_sound_on"
+                path="img/toolbar/sound-on.png" />
+            
+            <texture
+                id="tb_vibration_off"
+                path="img/toolbar/vibration-off.png" />
+            
+            <texture
+                id="tb_vibration_on"
+                path="img/toolbar/vibration-on.png" />
+        </textures>
+
+        <sounds>
+
+            <sound
+                id="ppt-button-click"
+                path="sound/flip.wav" />
+
+            <sound
+                id="ppt-checkbox-click"
+                path="sound/checkbox2.wav" />
+
+            <sound
+                id="success"
+                path="sound/success.wav" />
+
+            <sound
+                id="error"
+                path="sound/error.wav" />
+
+            <sound
+                id="flip"
+                path="sound/flip.wav" />
+
+            <sound
+                id="wait"
+                path="sound/wait.wav" />
+
+            <sound
+                id="time-up"
+                path="sound/time-up.wav" />
+        </sounds>
+
+        <musics>
+
+            <music
+                id="game-music"
+                path="music/game-bg.mp3"
+                resource-load="ondemand" />
+
+            <music
+                id="menu-music"
+                path="music/menu-bg.mp3"
+                resource-load="ondemand" />
+
+            <music
+                id="scoreBoard-music"
+                path="music/scoreboard-bg.mp3"
+                resource-load="ondemand" />
+        </musics>
+    </resources>
+
+    <skins>
+
+        <skin id="ppt" >
+
+            <form
+                cols="16"
+                rows="32" />
+
+            <button
+                cols="8"
+                focus-color="#3974b1ff"
+                rows="2"
+                sound-click="ppt-button-click"
+                vibrate="50"
+                x="4" />
+
+            <checkbox
+                rows="2"
+                sound-click="ppt-checkbox-click"
+                texture-checked="ppt-checkbox-checked"
+                texture-unchecked="ppt-checkbox-unchecked" />
+
+            <label
+                align="W"
+                rows="2"
+                color="#fff" />
+        </skin>
+    </skins>
+
+</game>
