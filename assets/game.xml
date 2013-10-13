@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <game
-    id="ichigu"
+    id="Ichigu"
     class="com.blox.ichigu.view.IchiguGame" >
 
     <params>
@@ -98,9 +98,8 @@
 
             <label
                 id="lblGameName"
-                align="CENTERED"
                 font-scale="1.2"
-                text="ichigu"
+                text="Ichigu"
                 x="0"
                 y="26"
                 rows="2"
@@ -353,6 +352,7 @@
 
             <button
                 cols="8"
+                halign="center"
                 focus-color="#3974b1ff"
                 rows="2"
                 sound-click="ppt-button-click"
@@ -366,7 +366,7 @@
                 texture-unchecked="ppt-checkbox-unchecked" />
 
             <label
-                align="W"
+                halign="center"
                 rows="2"
                 color="#fff" />
         </skin>
