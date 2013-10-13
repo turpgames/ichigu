@@ -229,8 +229,8 @@ class LearningModeTutorial extends IchiguObject implements IViewFinder {
 		page = new TutorialPage("16");
 		page.addInfo("Scores", Text.HAlignCenter, marginTop);
 		page.addInfo("Scores are calculated over two basic parameters:", Text.HAlignLeft, 50).setPadX(10);
-		page.addInfo("How complex was the ichigu?", Text.HAlignLeft, 30).setPadX(30);
-		page.addInfo("How fast did you find the ichigu?", Text.HAlignLeft, 30).setPadX(30);
+		page.addInfo("- How complex was the ichigu?", Text.HAlignLeft, 30).setPadX(20);
+		page.addInfo("- How fast did you find the ichigu?", Text.HAlignLeft, 30).setPadX(20);
 		page.addInfo("You get 1 point for a common property of ichigu cards and 3 point for different properties.", Text.HAlignLeft, 30).setPadX(10);
 		page.addInfo("Sum of property points is multiplied by a factor calculated over time.", Text.HAlignLeft, 30).setPadX(10);
 		pages.add(page);

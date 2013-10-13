@@ -34,8 +34,8 @@ public class HiScores implements IDrawable {
 				if ("Yes".equals(id)) {
 					Settings.putInteger(R.settings.hiscores.practice, 0);
 					Settings.putInteger(R.settings.hiscores.challenge, 0);
+					info.setText("Practice: 0\n\nChallenge: 0\n\n\n\n");
 				}
-				info.setText("Practice: 0\n\nChallenge: 0\n\n\n\n");
 				IchiguResources.playSoundFlip();
 				Game.vibrate(50);				
 			}
