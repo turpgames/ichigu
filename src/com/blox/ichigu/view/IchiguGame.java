@@ -13,6 +13,7 @@ public class IchiguGame extends BaseGame {
 	@Override
 	public void init() {
 		Dialog.activeButtonColor = R.colors.ichiguBlue;
+		Dialog.closeButtonFocusColor = R.colors.ichiguRed;
 		super.init();
 	}
 

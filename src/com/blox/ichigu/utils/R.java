@@ -34,21 +34,25 @@ public final class R {
 
 		public static final class textures {
 			public static final String logo = "logo";
-			
+
 			public static final String cardBorder = "card-border";
 			public static final String cardClosed = "card-closed";
 			public static final String cardEmpty = "card-empty";
-			
+
 			public static final String hint = "hint";
 			public static final String next = "next";
 			public static final String prev = "prev";
 			public static final String skip = "play";
 			public static final String refresh = "refresh";
-			
+
 			public static final String shapes = "shapes";
 			public static final String colors = "colors";
 			public static final String fills = "fills";
 			public static final String amounts = "amounts";
+
+			public static final String stripedCircle = "card-14";
+			public static final String filledSquare = "card-22";
+			public static final String emptyTriangle = "card-41";
 
 			public static final class toolbar {
 				public static final String back = "tb_back";
@@ -62,12 +66,12 @@ public final class R {
 			}
 		}
 	}
-	
+
 	public static final class settings {
 		public static final String music = "music";
 		public static final String sound = "sound";
 		public static final String vibration = "vibration";
-		
+
 		public static final class hiscores {
 			public static final String practice = "hiscore_practice";
 			public static final String challenge = "hiscore_challenge";
@@ -76,12 +80,12 @@ public final class R {
 
 	public static final class learningModeScreen {
 		public static final class layout {
-			public static final Vector cardOnTable1Pos = new Vector(Game.getVirtualWidth() / 2 - Card.Width - 20, 4 * Game.getVirtualHeight() / 7);
-			public static final Vector cardOnTable2Pos = new Vector(Game.getVirtualWidth() / 2 + 20, 4 * Game.getVirtualHeight() / 7);
+			public static final Vector cardOnTable1Pos = new Vector(Game.getVirtualWidth() / 2 - Card.Width - 20, 4 * Game.getVirtualHeight() / 7 - 50);
+			public static final Vector cardOnTable2Pos = new Vector(Game.getVirtualWidth() / 2 + 20, 4 * Game.getVirtualHeight() / 7 - 50);
 
-			public static final Vector cardToSelect1Pos = new Vector(Game.getVirtualWidth() / 2 - Card.Width * 1.5f - 40, 2 * Game.getVirtualHeight() / 7);
-			public static final Vector cardToSelect2Pos = new Vector(Game.getVirtualWidth() / 2 - Card.Width * 0.5f, 2 * Game.getVirtualHeight() / 7);
-			public static final Vector cardToSelect3Pos = new Vector(Game.getVirtualWidth() / 2 + Card.Width * 0.5f + 40, 2 * Game.getVirtualHeight() / 7);
+			public static final Vector cardToSelect1Pos = new Vector(Game.getVirtualWidth() / 2 - Card.Width * 1.5f - 40, 2 * Game.getVirtualHeight() / 7 - 50);
+			public static final Vector cardToSelect2Pos = new Vector(Game.getVirtualWidth() / 2 - Card.Width * 0.5f, 2 * Game.getVirtualHeight() / 7 - 50);
+			public static final Vector cardToSelect3Pos = new Vector(Game.getVirtualWidth() / 2 + Card.Width * 0.5f + 40, 2 * Game.getVirtualHeight() / 7 - 50);
 
 			public static final Vector[] positions = new Vector[] { cardOnTable1Pos, cardOnTable2Pos, cardToSelect1Pos, cardToSelect2Pos, cardToSelect3Pos };
 		}
@@ -97,8 +101,8 @@ public final class R {
 		public static final Vector secondOfThree = new Vector((Card.Width - Card.SymbolWidth) / 2, Card.Height / 2 - Card.SymbolHeight * 0.5f);
 		public static final Vector thirdOfThree = new Vector((Card.Width - Card.SymbolWidth) / 2, Card.Height / 2 + Card.SymbolHeight * 0.65f);
 
-		public static Vector tutorial300x96 = new Vector(Game.getVirtualWidth() / 2 - 300 / 2, Game.getVirtualHeight() / 2 + 60);
-		public static Vector tutorial350x300 = new Vector(Game.getVirtualWidth() / 2 - 350 / 2, Game.getVirtualHeight() / 2 - 36 );
+		public static Vector tutorial300x96 = new Vector(Game.getVirtualWidth() / 2 - 300 / 2, Game.getVirtualHeight() / 2 - 60);
+		public static Vector tutorial350x300 = new Vector(Game.getVirtualWidth() / 2 - 350 / 2, 200);
 	}
 
 	public static final class colors {
@@ -115,11 +119,11 @@ public final class R {
 		public static final float large = 0.66f;
 		public static final float xLarge = 0.75f;
 	}
-	
+
 	public static final class ui {
 		public final static float imageButtonSize = 64;
 	}
-	
+
 	private R() {
 	}
 }

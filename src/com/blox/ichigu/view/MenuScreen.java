@@ -20,7 +20,6 @@ public class MenuScreen extends FormScreen {
 	@Override
 	public void activated() {
 		super.activated();
-		Toolbar.getInstance().setTitle("ichigu");
 		Toolbar.getInstance().deactivateBackButton();
 	}
 }

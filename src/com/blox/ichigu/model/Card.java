@@ -164,4 +164,11 @@ public class Card extends IchiguObject {
 		if (eventListener != null)
 			eventListener.onCardTapped(this);
 	}
+
+	static Card createTutorialCard(int color, int shape, int count, int pattern, float x, float y) {
+		Card card = new Card(new CardAttributes(color, shape, count, pattern));
+		card.open();
+		card.getLocation().set(x, y);
+		return card;
+	}
 }

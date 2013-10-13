@@ -33,7 +33,7 @@ class Symbol extends IchiguObject {
 	}
 
 	@Override
-	public Vector getLocation() {
+	public Vector getLocation() {		
 		return parent.getLocation().tmp().add(super.getLocation());
 	}
 

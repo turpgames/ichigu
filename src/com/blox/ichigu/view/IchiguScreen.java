@@ -32,7 +32,6 @@ public abstract class IchiguScreen extends Screen {
 	public void activated() {
 		super.activated();
 		notifyScreenActivated();
-		Toolbar.getInstance().setTitle(getTitle());
 		Toolbar.getInstance().activateBackButton();
 	}
 

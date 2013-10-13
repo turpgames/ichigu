@@ -1,7 +1,7 @@
 package com.blox.ichigu.model;
 
 import com.blox.framework.v0.impl.Settings;
-import com.blox.framework.v0.util.TextDrawer;
+import com.blox.framework.v0.impl.Text;
 import com.blox.framework.v0.util.Timer;
 import com.blox.ichigu.utils.R;
 
@@ -9,19 +9,29 @@ public class ChallengeMode extends FullGameMode {
 	private static final int maxTimeToFindIchigu = 100;
 
 	private int totalScore;
-	private String scoreText;
 	private Timer challengeTimer;
 	private boolean extraCardsOpened;
 
+	private GameInfo resultInfo;
+	private GameInfo scoreInfo;
+
 	public ChallengeMode() {
 		hint.deactivate();
-		updateScoreText();
 
 		challengeTimer = new Timer();
+
+		resultInfo = new GameInfo();
+		resultInfo.locate(Text.HAlignCenter, Text.VAlignCenter);
+
+		scoreInfo = new GameInfo();
+		scoreInfo.locate(Text.HAlignLeft, Text.VAlignTop);
+		scoreInfo.setPadding(7, 90);
+		
+		updateScoreText();
 	}
 
 	private void updateScoreText() {
-		scoreText = "Score: " + totalScore;
+		scoreInfo.setText("Score: " + totalScore);
 	}
 
 	@Override
@@ -39,6 +49,13 @@ public class ChallengeMode extends FullGameMode {
 		int challengeHiScore = Settings.getInteger(R.settings.hiscores.challenge, 0);
 		if (totalScore > challengeHiScore)
 			Settings.putInteger(R.settings.hiscores.challenge, totalScore);
+
+		resultInfo.setText(
+				"Congratulations,\n" +
+						String.format("You found %d ichigu%s!\n", ichigusFound, ichigusFound != 1 ? "s" : "") +
+						"Total Time " + modeCompleteTime + "\n" +
+						scoreInfo.getText() + "\n" +
+						"Touch Screen\nTo Continue");
 	}
 
 	@Override
@@ -56,12 +73,7 @@ public class ChallengeMode extends FullGameMode {
 
 	@Override
 	public void drawResult() {
-		info.draw("Congratulations,", TextDrawer.AlignCentered, 200);
-		info.draw(String.format("You found %d ichigu%s!", ichigusFound, ichigusFound != 1 ? "s" : ""), TextDrawer.AlignCentered, 150);
-		info.draw("Total Time " + modeCompleteTime, TextDrawer.AlignCentered, 50);
-		info.draw(scoreText, TextDrawer.AlignCentered, 0);
-		info.draw("Touch Screen", TextDrawer.AlignCentered, -100);
-		info.draw("To Continue", TextDrawer.AlignCentered, -150);
+		resultInfo.draw();
 	}
 
 	@Override
@@ -72,7 +84,7 @@ public class ChallengeMode extends FullGameMode {
 			if (elapsed > maxTimeToFindIchigu)
 				elapsed = maxTimeToFindIchigu;
 			totalScore += (int) ((score * ((maxTimeToFindIchigu - elapsed) / 10) * (extraCardsOpened ? 0.5f : 1)));
-			scoreText = "Score: " + totalScore;
+			updateScoreText();
 			challengeTimer.restart();
 			extraCardsOpened = false;
 		}
@@ -86,6 +98,6 @@ public class ChallengeMode extends FullGameMode {
 	}
 
 	protected void drawScore() {
-		info.draw(scoreText, TextDrawer.AlignNW, -60);
+		scoreInfo.draw();
 	}
 }

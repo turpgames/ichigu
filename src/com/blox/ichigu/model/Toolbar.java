@@ -1,9 +1,6 @@
 package com.blox.ichigu.model;
 
-import com.blox.framework.v0.IFont;
-import com.blox.framework.v0.util.FontManager;
 import com.blox.framework.v0.util.Game;
-import com.blox.framework.v0.util.TextDrawer;
 import com.blox.framework.v0.util.Utils;
 import com.blox.framework.v0.util.Vector;
 import com.blox.ichigu.utils.R;
@@ -37,15 +34,8 @@ public class Toolbar extends IchiguObject {
 	private SettingsButton vibrationButton;
 
 	private IToolbarListener listener;
-	private IFont font;
-
-	private String title;
-
+	
 	private Toolbar() {
-		font = FontManager.createDefaultFontInstance();
-		font.setScale(R.fontSize.medium);
-		font.getColor().set(R.colors.ichiguRed);
-
 		backButton = new ToolbarButton();
 		backButton.setTexture(R.game.textures.toolbar.back);
 		backButton.setLocation(ToolbarButton.AlignNW, buttonSpacing, buttonSpacing);
@@ -97,10 +87,6 @@ public class Toolbar extends IchiguObject {
 		this.listener = listener;
 	}
 
-	public void setTitle(String title) {
-		this.title = "";
-	}
-
 	public void activateBackButton() {
 		backButton.activate();
 	}
@@ -128,9 +114,5 @@ public class Toolbar extends IchiguObject {
 		musicButton.draw();
 		soundButton.draw();
 		vibrationButton.draw();
-
-		Game.pushRenderingShift(0, -20, false);
-		TextDrawer.draw(font, title, TextDrawer.AlignN);
-		Game.popRenderingShift();
 	}
 }

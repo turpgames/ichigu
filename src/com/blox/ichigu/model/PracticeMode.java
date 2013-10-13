@@ -1,7 +1,7 @@
 package com.blox.ichigu.model;
 
 import com.blox.framework.v0.impl.Settings;
-import com.blox.framework.v0.util.TextDrawer;
+import com.blox.framework.v0.impl.Text;
 import com.blox.framework.v0.util.Timer;
 import com.blox.ichigu.utils.R;
 
@@ -15,7 +15,12 @@ public class PracticeMode extends TrainingMode {
 
 	private int deals = 0;
 	private int score = 0;
-	private GameInfo info;
+
+	private GameInfo timeInfo;
+	private GameInfo waitInfo;
+	private GameInfo scoreInfo;
+	private GameInfo remainingCardsInfo;
+	private GameInfo resultInfo;
 
 	private ScreenTouchHandler touchHandler;
 
@@ -26,16 +31,26 @@ public class PracticeMode extends TrainingMode {
 		}
 	};
 
-	private IPracticeModeListener getModeListener() {
-		return (IPracticeModeListener)super.modeListener;
-	}
-
-	public int getScore() {
-		return score;
-	}
 
 	public PracticeMode() {
-		info = new GameInfo(50, 25);
+		timeInfo = new GameInfo();
+		timeInfo.locate(Text.HAlignRight, Text.VAlignTop);
+		timeInfo.setPadding(20, 125);
+
+		waitInfo = new GameInfo();
+		waitInfo.locate(Text.HAlignLeft, Text.VAlignTop);
+		waitInfo.setPadding(20, 125);
+
+		scoreInfo = new GameInfo();
+		scoreInfo.locate(Text.HAlignLeft, Text.VAlignBottom);
+		scoreInfo.setPadding(20, 75);
+
+		remainingCardsInfo = new GameInfo();
+		remainingCardsInfo.locate(Text.HAlignRight, Text.VAlignBottom);
+		remainingCardsInfo.setPadding(20, 75);
+
+		resultInfo = new GameInfo();
+		resultInfo.locate(Text.HAlignCenter, Text.VAlignCenter);
 
 		touchHandler = new ScreenTouchHandler();
 
@@ -69,6 +84,14 @@ public class PracticeMode extends TrainingMode {
 		blockTimer.stop();
 		dealTimer.stop();
 		notifyDealTimeUp();
+	}
+
+	private IPracticeModeListener getModeListener() {
+		return (IPracticeModeListener) super.modeListener;
+	}
+
+	public int getScore() {
+		return score;
 	}
 
 	private void notifyUnblocked() {
@@ -170,9 +193,8 @@ public class PracticeMode extends TrainingMode {
 	}
 
 	public void drawResults() {
-		info.draw("Score: " + score, TextDrawer.AlignCentered, 50);
-		info.draw("Touch Screen", TextDrawer.AlignCentered, -50);
-		info.draw("To Continue", TextDrawer.AlignCentered, -100);
+		resultInfo.setText("Score: " + score + "\nTouch Screen" + "\nTo Continue");
+		resultInfo.draw();
 	}
 
 	private void drawCards() {
@@ -183,18 +205,22 @@ public class PracticeMode extends TrainingMode {
 
 	private void drawRemainingTime() {
 		int t = (int) Math.min(timePerDeal, (1 + timePerDeal - dealTimer.getElapsedTime()));
-		info.draw("" + t, TextDrawer.AlignNE, -70);
+		timeInfo.setText("" + t);
+		timeInfo.draw();
 	}
 
 	private void drawScore() {
-		info.draw("Score: " + score, TextDrawer.AlignSW, 100);
+		scoreInfo.setText("Score: " + score);
+		scoreInfo.draw();
 	}
-	
+
 	private void drawRemainingDeals() {
-		info.draw("Deals: " + deals + "/" + totalDeals, TextDrawer.AlignSW, 50);
+		remainingCardsInfo.setText(deals + "/" + totalDeals);
+		remainingCardsInfo.draw();
 	}
 
 	private void drawWaitMessage() {
-		info.draw("Wait: " + String.format("%.1f", blockDuration - blockTimer.getElapsedTime()), TextDrawer.AlignNW, -70);
+		waitInfo.setText("Wait: " + String.format("%.1f", blockDuration - blockTimer.getElapsedTime()));
+		waitInfo.draw();
 	}
 }

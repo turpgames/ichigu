@@ -1,19 +1,21 @@
 package com.blox.ichigu.model;
 
-import com.blox.framework.v0.util.TextDrawer;
+import com.blox.framework.v0.impl.Text;
 import com.blox.framework.v0.util.Timer;
 import com.blox.ichigu.utils.IchiguResources;
 
 public abstract class FullGameMode extends IchiguMode {
 
 	protected FullGameCards cards;
-	protected GameInfo info;
 	protected FullGameHint hint;
 	protected Timer timer;
 	protected ScreenTouchHandler touchHandler;
 	protected String modeCompleteTime;
 	protected int ichigusFound;
 	protected int selectedCardCount;
+
+	protected GameInfo remaingCardInfo;
+	protected GameInfo timeInfo;
 
 	protected final IScreenTouchListener touchListener = new IScreenTouchListener() {
 		@Override
@@ -25,10 +27,30 @@ public abstract class FullGameMode extends IchiguMode {
 	public FullGameMode() {
 		cards = new FullGameCards();
 		dealer = new FullGameCardDealer(cards);
-		info = new GameInfo(7, 25);
 		touchHandler = new ScreenTouchHandler();
+
+		remaingCardInfo = new GameInfo();
+		remaingCardInfo.locate(Text.HAlignCenter, Text.VAlignBottom);
+		remaingCardInfo.setPadding(0, 75);
+		
+		timeInfo = new GameInfo();
+		timeInfo.locate(Text.HAlignCenter, Text.VAlignBottom);
+		timeInfo.setPadding(0, 30);
+
 		timer = new Timer();
 		timer.setInterval(1);
+		timer.setTickListener(new Timer.ITimerTickListener() {
+			@Override
+			public void timerTick(Timer timer) {
+				int elapsed = (int) timer.getTotalElapsedTime();
+				int min = elapsed / 60;
+				int sec = elapsed % 60;
+
+				timeInfo.setText((min < 10 ? ("0" + min) : ("" + min)) +
+						":" +
+						(sec < 10 ? ("0" + sec) : ("" + sec)));
+			}
+		});
 
 		hint = new FullGameHint();
 	}
@@ -45,16 +67,6 @@ public abstract class FullGameMode extends IchiguMode {
 		return (FullGameCardDealer) dealer;
 	}
 
-	protected String getTimeString() {
-		int elapsed = (int) timer.getTotalElapsedTime();
-		int min = elapsed / 60;
-		int sec = elapsed % 60;
-
-		return (min < 10 ? ("0" + min) : ("" + min)) +
-				":" +
-				(sec < 10 ? ("0" + sec) : ("" + sec));
-	}
-
 	protected void notifyModeEnd() {
 		touchHandler.activate(touchListener);
 		if (getModeListener() != null)
@@ -69,7 +81,7 @@ public abstract class FullGameMode extends IchiguMode {
 
 	public void cardTapped(Card card) {
 		hint.restartNotificationTimer();
-		
+
 		if (!card.isOpened()) {
 			card.deselect();
 			openExtraCards();
@@ -98,7 +110,7 @@ public abstract class FullGameMode extends IchiguMode {
 			notifyInvalidIchiguSelected();
 		}
 		return score;
-	}	
+	}
 
 	public void activateCards() {
 		for (int i = 0; i < FullGameCards.TotalCardsOnTable; i++) {
@@ -154,11 +166,12 @@ public abstract class FullGameMode extends IchiguMode {
 		selectedCardCount = 0;
 		timer.start();
 		hint.activate();
+		timeInfo.setText("00:00");
 	}
 
 	public void endMode() {
 		IchiguResources.playSoundTimeUp();
-		modeCompleteTime = getTimeString();
+		modeCompleteTime = timeInfo.getText();
 		timer.stop();
 		cards.empty();
 		deactivateCards();
@@ -185,11 +198,11 @@ public abstract class FullGameMode extends IchiguMode {
 	}
 
 	protected void drawRemainingCards() {
-		info.draw(getDealer().getIndex() + "/" + Card.CardsInDeck, TextDrawer.AlignS, 55);
+		remaingCardInfo.setText(getDealer().getIndex() + "/" + Card.CardsInDeck);
+		remaingCardInfo.draw();
 	}
 
 	protected void drawTime() {
-		info.draw(getTimeString(), TextDrawer.AlignS, 5);
+		timeInfo.draw();
 	}
-
 }

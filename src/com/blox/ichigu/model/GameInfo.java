@@ -1,42 +1,38 @@
 package com.blox.ichigu.model;
 
-import com.blox.framework.v0.IFont;
-import com.blox.framework.v0.util.Color;
-import com.blox.framework.v0.util.FontManager;
+import com.blox.framework.v0.IDrawable;
+import com.blox.framework.v0.impl.Text;
 import com.blox.framework.v0.util.Game;
-import com.blox.framework.v0.util.TextDrawer;
 
-class GameInfo extends IchiguObject {
-	private String text;
-	private int alignment;
-	private int shiftY;
-	private IFont font;
+class GameInfo implements IDrawable {
+	private Text text;
 
-	GameInfo(float paddingX, float paddingY) {
-		getLocation().set(paddingX, paddingY);
-		setWidth(Game.getVirtualWidth() - 2 * paddingX);
-		setHeight(Game.getVirtualHeight() - 2 * paddingY);
-		getColor().set(Color.white());
-		
-		font = FontManager.createDefaultFontInstance();
-//		setFontScale(R.fontSize.small);
+	GameInfo() {
+		text = new Text();
+		text.setWidth(Game.getVirtualWidth());
+		text.setHeight(Game.getVirtualHeight());
 	}
 
-	void setFontScale(float scale) {
-		this.font.setScale(scale);
+	public void locate(int halign, int valign) {
+		text.setHorizontalAlignment(halign);
+		text.setVerticalAlignment(valign);
+	}
+
+	public void setPadding(float padX, float padY) {
+		text.setPadX(padX);
+		text.setPadY(padY);
+	}
+
+	public String getText() {
+		return text.getText();
 	}
 	
-	@Override
-	public void draw() {
-		Game.pushRenderingShift(0, shiftY, false);
-		TextDrawer.draw(font, text, this, alignment);
-		Game.popRenderingShift();
+	public void setText(String info) {
+		text.setText(info);
 	}
 
-	public void draw(String text, int alignment, int shiftY) {
-		this.alignment = alignment;
-		this.text = text;
-		this.shiftY = shiftY;
-		this.draw();
+	@Override
+	public void draw() {
+		text.draw();		
 	}
 }

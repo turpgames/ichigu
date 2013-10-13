@@ -1,5 +1,6 @@
 package com.blox.ichigu.model;
 
+import com.blox.framework.v0.IDrawable;
 import com.blox.framework.v0.IFont;
 import com.blox.framework.v0.effects.IEffectEndListener;
 import com.blox.framework.v0.util.FontManager;
@@ -9,7 +10,7 @@ import com.blox.framework.v0.util.Timer;
 import com.blox.framework.v0.util.Vector;
 import com.blox.ichigu.utils.R;
 
-class FullGameHint extends IchiguObject implements ITextSliderListener, IEffectEndListener {
+class FullGameHint implements IDrawable, ITextSliderListener, IEffectEndListener {
 	private final static int notificationInterval = 30;
 	
 	private IchiguImageButton button;
@@ -18,7 +19,6 @@ class FullGameHint extends IchiguObject implements ITextSliderListener, IEffectE
 	private TextSlider textSlider;
 	private String text;
 	private int hintIndex;
-	private float slideY;
 	private boolean isActive;
 	private IFont font;
 	private Timer notificationTimer;
@@ -51,17 +51,14 @@ class FullGameHint extends IchiguObject implements ITextSliderListener, IEffectE
 		font.setScale(R.fontSize.small);
 	}
 	
-	@Override
 	public Vector getLocation() {
 		return button.getLocation();
 	}
 
-	@Override
 	public float getWidth() {
 		return button.getWidth();
 	}
 	
-	@Override
 	public float getHeight() {
 		return button.getHeight();
 	}
@@ -83,7 +80,7 @@ class FullGameHint extends IchiguObject implements ITextSliderListener, IEffectE
 	}
 
 	public void setSlideY(float slideY) {
-		this.slideY = slideY;
+		textSlider.setY(slideY);
 	}
 	
 	private void showNextHint() {
@@ -91,7 +88,8 @@ class FullGameHint extends IchiguObject implements ITextSliderListener, IEffectE
 			return;
 
 		if (hintIndex == 0) {
-			textSlider.slide(font, text, slideY);
+			textSlider.setText(text);
+			textSlider.slide();
 		}
 		else {
 			int cardIndex = ichiguInfo.getIchiguCardIndex(hintIndex - 1, 1);
@@ -130,16 +128,10 @@ class FullGameHint extends IchiguObject implements ITextSliderListener, IEffectE
 	@Override
 	public void draw() {
 		drawButton();
-		drawHint();
 	}
 	
 	private void drawButton() {
 		button.draw();
-	}
-
-	private void drawHint() {
-		if (isActive && hintIndex == 0)
-			textSlider.draw();
 	}
 
 	public void activate() {

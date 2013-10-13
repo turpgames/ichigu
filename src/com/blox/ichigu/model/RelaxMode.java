@@ -1,16 +1,21 @@
 package com.blox.ichigu.model;
 
+import com.blox.framework.v0.impl.Text;
 import com.blox.framework.v0.util.Game;
-import com.blox.framework.v0.util.TextDrawer;
 import com.blox.ichigu.utils.R;
 
 public class RelaxMode extends FullGameMode {
 	protected IchiguImageButton resetButton;
 	
+	private GameInfo resultInfo;
+	
 	public RelaxMode() {
 		super();
 		hint.getLocation().set(Game.getVirtualWidth() - hint.getWidth() - 10, 50);
-		hint.setSlideY(Game.getVirtualHeight() - 100);
+		hint.setSlideY(Game.getVirtualHeight() - 115);
+		
+		resultInfo = new GameInfo();
+		resultInfo.locate(Text.HAlignCenter, Text.VAlignCenter);
 
 		resetButton = new IchiguImageButton();
 		resetButton.getLocation().set(10, 50);
@@ -47,6 +52,11 @@ public class RelaxMode extends FullGameMode {
 	public void endMode() {
 		super.endMode();
 		resetButton.listenInput(false);
+		
+		resultInfo.setText("Congratulations,\n" +
+				String.format("You found %d ichigu%s!", ichigusFound, ichigusFound != 1 ? "s" : "") +
+				"\nTotal Time " + modeCompleteTime + 
+				"\nTouch Screen\nTo Continue");
 	}
 	
 	@Override
@@ -63,11 +73,7 @@ public class RelaxMode extends FullGameMode {
 	}
 
 	public void drawResult() {
-		info.draw("Congratulations,", TextDrawer.AlignCentered, 170);
-		info.draw(String.format("You found %d ichigu%s!", ichigusFound, ichigusFound != 1 ? "s" : ""), TextDrawer.AlignCentered, 120);
-		info.draw("Total Time " + modeCompleteTime, TextDrawer.AlignCentered, 0);
-		info.draw("Touch Screen", TextDrawer.AlignCentered, -120);
-		info.draw("To Continue", TextDrawer.AlignCentered, -170);
+		resultInfo.draw();
 	}
 
 	protected void drawHint() {

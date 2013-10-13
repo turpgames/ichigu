@@ -3,11 +3,10 @@ package com.blox.ichigu.model;
 import com.blox.framework.v0.IDrawable;
 import com.blox.framework.v0.forms.xml.Dialog;
 import com.blox.framework.v0.impl.Settings;
-import com.blox.framework.v0.util.FontManager;
+import com.blox.framework.v0.impl.Text;
 import com.blox.framework.v0.util.Game;
-import com.blox.framework.v0.util.TextDrawer;
-import com.blox.ichigu.utils.R;
 import com.blox.ichigu.utils.IchiguResources;
+import com.blox.ichigu.utils.R;
 
 public class HiScores implements IDrawable {
 	private GameInfo info;
@@ -15,17 +14,16 @@ public class HiScores implements IDrawable {
 	private Dialog confirmDialog;
 
 	public HiScores() {
-		info = new GameInfo(20, 0);
-		info.setFontScale(R.fontSize.medium);
+		info = new GameInfo();
+		info.locate(Text.HAlignCenter, Text.VAlignCenter);
 
 		resetScores = new IchiguTextButton();
-		resetScores.setFont(FontManager.createDefaultFontInstance());
 		resetScores.setText("Reset Hi Scores");
 		resetScores.listenInput(false);
 		resetScores.setListener(new IIchiguButtonListener() {
 			@Override
 			public void onButtonTapped() {
-				confirmDialog.open("Are you sure that\nyou want to reset hi-scores?");
+				confirmDialog.open("Are you sure that you want to reset hi-scores?");
 			}
 		});
 
@@ -37,6 +35,7 @@ public class HiScores implements IDrawable {
 					Settings.putInteger(R.settings.hiscores.practice, 0);
 					Settings.putInteger(R.settings.hiscores.challenge, 0);
 				}
+				info.setText("Practice: 0\n\nChallenge: 0\n\n\n\n");
 				IchiguResources.playSoundFlip();
 				Game.vibrate(50);				
 			}
@@ -49,6 +48,11 @@ public class HiScores implements IDrawable {
 
 	public void activate() {
 		resetScores.listenInput(true);
+		
+		int practiceScore = Settings.getInteger(R.settings.hiscores.practice, 0);
+		int challengeScore = Settings.getInteger(R.settings.hiscores.challenge, 0);
+		
+		info.setText("Practice: " + practiceScore + "\n\nChallenge: " + challengeScore + "\n\n\n\n");
 	}
 
 	public void deactivate() {
@@ -57,12 +61,7 @@ public class HiScores implements IDrawable {
 
 	@Override
 	public void draw() {
-		int practiceScore = Settings.getInteger(R.settings.hiscores.practice, 0);
-		int challengeScore = Settings.getInteger(R.settings.hiscores.challenge, 0);
-
-		info.draw("Practice: " + practiceScore, TextDrawer.AlignCentered, 200);
-		info.draw("Challenge: " + challengeScore, TextDrawer.AlignCentered, 80);
-
+		info.draw();
 		resetScores.draw();
 	}
 }

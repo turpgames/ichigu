@@ -3,22 +3,24 @@ package com.blox.ichigu.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.blox.framework.v0.IDrawable;
 import com.blox.framework.v0.effects.IEffectEndListener;
-import com.blox.framework.v0.util.FontManager;
 import com.blox.framework.v0.util.Game;
 import com.blox.framework.v0.util.ITextSliderListener;
 import com.blox.framework.v0.util.TextSlider;
 import com.blox.ichigu.utils.R;
 
-class LearningModeHint extends IchiguObject implements ITextSliderListener, IEffectEndListener {
+class LearningModeHint implements IDrawable, ITextSliderListener, IEffectEndListener {
 	private List<String> hints;
 	private int index;
 	private TextSlider textSlider;
 	private Card thirdCard;
-	private boolean isActive;
+	private boolean isDisplayingHint;
 	private IchiguImageButton hintButton;
 
 	LearningModeHint() {
+		hints = new ArrayList<String>();
+		
 		hintButton = new IchiguImageButton();
 		hintButton.setTexture(R.game.textures.hint);
 		hintButton.getLocation().set((Game.getVirtualWidth() - hintButton.getWidth()) / 2, 50);
@@ -28,52 +30,51 @@ class LearningModeHint extends IchiguObject implements ITextSliderListener, IEff
 				showNextHint();
 			}
 		});
-
-		hints = new ArrayList<String>();
+		
 		textSlider = new TextSlider();
+		textSlider.setY(Game.getVirtualHeight() - 150);
 		textSlider.setListener(this);
 	}
 
 	@Override
 	public boolean onEffectEnd(Object obj) {
-		return !isActive;
+		// Yazý kaymaya devam ediyorsa, kart da yanýp sönmeye devam etsin
+		return !isDisplayingHint;
 	}
 
 	@Override
 	public void onTextSlideEnd(TextSlider slider) {
-		isActive = false;
+		isDisplayingHint = false;
 		thirdCard.stopBlinking();
 	}
 
-	@Override
-	public void listenInput(boolean listen) {
-		hintButton.listenInput(listen);
-		if (!listen)
-			textSlider.stop();
-		super.listenInput(listen);
+	public void activate() {
+		hintButton.listenInput(true);
 	}
-
+	
+	public void deactivate() {
+		hintButton.listenInput(false);
+		textSlider.stop();
+	}
+	
 	@Override
 	public void draw() {
 		drawButton();
-		drawHint();
 	}
 
 	private void drawButton() {
 		hintButton.draw();
 	}
 
-	private void drawHint() {
-		if (isActive)
-			textSlider.draw();
-	}
-
 	private void showNextHint() {
-		if (isActive)
+		if (isDisplayingHint)
 			return;
-		isActive = true;
+		isDisplayingHint = true;
 		String hint = hints.get(index++);
-		textSlider.slide(FontManager.defaultFont, hint, Game.getVirtualHeight() - 100);
+		
+		textSlider.setText(hint);
+		textSlider.slide();
+		
 		if (index == hints.size()) {
 			index = 0;
 			thirdCard.blink(this, true);
@@ -86,7 +87,7 @@ class LearningModeHint extends IchiguObject implements ITextSliderListener, IEff
 
 		this.thirdCard = card3;
 
-		isActive = false;
+		isDisplayingHint = false;
 		index = 0;
 		hints.clear();
 

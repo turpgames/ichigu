@@ -38,15 +38,22 @@ public class LearningMode extends TrainingMode {
 		}
 
 		hint.update(allCards[0], allCards[1], card3);
-		hint.listenInput(true);
+		hint.activate();
 	}
 
 	@Override
 	public void deactivateCards() {
-		hint.listenInput(false);
+		hint.deactivate();
 		super.deactivateCards();
 	}
 
+	@Override
+	public void exitMode() {
+		super.exitMode();
+		tutorial.end();
+		hint.deactivate();
+	}
+	
 	public void drawTutorial() {
 		tutorial.draw();
 	}
@@ -64,10 +71,11 @@ public class LearningMode extends TrainingMode {
 
 	public void endTutorial() {
 		tutorial.end();
+		hint.activate();
 	}
 
 	public void beginTutorial() {
-		hint.listenInput(false);
+		hint.deactivate();
 		tutorial.start();
 	}
 }
