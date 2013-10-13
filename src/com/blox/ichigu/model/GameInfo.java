@@ -2,6 +2,7 @@ package com.blox.ichigu.model;
 
 import com.blox.framework.v0.IDrawable;
 import com.blox.framework.v0.impl.Text;
+import com.blox.framework.v0.util.Color;
 import com.blox.framework.v0.util.Game;
 
 class GameInfo implements IDrawable {
@@ -23,6 +24,10 @@ class GameInfo implements IDrawable {
 		text.setPadY(padY);
 	}
 
+	public void setColor(Color color) {
+		text.getColor().set(color);
+	}
+	
 	public String getText() {
 		return text.getText();
 	}
