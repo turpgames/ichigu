@@ -11,8 +11,8 @@ public class Main {
 		cfg.useGL20 = true;
 
 		float w = 9f;
-		float h = 16;
-		float x = 37.5f;
+		float h = 16f;
+		float x = 32f;
 
 		cfg.width = (int) (x * w);
 		cfg.height = (int) (x * h);
