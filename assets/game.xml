@@ -23,7 +23,7 @@
 
         <param
             key="default-font"
-            value="JetSet,0.66" />
+            value="JetSet,1" />
 
         <param
             key="default-skin"
@@ -98,12 +98,12 @@
 
             <label
                 id="lblGameName"
+                cols="16"
                 font-scale="1.2"
+                rows="2"
                 text="Ichigu"
                 x="0"
                 y="26"
-                rows="2"
-                cols="16"
                 color="#56bd89ff" />
 
             <button
@@ -151,6 +151,7 @@
     <resources>
 
         <fonts>
+
             <font
                 id="JetSet"
                 path="fonts/JetSet.fnt" />
@@ -274,22 +275,6 @@
             <texture
                 id="tb_vibration_on"
                 path="img/toolbar/vibration-on.png" />
-
-            <texture
-                id="shapes"
-                path="img/tutorial/shapes.png" />
-
-            <texture
-                id="colors"
-                path="img/tutorial/colors.png" />
-
-            <texture
-                id="fills"
-                path="img/tutorial/fills.png" />
-
-            <texture
-                id="amounts"
-                path="img/tutorial/amounts.png" />
         </textures>
 
         <sounds>
@@ -352,8 +337,8 @@
 
             <button
                 cols="8"
-                halign="center"
                 focus-color="#3974b1ff"
+                halign="center"
                 rows="2"
                 sound-click="ppt-button-click"
                 vibrate="50"
