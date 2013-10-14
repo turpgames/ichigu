@@ -5,22 +5,22 @@ import java.util.List;
 
 import com.blox.framework.v0.IDrawable;
 import com.blox.framework.v0.effects.IEffectEndListener;
+import com.blox.framework.v0.forms.xml.Toast;
 import com.blox.framework.v0.util.Game;
-import com.blox.framework.v0.util.ITextSliderListener;
-import com.blox.framework.v0.util.TextSlider;
 import com.blox.ichigu.utils.R;
 
-class LearningModeHint implements IDrawable, ITextSliderListener, IEffectEndListener {
+class LearningModeHint implements IDrawable, Toast.IToastListener, IEffectEndListener {
 	private List<String> hints;
 	private int index;
-	private TextSlider textSlider;
+	private Toast toast;
 	private Card thirdCard;
 	private boolean isDisplayingHint;
 	private IchiguImageButton hintButton;
+	private int colorIndex;
 
 	LearningModeHint() {
 		hints = new ArrayList<String>();
-		
+
 		hintButton = new IchiguImageButton();
 		hintButton.setTexture(R.game.textures.hint);
 		hintButton.getLocation().set((Game.getVirtualWidth() - hintButton.getWidth()) / 2, 50);
@@ -30,10 +30,10 @@ class LearningModeHint implements IDrawable, ITextSliderListener, IEffectEndList
 				showNextHint();
 			}
 		});
-		
-		textSlider = new TextSlider();
-		textSlider.setY(Game.getVirtualHeight() - 150);
-		textSlider.setListener(this);
+
+		toast = new Toast();
+		toast.setListener(this);
+		toast.setFontScale(R.fontSize.small);
 	}
 
 	@Override
@@ -43,7 +43,7 @@ class LearningModeHint implements IDrawable, ITextSliderListener, IEffectEndList
 	}
 
 	@Override
-	public void onTextSlideEnd(TextSlider slider) {
+	public void onToastHidden(Toast toast) {
 		isDisplayingHint = false;
 		thirdCard.stopBlinking();
 	}
@@ -51,12 +51,12 @@ class LearningModeHint implements IDrawable, ITextSliderListener, IEffectEndList
 	public void activate() {
 		hintButton.listenInput(true);
 	}
-	
+
 	public void deactivate() {
 		hintButton.listenInput(false);
-		textSlider.stop();
+		toast.dispose();
 	}
-	
+
 	@Override
 	public void draw() {
 		drawButton();
@@ -67,18 +67,33 @@ class LearningModeHint implements IDrawable, ITextSliderListener, IEffectEndList
 	}
 
 	private void showNextHint() {
-		if (isDisplayingHint)
+		if (isDisplayingHint) {
+			toast.hide();
 			return;
+		}
 		isDisplayingHint = true;
 		String hint = hints.get(index++);
-		
-		textSlider.setText(hint);
-		textSlider.slide();
-		
+
+		setToastColor();
+		toast.show(hint, 5000);
+
 		if (index == hints.size()) {
 			index = 0;
 			thirdCard.blink(this, true);
 		}
+	}
+
+	private void setToastColor() {
+		colorIndex++;
+
+		if (colorIndex % 3 == 0)
+			toast.getColor().set(R.colors.ichiguRed);
+		else if (colorIndex % 3 == 1)
+			toast.getColor().set(R.colors.ichiguGreen);
+		else if (colorIndex % 3 == 2)
+			toast.getColor().set(R.colors.ichiguBlue);
+		
+		toast.getColor().a = 0.85f;
 	}
 
 	public void update(Card card1, Card card2, Card card3) {

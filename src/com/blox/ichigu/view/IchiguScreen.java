@@ -37,8 +37,8 @@ public abstract class IchiguScreen extends Screen {
 
 	@Override
 	public void deactivated() {
-		super.deactivated();
 		notifyScreenDeactivated();
+		super.deactivated();
 	}
 
 	@Override

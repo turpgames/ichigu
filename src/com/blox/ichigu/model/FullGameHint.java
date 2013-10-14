@@ -1,27 +1,25 @@
 package com.blox.ichigu.model;
 
 import com.blox.framework.v0.IDrawable;
-import com.blox.framework.v0.IFont;
 import com.blox.framework.v0.effects.IEffectEndListener;
-import com.blox.framework.v0.util.FontManager;
-import com.blox.framework.v0.util.ITextSliderListener;
-import com.blox.framework.v0.util.TextSlider;
+import com.blox.framework.v0.forms.xml.Toast;
 import com.blox.framework.v0.util.Timer;
 import com.blox.framework.v0.util.Vector;
 import com.blox.ichigu.utils.R;
 
-class FullGameHint implements IDrawable, ITextSliderListener, IEffectEndListener {
+class FullGameHint implements IDrawable, IEffectEndListener, Toast.IToastListener {
 	private final static int notificationInterval = 30;
-	
+
 	private IchiguImageButton button;
 	private FullGameIchiguInfo ichiguInfo;
 	private Card[] cards;
-	private TextSlider textSlider;
 	private String text;
 	private int hintIndex;
 	private boolean isActive;
-	private IFont font;
 	private Timer notificationTimer;
+	private int colorIndex;
+
+	private Toast toast;
 
 	FullGameHint() {
 		button = new IchiguImageButton();
@@ -35,9 +33,7 @@ class FullGameHint implements IDrawable, ITextSliderListener, IEffectEndListener
 		});
 
 		ichiguInfo = new FullGameIchiguInfo();
-		textSlider = new TextSlider();
-		textSlider.setListener(this);
-		
+
 		notificationTimer = new Timer();
 		notificationTimer.setInterval(notificationInterval);
 		notificationTimer.setTickListener(new Timer.ITimerTickListener() {
@@ -46,11 +42,11 @@ class FullGameHint implements IDrawable, ITextSliderListener, IEffectEndListener
 				button.blink(null, false);
 			}
 		});
-		
-		font = FontManager.createDefaultFontInstance();
-		font.setScale(R.fontSize.small);
+
+		toast = new Toast();
+		toast.setListener(this);
 	}
-	
+
 	public Vector getLocation() {
 		return button.getLocation();
 	}
@@ -58,11 +54,11 @@ class FullGameHint implements IDrawable, ITextSliderListener, IEffectEndListener
 	public float getWidth() {
 		return button.getWidth();
 	}
-	
+
 	public float getHeight() {
 		return button.getHeight();
 	}
-	
+
 	public void restartNotificationTimer() {
 		notificationTimer.restart();
 	}
@@ -79,17 +75,13 @@ class FullGameHint implements IDrawable, ITextSliderListener, IEffectEndListener
 		return ichiguInfo.getIchiguCount();
 	}
 
-	public void setSlideY(float slideY) {
-		textSlider.setY(slideY);
-	}
-	
 	private void showNextHint() {
 		if (isActive)
 			return;
 
 		if (hintIndex == 0) {
-			textSlider.setText(text);
-			textSlider.slide();
+			setToastColor();
+			toast.show(text, 3000);
 		}
 		else {
 			int cardIndex = ichiguInfo.getIchiguCardIndex(hintIndex - 1, 1);
@@ -97,6 +89,19 @@ class FullGameHint implements IDrawable, ITextSliderListener, IEffectEndListener
 		}
 
 		isActive = true;
+	}
+
+	private void setToastColor() {
+		colorIndex++;
+
+		if (colorIndex % 3 == 0)
+			toast.getColor().set(R.colors.ichiguRed);
+		else if (colorIndex % 3 == 1)
+			toast.getColor().set(R.colors.ichiguGreen);
+		else if (colorIndex % 3 == 2)
+			toast.getColor().set(R.colors.ichiguBlue);
+
+		toast.getColor().a = 0.85f;
 	}
 
 	private void updateText() {
@@ -121,7 +126,7 @@ class FullGameHint implements IDrawable, ITextSliderListener, IEffectEndListener
 	}
 
 	@Override
-	public void onTextSlideEnd(TextSlider slider) {
+	public void onToastHidden(Toast toast) {
 		hintEnd();
 	}
 
@@ -129,7 +134,7 @@ class FullGameHint implements IDrawable, ITextSliderListener, IEffectEndListener
 	public void draw() {
 		drawButton();
 	}
-	
+
 	private void drawButton() {
 		button.draw();
 	}
@@ -140,5 +145,6 @@ class FullGameHint implements IDrawable, ITextSliderListener, IEffectEndListener
 
 	public void deactivate() {
 		button.listenInput(false);
+		toast.dispose();
 	}
 }

@@ -1,6 +1,7 @@
 package com.blox.ichigu.utils;
 
 import com.blox.framework.v0.util.Color;
+import com.blox.framework.v0.util.FontManager;
 import com.blox.framework.v0.util.Game;
 import com.blox.framework.v0.util.Vector;
 import com.blox.ichigu.model.Card;
@@ -44,11 +45,6 @@ public final class R {
 			public static final String prev = "prev";
 			public static final String skip = "play";
 			public static final String refresh = "refresh";
-
-			public static final String shapes = "shapes";
-			public static final String colors = "colors";
-			public static final String fills = "fills";
-			public static final String amounts = "amounts";
 
 			public static final String stripedCircle = "card-14";
 			public static final String filledSquare = "card-22";
@@ -113,11 +109,11 @@ public final class R {
 	}
 
 	public static final class fontSize {
-		public static final float xSmall = 0.25f;
-		public static final float small = 0.33f;
-		public static final float medium = 0.5f;
-		public static final float large = 0.66f;
-		public static final float xLarge = 0.75f;
+		public static final float xSmall = FontManager.defaultFontSize * 0.5f;
+		public static final float small = FontManager.defaultFontSize * 0.625f;
+		public static final float medium = FontManager.defaultFontSize * 0.75f;
+		public static final float large = FontManager.defaultFontSize * 1f;
+		public static final float xLarge = FontManager.defaultFontSize * 0.25f;
 	}
 
 	public static final class ui {

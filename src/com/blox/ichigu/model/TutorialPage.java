@@ -7,6 +7,7 @@ import com.blox.framework.v0.IView;
 import com.blox.framework.v0.impl.GameObject;
 import com.blox.framework.v0.impl.Text;
 import com.blox.framework.v0.util.Game;
+import com.blox.ichigu.utils.R;
 
 public class TutorialPage implements IView {
 	private final String id;
@@ -26,7 +27,7 @@ public class TutorialPage implements IView {
 		text.setHorizontalAlignment(halign);
 		text.setVerticalAlignment(Text.VAlignTop);
 		text.setText(info);
-		text.setFontScale(0.5f);
+		text.setFontScale(R.fontSize.medium);
 
 		if (pageTexts.size() > 0) {
 			Text lastText = pageTexts.get(pageTexts.size() - 1);
