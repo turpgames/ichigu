@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <game
     id="Ichigu"
-    class="com.blox.ichigu.view.IchiguGame" >
+    class="com.turpgames.ichigu.view.IchiguGame" >
 
     <params>
 
         <param
             key="provider"
-            value="com.blox.framework.v0.impl.libgdx.GdxGameProvider" />
+            value="com.turpgames.framework.v0.impl.libgdx.GdxGameProvider" />
 
         <param
             key="settings-key"
-            value="com.blox.ichigu" />
+            value="com.turpgames.ichigu" />
 
         <param
             key="virtual-width"
@@ -54,35 +54,35 @@
 
         <screen
             id="challenge"
-            class="com.blox.ichigu.view.ChallengeModeScreen" />
+            class="com.turpgames.ichigu.view.ChallengeModeScreen" />
 
         <screen
             id="learning"
-            class="com.blox.ichigu.view.LearningModeScreen" />
+            class="com.turpgames.ichigu.view.LearningModeScreen" />
 
         <screen
             id="multiplayer"
-            class="com.blox.ichigu.view.MultiplayerModeScreen" />
+            class="com.turpgames.ichigu.view.MultiplayerModeScreen" />
 
         <screen
             id="menu"
-            class="com.blox.ichigu.view.MenuScreen" />
+            class="com.turpgames.ichigu.view.MenuScreen" />
 
         <screen
             id="practice"
-            class="com.blox.ichigu.view.PracticeModeScreen" />
+            class="com.turpgames.ichigu.view.PracticeModeScreen" />
 
         <screen
             id="relax"
-            class="com.blox.ichigu.view.RelaxModeScreen" />
+            class="com.turpgames.ichigu.view.RelaxModeScreen" />
 
         <screen
             id="splash"
-            class="com.blox.ichigu.view.SplashScreen" />
+            class="com.turpgames.ichigu.view.SplashScreen" />
 
         <screen
             id="scoreBoard"
-            class="com.blox.ichigu.view.ScoreBoardScreen" />
+            class="com.turpgames.ichigu.view.ScoreBoardScreen" />
     </screens>
 
     <forms>

@@ -1,11 +1,11 @@
-package com.blox.ichigu;
+package com.turpgames.ichigu;
 
 import android.os.Bundle;
 import android.view.WindowManager;
 
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
-import com.blox.framework.v0.impl.libgdx.GdxGame;
+import com.turpgames.framework.v0.impl.libgdx.GdxGame;
 
 public class MainActivity extends AndroidApplication {
     @Override
