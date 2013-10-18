@@ -18,4 +18,9 @@ public class PracticeModeDealingState extends PracticeModeState implements ICard
 		model.dealEnd();
 		controller.setWaitingState();
 	}
+
+	@Override
+	public boolean onScreenDeactivated() {
+		return false;
+	}
 }

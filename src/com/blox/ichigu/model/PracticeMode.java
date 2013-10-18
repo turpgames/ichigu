@@ -185,6 +185,7 @@ public class PracticeMode extends TrainingMode {
 		blockTimer.stop();
 		dealTimer.stop();
 		cards.empty();
+		isExitConfirmed = true;
 		int practiceHiScore = Settings.getInteger(R.settings.hiscores.practice, 0);
 		if (score > practiceHiScore)
 			Settings.putInteger(R.settings.hiscores.practice, score);

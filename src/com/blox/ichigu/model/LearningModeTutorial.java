@@ -78,7 +78,7 @@ class LearningModeTutorial extends IchiguObject implements IViewFinder {
 		pages = new ArrayList<TutorialPage>();
 
 		TutorialPage page;
-		
+
 		page = new TutorialPage("1");
 		page.addInfo("Overview", Text.HAlignCenter, marginTop).getColor().set(R.colors.ichiguYellow);
 		page.addInfo("Ichigu is a card game played with a deck of 81 cards.", Text.HAlignLeft, 50).setPadX(10);
@@ -246,6 +246,13 @@ class LearningModeTutorial extends IchiguObject implements IViewFinder {
 		pages.add(page);
 
 		page = new TutorialPage("17");
+		page.addInfo("Scores", Text.HAlignCenter, marginTop).getColor().set(R.colors.ichiguYellow);
+		page.addInfo("In Challenge Mode Game, if you find an ichigu after opening extra cards you will get half of the point that you supposed to get.", Text.HAlignLeft, 25).setPadX(10);
+		page.addInfo("Note that, your point won't be deducted if there is no ichigu exists in 12 cards.", Text.HAlignLeft, 25).setPadX(10);
+		page.addInfo("So, first try finding ichigus without opening extra cards then open them if you are sure that there is no ichigu or lost too much time.", Text.HAlignLeft, 25).setPadX(10);
+		pages.add(page);
+
+		page = new TutorialPage("18");
 		info = page.addInfo("Ichigu Score", Text.HAlignCenter, marginTop);
 		info.getColor().set(R.colors.ichiguYellow);
 		y = Game.getVirtualHeight() - marginTop - info.getTextAreaHeight() - Card.Height - 30;

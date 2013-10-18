@@ -17,4 +17,9 @@ public class RelaxModeDealingState extends RelaxModeState implements ICardDealer
 	public void onDealEnd() {
 		controller.setWaitingState();
 	}
+
+	@Override
+	public boolean onScreenDeactivated() {
+		return false;
+	}
 }
