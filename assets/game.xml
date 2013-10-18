@@ -99,6 +99,16 @@
                 y="26"
                 color="#56bd89ff" />
 
+            <label
+                id="lblBeta"
+                font-scale="0.5"
+                text="beta"
+                cols="16"
+                rows="1"
+                x="0"
+                y="25"
+                color="#f9b000ff" />
+
             <button
                 id="btnLearning"
                 action="screen=learning"
