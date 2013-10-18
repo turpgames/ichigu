@@ -1,13 +1,13 @@
-package com.blox.ichigu;
+package com.turpgames.ichigu;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
-import com.blox.framework.v0.impl.libgdx.GdxGame;
+import com.turpgames.framework.v0.impl.libgdx.GdxGame;
 
 public class Main {
 	public static void main(String[] args) {
 		LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
-		cfg.title = "blox";
+		cfg.title = "ichigu";
 		cfg.useGL20 = true;
 
 		float w = 9f;
