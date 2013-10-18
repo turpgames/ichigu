@@ -51,6 +51,11 @@ public class PracticeModeController extends IchiguController<PracticeModeState> 
 	}
 
 	@Override
+	public void onExitConfirmed() {
+		currentState.onExitConfirmed();
+	}
+	
+	@Override
 	public void onModeEnd() {
 		currentState.onModeEnd();
 	}

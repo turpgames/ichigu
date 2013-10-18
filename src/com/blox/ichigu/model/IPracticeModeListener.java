@@ -8,4 +8,6 @@ public interface IPracticeModeListener extends IIchiguModeListener {
 	void onModeEnd();
 
 	void onNewGame();
+	
+	void onExitConfirmed();
 }

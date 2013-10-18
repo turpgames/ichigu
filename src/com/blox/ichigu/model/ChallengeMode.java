@@ -97,12 +97,11 @@ public class ChallengeMode extends FullGameMode {
 	@Override
 	public boolean exitMode() {
 		if (isExitConfirmed) {
-			super.exitMode();
 			confirmExitDialog.close();
 			totalScore = 0;
 			challengeTimer.stop();
 			isExitConfirmed = false;
-			return true;
+			return super.exitMode();
 		}
 		else {
 			confirmModeExit();

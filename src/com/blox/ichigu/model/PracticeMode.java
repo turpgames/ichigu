@@ -1,5 +1,6 @@
 package com.blox.ichigu.model;
 
+import com.blox.framework.v0.forms.xml.Dialog;
 import com.blox.framework.v0.impl.Settings;
 import com.blox.framework.v0.impl.Text;
 import com.blox.framework.v0.util.Timer;
@@ -23,6 +24,9 @@ public class PracticeMode extends TrainingMode {
 	private GameInfo resultInfo;
 
 	private ScreenTouchHandler touchHandler;
+
+	private Dialog confirmExitDialog;
+	private boolean isExitConfirmed;
 
 	private final IScreenTouchListener touchListener = new IScreenTouchListener() {
 		@Override
@@ -51,6 +55,14 @@ public class PracticeMode extends TrainingMode {
 		resultInfo = new GameInfo();
 		resultInfo.locate(Text.HAlignCenter, Text.VAlignCenter);
 
+		confirmExitDialog = new Dialog();
+		confirmExitDialog.setListener(new Dialog.IDialogListener() {
+			@Override
+			public void onDialogButtonClicked(String id) {
+				onExitConfirmed("Yes".equals(id));
+			}
+		});
+
 		touchHandler = new ScreenTouchHandler();
 
 		blockTimer = new Timer();
@@ -74,6 +86,27 @@ public class PracticeMode extends TrainingMode {
 		});
 	}
 
+	private void onExitConfirmed(boolean exit) {
+		isExitConfirmed = exit;
+		if (isExitConfirmed) {
+			getModeListener().onExitConfirmed();
+		}
+		else {
+			if (blockTimer.isPaused())
+				blockTimer.start();
+			dealTimer.start();
+			openCloseCards(true);
+		}
+	}
+
+	private void confirmModeExit() {
+		if (blockTimer.isRunning())
+			blockTimer.pause();
+		dealTimer.pause();
+		openCloseCards(false);
+		confirmExitDialog.open("Are you sure you want to exit game? All progress will be lost!");
+	}
+
 	private void onBlockTimerTick() {
 		blockTimer.stop();
 		notifyUnblocked();
@@ -87,6 +120,15 @@ public class PracticeMode extends TrainingMode {
 
 	private IPracticeModeListener getModeListener() {
 		return (IPracticeModeListener) super.modeListener;
+	}
+
+	protected void openCloseCards(boolean open) {
+		for (int i = 0; i < TrainingCards.TotalCardCount; i++) {
+			if (open)
+				cards.get(i).open();
+			else
+				cards.get(i).close();
+		}
 	}
 
 	public int getScore() {
@@ -120,7 +162,7 @@ public class PracticeMode extends TrainingMode {
 	}
 
 	private void addScore(int score) {
-		// -3: Score is in the range of min=6 and max=12 
+		// -3: Score is in the range of min=6 and max=12
 		// To increase max/min ratio we subtract 3 from the score
 		this.score += (int) ((timePerDeal - dealTimer.getElapsedTime()) * (score - 3f));
 	}
@@ -149,13 +191,21 @@ public class PracticeMode extends TrainingMode {
 	}
 
 	@Override
-	public void exitMode() {
-		blockTimer.stop();
-		dealTimer.stop();
-		touchHandler.deactivate();
-		score = 0;
-		deals = 0;
-		super.exitMode();
+	public boolean exitMode() {
+		if (isExitConfirmed) {
+			blockTimer.stop();
+			dealTimer.stop();
+			touchHandler.deactivate();
+			score = 0;
+			deals = 0;
+			confirmExitDialog.close();
+			isExitConfirmed = false;
+			return super.exitMode();
+		}
+		else {
+			confirmModeExit();
+			return false;
+		}
 	}
 
 	@Override
@@ -190,7 +240,7 @@ public class PracticeMode extends TrainingMode {
 		drawScore();
 		drawRemainingDeals();
 		drawRemainingTime();
-		if (blockTimer.isRunning())
+		if (!blockTimer.isStopped())
 			drawWaitMessage();
 	}
 

@@ -3,6 +3,7 @@ package com.blox.ichigu.model;
 class TrainingCards {
 	public static final int ReadyCardCount = 2;
 	public static final int CardToSelectCount = 3;
+	public static final int TotalCardCount = ReadyCardCount + CardToSelectCount;
 
 	private Card[] cards;
 

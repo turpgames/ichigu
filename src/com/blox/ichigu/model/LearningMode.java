@@ -24,8 +24,8 @@ public class LearningMode extends TrainingMode {
 	}
 
 	@Override
-	public void activateCardsOnTable() {
-		super.activateCardsOnTable();
+	public void activateCards() {
+		super.activateCards();
 
 		Card[] allCards = cards.getAllCards();
 
@@ -48,10 +48,10 @@ public class LearningMode extends TrainingMode {
 	}
 
 	@Override
-	public void exitMode() {
-		super.exitMode();
+	public boolean exitMode() {
 		tutorial.end();
 		hint.deactivate();
+		return super.exitMode();
 	}
 	
 	public void drawTutorial() {

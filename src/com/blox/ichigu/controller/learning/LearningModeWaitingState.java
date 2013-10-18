@@ -11,7 +11,7 @@ public class LearningModeWaitingState extends LearningModeState {
 
 	@Override
 	protected void activated() {
-		model.activateCardsOnTable();
+		model.activateCards();
 	}
 
 	@Override

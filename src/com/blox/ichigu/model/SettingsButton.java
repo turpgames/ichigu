@@ -4,6 +4,7 @@ import com.blox.framework.v0.ITexture;
 import com.blox.framework.v0.impl.Settings;
 import com.blox.framework.v0.util.Game;
 import com.blox.framework.v0.util.TextureDrawer;
+import com.blox.ichigu.utils.R;
 
 class SettingsButton extends ToolbarButton {
 	private ITexture textureOff;
@@ -26,6 +27,11 @@ class SettingsButton extends ToolbarButton {
 
 	@Override
 	protected void onDraw() {
+		if(isOn) 
+			getColor().set(R.colors.ichiguGreen);
+		else
+			getColor().set(R.colors.ichiguWhite);
+		
 		if (isOn)
 			super.onDraw();
 		else

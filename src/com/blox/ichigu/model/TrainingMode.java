@@ -23,16 +23,15 @@ public abstract class TrainingMode extends IchiguMode {
 			notifyInvalidIchiguSelected();
 	}
 
-	public void activateCardsOnTable() {
+	public void activateCards() {
 		for (int i = 0; i < TrainingCards.CardToSelectCount; i++)
 			cards.getCardsToSelect(i).activate(modeListener);
 	}
 
 	public void deactivateCards() {
 		for (int i = 0; i < TrainingCards.CardToSelectCount; i++) {
-			Card card = cards.getCardsToSelect(i);
-			if (card != null)
-				card.deactivate();
+			if (cards.getCardsToSelect(i) != null)
+				cards.getCardsToSelect(i).deactivate();
 		}
 	}
 
@@ -41,9 +40,10 @@ public abstract class TrainingMode extends IchiguMode {
 			cards.get(i).getLocation().set(R.learningModeScreen.layout.positions[i]);
 	}
 
-	public void exitMode() {
-		((TrainingCardDealer)dealer).abortDeal();
+	public boolean exitMode() {
+		((TrainingCardDealer) dealer).abortDeal();
 		deactivateCards();
 		cards.empty();
+		return true;
 	}
 }

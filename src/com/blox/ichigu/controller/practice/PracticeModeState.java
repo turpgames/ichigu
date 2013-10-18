@@ -19,8 +19,7 @@ public abstract class PracticeModeState extends IchiguState implements IPractice
 
 	@Override
 	public boolean onScreenDeactivated() {
-		model.exitMode();
-		return true;
+		return model.exitMode();
 	}
 	
 	@Override
@@ -45,6 +44,11 @@ public abstract class PracticeModeState extends IchiguState implements IPractice
 
 	}
 
+	@Override
+	public void onExitConfirmed() {
+		view.onExitConfirmed();
+	}	
+	
 	@Override
 	public void draw() {
 		model.drawGame();

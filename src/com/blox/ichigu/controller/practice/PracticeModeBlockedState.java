@@ -10,7 +10,7 @@ public class PracticeModeBlockedState extends PracticeModeState {
 
 	@Override
 	protected void activated() {
-		model.activateCardsOnTable();
+		model.activateCards();
 	}
 
 	@Override
