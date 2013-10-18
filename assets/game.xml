@@ -54,32 +54,26 @@
 
         <screen
             id="challenge"
-            background-music="game-music"
             class="com.blox.ichigu.view.ChallengeModeScreen" />
 
         <screen
             id="learning"
-            background-music="game-music"
             class="com.blox.ichigu.view.LearningModeScreen" />
 
         <screen
             id="multiplayer"
-            background-music="game-music"
             class="com.blox.ichigu.view.MultiplayerModeScreen" />
 
         <screen
             id="menu"
-            background-music="menu-music"
             class="com.blox.ichigu.view.MenuScreen" />
 
         <screen
             id="practice"
-            background-music="game-music"
             class="com.blox.ichigu.view.PracticeModeScreen" />
 
         <screen
             id="relax"
-            background-music="game-music"
             class="com.blox.ichigu.view.RelaxModeScreen" />
 
         <screen
@@ -88,7 +82,6 @@
 
         <screen
             id="scoreBoard"
-            background-music="scoreBoard-music"
             class="com.blox.ichigu.view.ScoreBoardScreen" />
     </screens>
 
@@ -99,7 +92,7 @@
             <label
                 id="lblGameName"
                 cols="16"
-                font-scale="1.2"
+                font-scale="1.5"
                 rows="2"
                 text="Ichigu"
                 x="0"
@@ -187,15 +180,7 @@
             <texture
                 id="refresh"
                 path="img/refresh.png" />
-
-            <texture
-                id="ppt-checkbox-checked"
-                path="img/ui/checkbox-checked.png" />
-
-            <texture
-                id="ppt-checkbox-unchecked"
-                path="img/ui/checkbox-unchecked.png" />
-
+            
             <texture
                 id="card-11"
                 path="img/cards/11.png" />
@@ -253,14 +238,6 @@
                 path="img/toolbar/settings.png" />
 
             <texture
-                id="tb_music_play"
-                path="img/toolbar/music-play.png" />
-
-            <texture
-                id="tb_music_stop"
-                path="img/toolbar/music-stop.png" />
-
-            <texture
                 id="tb_sound_off"
                 path="img/toolbar/sound-off.png" />
 
@@ -275,56 +252,35 @@
             <texture
                 id="tb_vibration_on"
                 path="img/toolbar/vibration-on.png" />
+            
+            <texture
+                id="bg"
+                path="img/bg.png" />
         </textures>
 
         <sounds>
 
             <sound
-                id="ppt-button-click"
-                path="sound/flip.wav" />
-
-            <sound
-                id="ppt-checkbox-click"
-                path="sound/checkbox2.wav" />
-
-            <sound
                 id="success"
-                path="sound/success.wav" />
+                path="sound/success.ogg" />
 
             <sound
                 id="error"
-                path="sound/error.wav" />
+                path="sound/error.ogg" />
 
             <sound
                 id="flip"
-                path="sound/flip.wav" />
+                path="sound/flip.ogg" />
 
             <sound
                 id="wait"
-                path="sound/wait.wav" />
+                path="sound/wait.ogg" />
 
             <sound
                 id="time-up"
-                path="sound/time-up.wav" />
+                path="sound/time-up.ogg" />
         </sounds>
 
-        <musics>
-
-            <music
-                id="game-music"
-                path="music/game-bg.mp3"
-                resource-load="ondemand" />
-
-            <music
-                id="menu-music"
-                path="music/menu-bg.mp3"
-                resource-load="ondemand" />
-
-            <music
-                id="scoreBoard-music"
-                path="music/scoreboard-bg.mp3"
-                resource-load="ondemand" />
-        </musics>
     </resources>
 
     <skins>
@@ -340,16 +296,10 @@
                 focus-color="#3974b1ff"
                 halign="center"
                 rows="2"
-                sound-click="ppt-button-click"
+                sound-click="flip"
                 vibrate="50"
                 x="4" />
-
-            <checkbox
-                rows="2"
-                sound-click="ppt-checkbox-click"
-                texture-checked="ppt-checkbox-checked"
-                texture-unchecked="ppt-checkbox-unchecked" />
-
+            
             <label
                 halign="center"
                 rows="2"
