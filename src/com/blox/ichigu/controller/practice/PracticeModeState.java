@@ -18,8 +18,9 @@ public abstract class PracticeModeState extends IchiguState implements IPractice
 	}
 
 	@Override
-	public void onScreenDeactivated() {
+	public boolean onScreenDeactivated() {
 		model.exitMode();
+		return true;
 	}
 	
 	@Override

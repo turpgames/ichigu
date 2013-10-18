@@ -51,7 +51,7 @@ abstract class IchiguButton extends IchiguObject {
 			return;
 
 		if (isTouched()) {
-			getColor().set(R.colors.ichiguBlue.r, R.colors.ichiguBlue.g, R.colors.ichiguBlue.b, getColor().a);
+			getColor().set(R.colors.ichiguYellow.r, R.colors.ichiguYellow.g, R.colors.ichiguYellow.b, getColor().a);
 			getScale().set(1.2f);
 			getRotation().origin.set(getLocation().x + getWidth() / 2, getLocation().y + getHeight() / 2);
 		}

@@ -23,19 +23,13 @@ public class SplashScreen extends Screen {
 	}
 
 	@Override
-	public void render() {
-		super.render();
+	public void draw() {
+		super.draw();
 
 		float width = 500 * resourceManager.getProgress();
 		float x = (Game.getVirtualWidth() - width) / 2;
 
 		ShapeDrawer.drawRect(x, 100, width, 10, progressColor, true, false);
-	}
-
-	@Override
-	public void deactivated() {
-		super.deactivated();
-		IchiguGame.activateToolbar();
 	}
 
 	@Override

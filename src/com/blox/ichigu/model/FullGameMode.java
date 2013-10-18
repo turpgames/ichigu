@@ -16,6 +16,31 @@ public abstract class FullGameMode extends IchiguMode {
 
 	protected GameInfo remaingCardInfo;
 	protected GameInfo timeInfo;
+	
+	private boolean areExtraCardsOpened;
+
+	protected void openCloseCards(boolean open) {
+		for (int i = 0; i < FullGameCards.ActiveCardCount; i++) {
+			if (!cards.isActiveCardEmpty(i)) {
+				if (open)
+					cards.getActiveCard(i).open();
+				else
+					cards.getActiveCard(i).close();
+			}
+		}
+
+		if (areExtraCardsOpened) {
+			for (int i = 0; i < FullGameCards.ExtraCardCount; i++) {
+				if (!cards.isExtraCardEmpty(i)) {
+					if (open)
+						cards.getExtraCard(i).open();
+					else
+						cards.getExtraCard(i).close();
+
+				}
+			}
+		}
+	}
 
 	protected final IScreenTouchListener touchListener = new IScreenTouchListener() {
 		@Override
@@ -68,13 +93,11 @@ public abstract class FullGameMode extends IchiguMode {
 	}
 
 	protected void notifyModeEnd() {
-		touchHandler.activate(touchListener);
 		if (getModeListener() != null)
 			getModeListener().onModeEnd();
 	}
 
 	protected void notifyNewGame() {
-		touchHandler.deactivate();
 		if (getModeListener() != null)
 			getModeListener().onNewGame();
 	}
@@ -105,6 +128,7 @@ public abstract class FullGameMode extends IchiguMode {
 		if (score > 0) {
 			ichigusFound++;
 			notifyIchiguFound();
+			areExtraCardsOpened = false;
 		}
 		else {
 			notifyInvalidIchiguSelected();
@@ -134,6 +158,7 @@ public abstract class FullGameMode extends IchiguMode {
 	}
 
 	protected void openExtraCards() {
+		areExtraCardsOpened = true;
 		for (int i = 0; i < FullGameCards.ExtraCardCount; i++)
 			cards.getExtraCard(i).open();
 	}
@@ -176,13 +201,16 @@ public abstract class FullGameMode extends IchiguMode {
 		cards.empty();
 		deactivateCards();
 		hint.deactivate();
+		touchHandler.activate(touchListener);
 	}
 
-	public void exitMode() {
+	public boolean exitMode() {
+		touchHandler.deactivate();
 		deactivateCards();
 		cards.empty();
 		timer.stop();
 		hint.deactivate();
+		return true;
 	}
 
 	public void drawGame() {

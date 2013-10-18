@@ -24,14 +24,19 @@ public abstract class ChallengeModeState extends IchiguState implements IChallen
 	public void onNewGame() {
 
 	}
-	
+
+	@Override
+	public void onExitConfirmed() {
+		view.onExitConfirmed();
+	}
+
 	@Override
 	public void draw() {
 		model.drawGame();
 	}
 
 	@Override
-	public void onScreenDeactivated() {
-		model.exitMode();
+	public boolean onScreenDeactivated() {
+		return model.exitMode();
 	}
 }

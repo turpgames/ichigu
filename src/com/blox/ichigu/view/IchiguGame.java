@@ -8,32 +8,33 @@ import com.blox.ichigu.model.Toolbar;
 import com.blox.ichigu.utils.R;
 
 public class IchiguGame extends BaseGame {
-	private static Toolbar toolbar;
+	public static Toolbar toolbar;
 
 	@Override
 	public void init() {
-		Dialog.activeButtonColor = R.colors.ichiguBlue;
-		Dialog.closeButtonFocusColor = R.colors.ichiguRed;
 		super.init();
+		Dialog.activeButtonColor.set(R.colors.ichiguYellow);
+		Dialog.closeButtonFocusColor.set(R.colors.ichiguRed);
 	}
 
-	static void activateToolbar() {
-		Toolbar.init();
-		toolbar = Toolbar.getInstance();
-		toolbar.setListener(new Toolbar.IToolbarListener() {
-			@Override
-			public void onToolbarBack() {
-				Screen screen = ScreenManager.instance.getCurrentScreen();
-				if (screen instanceof IchiguScreen)
-					((IchiguScreen) screen).back();
-			}
-		});
+	public static Toolbar getToolbar() {
+		if (toolbar == null) {
+			Toolbar.init();
+			toolbar = Toolbar.getInstance();
+			toolbar.setListener(new Toolbar.IToolbarListener() {
+				@Override
+				public void onToolbarBack() {
+					Screen screen = ScreenManager.instance.getCurrentScreen();
+					if (screen instanceof IchiguScreen)
+						((IchiguScreen) screen).back();
+				}
+			});
+		}
+		return toolbar;
 	}
 
 	@Override
-	public void render() {
-		if (toolbar != null)
-			toolbar.draw();
-		super.render();
+	public void draw() {
+		super.draw();
 	}
 }

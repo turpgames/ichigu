@@ -76,8 +76,10 @@ class FullGameHint implements IDrawable, IEffectEndListener, Toast.IToastListene
 	}
 
 	private void showNextHint() {
-		if (isActive)
+		if (isActive) {
+			toast.hide();
 			return;
+		}
 
 		if (hintIndex == 0) {
 			setToastColor();

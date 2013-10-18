@@ -16,8 +16,9 @@ public abstract class LearningModeState extends IchiguState implements ILearning
 	}
 
 	@Override
-	public void onScreenDeactivated() {
+	public boolean onScreenDeactivated() {
 		model.exitMode();
+		return true;
 	}
 	
 	@Override

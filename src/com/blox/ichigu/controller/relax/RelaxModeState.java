@@ -26,8 +26,9 @@ public abstract class RelaxModeState extends IchiguState implements IRelaxModeAc
 	}
 	
 	@Override
-	public void onScreenDeactivated() {
+	public boolean onScreenDeactivated() {
 		controller.setPausedState();
+		return true;
 	}
 
 	@Override

@@ -93,19 +93,23 @@ public final class R {
 		public static final Vector firstOfTwo = new Vector((Card.Width - Card.SymbolWidth) / 2, Card.Height / 2 - Card.SymbolHeight * 1.1f);
 		public static final Vector secondOfTwo = new Vector((Card.Width - Card.SymbolWidth) / 2, Card.Height / 2 + Card.SymbolHeight * 0.1f);
 
-		public static final Vector firstOfThree = new Vector((Card.Width - Card.SymbolWidth) / 2, Card.Height / 2 - Card.SymbolHeight * 1.65f);
-		public static final Vector secondOfThree = new Vector((Card.Width - Card.SymbolWidth) / 2, Card.Height / 2 - Card.SymbolHeight * 0.5f);
-		public static final Vector thirdOfThree = new Vector((Card.Width - Card.SymbolWidth) / 2, Card.Height / 2 + Card.SymbolHeight * 0.65f);
+		public static final Vector firstOfThree = new Vector((Card.Width - Card.SymbolWidth) / 2, 2 + Card.Height / 2 - Card.SymbolHeight * 1.65f);
+		public static final Vector secondOfThree = new Vector((Card.Width - Card.SymbolWidth) / 2, 2 + Card.Height / 2 - Card.SymbolHeight * 0.5f);
+		public static final Vector thirdOfThree = new Vector((Card.Width - Card.SymbolWidth) / 2, 2 + Card.Height / 2 + Card.SymbolHeight * 0.65f);
 
 		public static Vector tutorial300x96 = new Vector(Game.getVirtualWidth() / 2 - 300 / 2, Game.getVirtualHeight() / 2 - 60);
 		public static Vector tutorial350x300 = new Vector(Game.getVirtualWidth() / 2 - 350 / 2, 200);
 	}
 
 	public static final class colors {
+		public static final Color ichiguWhite = Color.fromHex("#ffffffff");
+		public static final Color ichiguBlack = Color.fromHex("#000000ff");
 		public static final Color ichiguRed = Color.fromHex("#d0583bff");
 		public static final Color ichiguGreen = Color.fromHex("#56bd89ff");
 		public static final Color ichiguBlue = Color.fromHex("#3974c1ff");
-		public static final Color ichiguWhite = Color.fromHex("#ffffffff");
+		public static final Color ichiguYellow = Color.fromHex("#f9b000ff");
+		public static final Color ichiguCyan = Color.fromHex("#00f9b0ff");
+		public static final Color ichiguMagenta = Color.fromHex("#f900b0ff");
 	}
 
 	public static final class fontSize {

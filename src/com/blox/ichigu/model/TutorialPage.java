@@ -47,7 +47,7 @@ public class TutorialPage implements IView {
 	}
 
 	@Override
-	public void render() {
+	public void draw() {
 		for (int i = 0; i < pageTexts.size(); i++)
 			pageTexts.get(i).draw();
 
@@ -56,13 +56,13 @@ public class TutorialPage implements IView {
 	}
 
 	@Override
-	public void activated() {
+	public void activate() {
 
 	}
 
 	@Override
-	public void deactivated() {
-
+	public boolean deactivate() {
+		return true;
 	}
 
 	public void addImage(GameObject obj) {

@@ -32,7 +32,8 @@ public abstract class IchiguState implements IIchiguController {
 	}
 
 	@Override
-	public void onScreenDeactivated() {
+	public boolean onScreenDeactivated() {
 		this.deactivated();
+		return true;
 	}
 }

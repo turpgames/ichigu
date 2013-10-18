@@ -1,7 +1,7 @@
 package com.blox.ichigu.controller.challenge;
 
-import com.blox.ichigu.model.IFullGameModeListener;
+import com.blox.ichigu.model.IChallengeModeListener;
 
-public interface IChallengeModeActionListener extends IFullGameModeListener {
+public interface IChallengeModeActionListener extends IChallengeModeListener {
 
 }

@@ -5,7 +5,6 @@ import com.blox.framework.v0.forms.xml.Dialog;
 import com.blox.framework.v0.impl.Settings;
 import com.blox.framework.v0.impl.Text;
 import com.blox.framework.v0.util.Game;
-import com.blox.ichigu.utils.IchiguResources;
 import com.blox.ichigu.utils.R;
 
 public class HiScores implements IDrawable {
@@ -36,8 +35,6 @@ public class HiScores implements IDrawable {
 					Settings.putInteger(R.settings.hiscores.challenge, 0);
 					info.setText("Practice: 0\n\nChallenge: 0\n\n\n\n");
 				}
-				IchiguResources.playSoundFlip();
-				Game.vibrate(50);				
 			}
 		});
 
@@ -56,6 +53,7 @@ public class HiScores implements IDrawable {
 	}
 
 	public void deactivate() {
+		confirmDialog.close();
 		resetScores.listenInput(false);
 	}
 

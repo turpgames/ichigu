@@ -1,5 +1,6 @@
 package com.blox.ichigu.model;
 
+import com.blox.framework.v0.forms.xml.Dialog;
 import com.blox.framework.v0.impl.Settings;
 import com.blox.framework.v0.impl.Text;
 import com.blox.framework.v0.util.Timer;
@@ -10,10 +11,17 @@ public class ChallengeMode extends FullGameMode {
 
 	private int totalScore;
 	private Timer challengeTimer;
-	private boolean extraCardsOpened;
+	private boolean deductScore;
 
 	private GameInfo resultInfo;
 	private GameInfo scoreInfo;
+
+	private Dialog confirmExitDialog;
+	private boolean isExitConfirmed;
+
+	private IChallengeModeListener getChallengeModeListener() {
+		return (IChallengeModeListener) super.modeListener;
+	}
 
 	public ChallengeMode() {
 		hint.deactivate();
@@ -26,12 +34,37 @@ public class ChallengeMode extends FullGameMode {
 		scoreInfo = new GameInfo();
 		scoreInfo.locate(Text.HAlignLeft, Text.VAlignTop);
 		scoreInfo.setPadding(7, 90);
-		
+
+		confirmExitDialog = new Dialog();
+		confirmExitDialog.setListener(new Dialog.IDialogListener() {
+			@Override
+			public void onDialogButtonClicked(String id) {
+				onExitConfirmed("Yes".equals(id));
+			}
+		});
+
 		updateScoreText();
 	}
 
 	private void updateScoreText() {
 		scoreInfo.setText("Score: " + totalScore);
+	}
+
+	private void onExitConfirmed(boolean exit) {
+		isExitConfirmed = exit;
+		if (isExitConfirmed) {
+			getChallengeModeListener().onExitConfirmed();
+		}
+		else {
+			timer.start();
+			openCloseCards(true);
+		}
+	}
+
+	private void confirmModeExit() {
+		timer.pause();
+		openCloseCards(false);
+		confirmExitDialog.open("Are you sure you want to exit game? All progress will be lost!");
 	}
 
 	@Override
@@ -40,6 +73,7 @@ public class ChallengeMode extends FullGameMode {
 		totalScore = 0;
 		challengeTimer.restart();
 		updateScoreText();
+		isExitConfirmed = false;
 	}
 
 	@Override
@@ -52,17 +86,28 @@ public class ChallengeMode extends FullGameMode {
 
 		resultInfo.setText(
 				"Congratulations,\n" +
-						String.format("You found %d ichigu%s!\n", ichigusFound, ichigusFound != 1 ? "s" : "") +
-						"Total Time " + modeCompleteTime + "\n" +
-						scoreInfo.getText() + "\n" +
-						"Touch Screen\nTo Continue");
+						String.format("You found %d ichigu%s!", ichigusFound, ichigusFound != 1 ? "s" : "") +
+						"\n\nTotal Time " + modeCompleteTime +
+						"\n\n" + scoreInfo.getText() +
+						"\n\nTouch Screen To Continue");
+		
+		isExitConfirmed = true;
 	}
 
 	@Override
-	public void exitMode() {
-		super.exitMode();
-		totalScore = 0;
-		challengeTimer.stop();
+	public boolean exitMode() {
+		if (isExitConfirmed) {
+			super.exitMode();
+			confirmExitDialog.close();
+			totalScore = 0;
+			challengeTimer.stop();
+			isExitConfirmed = false;
+			return true;
+		}
+		else {
+			confirmModeExit();
+			return false;
+		}
 	}
 
 	@Override
@@ -83,10 +128,12 @@ public class ChallengeMode extends FullGameMode {
 			float elapsed = challengeTimer.getElapsedTime();
 			if (elapsed > maxTimeToFindIchigu)
 				elapsed = maxTimeToFindIchigu;
-			totalScore += (int) ((score * ((maxTimeToFindIchigu - elapsed) / 10) * (extraCardsOpened ? 0.5f : 1)));
+			// -3: Score is in the range of min=6 and max=12
+			// To increase max/min ratio we subtract 3 from the score
+			totalScore += (int) (((score - 3) * ((maxTimeToFindIchigu - elapsed) / 10f) * (deductScore ? 0.5f : 1)));
 			updateScoreText();
 			challengeTimer.restart();
-			extraCardsOpened = false;
+			deductScore = false;
 		}
 		return score;
 	}
@@ -94,7 +141,7 @@ public class ChallengeMode extends FullGameMode {
 	@Override
 	protected void openExtraCards() {
 		super.openExtraCards();
-		extraCardsOpened = true;
+		deductScore = hint.getIchiguCount() != 0;
 	}
 
 	protected void drawScore() {

@@ -1,25 +1,21 @@
 package com.blox.ichigu.view;
 
 import com.blox.ichigu.model.HiScores;
+import com.blox.ichigu.model.Toolbar;
 
 public class ScoreBoardScreen extends IchiguScreen {
 	private HiScores hiScores;
 
 	@Override
-	protected String getTitle() {
-		return "Hi Scores";
-	}
-
-	@Override
-	public void activated() {
-		super.activated();
+	protected void onAfterActivate() {
 		hiScores.activate();
+		Toolbar.getInstance().activateBackButton();
 	}
-
+	
 	@Override
-	public void deactivated() {
-		super.deactivated();
+	protected boolean onBeforeDeactivate() {
 		hiScores.deactivate();
+		return true;
 	}
 
 	@Override

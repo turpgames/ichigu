@@ -31,7 +31,6 @@ public class PracticeMode extends TrainingMode {
 		}
 	};
 
-
 	public PracticeMode() {
 		timeInfo = new GameInfo();
 		timeInfo.locate(Text.HAlignRight, Text.VAlignTop);
@@ -121,7 +120,9 @@ public class PracticeMode extends TrainingMode {
 	}
 
 	private void addScore(int score) {
-		this.score += (int) (timePerDeal - dealTimer.getElapsedTime()) * score;
+		// -3: Score is in the range of min=6 and max=12 
+		// To increase max/min ratio we subtract 3 from the score
+		this.score += (int) ((timePerDeal - dealTimer.getElapsedTime()) * (score - 3f));
 	}
 
 	private void block() {
@@ -151,6 +152,7 @@ public class PracticeMode extends TrainingMode {
 	public void exitMode() {
 		blockTimer.stop();
 		dealTimer.stop();
+		touchHandler.deactivate();
 		score = 0;
 		deals = 0;
 		super.exitMode();
@@ -193,14 +195,15 @@ public class PracticeMode extends TrainingMode {
 	}
 
 	public void drawResults() {
-		resultInfo.setText("Score: " + score + "\nTouch Screen" + "\nTo Continue");
+		resultInfo.setText("Score: " + score + "\n\nTouch Screen To Continue");
 		resultInfo.draw();
 	}
 
 	private void drawCards() {
 		Card[] allCards = cards.getAllCards();
 		for (int i = 0; i < allCards.length; i++)
-			allCards[i].draw();
+			if (allCards[i] != null)
+				allCards[i].draw();
 	}
 
 	private void drawRemainingTime() {

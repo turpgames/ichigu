@@ -17,8 +17,8 @@ public abstract class IchiguController<T extends IchiguState> implements IIchigu
 	}
 
 	@Override
-	public void onScreenDeactivated() {
-		currentState.onScreenDeactivated();
+	public boolean onScreenDeactivated() {
+		return currentState.onScreenDeactivated();
 	}
 
 	@Override
@@ -33,7 +33,8 @@ public abstract class IchiguController<T extends IchiguState> implements IIchigu
 
 	@Override
 	public void draw() {
-		currentState.draw();
+		if (currentState != null)
+			currentState.draw();
 	}
 
 	protected void setState(T newState) {

@@ -22,7 +22,8 @@ public class RelaxModeEndState extends RelaxModeState {
 	}
 	
 	@Override
-	public void onScreenDeactivated() {
+	public boolean onScreenDeactivated() {
 		model.exitMode();
+		return true;
 	}
 }

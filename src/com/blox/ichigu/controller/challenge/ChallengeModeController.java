@@ -38,6 +38,12 @@ public class ChallengeModeController extends IchiguController<ChallengeModeState
 	public void onNewGame() {
 		currentState.onNewGame();
 	}
+	
+	@Override
+	public void onExitConfirmed() {
+		currentState.onExitConfirmed();
+	}
+	
 
 	void setDealingState() {
 		setState(dealingState);

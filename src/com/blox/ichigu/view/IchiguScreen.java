@@ -2,64 +2,51 @@ package com.blox.ichigu.view;
 
 import com.blox.framework.v0.impl.Screen;
 import com.blox.framework.v0.impl.ScreenManager;
-import com.blox.ichigu.model.Logo;
+import com.blox.ichigu.model.Background;
 import com.blox.ichigu.model.Toolbar;
 import com.blox.ichigu.utils.R;
 
 public abstract class IchiguScreen extends Screen {
-	protected IIchiguViewListener screenListener;
+	protected IIchiguViewListener screenListener = IIchiguViewListener.NULL;
 
 	protected void notifyScreenActivated() {
-		if (screenListener != null)
-			screenListener.onScreenActivated();
+		registerDrawable(screenListener, 2);
+		screenListener.onScreenActivated();
 	}
 
-	protected void notifyScreenDeactivated() {
-		if (screenListener != null)
-			screenListener.onScreenDeactivated();
+	protected boolean notifyScreenDeactivated() {
+		if (screenListener.onScreenDeactivated()) {
+			unregisterDrawable(screenListener);
+			return true;
+		}
+		return false;
 	}
 
-	protected void notifyDraw() {
-		if (screenListener != null)
-			screenListener.draw();
-	}
-
-	protected void setScreenListener(IIchiguViewListener screenListener) {
-		this.screenListener = screenListener;
+	protected void setScreenListener(IIchiguViewListener listener) {
+		this.screenListener = listener;
 	}
 
 	@Override
-	public void activated() {
-		super.activated();
+	protected void onAfterActivate() {
 		notifyScreenActivated();
 		Toolbar.getInstance().activateBackButton();
 	}
-
+	
 	@Override
-	public void deactivated() {
-		notifyScreenDeactivated();
-		super.deactivated();
+	protected boolean onBeforeDeactivate() {
+		return notifyScreenDeactivated();
 	}
 
 	@Override
 	public void init() {
 		super.init();
 
-		Logo logo = new Logo();
-		logo.getColor().a = 0.25f;
-		registerDrawable(logo, 1);
+		registerDrawable(new Background(), 1);
+		registerDrawable(IchiguGame.getToolbar(), 2);
 
 		registerInputListener(this);
 	}
 
-	@Override
-	public void render() {
-		super.render();
-		
-		if (super.isActive())
-			notifyDraw();
-	}
-	
 	void back() {
 		onBack();
 	}
@@ -69,6 +56,4 @@ public abstract class IchiguScreen extends Screen {
 		ScreenManager.instance.switchTo(R.game.screens.menu, true);
 		return true;
 	}
-
-	protected abstract String getTitle();
 }
