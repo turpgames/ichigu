@@ -53,12 +53,28 @@
     <screens>
 
         <screen
-            id="challenge"
-            class="com.turpgames.ichigu.view.ChallengeModeScreen" />
-
+            id="tutorial"
+            class="com.turpgames.ichigu.view.TutorialModeScreen" />
+        
         <screen
-            id="learning"
-            class="com.turpgames.ichigu.view.LearningModeScreen" />
+            id="practice"
+            class="com.turpgames.ichigu.view.PracticeModeScreen" />
+        
+        <screen
+            id="minichallenge"
+            class="com.turpgames.ichigu.view.MiniChallengeModeScreen" />
+        
+        <screen
+            id="relax"
+            class="com.turpgames.ichigu.view.RelaxModeScreen" />
+        
+        <screen
+            id="normal"
+            class="com.turpgames.ichigu.view.NormalModeScreen" />
+        
+        <screen
+            id="fullchallenge"
+            class="com.turpgames.ichigu.view.FullChallengeModeScreen" />
 
         <screen
             id="multiplayer"
@@ -67,14 +83,6 @@
         <screen
             id="menu"
             class="com.turpgames.ichigu.view.MenuScreen" />
-
-        <screen
-            id="practice"
-            class="com.turpgames.ichigu.view.PracticeModeScreen" />
-
-        <screen
-            id="relax"
-            class="com.turpgames.ichigu.view.RelaxModeScreen" />
 
         <screen
             id="splash"
@@ -111,33 +119,45 @@
 
             <button
                 id="btnLearning"
-                action="screen=learning"
+                action="screen=tutorial"
                 text="How To Play"
-                y="21" />
+                y="22" />
 
             <button
                 id="btnPractice"
                 action="screen=practice"
                 text="Practice"
-                y="18" />
+                y="19" />
 
+            <button
+                id="btnPractice"
+                action="screen=minichallenge"
+                text="Mini Challenge"
+                y="17" />
+            
             <button
                 id="btnRelax"
                 action="screen=relax"
-                text="Relax"
-                y="15" />
+                text="Relax Mode"
+                y="14" />
 
             <button
-                id="btnChallenge"
-                action="screen=challenge"
-                text="Challenge"
+                id="btnRelax"
+                action="screen=normal"
+                text="Normal Mode"
                 y="12" />
+            
+            <button
+                id="btnChallenge"
+                action="screen=fullchallenge"
+                text="Full Challenge"
+                y="10" />
 
             <button
                 id="btnScoreBoard"
                 action="screen=scoreBoard"
                 text="Hi Scores"
-                y="9" />
+                y="7" />
 
             <button
                 id="btnExitGame"
