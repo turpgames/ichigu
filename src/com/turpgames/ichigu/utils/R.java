@@ -23,6 +23,7 @@ public final class R {
 
 		public static final class screens {
 			public static final String menu = "menu";
+			public static final String practice = "practice";
 		}
 
 		public static final class sounds {

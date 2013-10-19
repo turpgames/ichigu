@@ -1,5 +1,5 @@
 package com.turpgames.ichigu.model;
 
-interface IIchiguButtonListener {
+public interface IIchiguButtonListener {
 	void onButtonTapped();
 }

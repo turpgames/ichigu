@@ -35,6 +35,5 @@ public class PracticeModeWaitingState extends PracticeModeState {
 	public void onInvalidIchiguSelected() {
 		IchiguResources.playSoundError();
 		Game.vibrate(100);
-		controller.setBlockedState();
 	}
 }

@@ -2,7 +2,7 @@ package com.turpgames.ichigu.model;
 
 import com.turpgames.framework.v0.util.Utils;
 
-abstract class CardDealer {
+public abstract class CardDealer {
 	protected final Card[] deck;
 	protected ICardDealerListener listener;
 

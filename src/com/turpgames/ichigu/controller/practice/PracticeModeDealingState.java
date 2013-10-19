@@ -15,7 +15,6 @@ public class PracticeModeDealingState extends PracticeModeState implements ICard
 
 	@Override
 	public void onDealEnd() {
-		model.dealEnd();
 		controller.setWaitingState();
 	}
 

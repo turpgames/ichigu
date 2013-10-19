@@ -1,5 +1,5 @@
 package com.turpgames.ichigu.model;
 
-interface IScreenTouchListener {
+public interface IScreenTouchListener {
 	void onScreenTouched();
 }

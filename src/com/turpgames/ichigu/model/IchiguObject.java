@@ -9,7 +9,7 @@ import com.turpgames.framework.v0.effects.ScaleEffect;
 import com.turpgames.framework.v0.impl.GameObject;
 import com.turpgames.framework.v0.util.Vector;
 
-abstract class IchiguObject extends GameObject {
+public abstract class IchiguObject extends GameObject {
 	public static final float FadingDuration = 0.25f;
 	public static final float BlinkDuration = 1f;
 	public static final int BlinkPerSecond = 10;
@@ -61,26 +61,26 @@ abstract class IchiguObject extends GameObject {
 		return moveAndScaleEffect;
 	}
 	
-	void fadeOut(IEffectEndListener listener) {
+	public void fadeOut(IEffectEndListener listener) {
 		getFadeEffect().start(listener);
 	}
 
-	void moveTo(IEffectEndListener listener, Vector destination, float duration) {
+	public void moveTo(IEffectEndListener listener, Vector destination, float duration) {
 		getMoveEffect().setDestination(destination);
 		getMoveAndScaleEffect().setDuration(duration);
 		getMoveAndScaleEffect().start(listener);
 	}
 	
-	void blink(IEffectEndListener listener, boolean looping) {
+	public void blink(IEffectEndListener listener, boolean looping) {
 		getBlinkEffect().setLooping(looping);
 		getBlinkEffect().start(listener);
 	}
 
-	void stopBlinking() {
+	public void stopBlinking() {
 		getBlinkEffect().stop();
 	}
 
-	void stopEffects() {
+	public void stopEffects() {
 		getFadeEffect().stop();
 		getBlinkEffect().stop();
 		getMoveAndScaleEffect().stop();
