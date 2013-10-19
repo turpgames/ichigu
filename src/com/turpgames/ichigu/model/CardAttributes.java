@@ -1,6 +1,6 @@
 package com.turpgames.ichigu.model;
 
-final class CardAttributes {
+public final class CardAttributes {
 	public static final int AllDiff = 7;
 
 	public static final int Value1 = 1;

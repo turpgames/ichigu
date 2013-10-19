@@ -5,10 +5,10 @@ import com.turpgames.framework.v0.impl.Text;
 import com.turpgames.framework.v0.util.Color;
 import com.turpgames.framework.v0.util.Game;
 
-class GameInfo implements IDrawable {
+public class GameInfo implements IDrawable {
 	private Text text;
 
-	GameInfo() {
+	public GameInfo() {
 		text = new Text();
 		text.setWidth(Game.getVirtualWidth());
 		text.setHeight(Game.getVirtualHeight());

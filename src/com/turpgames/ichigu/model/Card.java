@@ -96,29 +96,29 @@ public class Card extends IchiguObject {
 		isSelected = !isSelected;
 	}
 
-	void activate(ICardListener listener) {
+	public void activate(ICardListener listener) {
 		listenInput(true);
 		eventListener = listener;
 	}
 
-	void deactivate() {
+	public void deactivate() {
 		listenInput(false);
 		eventListener = null;
 	}
 
-	boolean isOpened() {
+	public boolean isOpened() {
 		return isOpened;
 	}
 
-	void open() {
+	public void open() {
 		isOpened = true;
 	}
 
-	void close() {
+	public void close() {
 		isOpened = false;
 	}
 
-	boolean isSelected() {
+	public boolean isSelected() {
 		return isSelected;
 	}
 
@@ -126,7 +126,7 @@ public class Card extends IchiguObject {
 		isSelected = false;
 	}
 
-	CardAttributes getAttributes() {
+	public CardAttributes getAttributes() {
 		return attributes;
 	}
 
@@ -165,7 +165,7 @@ public class Card extends IchiguObject {
 			eventListener.onCardTapped(this);
 	}
 
-	static Card createTutorialCard(int color, int shape, int count, int pattern, float x, float y) {
+	public static Card createTutorialCard(int color, int shape, int count, int pattern, float x, float y) {
 		Card card = new Card(new CardAttributes(color, shape, count, pattern));
 		card.open();
 		card.getLocation().set(x, y);

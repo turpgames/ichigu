@@ -1,7 +1,7 @@
 package com.turpgames.ichigu.controller.relax;
 
 import com.turpgames.ichigu.controller.IchiguState;
-import com.turpgames.ichigu.model.RelaxMode;
+import com.turpgames.ichigu.model.fullgame.relax.RelaxMode;
 import com.turpgames.ichigu.view.RelaxModeScreen;
 
 public abstract class RelaxModeState extends IchiguState implements IRelaxModeActionListener {

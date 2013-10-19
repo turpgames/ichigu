@@ -8,13 +8,13 @@ import com.turpgames.ichigu.utils.R;
 public class IchiguImageButton extends IchiguButton {	
 	private ITexture texture;
 	
-	IchiguImageButton() {
+	public IchiguImageButton() {
 		super();
 		setWidth(R.ui.imageButtonSize);
 		setHeight(R.ui.imageButtonSize);
 	}
 	
-	void setTexture(String id) {
+	public void setTexture(String id) {
 		texture = Game.getResourceManager().getTexture(id);
 	}
 	
