@@ -31,9 +31,11 @@ public class HiScores implements IDrawable {
 			@Override
 			public void onDialogButtonClicked(String id) {
 				if ("Yes".equals(id)) {
-					Settings.putInteger(R.settings.hiscores.practice, 0);
-					Settings.putInteger(R.settings.hiscores.challenge, 0);
-					info.setText("Practice: 0\n\nChallenge: 0\n\n\n\n");
+					Settings.putInteger(R.settings.hiscores.minichallenge, 0);
+					Settings.putInteger(R.settings.hiscores.normal, 0);
+					Settings.putInteger(R.settings.hiscores.normaltime, 0);
+					Settings.putInteger(R.settings.hiscores.fullchallenge, 0);
+					info.setText("Mini Challenge: 0\n\nNormal: 0\nTime: 00:00\n\nFull Challenge: 0\n\n\n\n");
 				}
 			}
 		});
@@ -46,10 +48,17 @@ public class HiScores implements IDrawable {
 	public void activate() {
 		resetScores.listenInput(true);
 		
-		int practiceScore = Settings.getInteger(R.settings.hiscores.practice, 0);
-		int challengeScore = Settings.getInteger(R.settings.hiscores.challenge, 0);
+		int minichallengeScore = Settings.getInteger(R.settings.hiscores.minichallenge, 0);
+		int normalScore = Settings.getInteger(R.settings.hiscores.normal, 0);
+		int normalTime = Settings.getInteger(R.settings.hiscores.normaltime, 0);
+		int fullchallengeScore = Settings.getInteger(R.settings.hiscores.fullchallenge, 0);
 		
-		info.setText("Practice: " + practiceScore + "\n\nChallenge: " + challengeScore + "\n\n\n\n");
+		int min = normalTime / 60;
+		int sec = normalTime % 60;
+		
+		info.setText("Mini Challenge: " + minichallengeScore + "\n\nNormal: " + normalScore + 
+				"\nTime: " + (min < 10 ? ("0" + min) : ("" + min)) + ":" + (sec < 10 ? ("0" + sec) : ("" + sec)) + 
+				"\n\nFull Challenge: " + fullchallengeScore + "\n\n\n\n");
 	}
 
 	public void deactivate() {

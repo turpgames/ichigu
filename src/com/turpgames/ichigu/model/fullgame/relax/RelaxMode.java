@@ -106,15 +106,15 @@ public class RelaxMode extends FullGameMode {
 		super.drawGame();
 	}
 
-	@Override
-	public void deckFinished() {
-		deal();
-		deckCount++;
-	}
+//	@Override
+//	public void deckFinished() {
+//		dealer.reset();
+//		deckCount++;
+//	}
 	
 	@Override
 	protected void drawTime() {	}
-	
+	 
 	public void drawResult() {
 		resultInfo.draw();
 	}

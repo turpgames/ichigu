@@ -13,20 +13,24 @@ import com.turpgames.ichigu.model.singlegame.SingleGameMode;
 import com.turpgames.ichigu.utils.R;
 
 public class MiniChallengeMode extends SingleGameMode {
-	private final static float blockDuration = 2f;
-	private final static float timePerDeal = 5;
-	private final static int totalDeals = 20;
+	private final static float blockDuration = 1f;
+//	private final static float timePerDeal = 5;
+//	private final static int totalDeals = 20;
 
 	private final Timer blockTimer;
-	private final Timer dealTimer;
+//	private final Timer dealTimer;
+	private final Timer challengeTimer;
 
-	private int deals = 0;
+//	private int deals = 0;
 	private int score = 0;
 
+	private int ichigusFound;
+	private GameInfo ichigusFoundInfo;
+	
 	private GameInfo timeInfo;
 	private GameInfo waitInfo;
 	private GameInfo scoreInfo;
-	private GameInfo remainingCardsInfo;
+//	private GameInfo remainingCardsInfo;
 	private GameInfo resultInfo;
 
 	private ScreenTouchHandler touchHandler;
@@ -41,22 +45,26 @@ public class MiniChallengeMode extends SingleGameMode {
 		}
 	};
 
-	public MiniChallengeMode() {
+	public MiniChallengeMode() {		
 		timeInfo = new GameInfo();
-		timeInfo.locate(Text.HAlignRight, Text.VAlignTop);
-		timeInfo.setPadding(20, 125);
-
+		timeInfo.locate(Text.HAlignCenter, Text.VAlignBottom);
+		timeInfo.setPadding(0, 75);
+		
 		waitInfo = new GameInfo();
-		waitInfo.locate(Text.HAlignLeft, Text.VAlignTop);
-		waitInfo.setPadding(20, 125);
+		waitInfo.locate(Text.HAlignCenter, Text.VAlignTop);
+		waitInfo.setPadding(0, 20);
+		
+		ichigusFoundInfo = new GameInfo();
+		ichigusFoundInfo.locate(Text.HAlignRight, Text.VAlignTop);
+		ichigusFoundInfo.setPadding(20, 125);
 
 		scoreInfo = new GameInfo();
-		scoreInfo.locate(Text.HAlignLeft, Text.VAlignBottom);
-		scoreInfo.setPadding(20, 75);
+		scoreInfo.locate(Text.HAlignLeft, Text.VAlignTop);
+		scoreInfo.setPadding(20, 125);
 
-		remainingCardsInfo = new GameInfo();
-		remainingCardsInfo.locate(Text.HAlignRight, Text.VAlignBottom);
-		remainingCardsInfo.setPadding(20, 75);
+//		remainingCardsInfo = new GameInfo();
+//		remainingCardsInfo.locate(Text.HAlignRight, Text.VAlignBottom);
+//		remainingCardsInfo.setPadding(20, 75);
 
 		resultInfo = new GameInfo();
 		resultInfo.locate(Text.HAlignCenter, Text.VAlignCenter);
@@ -72,10 +80,10 @@ public class MiniChallengeMode extends SingleGameMode {
 		touchHandler = new ScreenTouchHandler();
 
 		blockTimer = new Timer();
-		dealTimer = new Timer();
+//		dealTimer = new Timer();
 
 		blockTimer.setInterval(blockDuration);
-		dealTimer.setInterval(timePerDeal);
+//		dealTimer.setInterval(timePerDeal);
 
 		blockTimer.setTickListener(new Timer.ITimerTickListener() {
 			@Override
@@ -84,12 +92,34 @@ public class MiniChallengeMode extends SingleGameMode {
 			}
 		});
 
-		dealTimer.setTickListener(new Timer.ITimerTickListener() {
+//		dealTimer.setTickListener(new Timer.ITimerTickListener() {
+//			@Override
+//			public void timerTick(Timer timer) {
+//				onDealTimerTick();
+//			}
+//		});
+		
+		challengeTimer = new Timer();
+		challengeTimer.setInterval(1);
+		challengeTimer.setTickListener(new Timer.ITimerTickListener() {
 			@Override
 			public void timerTick(Timer timer) {
-				onDealTimerTick();
+				int elapsed = (int) timer.getTotalElapsedTime();
+				int min = 0 - elapsed / 60;
+				int sec = 60 - elapsed % 60;
+
+				timeInfo.setText((min < 10 ? ("0" + min) : ("" + min)) +
+						":" +
+						(sec < 10 ? ("0" + sec) : ("" + sec)));
+				
+				if (min < 0 || sec < 0)
+					timerFinished();
 			}
 		});
+	}
+
+	protected void timerFinished() {
+		notifyModeEnd();
 	}
 
 	private void onExitConfirmed(boolean exit) {
@@ -100,7 +130,8 @@ public class MiniChallengeMode extends SingleGameMode {
 		else {
 			if (blockTimer.isPaused())
 				blockTimer.start();
-			dealTimer.start();
+//			dealTimer.start();
+			challengeTimer.start();
 			openCloseCards(true);
 		}
 	}
@@ -108,7 +139,8 @@ public class MiniChallengeMode extends SingleGameMode {
 	private void confirmModeExit() {
 		if (blockTimer.isRunning())
 			blockTimer.pause();
-		dealTimer.pause();
+//		dealTimer.pause();
+		challengeTimer.pause();
 		openCloseCards(false);
 		confirmExitDialog.open("Are you sure you want to exit game? All progress will be lost!");
 	}
@@ -118,11 +150,11 @@ public class MiniChallengeMode extends SingleGameMode {
 		notifyUnblocked();
 	}
 
-	private void onDealTimerTick() {
-		blockTimer.stop();
-		dealTimer.stop();
-		notifyDealTimeUp();
-	}
+//	private void onDealTimerTick() {
+//		blockTimer.stop();
+//		dealTimer.stop();
+//		notifyDealTimeUp();
+//	}
 
 	private IMiniChallengeModeListener getModeListener() {
 		return (IMiniChallengeModeListener) super.modeListener;
@@ -146,10 +178,10 @@ public class MiniChallengeMode extends SingleGameMode {
 			getModeListener().onUnblock();
 	}
 
-	private void notifyDealTimeUp() {
-		if (getModeListener() != null)
-			getModeListener().onDealTimeUp();
-	}
+//	private void notifyDealTimeUp() {
+//		if (getModeListener() != null)
+//			getModeListener().onDealTimeUp();
+//	}
 
 	private void notifyModeEnd() {
 		touchHandler.activate(touchListener);
@@ -164,13 +196,15 @@ public class MiniChallengeMode extends SingleGameMode {
 	}
 
 	private boolean requiresNewDeal() {
-		return deals < totalDeals;
+//		return deals < totalDeals;
+		return true;
 	}
 
 	private void addScore(int score) {
 		// -3: Score is in the range of min=6 and max=12
 		// To increase max/min ratio we subtract 3 from the score
-		this.score += (int) ((timePerDeal - dealTimer.getElapsedTime()) * (score - 3f));
+//		this.score += (int) ((timePerDeal - dealTimer.getElapsedTime()) * (score - 3f));
+		this.score += score;
 	}
 
 	private void block() {
@@ -178,33 +212,46 @@ public class MiniChallengeMode extends SingleGameMode {
 	}
 
 	public void dealEnd() {
-		dealTimer.start();
+//		dealTimer.start();
+		challengeTimer.start();
 	}
 
 	public void startMode() {
 		score = 0;
-		deals = 0;
+		ichigusFound = 0;
+//		deals = 0;
+		timeInfo.setText("01:00");
 	}
 
 	public void endMode() {
 		deactivateCards();
 		blockTimer.stop();
-		dealTimer.stop();
+		challengeTimer.stop();
+//		dealTimer.stop();
 		cards.empty();
 		isExitConfirmed = true;
-		int practiceHiScore = Settings.getInteger(R.settings.hiscores.practice, 0);
-		if (score > practiceHiScore)
-			Settings.putInteger(R.settings.hiscores.practice, score);
+		int hiScore = Settings.getInteger(R.settings.hiscores.minichallenge, 0);
+		if (score > hiScore)
+			Settings.putInteger(R.settings.hiscores.minichallenge, score);
+		
+
+		resultInfo.setText(
+				"Game over!\n\nCongratulations,\n" +
+						String.format("You found %d ichigu%s!", ichigusFound, ichigusFound != 1 ? "s" : "") +
+						"\n\n" + scoreInfo.getText() +
+						(score > hiScore ? "\n\nNew High Score!!!" : "") + 
+						"\n\nTouch Screen To Continue");
 	}
 
 	@Override
 	public boolean exitMode() {
 		if (isExitConfirmed) {
 			blockTimer.stop();
-			dealTimer.stop();
+//			dealTimer.stop();
+			challengeTimer.stop();
 			touchHandler.deactivate();
 			score = 0;
-			deals = 0;
+//			deals = 0;
 			confirmExitDialog.close();
 			isExitConfirmed = false;
 			return super.exitMode();
@@ -222,6 +269,7 @@ public class MiniChallengeMode extends SingleGameMode {
 		if (score > 0) {
 			addScore(score);
 			notifyIchiguFound();
+			ichigusFound++;
 		}
 		else {
 			block();
@@ -236,23 +284,24 @@ public class MiniChallengeMode extends SingleGameMode {
 			return;
 		}
 
-		deals++;
+//		deals++;
 		blockTimer.stop();
-		dealTimer.stop();
+//		dealTimer.stop();
+		challengeTimer.pause();
 		super.deal();
 	}
 
 	public void drawGame() {
 		drawCards();
 		drawScore();
-		drawRemainingDeals();
+//		drawRemainingDeals();
 		drawRemainingTime();
+		drawIchigusFound();
 		if (!blockTimer.isStopped())
 			drawWaitMessage();
 	}
 
 	public void drawResults() {
-		resultInfo.setText("Score: " + score + "\n\nTouch Screen To Continue");
 		resultInfo.draw();
 	}
 
@@ -264,8 +313,8 @@ public class MiniChallengeMode extends SingleGameMode {
 	}
 
 	private void drawRemainingTime() {
-		int t = (int) Math.min(timePerDeal, (1 + timePerDeal - dealTimer.getElapsedTime()));
-		timeInfo.setText("" + t);
+//		int t = (int) Math.min(timePerDeal, (1 + timePerDeal - dealTimer.getElapsedTime()));
+//		timeInfo.setText("" + t);
 		timeInfo.draw();
 	}
 
@@ -274,13 +323,18 @@ public class MiniChallengeMode extends SingleGameMode {
 		scoreInfo.draw();
 	}
 
-	private void drawRemainingDeals() {
-		remainingCardsInfo.setText(deals + "/" + totalDeals);
-		remainingCardsInfo.draw();
-	}
+//	private void drawRemainingDeals() {
+//		remainingCardsInfo.setText(deals + "/" + totalDeals);
+//		remainingCardsInfo.draw();
+//	}
 
 	private void drawWaitMessage() {
 		waitInfo.setText("Wait: " + String.format("%.1f", blockDuration - blockTimer.getElapsedTime()));
 		waitInfo.draw();
+	}
+	
+	protected void drawIchigusFound() {
+		ichigusFoundInfo.setText("Found: " + ichigusFound);
+		ichigusFoundInfo.draw();
 	}
 }

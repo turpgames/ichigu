@@ -12,7 +12,7 @@ public class FullChallengeMode extends FullGameMode {
 //	private static final int maxTimeToFindIchigu = 100;
 
 	private int totalScore;
-//	private Timer challengeTimer;
+//	private Timer ichiguTimer;
 //	private boolean deductScore;
 	
 	private GameInfo resultInfo;
@@ -29,7 +29,7 @@ public class FullChallengeMode extends FullGameMode {
 	public FullChallengeMode() {
 		hint.deactivate();
 
-//		challengeTimer = new Timer();
+//		ichiguTimer = new Timer();
 
 		resultInfo = new GameInfo();
 		resultInfo.locate(Text.HAlignCenter, Text.VAlignCenter);
@@ -61,7 +61,7 @@ public class FullChallengeMode extends FullGameMode {
 						":" +
 						(sec < 10 ? ("0" + sec) : ("" + sec)));
 				
-				if (min <= 0 && sec == 0)
+				if (min < 0)
 					timerFinished();
 			}
 		});
@@ -96,7 +96,7 @@ public class FullChallengeMode extends FullGameMode {
 	public void startMode() {
 		super.startMode();
 		totalScore = 0;
-//		challengeTimer.restart();
+//		ichiguTimer.restart();
 		updateScoreText();
 		isExitConfirmed = false;
 		timeInfo.setText("03:00");
@@ -105,15 +105,16 @@ public class FullChallengeMode extends FullGameMode {
 	@Override
 	public void endMode() {
 		super.endMode();
-//		challengeTimer.stop();
-		int challengeHiScore = Settings.getInteger(R.settings.hiscores.challenge, 0);
-		if (totalScore > challengeHiScore)
-			Settings.putInteger(R.settings.hiscores.challenge, totalScore);
+//		ichiguTimer.stop();
+		int hiScore = Settings.getInteger(R.settings.hiscores.fullchallenge, 0);
+		if (totalScore > hiScore)
+			Settings.putInteger(R.settings.hiscores.fullchallenge, totalScore);
 
 		resultInfo.setText(
 				"Game over!\n\nCongratulations,\n" +
 						String.format("You found %d ichigu%s!", ichigusFound, ichigusFound != 1 ? "s" : "") +
 						"\n\n" + scoreInfo.getText() +
+						(totalScore > hiScore ? "\n\nNew High Score!!!" : "") + 
 						"\n\nTouch Screen To Continue");
 		
 		isExitConfirmed = true;
@@ -124,7 +125,7 @@ public class FullChallengeMode extends FullGameMode {
 		if (isExitConfirmed) {
 			confirmExitDialog.close();
 			totalScore = 0;
-//			challengeTimer.stop();
+//			ichiguTimer.stop();
 			isExitConfirmed = false;
 			return super.exitMode();
 		}
@@ -149,7 +150,7 @@ public class FullChallengeMode extends FullGameMode {
 	protected int checkIchigu() {
 		int score = super.checkIchigu();
 		if (score > 0) {
-//			float elapsed = challengeTimer.getElapsedTime();
+//			float elapsed = ichiguTimer.getElapsedTime();
 //			if (elapsed > maxTimeToFindIchigu)
 //				elapsed = maxTimeToFindIchigu;
 			// -3: Score is in the range of min=6 and max=12
@@ -157,7 +158,7 @@ public class FullChallengeMode extends FullGameMode {
 //			totalScore += (int) (((score - 3) * ((maxTimeToFindIchigu - elapsed) / 10f) * (deductScore ? 0.5f : 1)));
 			totalScore += score;
 			updateScoreText();
-//			challengeTimer.restart();
+//			ichiguTimer.restart();
 //			deductScore = false;
 		}
 		return score;
@@ -169,11 +170,11 @@ public class FullChallengeMode extends FullGameMode {
 //		deductScore = hint.getIchiguCount() != 0;
 	}
 
-	@Override
-	public void deckFinished() {
-		deal();
-		deckCount++;
-	}
+//	@Override
+//	public void deckFinished() {
+//		dealer.reset();
+//		deckCount++;
+//	}
 	
 	protected void drawScore() {
 		scoreInfo.draw();

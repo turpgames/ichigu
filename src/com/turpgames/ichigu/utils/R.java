@@ -70,8 +70,10 @@ public final class R {
 		public static final String vibration = "vibration";
 
 		public static final class hiscores {
-			public static final String practice = "hiscore_practice";
-			public static final String challenge = "hiscore_challenge";
+			public static final String minichallenge = "hiscore_practice";
+			public static final String normal = "hiscore_normal";
+			public static final String normaltime = "hiscore_normal_time";
+			public static final String fullchallenge = "hiscore_challenge";
 		}
 	}
 

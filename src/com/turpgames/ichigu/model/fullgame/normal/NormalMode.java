@@ -87,15 +87,25 @@ public class NormalMode extends FullGameMode implements IHintListener {
 	public void endMode() {
 		super.endMode();
 //		challengeTimer.stop();
-		int challengeHiScore = Settings.getInteger(R.settings.hiscores.challenge, 0);
-		if (totalScore > challengeHiScore)
-			Settings.putInteger(R.settings.hiscores.challenge, totalScore);
+		timer.stop();
+		int time = (int) timer.getElapsedTime();
+		int min = time / 60;
+		int sec = time % 60;
+		
+		int hiScore = Settings.getInteger(R.settings.hiscores.normal, 0);
+		int hiTime = Settings.getInteger(R.settings.hiscores.normaltime, 0);
+		if (totalScore > hiScore || time < hiTime) {
+			Settings.putInteger(R.settings.hiscores.normal, totalScore);
+			Settings.putInteger(R.settings.hiscores.normaltime, time);
+		}
 
 		resultInfo.setText(
 				"Game over!\n\nCongratulations,\n" +
 						String.format("You found %d ichigu%s!", ichigusFound, ichigusFound != 1 ? "s" : "") +
 						"\n\nTotal Time " + modeCompleteTime +
 						"\n\n" + scoreInfo.getText() +
+						"\n" + (min < 10 ? ("0" + min) : ("" + min)) + ":" + (sec < 10 ? ("0" + sec) : ("" + sec)) + 
+						(totalScore > hiScore ? "\n\nNew High Score!!!" : "") + 
 						"\n\nTouch Screen To Continue");
 		
 		isExitConfirmed = true;
