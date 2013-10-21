@@ -1,15 +1,17 @@
 package com.turpgames.ichigu.model;
 
-import com.turpgames.framework.v0.effects.BlinkEffect;
 import com.turpgames.framework.v0.effects.CompositeEffect;
-import com.turpgames.framework.v0.effects.FadeOutEffect;
 import com.turpgames.framework.v0.effects.IEffectEndListener;
 import com.turpgames.framework.v0.effects.MoveEffect;
 import com.turpgames.framework.v0.effects.ScaleEffect;
+import com.turpgames.framework.v0.effects.blink.BlinkEffect;
+import com.turpgames.framework.v0.effects.blink.IBlinkEffectSubject;
+import com.turpgames.framework.v0.effects.fading.FadeOutEffect;
+import com.turpgames.framework.v0.effects.fading.IFadingEffectSubject;
 import com.turpgames.framework.v0.impl.GameObject;
 import com.turpgames.framework.v0.util.Vector;
 
-public abstract class IchiguObject extends GameObject {
+public abstract class IchiguObject extends GameObject implements IFadingEffectSubject, IBlinkEffectSubject {
 	public static final float FadingDuration = 0.25f;
 	public static final float BlinkDuration = 1f;
 	public static final int BlinkPerSecond = 10;
@@ -84,5 +86,15 @@ public abstract class IchiguObject extends GameObject {
 		getFadeEffect().stop();
 		getBlinkEffect().stop();
 		getMoveAndScaleEffect().stop();
+	}
+	
+	@Override
+	public void setAlpha(float alpha) {
+		getColor().a = alpha;	
+	}
+	
+	@Override
+	public float getAlpha() {
+		return getColor().a;
 	}
 }

@@ -5,18 +5,18 @@ import com.turpgames.framework.v0.impl.Settings;
 import com.turpgames.framework.v0.impl.Text;
 import com.turpgames.framework.v0.util.Timer;
 import com.turpgames.ichigu.model.GameInfo;
+import com.turpgames.ichigu.model.ScoreInfo;
 import com.turpgames.ichigu.model.fullgame.FullGameMode;
 import com.turpgames.ichigu.utils.R;
 
 public class FullChallengeMode extends FullGameMode {
 //	private static final int maxTimeToFindIchigu = 100;
 
-	private int totalScore;
 //	private Timer ichiguTimer;
 //	private boolean deductScore;
 	
 	private GameInfo resultInfo;
-	private GameInfo scoreInfo;
+	private ScoreInfo scoreInfo;
 
 	private Dialog confirmExitDialog;
 	private boolean isExitConfirmed;
@@ -34,7 +34,7 @@ public class FullChallengeMode extends FullGameMode {
 		resultInfo = new GameInfo();
 		resultInfo.locate(Text.HAlignCenter, Text.VAlignCenter);
 
-		scoreInfo = new GameInfo();
+		scoreInfo = new ScoreInfo();
 		scoreInfo.locate(Text.HAlignLeft, Text.VAlignTop);
 		scoreInfo.setPadding(7, 90);
 
@@ -45,8 +45,6 @@ public class FullChallengeMode extends FullGameMode {
 				onExitConfirmed("Yes".equals(id));
 			}
 		});
-
-		updateScoreText();
 
 		timer = new Timer();
 		timer.setInterval(1);
@@ -71,10 +69,6 @@ public class FullChallengeMode extends FullGameMode {
 		notifyModeEnd();
 	}
 
-	private void updateScoreText() {
-		scoreInfo.setText("Score: " + totalScore);
-	}
-
 	private void onExitConfirmed(boolean exit) {
 		isExitConfirmed = exit;
 		if (isExitConfirmed) {
@@ -95,9 +89,8 @@ public class FullChallengeMode extends FullGameMode {
 	@Override
 	public void startMode() {
 		super.startMode();
-		totalScore = 0;
+		scoreInfo.init();
 //		ichiguTimer.restart();
-		updateScoreText();
 		isExitConfirmed = false;
 		timeInfo.setText("03:00");
 	}
@@ -107,14 +100,15 @@ public class FullChallengeMode extends FullGameMode {
 		super.endMode();
 //		ichiguTimer.stop();
 		int hiScore = Settings.getInteger(R.settings.hiscores.fullchallenge, 0);
-		if (totalScore > hiScore)
-			Settings.putInteger(R.settings.hiscores.fullchallenge, totalScore);
+		int score = scoreInfo.getScore();
+		if (score > hiScore)
+			Settings.putInteger(R.settings.hiscores.fullchallenge, score);
 
 		resultInfo.setText(
 				"Game over!\n\nCongratulations,\n" +
 						String.format("You found %d ichigu%s!", ichigusFound, ichigusFound != 1 ? "s" : "") +
 						"\n\n" + scoreInfo.getText() +
-						(totalScore > hiScore ? "\n\nNew High Score!!!" : "") + 
+						(score > hiScore ? "\n\nNew High Score!!!" : "") + 
 						"\n\nTouch Screen To Continue");
 		
 		isExitConfirmed = true;
@@ -124,7 +118,6 @@ public class FullChallengeMode extends FullGameMode {
 	public boolean exitMode() {
 		if (isExitConfirmed) {
 			confirmExitDialog.close();
-			totalScore = 0;
 //			ichiguTimer.stop();
 			isExitConfirmed = false;
 			return super.exitMode();
@@ -156,8 +149,7 @@ public class FullChallengeMode extends FullGameMode {
 			// -3: Score is in the range of min=6 and max=12
 			// To increase max/min ratio we subtract 3 from the score
 //			totalScore += (int) (((score - 3) * ((maxTimeToFindIchigu - elapsed) / 10f) * (deductScore ? 0.5f : 1)));
-			totalScore += score;
-			updateScoreText();
+			scoreInfo.increaseScore(score);
 //			ichiguTimer.restart();
 //			deductScore = false;
 		}
@@ -167,7 +159,8 @@ public class FullChallengeMode extends FullGameMode {
 	@Override
 	protected void openExtraCards() {
 		super.openExtraCards();
-//		deductScore = hint.getIchiguCount() != 0;
+		if (hint.getIchiguCount() != 0)
+			scoreInfo.decreaseScore(10);
 	}
 
 //	@Override

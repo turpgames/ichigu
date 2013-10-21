@@ -5,6 +5,7 @@ import com.turpgames.framework.v0.impl.Settings;
 import com.turpgames.framework.v0.impl.Text;
 import com.turpgames.framework.v0.util.Timer;
 import com.turpgames.ichigu.model.Card;
+import com.turpgames.ichigu.model.ChallengeTimeInfo;
 import com.turpgames.ichigu.model.GameInfo;
 import com.turpgames.ichigu.model.IScreenTouchListener;
 import com.turpgames.ichigu.model.ScreenTouchHandler;
@@ -27,7 +28,7 @@ public class MiniChallengeMode extends SingleGameMode {
 	private int ichigusFound;
 	private GameInfo ichigusFoundInfo;
 	
-	private GameInfo timeInfo;
+	private ChallengeTimeInfo timeInfo;
 	private GameInfo waitInfo;
 	private GameInfo scoreInfo;
 //	private GameInfo remainingCardsInfo;
@@ -46,13 +47,14 @@ public class MiniChallengeMode extends SingleGameMode {
 	};
 
 	public MiniChallengeMode() {		
-		timeInfo = new GameInfo();
+		timeInfo = new ChallengeTimeInfo();
 		timeInfo.locate(Text.HAlignCenter, Text.VAlignBottom);
 		timeInfo.setPadding(0, 75);
 		
 		waitInfo = new GameInfo();
 		waitInfo.locate(Text.HAlignCenter, Text.VAlignTop);
 		waitInfo.setPadding(0, 20);
+		waitInfo.setColor(R.colors.ichiguRed);
 		
 		ichigusFoundInfo = new GameInfo();
 		ichigusFoundInfo.locate(Text.HAlignRight, Text.VAlignTop);
@@ -114,6 +116,8 @@ public class MiniChallengeMode extends SingleGameMode {
 				
 				if (min < 0 || sec < 0)
 					timerFinished();
+				if (min == 0 && sec == 10)
+					timeInfo.startCountdown();
 			}
 		});
 	}

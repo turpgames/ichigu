@@ -6,7 +6,7 @@ import com.turpgames.framework.v0.util.Color;
 import com.turpgames.framework.v0.util.Game;
 
 public class GameInfo implements IDrawable {
-	private Text text;
+	protected Text text;
 
 	public GameInfo() {
 		text = new Text();

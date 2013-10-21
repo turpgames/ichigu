@@ -6,6 +6,7 @@ import com.turpgames.framework.v0.impl.Text;
 import com.turpgames.framework.v0.util.Game;
 import com.turpgames.ichigu.model.Card;
 import com.turpgames.ichigu.model.GameInfo;
+import com.turpgames.ichigu.model.ScoreInfo;
 import com.turpgames.ichigu.model.fullgame.FullGameMode;
 import com.turpgames.ichigu.model.fullgame.IHintListener;
 import com.turpgames.ichigu.utils.R;
@@ -13,12 +14,11 @@ import com.turpgames.ichigu.utils.R;
 public class NormalMode extends FullGameMode implements IHintListener {
 //	private static final int maxTimeToFindIchigu = 100;
 
-	private int totalScore;
 //	private Timer challengeTimer;
 //	private boolean deductScore;
 
 	private GameInfo resultInfo;
-	private GameInfo scoreInfo;
+	private ScoreInfo scoreInfo;
 
 	private Dialog confirmExitDialog;
 	private boolean isExitConfirmed;
@@ -38,7 +38,7 @@ public class NormalMode extends FullGameMode implements IHintListener {
 		resultInfo = new GameInfo();
 		resultInfo.locate(Text.HAlignCenter, Text.VAlignCenter);
 
-		scoreInfo = new GameInfo();
+		scoreInfo = new ScoreInfo();
 		scoreInfo.locate(Text.HAlignLeft, Text.VAlignTop);
 		scoreInfo.setPadding(7, 90);
 
@@ -54,7 +54,7 @@ public class NormalMode extends FullGameMode implements IHintListener {
 	}
 
 	private void updateScoreText() {
-		scoreInfo.setText("Score: " + totalScore);
+		
 	}
 
 	private void onExitConfirmed(boolean exit) {
@@ -77,7 +77,7 @@ public class NormalMode extends FullGameMode implements IHintListener {
 	@Override
 	public void startMode() {
 		super.startMode();
-		totalScore = 0;
+		scoreInfo.init();
 //		challengeTimer.restart();
 		updateScoreText();
 		isExitConfirmed = false;
@@ -94,8 +94,9 @@ public class NormalMode extends FullGameMode implements IHintListener {
 		
 		int hiScore = Settings.getInteger(R.settings.hiscores.normal, 0);
 		int hiTime = Settings.getInteger(R.settings.hiscores.normaltime, 0);
-		if (totalScore > hiScore || time < hiTime) {
-			Settings.putInteger(R.settings.hiscores.normal, totalScore);
+		int score = scoreInfo.getScore();
+		if (score > hiScore || time < hiTime) {
+			Settings.putInteger(R.settings.hiscores.normal, score);
 			Settings.putInteger(R.settings.hiscores.normaltime, time);
 		}
 
@@ -105,7 +106,7 @@ public class NormalMode extends FullGameMode implements IHintListener {
 						"\n\nTotal Time " + modeCompleteTime +
 						"\n\n" + scoreInfo.getText() +
 						"\n" + (min < 10 ? ("0" + min) : ("" + min)) + ":" + (sec < 10 ? ("0" + sec) : ("" + sec)) + 
-						(totalScore > hiScore ? "\n\nNew High Score!!!" : "") + 
+						(score > hiScore || time < hiTime ? "\n\nNew High Score!!!" : "") + 
 						"\n\nTouch Screen To Continue");
 		
 		isExitConfirmed = true;
@@ -115,7 +116,6 @@ public class NormalMode extends FullGameMode implements IHintListener {
 	public boolean exitMode() {
 		if (isExitConfirmed) {
 			confirmExitDialog.close();
-			totalScore = 0;
 //			challengeTimer.stop();
 			isExitConfirmed = false;
 			return super.exitMode();
@@ -148,8 +148,7 @@ public class NormalMode extends FullGameMode implements IHintListener {
 //			// -3: Score is in the range of min=6 and max=12
 //			// To increase max/min ratio we subtract 3 from the score
 //			totalScore += (int) (((score - 3) * ((maxTimeToFindIchigu - elapsed) / 10f) * (deductScore ? 0.5f : 1)));
-			totalScore += score;
-			updateScoreText();
+			scoreInfo.increaseScore(score);
 //			challengeTimer.restart();
 //			deductScore = false;
 		}
@@ -159,7 +158,8 @@ public class NormalMode extends FullGameMode implements IHintListener {
 	@Override
 	protected void openExtraCards() {
 		super.openExtraCards();
-//		deductScore = hint.getIchiguCount() != 0;
+		if (hint.getIchiguCount() != 0)
+			scoreInfo.decreaseScore(10);
 	}
 	
 	@Override
@@ -178,7 +178,6 @@ public class NormalMode extends FullGameMode implements IHintListener {
 
 	@Override
 	public void onHintShowed() {
-		totalScore -= 20;
-		// TODO: Show feedback animation on scoreInfo
+		scoreInfo.decreaseScore(10);
 	}
 }
