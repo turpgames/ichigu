@@ -83,10 +83,6 @@
         <screen
             id="menu"
             class="com.turpgames.ichigu.view.MenuScreen" />
-
-        <screen
-            id="play"
-            class="com.turpgames.ichigu.view.PlayMenuScreen" />
         
         <screen
             id="splash"
@@ -127,7 +123,7 @@
 
             <button
                 id="btnPlay"
-                action="screen=play"
+                action="form=playMenu"
                 text="Play"
                 y="20" />
             
