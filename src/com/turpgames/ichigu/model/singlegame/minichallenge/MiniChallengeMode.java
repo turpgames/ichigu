@@ -3,6 +3,7 @@ package com.turpgames.ichigu.model.singlegame.minichallenge;
 import com.turpgames.framework.v0.forms.xml.Dialog;
 import com.turpgames.framework.v0.impl.Settings;
 import com.turpgames.framework.v0.impl.Text;
+import com.turpgames.framework.v0.util.Game;
 import com.turpgames.framework.v0.util.Timer;
 import com.turpgames.ichigu.model.Card;
 import com.turpgames.ichigu.model.ChallengeTimeInfo;
@@ -46,14 +47,17 @@ public class MiniChallengeMode extends SingleGameMode {
 		}
 	};
 
-	public MiniChallengeMode() {		
+	public MiniChallengeMode() {
+		pointsInfo.getLocation().set(0, Game.getVirtualHeight() - Game.scale(pointsInfo.getHeight() - 35));
+		pointsInfo.initPointInfos();
+
 		timeInfo = new ChallengeTimeInfo();
 		timeInfo.locate(Text.HAlignCenter, Text.VAlignBottom);
 		timeInfo.setPadding(0, 75);
 		
 		waitInfo = new GameInfo();
 		waitInfo.locate(Text.HAlignCenter, Text.VAlignTop);
-		waitInfo.setPadding(0, 20);
+		waitInfo.setPadding(0, 170);
 		waitInfo.setColor(R.colors.ichiguRed);
 		
 		ichigusFoundInfo = new GameInfo();
@@ -268,17 +272,15 @@ public class MiniChallengeMode extends SingleGameMode {
 
 	@Override
 	public void onCardSelected(Card selectedCard) {
-		selectedCard.deselect();
 		int score = cards.checkScore(selectedCard);
 		if (score > 0) {
 			addScore(score);
-			notifyIchiguFound();
 			ichigusFound++;
 		}
 		else {
 			block();
-			notifyInvalidIchiguSelected();
 		}
+		super.onCardSelected(selectedCard);
 	}
 
 	@Override

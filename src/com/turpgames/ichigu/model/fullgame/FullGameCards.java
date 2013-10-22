@@ -1,6 +1,7 @@
 package com.turpgames.ichigu.model.fullgame;
 
 import com.turpgames.ichigu.model.Card;
+import com.turpgames.ichigu.model.CardAttributes;
 
 class FullGameCards {
 	public static final int ActiveCardCount = 12;
@@ -114,5 +115,13 @@ class FullGameCards {
 			if (allCards[i] != null)
 				allCards[i].draw();
 		}
+	}
+	
+	public CardAttributes[] getIchiguCards() {
+		CardAttributes[] ready = new CardAttributes[3];
+		ready[0] = selectedCards[0].getAttributes();
+		ready[1] = selectedCards[1].getAttributes();
+		ready[2] = selectedCards[2].getAttributes();
+		return ready;
 	}
 }

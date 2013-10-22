@@ -61,6 +61,26 @@ public final class R {
 				public static final String soundOn = "tb_sound_on";
 				public static final String soundOff = "tb_sound_off";
 			}
+			
+			public static final class points {
+				public static final String shapecircle = "shapecircle";
+				public static final String shaperectangle = "shaperectangle";
+				public static final String shapetriangle = "shapetriangle";
+				public static final String shapeall = "shapeall";
+
+				public static final String countone = "countone";
+				public static final String counttwo = "counttwo";
+				public static final String countthree = "countthree";
+				public static final String countall = "countall";
+
+				public static final String fillempty = "fillempty";
+				public static final String fillstriped = "fillstriped";
+				public static final String fillfull = "fillfull";
+				public static final String fillall = "fillall";
+
+				public static final String colorone = "colorone";
+				public static final String colorall = "colorall";
+			}
 		}
 	}
 

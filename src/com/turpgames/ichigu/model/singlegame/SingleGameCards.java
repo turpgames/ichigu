@@ -1,6 +1,7 @@
 package com.turpgames.ichigu.model.singlegame;
 
 import com.turpgames.ichigu.model.Card;
+import com.turpgames.ichigu.model.CardAttributes;
 
 public class SingleGameCards {
 	public static final int ReadyCardCount = 2;
@@ -50,5 +51,13 @@ public class SingleGameCards {
 
 	public int checkScore(Card selectedCard) {
 		return Card.getIchiguScore(cards[0], cards[1], selectedCard);
+	}
+	
+	public CardAttributes[] getIchiguCards(Card selectedCard) {
+		CardAttributes[] ready = new CardAttributes[3];
+		ready[0] = cards[0].getAttributes();
+		ready[1] = cards[1].getAttributes();
+		ready[2] = selectedCard.getAttributes();
+		return ready;
 	}
 }

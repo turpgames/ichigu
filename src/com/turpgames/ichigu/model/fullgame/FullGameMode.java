@@ -6,6 +6,7 @@ import com.turpgames.ichigu.model.Card;
 import com.turpgames.ichigu.model.GameInfo;
 import com.turpgames.ichigu.model.IScreenTouchListener;
 import com.turpgames.ichigu.model.IchiguMode;
+import com.turpgames.ichigu.model.PointsInfo;
 import com.turpgames.ichigu.model.ScreenTouchHandler;
 import com.turpgames.ichigu.utils.IchiguResources;
 
@@ -25,6 +26,8 @@ public abstract class FullGameMode extends IchiguMode {
 	protected Timer timer;
 	protected GameInfo timeInfo;
 	protected String modeCompleteTime;
+
+	protected PointsInfo pointsInfo;
 	
 	private boolean areExtraCardsOpened;
 
@@ -91,6 +94,8 @@ public abstract class FullGameMode extends IchiguMode {
 		});
 
 		hint = new FullGameHint();
+		
+		pointsInfo = new PointsInfo();
 	}
 
 	public FullGameCards getCards() {
@@ -141,6 +146,7 @@ public abstract class FullGameMode extends IchiguMode {
 		if (score > 0) {
 			ichigusFound++;
 			notifyIchiguFound();
+			pointsInfo.show(cards.getIchiguCards());
 			areExtraCardsOpened = false;
 		}
 		else {

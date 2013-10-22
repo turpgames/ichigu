@@ -35,8 +35,24 @@ public final class CardAttributes {
 		return 0;
 	}
 
+	public static boolean isSameColor(CardAttributes a1, CardAttributes a2, CardAttributes a3) {
+		return a1.color == a2.color;
+	}
+	
+	public static boolean isSameShape(CardAttributes a1, CardAttributes a2, CardAttributes a3) {
+		return a1.shape == a2.shape;
+	}
+
+	public static boolean isSameCount(CardAttributes a1, CardAttributes a2, CardAttributes a3) {
+		return a1.count == a2.count;
+	}
+
+	public static boolean isSamePattern(CardAttributes a1, CardAttributes a2, CardAttributes a3) {
+		return a1.pattern == a2.pattern;
+	}
+	
 	public static boolean isIchigu(CardAttributes a1, CardAttributes a2, CardAttributes a3) {
-		return isIchigu(a1.color, a2.color, a3.color) &&
+		return  isIchigu(a1.color, a2.color, a3.color) &&
 				isIchigu(a1.shape, a2.shape, a3.shape) &&
 				isIchigu(a1.count, a2.count, a3.count) &&
 				isIchigu(a1.pattern, a2.pattern, a3.pattern);
