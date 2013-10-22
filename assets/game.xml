@@ -286,6 +286,54 @@
             <texture
                 id="bg"
                 path="img/bg.png" />
+            
+            
+            <texture
+                id="shapecircle"
+                path="img/points/shapecircle.png" />
+            <texture
+                id="shaperectangle"
+                path="img/points/shaperectangle.png" />
+            <texture
+                id="shapetriangle"
+                path="img/points/shapetriangle.png" />
+            <texture
+                id="shapeall"
+                path="img/points/shapeall.png" />
+            
+            <texture
+                id="countone"
+                path="img/points/countone.png" />
+            <texture
+                id="counttwo"
+                path="img/points/counttwo.png" />
+            <texture
+                id="countthree"
+                path="img/points/countthree.png" />
+            <texture
+                id="countall"
+                path="img/points/countall.png" />
+            
+            <texture
+                id="fillempty"
+                path="img/points/fillempty.png" />
+            <texture
+                id="fillstriped"
+                path="img/points/fillstriped.png" />
+            <texture
+                id="fillfull"
+                path="img/points/fillfull.png" />
+            <texture
+                id="fillall"
+                path="img/points/fillall.png" />
+            
+            <texture
+                id="colorone"
+                path="img/points/colorone.png" />
+            <texture
+                id="colorall"
+                path="img/points/colorall.png" />
+            
         </textures>
 
         <sounds>
