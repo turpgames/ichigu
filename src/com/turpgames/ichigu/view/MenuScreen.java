@@ -2,6 +2,7 @@ package com.turpgames.ichigu.view;
 
 import com.turpgames.framework.v0.IGameExitListener;
 import com.turpgames.framework.v0.forms.xml.Dialog;
+import com.turpgames.framework.v0.forms.xml.Form;
 import com.turpgames.framework.v0.impl.FormScreen;
 import com.turpgames.framework.v0.util.Game;
 import com.turpgames.ichigu.model.Logo;
@@ -37,16 +38,28 @@ public class MenuScreen extends FormScreen implements IGameExitListener {
 
 		setForm(R.game.forms.mainMenu, false);
 	}
-	
+
 	@Override
 	protected void onAfterActivate() {
 		super.onAfterActivate();
-		Toolbar.getInstance().deactivateBackButton();
+		if (getCurrentForm().getId().equals(R.game.forms.playMenu))
+			Toolbar.getInstance().activateBackButton();
+		else if (getCurrentForm().getId().equals(R.game.forms.mainMenu))
+			Toolbar.getInstance().deactivateBackButton();
 	}
 	
 	@Override
 	public boolean onGameExit() {
 		exitConfirm.open("Are you sure you want to exit?");
 		return false;
+	}
+	
+	@Override
+	protected void onFormActivated(Form activatedForm) {
+		if (activatedForm.getId().equals(R.game.forms.playMenu))
+			Toolbar.getInstance().activateBackButton();
+		else if (activatedForm.getId().equals(R.game.forms.mainMenu))
+			Toolbar.getInstance().deactivateBackButton();
+		super.onFormActivated(activatedForm);
 	}
 }
