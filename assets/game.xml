@@ -85,12 +85,20 @@
             class="com.turpgames.ichigu.view.MenuScreen" />
 
         <screen
+            id="play"
+            class="com.turpgames.ichigu.view.PlayMenuScreen" />
+        
+        <screen
             id="splash"
             class="com.turpgames.ichigu.view.SplashScreen" />
 
         <screen
             id="scoreBoard"
             class="com.turpgames.ichigu.view.ScoreBoardScreen" />
+        
+        <screen
+            id="about"
+            class="com.turpgames.ichigu.view.AboutScreen" />
     </screens>
 
     <forms>
@@ -118,11 +126,39 @@
                 color="#f9b000ff" />
 
             <button
+                id="btnPlay"
+                action="screen=play"
+                text="Play"
+                y="20" />
+            
+            <button
                 id="btnLearning"
                 action="screen=tutorial"
                 text="How To Play"
-                y="22" />
+                y="16" />
 
+            <button
+                id="btnScoreBoard"
+                action="screen=scoreBoard"
+                text="Hi Scores"
+                y="14" />
+
+            <button
+                id="btnAbout"
+                action="screen=about"
+                text="About"
+                y="12" />
+            
+            <button
+                id="btnExitGame"
+                action="exit"
+                focus-color="#d0583bff"
+                text="Exit Game"
+                y="7" />
+        </form>
+        
+        <form id="playMenu">
+            
             <button
                 id="btnPractice"
                 action="screen=practice"
@@ -130,7 +166,7 @@
                 y="19" />
 
             <button
-                id="btnPractice"
+                id="btnMiniChallenge"
                 action="screen=minichallenge"
                 text="Mini Challenge"
                 y="17" />
@@ -152,19 +188,7 @@
                 action="screen=fullchallenge"
                 text="Full Challenge"
                 y="10" />
-
-            <button
-                id="btnScoreBoard"
-                action="screen=scoreBoard"
-                text="Hi Scores"
-                y="7" />
-
-            <button
-                id="btnExitGame"
-                action="exit"
-                focus-color="#d0583bff"
-                text="Exit Game"
-                y="4" />
+            
         </form>
     </forms>
 
