@@ -1,8 +1,9 @@
-package com.turpgames.ichigu.model;
+package com.turpgames.ichigu.model.display;
 
 import com.turpgames.framework.v0.util.Game;
 import com.turpgames.framework.v0.util.Utils;
 import com.turpgames.framework.v0.util.Vector;
+import com.turpgames.ichigu.model.IchiguObject;
 import com.turpgames.ichigu.utils.R;
 
 public class Toolbar extends IchiguObject {

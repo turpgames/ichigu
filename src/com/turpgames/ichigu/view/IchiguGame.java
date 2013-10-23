@@ -5,7 +5,7 @@ import com.turpgames.framework.v0.impl.BaseGame;
 import com.turpgames.framework.v0.impl.FormScreen;
 import com.turpgames.framework.v0.impl.Screen;
 import com.turpgames.framework.v0.impl.ScreenManager;
-import com.turpgames.ichigu.model.Toolbar;
+import com.turpgames.ichigu.model.display.Toolbar;
 import com.turpgames.ichigu.utils.R;
 
 public class IchiguGame extends BaseGame {

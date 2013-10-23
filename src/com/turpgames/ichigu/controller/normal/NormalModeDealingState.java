@@ -1,6 +1,6 @@
 package com.turpgames.ichigu.controller.normal;
 
-import com.turpgames.ichigu.model.ICardDealerListener;
+import com.turpgames.ichigu.model.game.ICardDealerListener;
 
 public class NormalModeDealingState extends NormalModeState implements ICardDealerListener {
 	public NormalModeDealingState(NormalModeController controller) {

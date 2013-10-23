@@ -2,8 +2,8 @@ package com.turpgames.ichigu.view;
 
 import com.turpgames.framework.v0.impl.Screen;
 import com.turpgames.framework.v0.impl.ScreenManager;
-import com.turpgames.ichigu.model.Background;
-import com.turpgames.ichigu.model.Toolbar;
+import com.turpgames.ichigu.model.display.Toolbar;
+import com.turpgames.ichigu.model.game.Background;
 import com.turpgames.ichigu.utils.R;
 
 public abstract class IchiguScreen extends Screen {

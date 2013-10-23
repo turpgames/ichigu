@@ -2,8 +2,8 @@ package com.turpgames.ichigu.model.singlegame.practice;
 
 import com.turpgames.framework.v0.impl.Text;
 import com.turpgames.framework.v0.util.Game;
-import com.turpgames.ichigu.model.Card;
-import com.turpgames.ichigu.model.FadingGameInfo;
+import com.turpgames.ichigu.model.game.Card;
+import com.turpgames.ichigu.model.game.FadingGameInfo;
 import com.turpgames.ichigu.model.singlegame.SingleGameCards;
 import com.turpgames.ichigu.model.singlegame.SingleGameMode;
 
@@ -16,11 +16,10 @@ public class PracticeMode extends SingleGameMode {
 		hint = new PracticeModeHint();
 		tryAgainInfo = new FadingGameInfo();
 		tryAgainInfo.locate(Text.HAlignCenter, Text.VAlignTop);
-		tryAgainInfo.setPadding(0, Game.scale(170));
+		tryAgainInfo.setPadding(0, 165);
 		tryAgainInfo.setText("Try again...");
 
-		pointsInfo.getLocation().set(0, Game.getVirtualHeight() - Game.scale(pointsInfo.getHeight() + 15));
-		pointsInfo.initPointInfos();
+		pointsInfo.getLocation().set(0, Game.getVirtualHeight() - pointsInfo.getHeight() - 45);
 	}
 	
 	@Override

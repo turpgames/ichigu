@@ -4,9 +4,9 @@ import com.turpgames.framework.v0.forms.xml.Dialog;
 import com.turpgames.framework.v0.impl.Settings;
 import com.turpgames.framework.v0.impl.Text;
 import com.turpgames.framework.v0.util.Timer;
-import com.turpgames.ichigu.model.GameInfo;
-import com.turpgames.ichigu.model.ScoreInfo;
 import com.turpgames.ichigu.model.fullgame.FullGameMode;
+import com.turpgames.ichigu.model.game.GameInfo;
+import com.turpgames.ichigu.model.game.ScoreInfo;
 import com.turpgames.ichigu.utils.R;
 
 public class FullChallengeMode extends FullGameMode {
@@ -36,7 +36,7 @@ public class FullChallengeMode extends FullGameMode {
 
 		scoreInfo = new ScoreInfo();
 		scoreInfo.locate(Text.HAlignLeft, Text.VAlignTop);
-		scoreInfo.setPadding(7, 90);
+		scoreInfo.setPadding(7, 110);
 
 		confirmExitDialog = new Dialog();
 		confirmExitDialog.setListener(new Dialog.IDialogListener() {
@@ -52,21 +52,24 @@ public class FullChallengeMode extends FullGameMode {
 			@Override
 			public void timerTick(Timer timer) {
 				int elapsed = (int) timer.getTotalElapsedTime();
-				int min = 2 - elapsed / 60;
+				int min = 4 - elapsed / 60;
 				int sec = 60 - elapsed % 60;
 
 				timeInfo.setText((min < 10 ? ("0" + min) : ("" + min)) +
 						":" +
 						(sec < 10 ? ("0" + sec) : ("" + sec)));
 				
-				if (min < 0)
+				if (min < 0 || sec < 0)
 					timerFinished();
+				if (min == 0 && sec == 10)
+					timeInfo.start();
 			}
 		});
 	}
 
 	protected void timerFinished() {
 		notifyModeEnd();
+		timeInfo.stop();
 	}
 
 	private void onExitConfirmed(boolean exit) {
@@ -92,7 +95,7 @@ public class FullChallengeMode extends FullGameMode {
 		scoreInfo.init();
 //		ichiguTimer.restart();
 		isExitConfirmed = false;
-		timeInfo.setText("03:00");
+		timeInfo.setText("05:00");
 	}
 
 	@Override

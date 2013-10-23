@@ -5,8 +5,8 @@ import com.turpgames.framework.v0.forms.xml.Dialog;
 import com.turpgames.framework.v0.forms.xml.Form;
 import com.turpgames.framework.v0.impl.FormScreen;
 import com.turpgames.framework.v0.util.Game;
-import com.turpgames.ichigu.model.Logo;
-import com.turpgames.ichigu.model.Toolbar;
+import com.turpgames.ichigu.model.display.Logo;
+import com.turpgames.ichigu.model.display.Toolbar;
 import com.turpgames.ichigu.utils.R;
 
 public class MenuScreen extends FormScreen implements IGameExitListener {
@@ -62,4 +62,20 @@ public class MenuScreen extends FormScreen implements IGameExitListener {
 			Toolbar.getInstance().deactivateBackButton();
 		super.onFormActivated(activatedForm);
 	}
+	
+//	@Override
+//	public boolean keyDown(int keycode) {
+//		if (keycode == Keys.BACK || keycode == Keys.ESCAPE) {
+//			if (formHistory.size() == 0) {
+//				if ("true".equals(Game.getParam("allow-exit-on-back"))) {
+//					Game.exit();
+//				}
+//			}
+//			else {
+//				setForm(formHistory.peek(), true);
+//				return true;
+//			}
+//		}
+//		return super.keyDown(keycode);
+//	}
 }

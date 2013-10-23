@@ -6,7 +6,7 @@ import com.turpgames.framework.v0.impl.ScreenManager;
 import com.turpgames.framework.v0.util.Color;
 import com.turpgames.framework.v0.util.Game;
 import com.turpgames.framework.v0.util.ShapeDrawer;
-import com.turpgames.ichigu.model.Logo;
+import com.turpgames.ichigu.model.display.Logo;
 import com.turpgames.ichigu.utils.R;
 
 public class SplashScreen extends Screen {

@@ -1,4 +1,5 @@
-package com.turpgames.ichigu.model;
+package com.turpgames.ichigu.model.game;
+
 
 public abstract class IchiguMode {
 	protected CardDealer dealer;

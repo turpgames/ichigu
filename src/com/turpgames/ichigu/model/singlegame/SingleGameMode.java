@@ -1,8 +1,8 @@
 package com.turpgames.ichigu.model.singlegame;
 
-import com.turpgames.ichigu.model.Card;
-import com.turpgames.ichigu.model.IchiguMode;
-import com.turpgames.ichigu.model.PointsInfo;
+import com.turpgames.ichigu.model.game.Card;
+import com.turpgames.ichigu.model.game.IchiguMode;
+import com.turpgames.ichigu.model.game.PointsInfo;
 import com.turpgames.ichigu.utils.R;
 
 public abstract class SingleGameMode extends IchiguMode {

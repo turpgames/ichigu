@@ -1,7 +1,7 @@
 package com.turpgames.ichigu.controller.minichallenge;
 
 import com.turpgames.ichigu.controller.IchiguController;
-import com.turpgames.ichigu.model.Card;
+import com.turpgames.ichigu.model.game.Card;
 import com.turpgames.ichigu.model.singlegame.minichallenge.MiniChallengeMode;
 import com.turpgames.ichigu.view.MiniChallengeModeScreen;
 

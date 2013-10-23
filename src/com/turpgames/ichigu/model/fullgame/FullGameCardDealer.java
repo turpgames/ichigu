@@ -6,8 +6,8 @@ import java.util.Map;
 import com.turpgames.framework.v0.effects.IEffectEndListener;
 import com.turpgames.framework.v0.util.Game;
 import com.turpgames.framework.v0.util.Vector;
-import com.turpgames.ichigu.model.Card;
-import com.turpgames.ichigu.model.CardDealer;
+import com.turpgames.ichigu.model.game.Card;
+import com.turpgames.ichigu.model.game.CardDealer;
 
 public class FullGameCardDealer extends CardDealer {
 	// region static
@@ -18,7 +18,7 @@ public class FullGameCardDealer extends CardDealer {
 	private final static Map<Integer, Vector> cardLocations = new HashMap<Integer, Vector>();
 
 	static {
-		float dy = (Game.getVirtualHeight() - Game.getVirtualWidth()) / 2f;
+		float dy = (Game.getVirtualHeight() - Game.getVirtualWidth()) / 2f - 20;
 		for (int i = 0; i < FullGameCards.TotalCardsOnTable; i++) {
 			int x = i < FullGameCards.ActiveCardCount ? i % (cols - 1) : cols - 1;
 			int y = i < FullGameCards.ActiveCardCount ? i / (cols - 1) : i - FullGameCards.ActiveCardCount;

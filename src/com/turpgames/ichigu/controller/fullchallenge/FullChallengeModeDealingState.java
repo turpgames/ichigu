@@ -1,6 +1,6 @@
 package com.turpgames.ichigu.controller.fullchallenge;
 
-import com.turpgames.ichigu.model.ICardDealerListener;
+import com.turpgames.ichigu.model.game.ICardDealerListener;
 
 public class FullChallengeModeDealingState extends FullChallengeModeState implements ICardDealerListener {
 	public FullChallengeModeDealingState(FullChallengeModeController controller) {

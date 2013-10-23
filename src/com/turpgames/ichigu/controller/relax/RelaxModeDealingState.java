@@ -1,6 +1,6 @@
 package com.turpgames.ichigu.controller.relax;
 
-import com.turpgames.ichigu.model.ICardDealerListener;
+import com.turpgames.ichigu.model.game.ICardDealerListener;
 
 public class RelaxModeDealingState extends RelaxModeState implements ICardDealerListener {
 	public RelaxModeDealingState(RelaxModeController controller) {

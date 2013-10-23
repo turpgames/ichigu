@@ -1,4 +1,4 @@
-package com.turpgames.ichigu.model;
+package com.turpgames.ichigu.model.game;
 
 public final class CardAttributes {
 	public static final int AllDiff = 7;

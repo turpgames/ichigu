@@ -1,4 +1,4 @@
-package com.turpgames.ichigu.model;
+package com.turpgames.ichigu.model.game;
 
 import com.turpgames.framework.v0.IDrawable;
 import com.turpgames.framework.v0.IDrawingInfo;

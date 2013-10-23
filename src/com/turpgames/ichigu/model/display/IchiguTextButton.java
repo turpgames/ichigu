@@ -1,10 +1,10 @@
-package com.turpgames.ichigu.model;
+package com.turpgames.ichigu.model.display;
 
 import com.turpgames.framework.v0.impl.AttachedText;
 import com.turpgames.framework.v0.impl.Text;
 import com.turpgames.framework.v0.util.Color;
 
-class IchiguTextButton extends IchiguButton {
+public class IchiguTextButton extends IchiguButton {
 	private Text text;
 	
 	public IchiguTextButton() {

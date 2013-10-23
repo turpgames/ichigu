@@ -1,7 +1,7 @@
 package com.turpgames.ichigu.model.fullgame;
 
-import com.turpgames.ichigu.model.Card;
-import com.turpgames.ichigu.model.CardAttributes;
+import com.turpgames.ichigu.model.game.Card;
+import com.turpgames.ichigu.model.game.CardAttributes;
 
 class FullGameCards {
 	public static final int ActiveCardCount = 12;

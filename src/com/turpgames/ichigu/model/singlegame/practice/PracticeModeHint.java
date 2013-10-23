@@ -7,10 +7,10 @@ import com.turpgames.framework.v0.IDrawable;
 import com.turpgames.framework.v0.effects.IEffectEndListener;
 import com.turpgames.framework.v0.forms.xml.Toast;
 import com.turpgames.framework.v0.util.Game;
-import com.turpgames.ichigu.model.Card;
-import com.turpgames.ichigu.model.CardAttributes;
-import com.turpgames.ichigu.model.IIchiguButtonListener;
-import com.turpgames.ichigu.model.IchiguImageButton;
+import com.turpgames.ichigu.model.display.IIchiguButtonListener;
+import com.turpgames.ichigu.model.display.IchiguImageButton;
+import com.turpgames.ichigu.model.game.Card;
+import com.turpgames.ichigu.model.game.CardAttributes;
 import com.turpgames.ichigu.utils.R;
 
 class PracticeModeHint implements IDrawable, Toast.IToastListener, IEffectEndListener {

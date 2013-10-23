@@ -3,7 +3,7 @@ package com.turpgames.ichigu.model.fullgame;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.turpgames.ichigu.model.Card;
+import com.turpgames.ichigu.model.game.Card;
 
 class FullGameIchiguInfo {
 	private final List<Integer> ichigus;

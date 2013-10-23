@@ -3,13 +3,12 @@ package com.turpgames.ichigu.model.singlegame.minichallenge;
 import com.turpgames.framework.v0.forms.xml.Dialog;
 import com.turpgames.framework.v0.impl.Settings;
 import com.turpgames.framework.v0.impl.Text;
-import com.turpgames.framework.v0.util.Game;
 import com.turpgames.framework.v0.util.Timer;
-import com.turpgames.ichigu.model.Card;
-import com.turpgames.ichigu.model.ChallengeTimeInfo;
-import com.turpgames.ichigu.model.GameInfo;
-import com.turpgames.ichigu.model.IScreenTouchListener;
-import com.turpgames.ichigu.model.ScreenTouchHandler;
+import com.turpgames.ichigu.model.game.Card;
+import com.turpgames.ichigu.model.game.BlinkingTimeInfo;
+import com.turpgames.ichigu.model.game.GameInfo;
+import com.turpgames.ichigu.model.game.IScreenTouchListener;
+import com.turpgames.ichigu.model.game.ScreenTouchHandler;
 import com.turpgames.ichigu.model.singlegame.SingleGameCards;
 import com.turpgames.ichigu.model.singlegame.SingleGameMode;
 import com.turpgames.ichigu.utils.R;
@@ -29,7 +28,7 @@ public class MiniChallengeMode extends SingleGameMode {
 	private int ichigusFound;
 	private GameInfo ichigusFoundInfo;
 	
-	private ChallengeTimeInfo timeInfo;
+	private BlinkingTimeInfo timeInfo;
 	private GameInfo waitInfo;
 	private GameInfo scoreInfo;
 //	private GameInfo remainingCardsInfo;
@@ -48,10 +47,10 @@ public class MiniChallengeMode extends SingleGameMode {
 	};
 
 	public MiniChallengeMode() {
-		pointsInfo.getLocation().set(0, Game.getVirtualHeight() - Game.scale(pointsInfo.getHeight() - 35));
-		pointsInfo.initPointInfos();
+//		pointsInfo.getLocation().set(0, Game.getVirtualHeight() - pointsInfo.getHeight() - 35));
+//		pointsInfo.initPointInfos();
 
-		timeInfo = new ChallengeTimeInfo();
+		timeInfo = new BlinkingTimeInfo();
 		timeInfo.locate(Text.HAlignCenter, Text.VAlignBottom);
 		timeInfo.setPadding(0, 75);
 		
@@ -121,13 +120,14 @@ public class MiniChallengeMode extends SingleGameMode {
 				if (min < 0 || sec < 0)
 					timerFinished();
 				if (min == 0 && sec == 10)
-					timeInfo.startCountdown();
+					timeInfo.start();
 			}
 		});
 	}
 
 	protected void timerFinished() {
 		notifyModeEnd();
+		timeInfo.stop();
 	}
 
 	private void onExitConfirmed(boolean exit) {

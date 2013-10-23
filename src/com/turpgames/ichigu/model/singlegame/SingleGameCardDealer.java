@@ -4,9 +4,9 @@ import com.turpgames.framework.v0.effects.IEffectEndListener;
 import com.turpgames.framework.v0.util.Game;
 import com.turpgames.framework.v0.util.Utils;
 import com.turpgames.framework.v0.util.Vector;
-import com.turpgames.ichigu.model.Card;
-import com.turpgames.ichigu.model.CardAttributes;
-import com.turpgames.ichigu.model.CardDealer;
+import com.turpgames.ichigu.model.game.Card;
+import com.turpgames.ichigu.model.game.CardAttributes;
+import com.turpgames.ichigu.model.game.CardDealer;
 import com.turpgames.ichigu.utils.R;
 
 class SingleGameCardDealer extends CardDealer {

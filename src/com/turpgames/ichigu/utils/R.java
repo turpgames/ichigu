@@ -4,7 +4,7 @@ import com.turpgames.framework.v0.util.Color;
 import com.turpgames.framework.v0.util.FontManager;
 import com.turpgames.framework.v0.util.Game;
 import com.turpgames.framework.v0.util.Vector;
-import com.turpgames.ichigu.model.Card;
+import com.turpgames.ichigu.model.game.Card;
 
 public final class R {
 	/**
@@ -120,9 +120,6 @@ public final class R {
 		public static final Vector firstOfThree = new Vector((Card.Width - Card.SymbolWidth) / 2, 2 + Card.Height / 2 - Card.SymbolHeight * 1.65f);
 		public static final Vector secondOfThree = new Vector((Card.Width - Card.SymbolWidth) / 2, 2 + Card.Height / 2 - Card.SymbolHeight * 0.5f);
 		public static final Vector thirdOfThree = new Vector((Card.Width - Card.SymbolWidth) / 2, 2 + Card.Height / 2 + Card.SymbolHeight * 0.65f);
-
-		public static Vector tutorial300x96 = new Vector(Game.getVirtualWidth() / 2 - 300 / 2, Game.getVirtualHeight() / 2 - 60);
-		public static Vector tutorial350x300 = new Vector(Game.getVirtualWidth() / 2 - 350 / 2, 200);
 	}
 
 	public static final class colors {

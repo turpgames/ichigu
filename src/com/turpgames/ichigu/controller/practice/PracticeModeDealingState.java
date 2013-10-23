@@ -1,6 +1,6 @@
 package com.turpgames.ichigu.controller.practice;
 
-import com.turpgames.ichigu.model.ICardDealerListener;
+import com.turpgames.ichigu.model.game.ICardDealerListener;
 
 public class PracticeModeDealingState extends PracticeModeState implements ICardDealerListener {
 	public PracticeModeDealingState(PracticeModeController controller) {

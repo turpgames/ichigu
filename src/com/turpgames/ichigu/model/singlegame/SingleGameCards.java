@@ -1,7 +1,7 @@
 package com.turpgames.ichigu.model.singlegame;
 
-import com.turpgames.ichigu.model.Card;
-import com.turpgames.ichigu.model.CardAttributes;
+import com.turpgames.ichigu.model.game.Card;
+import com.turpgames.ichigu.model.game.CardAttributes;
 
 public class SingleGameCards {
 	public static final int ReadyCardCount = 2;

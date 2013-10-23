@@ -1,10 +1,12 @@
-package com.turpgames.ichigu.model;
+package com.turpgames.ichigu.model.game;
 
 import com.turpgames.framework.v0.IDrawable;
 import com.turpgames.framework.v0.forms.xml.Dialog;
 import com.turpgames.framework.v0.impl.Settings;
 import com.turpgames.framework.v0.impl.Text;
 import com.turpgames.framework.v0.util.Game;
+import com.turpgames.ichigu.model.display.IIchiguButtonListener;
+import com.turpgames.ichigu.model.display.IchiguTextButton;
 import com.turpgames.ichigu.utils.R;
 
 public class HiScores implements IDrawable {

@@ -5,9 +5,9 @@ import com.turpgames.framework.v0.effects.IEffectEndListener;
 import com.turpgames.framework.v0.forms.xml.Toast;
 import com.turpgames.framework.v0.util.Timer;
 import com.turpgames.framework.v0.util.Vector;
-import com.turpgames.ichigu.model.Card;
-import com.turpgames.ichigu.model.IIchiguButtonListener;
-import com.turpgames.ichigu.model.IchiguImageButton;
+import com.turpgames.ichigu.model.display.IIchiguButtonListener;
+import com.turpgames.ichigu.model.display.IchiguImageButton;
+import com.turpgames.ichigu.model.game.Card;
 import com.turpgames.ichigu.utils.R;
 
 public class FullGameHint implements IDrawable, IEffectEndListener, Toast.IToastListener {
@@ -90,7 +90,9 @@ public class FullGameHint implements IDrawable, IEffectEndListener, Toast.IToast
 			hintListener.onHintShowed();
 	}
 	
-	private void showNextHint() {
+	private int prevIchiguCount = 0;
+	
+	private void showNextHint() {			
 		if (isActive) {
 			toast.hide();
 			return;
@@ -99,6 +101,8 @@ public class FullGameHint implements IDrawable, IEffectEndListener, Toast.IToast
 		if (hintIndex == 0) {
 			setToastColor();
 			toast.show(text, 3000);
+			if (prevIchiguCount != ichiguInfo.getIchiguCount())
+				toast.setText(text);
 		}
 		else {
 			int cardIndex = ichiguInfo.getIchiguCardIndex(hintIndex - 1, 1);
@@ -106,6 +110,8 @@ public class FullGameHint implements IDrawable, IEffectEndListener, Toast.IToast
 		}
 
 		isActive = true;
+
+		prevIchiguCount = ichiguInfo.getIchiguCount();
 	}
 
 	private void setToastColor() {
@@ -163,5 +169,9 @@ public class FullGameHint implements IDrawable, IEffectEndListener, Toast.IToast
 	public void deactivate() {
 		button.listenInput(false);
 		toast.dispose();
+	}
+
+	public boolean isActive() {
+		return isActive;
 	}
 }

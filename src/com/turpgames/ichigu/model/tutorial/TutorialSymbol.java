@@ -2,7 +2,7 @@ package com.turpgames.ichigu.model.tutorial;
 
 import com.turpgames.framework.v0.impl.TexturedGameObject;
 import com.turpgames.framework.v0.util.Color;
-import com.turpgames.ichigu.model.Card;
+import com.turpgames.ichigu.model.game.Card;
 
 public class TutorialSymbol extends TexturedGameObject {
 	public TutorialSymbol(String textureId, Color color) {

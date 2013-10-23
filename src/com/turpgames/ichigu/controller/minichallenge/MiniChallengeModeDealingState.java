@@ -1,6 +1,6 @@
 package com.turpgames.ichigu.controller.minichallenge;
 
-import com.turpgames.ichigu.model.ICardDealerListener;
+import com.turpgames.ichigu.model.game.ICardDealerListener;
 
 public class MiniChallengeModeDealingState extends MiniChallengeModeState implements ICardDealerListener {
 	public MiniChallengeModeDealingState(MiniChallengeModeController controller) {

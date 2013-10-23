@@ -1,4 +1,4 @@
-package com.turpgames.ichigu.model;
+package com.turpgames.ichigu.model.game;
 
 import com.turpgames.framework.v0.ITexture;
 import com.turpgames.framework.v0.effects.IEffectEndListener;
@@ -29,12 +29,12 @@ public class PointsInfo extends GameObject implements IFadingEffectSubject {
 			this.text = new AttachedText(this);
 			this.text.setHorizontalAlignment(Text.HAlignCenter);
 //			this.text.setVerticalAlignment(Text.VAlignCenter);
-			this.text.setPadX(Game.scale(30));
-			this.text.setPadY(Game.scale(-65));
+//			this.text.setPadX(30);
+			this.text.setPadY(-15);
 			this.text.setWrapped(false);
 			
 			this.extraText = new AttachedText(this);
-			this.extraText.setPadY(Game.scale(-65));
+			this.extraText.setPadY(-15);
 			this.extraText.setText(" +");
 			
 			setWidth(pointImageSize);
@@ -43,7 +43,7 @@ public class PointsInfo extends GameObject implements IFadingEffectSubject {
 
 		public void setText(String text) {
 			this.text.setText(text);
-			this.extraText.setPadX(Game.scale(30 + this.text.getTextAreaWidth() + 30 - this.text.getTextAreaWidth()));			
+			this.extraText.setPadX(60);			
 		}
 		
 		public void setExtraText(String text) {
@@ -54,6 +54,10 @@ public class PointsInfo extends GameObject implements IFadingEffectSubject {
 			this.texture = texture;
 		}
 
+		public float getTotalWidth() {
+			return 60 + this.extraText.getTextAreaWidth();
+		}
+		
 		@Override
 		public void draw() {
 			TextureDrawer.draw(texture, this);
@@ -127,12 +131,14 @@ public class PointsInfo extends GameObject implements IFadingEffectSubject {
 			countInfo.setTexture(Game.getResourceManager().getTexture(R.game.textures.points.countall));
 		}
 		countInfo.setExtraText(" = " + points);
+		
+		setPointInfosPositions();
 	}
 
 	public PointsInfo() {
 		this.setWidth(Game.getVirtualWidth());
-		this.setHeight(PointInfo.pointImageSize);
-		this.getLocation().set(0, Game.getVirtualHeight() - Game.scale(this.getHeight() - 55));
+		this.setHeight(PointInfo.pointImageSize + 10);
+		this.getLocation().set(0, Game.getVirtualHeight() - this.getHeight());
 		this.getColor().set(R.colors.ichiguRed);
 
 		timer = new Timer();
@@ -157,9 +163,11 @@ public class PointsInfo extends GameObject implements IFadingEffectSubject {
 
 		countInfo = new PointInfo();
 		countInfo.getColor().set(R.colors.ichiguYellow);
-
-		// Set point info positions
-		int x = (int) (Game.getVirtualWidth() - 4 * PointInfo.pointImageSize) / 2;
+	}
+	
+	public void setPointInfosPositions() {
+		int totalWidth = (int) (3 * PointInfo.pointImageSize + countInfo.getTotalWidth());
+		int x = (int) (Game.getVirtualWidth() - totalWidth) / 2;
 		int y = (int) this.getLocation().y;
 		colorInfo.getLocation().set(x, y);
 		shapeInfo.getLocation().set(x + PointInfo.pointImageSize, y);

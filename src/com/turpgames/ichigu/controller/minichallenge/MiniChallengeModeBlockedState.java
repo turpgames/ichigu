@@ -1,6 +1,6 @@
 package com.turpgames.ichigu.controller.minichallenge;
 
-import com.turpgames.ichigu.model.Card;
+import com.turpgames.ichigu.model.game.Card;
 import com.turpgames.ichigu.utils.IchiguResources;
 
 public class MiniChallengeModeBlockedState extends MiniChallengeModeState {

@@ -3,10 +3,10 @@ package com.turpgames.ichigu.model.fullgame.relax;
 import com.turpgames.framework.v0.forms.xml.Dialog;
 import com.turpgames.framework.v0.impl.Text;
 import com.turpgames.framework.v0.util.Game;
-import com.turpgames.ichigu.model.GameInfo;
-import com.turpgames.ichigu.model.IIchiguButtonListener;
-import com.turpgames.ichigu.model.IchiguImageButton;
+import com.turpgames.ichigu.model.display.IIchiguButtonListener;
+import com.turpgames.ichigu.model.display.IchiguImageButton;
 import com.turpgames.ichigu.model.fullgame.FullGameMode;
+import com.turpgames.ichigu.model.game.GameInfo;
 import com.turpgames.ichigu.utils.R;
 
 public class RelaxMode extends FullGameMode {
@@ -17,11 +17,13 @@ public class RelaxMode extends FullGameMode {
 
 	public RelaxMode() {
 		super();
-		hint.getLocation().set(Game.getVirtualWidth() - hint.getWidth() - 10, 50);
+		hint.getLocation().set(Game.getVirtualWidth() - hint.getWidth() - 10, 30);
 
 		resultInfo = new GameInfo();
 		resultInfo.locate(Text.HAlignCenter, Text.VAlignCenter);
 
+		remaingCardInfo.setPadding(0, 55);
+		
 		resetConfirmDialog = new Dialog();
 		resetConfirmDialog.setListener(new Dialog.IDialogListener() {
 			@Override
@@ -31,7 +33,7 @@ public class RelaxMode extends FullGameMode {
 		});
 
 		resetButton = new IchiguImageButton();
-		resetButton.getLocation().set(10, 50);
+		resetButton.getLocation().set(10, 30);
 		resetButton.setTexture(R.game.textures.refresh);
 		resetButton.setListener(new IIchiguButtonListener() {
 			@Override

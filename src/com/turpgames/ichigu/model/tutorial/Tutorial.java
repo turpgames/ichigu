@@ -9,12 +9,12 @@ import com.turpgames.framework.v0.IViewSwitcher;
 import com.turpgames.framework.v0.impl.Text;
 import com.turpgames.framework.v0.impl.ViewSwitcher;
 import com.turpgames.framework.v0.util.Game;
-import com.turpgames.ichigu.model.Card;
-import com.turpgames.ichigu.model.CardAttributes;
-import com.turpgames.ichigu.model.GameInfo;
-import com.turpgames.ichigu.model.IIchiguButtonListener;
-import com.turpgames.ichigu.model.IchiguImageButton;
 import com.turpgames.ichigu.model.IchiguObject;
+import com.turpgames.ichigu.model.display.IIchiguButtonListener;
+import com.turpgames.ichigu.model.display.IchiguImageButton;
+import com.turpgames.ichigu.model.game.Card;
+import com.turpgames.ichigu.model.game.CardAttributes;
+import com.turpgames.ichigu.model.game.GameInfo;
 import com.turpgames.ichigu.utils.R;
 
 public class Tutorial extends IchiguObject implements IViewFinder {
@@ -199,27 +199,28 @@ public class Tutorial extends IchiguObject implements IViewFinder {
 
 		page = new TutorialPage("10");
 		page.addInfo("Game Modes", Text.HAlignCenter, marginTop).getColor().set(R.colors.ichiguYellow);
-		page.addInfo("- Training Modes", Text.HAlignLeft, 50).setPadX(50);
-		page.addInfo("- Learning Mode", Text.HAlignLeft, 30).setPadX(100);
+		page.addInfo("- Single Ichigu Modes", Text.HAlignLeft, 50).setPadX(50);
 		page.addInfo("- Practice Mode", Text.HAlignLeft, 30).setPadX(100);
+		page.addInfo("- Mini Challenge Mode", Text.HAlignLeft, 30).setPadX(100);
 		page.addInfo("- Full Game Modes", Text.HAlignLeft, 50).setPadX(50);
 		page.addInfo("- Relax Mode", Text.HAlignLeft, 30).setPadX(100);
-		page.addInfo("- Challenge Mode", Text.HAlignLeft, 30).setPadX(100);
+		page.addInfo("- Normal Mode", Text.HAlignLeft, 30).setPadX(100);
+		page.addInfo("- Full Challenge Mode", Text.HAlignLeft, 30).setPadX(100);
 //		page.addInfo("- Multiplayer Mode", Text.HAlignLeft, 30).setPadX(100);
 		pages.add(page);
 
 		page = new TutorialPage("11");
-		page.addInfo("Learning Mode", Text.HAlignCenter, marginTop).getColor().set(R.colors.ichiguYellow);
-		page.addInfo("At the end of this tutorial you will find the Learning Mode game", Text.HAlignLeft, 50).setPadX(10);
+		page.addInfo("Practice Mode", Text.HAlignCenter, marginTop).getColor().set(R.colors.ichiguYellow);
+		page.addInfo("At the end of this tutorial you will find the Practice Mode game", Text.HAlignLeft, 50).setPadX(10);
 		page.addInfo("In this mode, you will be given two cards and asked for the third card that makes an ichigu with the given two cards.", Text.HAlignLeft, 30).setPadX(10);
-		page.addInfo("Any time you need help, feel free to tap tip button at the bottom of screen.", Text.HAlignLeft, 30).setPadX(10);
+		page.addInfo("Any time you need help, feel free to tap the tip button at the bottom right.", Text.HAlignLeft, 30).setPadX(10);
 		pages.add(page);
 
 		page = new TutorialPage("12");
-		page.addInfo("Practice Mode", Text.HAlignCenter, marginTop).getColor().set(R.colors.ichiguYellow);
-		page.addInfo("Practice Mode is basically the same as Learning Mode but it is a little bit more challenging.", Text.HAlignLeft, 50).setPadX(10);
-		page.addInfo("This time you have to be fast and there won't be any tips.", Text.HAlignLeft, 30).setPadX(10);
-		page.addInfo("You will have 5 seconds to find the third card and if you make a mistake you will have to wait for 2 seconds to give another answer.", Text.HAlignLeft, 30).setPadX(10);
+		page.addInfo("Mini Challenge Mode", Text.HAlignCenter, marginTop).getColor().set(R.colors.ichiguYellow);
+		page.addInfo("Mini Challenge Mode is played the same as Practice Mode.", Text.HAlignLeft, 50).setPadX(10);
+		page.addInfo("This time you have 1 minutes to find as many ichigus as you can. No tips.", Text.HAlignLeft, 30).setPadX(10);
+		page.addInfo("If you choose the wrong card, you will have to wait for 2 seconds to try again.", Text.HAlignLeft, 30).setPadX(10);
 		pages.add(page);
 
 		page = new TutorialPage("13");
@@ -228,12 +229,17 @@ public class Tutorial extends IchiguObject implements IViewFinder {
 		page.addInfo("You are expected to find an ichigu in 12 cards. If you need, you can open the 3 extra cards and look for an ichigu in 15 cards.", Text.HAlignLeft, 30).setPadX(10);
 		page.addInfo("Tips are available and game can be reset", Text.HAlignLeft, 30).setPadX(10);
 		pages.add(page);
-
+		
 		page = new TutorialPage("14");
+		page.addInfo("Normal Mode", Text.HAlignCenter, marginTop).getColor().set(R.colors.ichiguYellow);
+		page.addInfo("Normal Mode is set up exactly as Relax Mode but score and time is kept.", Text.HAlignLeft, 50).setPadX(10);
+		pages.add(page);
+		
+		page = new TutorialPage("15");
 		page.addInfo("Challenge Mode", Text.HAlignCenter, marginTop).getColor().set(R.colors.ichiguYellow);
-		page.addInfo("Challenge Mode is the challenging version of the Relax Mode.", Text.HAlignLeft, 50).setPadX(10);
+		page.addInfo("Challenge Mode is the challenging version of the Normal Mode.", Text.HAlignLeft, 50).setPadX(10);
+		page.addInfo("You have 5 minutes to find as many ichigus as you can.", Text.HAlignLeft, 30).setPadX(10);
 		page.addInfo("No tips, no pause, no reset: pure challenge!", Text.HAlignLeft, 30).setPadX(10);
-		page.addInfo("You will get more score as you find faster and more complex ichigus.", Text.HAlignLeft, 30).setPadX(10);
 		pages.add(page);
 
 //		page = new TutorialPage("15");
@@ -242,22 +248,20 @@ public class Tutorial extends IchiguObject implements IViewFinder {
 //		page.addInfo("Multiplayer Mode can be played with 2, 3 or 4 players at the same time.", Text.HAlignLeft, 30).setPadX(10);
 //		pages.add(page);
 
-		page = new TutorialPage("15");
-		page.addInfo("Scores", Text.HAlignCenter, marginTop).getColor().set(R.colors.ichiguYellow);
-		page.addInfo("Scores are calculated over two basic parameters:", Text.HAlignLeft, 50).setPadX(10);
-		page.addInfo("- How complex was the ichigu?", Text.HAlignLeft, 30).setPadX(20);
-		page.addInfo("- How fast did you find the ichigu?", Text.HAlignLeft, 30).setPadX(20);
-		page.addInfo("You get 1 point for a common property of ichigu cards and 3 points for different properties.", Text.HAlignLeft, 30).setPadX(10);
-		page.addInfo("Sum of property points is multiplied by a factor calculated over time.", Text.HAlignLeft, 30).setPadX(10);
-		pages.add(page);
-
 		page = new TutorialPage("16");
-		page.addInfo("Scores", Text.HAlignCenter, marginTop).getColor().set(R.colors.ichiguYellow);
-		page.addInfo("In Challenge Mode, if you find an ichigu after opening extra cards you will get half of the point that you supposed to get.", Text.HAlignLeft, 25).setPadX(10);
-		page.addInfo("Note that, your point won't be deducted if there were no ichigus in the 12 open cards before opening the extra cards.", Text.HAlignLeft, 25).setPadX(10);
+		page.addInfo("Score", Text.HAlignCenter, marginTop).getColor().set(R.colors.ichiguYellow);
+		page.addInfo("Points are calculated according to the complexity of found ichigu.", Text.HAlignLeft, 50).setPadX(10);
+		page.addInfo("You get 1 point for a common property of ichigu cards and 3 points for different properties.", Text.HAlignLeft, 30).setPadX(10);
 		pages.add(page);
 
 		page = new TutorialPage("17");
+		page.addInfo("Score", Text.HAlignCenter, marginTop).getColor().set(R.colors.ichiguYellow);
+		page.addInfo("Taking hints in Normal Mode and Challenge Mode decreases score.", Text.HAlignLeft, 50).setPadX(10);
+		page.addInfo("In Challenge Mode, if you find an ichigu after opening extra cards you get half of the normal points.", Text.HAlignLeft, 25).setPadX(10);
+		page.addInfo("Your score won't be deducted if there were no ichigus in the 12 open cards before opening the extra cards.", Text.HAlignLeft, 25).setPadX(10);
+		pages.add(page);
+
+		page = new TutorialPage("18");
 		info = page.addInfo("Ichigu Score", Text.HAlignCenter, marginTop);
 		info.getColor().set(R.colors.ichiguYellow);
 		y = Game.getVirtualHeight() - marginTop - info.getTextAreaHeight() - Card.Height - 30;

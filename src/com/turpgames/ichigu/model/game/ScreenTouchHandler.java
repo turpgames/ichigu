@@ -1,6 +1,7 @@
-package com.turpgames.ichigu.model;
+package com.turpgames.ichigu.model.game;
 
 import com.turpgames.framework.v0.util.Game;
+import com.turpgames.ichigu.model.IchiguObject;
 
 public class ScreenTouchHandler extends IchiguObject {
 	public ScreenTouchHandler() {

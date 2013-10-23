@@ -1,7 +1,7 @@
 package com.turpgames.ichigu.controller.fullchallenge;
 
 import com.turpgames.framework.v0.util.Game;
-import com.turpgames.ichigu.model.Card;
+import com.turpgames.ichigu.model.game.Card;
 import com.turpgames.ichigu.utils.IchiguResources;
 
 public class FullChallengeModeWaitingState extends FullChallengeModeState {

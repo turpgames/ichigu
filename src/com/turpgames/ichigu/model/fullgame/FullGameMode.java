@@ -2,12 +2,13 @@ package com.turpgames.ichigu.model.fullgame;
 
 import com.turpgames.framework.v0.impl.Text;
 import com.turpgames.framework.v0.util.Timer;
-import com.turpgames.ichigu.model.Card;
-import com.turpgames.ichigu.model.GameInfo;
-import com.turpgames.ichigu.model.IScreenTouchListener;
-import com.turpgames.ichigu.model.IchiguMode;
-import com.turpgames.ichigu.model.PointsInfo;
-import com.turpgames.ichigu.model.ScreenTouchHandler;
+import com.turpgames.ichigu.model.game.Card;
+import com.turpgames.ichigu.model.game.BlinkingTimeInfo;
+import com.turpgames.ichigu.model.game.GameInfo;
+import com.turpgames.ichigu.model.game.IScreenTouchListener;
+import com.turpgames.ichigu.model.game.IchiguMode;
+import com.turpgames.ichigu.model.game.PointsInfo;
+import com.turpgames.ichigu.model.game.ScreenTouchHandler;
 import com.turpgames.ichigu.utils.IchiguResources;
 
 public abstract class FullGameMode extends IchiguMode {
@@ -24,7 +25,7 @@ public abstract class FullGameMode extends IchiguMode {
 	protected GameInfo remaingCardInfo;
 	
 	protected Timer timer;
-	protected GameInfo timeInfo;
+	protected BlinkingTimeInfo timeInfo;
 	protected String modeCompleteTime;
 
 	protected PointsInfo pointsInfo;
@@ -68,15 +69,15 @@ public abstract class FullGameMode extends IchiguMode {
 		
 		ichigusFoundInfo = new GameInfo();
 		ichigusFoundInfo.locate(Text.HAlignRight, Text.VAlignTop);
-		ichigusFoundInfo.setPadding(10, 90);
+		ichigusFoundInfo.setPadding(10, 110);
 		
 		remaingCardInfo = new GameInfo();
 		remaingCardInfo.locate(Text.HAlignCenter, Text.VAlignBottom);
-		remaingCardInfo.setPadding(0, 75);
+		remaingCardInfo.setPadding(0, 65);
 		
-		timeInfo = new GameInfo();
+		timeInfo = new BlinkingTimeInfo();
 		timeInfo.locate(Text.HAlignCenter, Text.VAlignBottom);
-		timeInfo.setPadding(0, 30);
+		timeInfo.setPadding(0, 20);
 		
 		timer = new Timer();
 		timer.setInterval(1);
@@ -251,7 +252,8 @@ public abstract class FullGameMode extends IchiguMode {
 	}
 
 	protected void drawRemainingCards() {
-		remaingCardInfo.setText(getDealer().getIndex() + "/" + Card.CardsInDeck + " | Deck " + deckCount);
+		remaingCardInfo.setText(getDealer().getIndex() + "/" + Card.CardsInDeck);
+//		remaingCardInfo.setText(getDealer().getIndex() + "/" + Card.CardsInDeck + " | Deck " + deckCount);
 		remaingCardInfo.draw();
 	}
 

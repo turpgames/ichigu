@@ -4,11 +4,11 @@ import com.turpgames.framework.v0.forms.xml.Dialog;
 import com.turpgames.framework.v0.impl.Settings;
 import com.turpgames.framework.v0.impl.Text;
 import com.turpgames.framework.v0.util.Game;
-import com.turpgames.ichigu.model.Card;
-import com.turpgames.ichigu.model.GameInfo;
-import com.turpgames.ichigu.model.ScoreInfo;
 import com.turpgames.ichigu.model.fullgame.FullGameMode;
 import com.turpgames.ichigu.model.fullgame.IHintListener;
+import com.turpgames.ichigu.model.game.Card;
+import com.turpgames.ichigu.model.game.GameInfo;
+import com.turpgames.ichigu.model.game.ScoreInfo;
 import com.turpgames.ichigu.utils.R;
 
 public class NormalMode extends FullGameMode implements IHintListener {
@@ -29,7 +29,7 @@ public class NormalMode extends FullGameMode implements IHintListener {
 
 	public NormalMode() {
 		super();
-		hint.getLocation().set(Game.getVirtualWidth() - hint.getWidth() - 10, 50);
+		hint.getLocation().set(Game.getVirtualWidth() - hint.getWidth() - 10, 30);
 		hint.activate();
 		hint.setHintListener(this);
 		
@@ -40,7 +40,7 @@ public class NormalMode extends FullGameMode implements IHintListener {
 
 		scoreInfo = new ScoreInfo();
 		scoreInfo.locate(Text.HAlignLeft, Text.VAlignTop);
-		scoreInfo.setPadding(7, 90);
+		scoreInfo.setPadding(7, 110);
 
 		confirmExitDialog = new Dialog();
 		confirmExitDialog.setListener(new Dialog.IDialogListener() {
@@ -178,6 +178,7 @@ public class NormalMode extends FullGameMode implements IHintListener {
 
 	@Override
 	public void onHintShowed() {
-		scoreInfo.decreaseScore(10);
+		if (!hint.isActive())
+			scoreInfo.decreaseScore(10);
 	}
 }
