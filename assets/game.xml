@@ -125,32 +125,37 @@
                 id="btnPlay"
                 action="form=playMenu"
                 text="Play"
+                font-scale="1.2"
                 y="20" />
             
             <button
                 id="btnLearning"
                 action="screen=tutorial"
                 text="How To Play"
-                y="16" />
+                font-scale="1.2"
+                y="15" />
 
             <button
                 id="btnScoreBoard"
                 action="screen=scoreBoard"
                 text="Hi Scores"
-                y="14" />
+                font-scale="1.2"
+                y="12" />
 
             <button
                 id="btnAbout"
                 action="screen=about"
                 text="About"
-                y="12" />
+                font-scale="1.2"
+                y="9" />
             
             <button
                 id="btnExitGame"
                 action="exit"
                 focus-color="#d0583bff"
                 text="Exit Game"
-                y="7" />
+                font-scale="1.2"
+                y="4" />
         </form>
         
         <form id="playMenu">
@@ -159,31 +164,36 @@
                 id="btnPractice"
                 action="screen=practice"
                 text="Practice"
-                y="19" />
+                font-scale="1.2"
+                y="24" />
 
             <button
                 id="btnMiniChallenge"
                 action="screen=minichallenge"
                 text="Mini Challenge"
-                y="17" />
+                font-scale="1.2"
+                y="20" />
             
             <button
                 id="btnRelax"
                 action="screen=relax"
                 text="Relax Mode"
+                font-scale="1.2"
                 y="14" />
 
             <button
                 id="btnRelax"
                 action="screen=normal"
                 text="Normal Mode"
-                y="12" />
+                font-scale="1.2"
+                y="10" />
             
             <button
                 id="btnChallenge"
                 action="screen=fullchallenge"
                 text="Full Challenge"
-                y="10" />
+                font-scale="1.2"
+                y="6" />
             
         </form>
     </forms>
