@@ -124,28 +124,28 @@
             <button
                 id="btnPlay"
                 action="form=playMenu"
-                text="Play"
+                resource-text="play"
                 font-scale="1.2"
                 y="20" />
             
             <button
                 id="btnLearning"
                 action="screen=tutorial"
-                text="How To Play"
+                resource-text="howToPlay"
                 font-scale="1.2"
                 y="15" />
 
             <button
                 id="btnScoreBoard"
                 action="screen=scoreBoard"
-                text="Hi Scores"
+                resource-text="hiScores"
                 font-scale="1.2"
                 y="12" />
 
             <button
                 id="btnAbout"
                 action="screen=about"
-                text="About"
+                resource-text="about"
                 font-scale="1.2"
                 y="9" />
             
@@ -153,7 +153,7 @@
                 id="btnExitGame"
                 action="exit"
                 focus-color="#d0583bff"
-                text="Exit Game"
+                resource-text="exitGame"
                 font-scale="1.2"
                 y="4" />
         </form>
@@ -163,35 +163,35 @@
             <button
                 id="btnPractice"
                 action="screen=practice"
-                text="Practice"
+                resource-text="practice"
                 font-scale="1.2"
                 y="24" />
 
             <button
                 id="btnMiniChallenge"
                 action="screen=minichallenge"
-                text="Mini Challenge"
+                resource-text="miniChallenge"
                 font-scale="1.2"
                 y="20" />
             
             <button
                 id="btnRelax"
                 action="screen=relax"
-                text="Relax Mode"
+                resource-text="relaxMode"
                 font-scale="1.2"
                 y="14" />
 
             <button
                 id="btnRelax"
                 action="screen=normal"
-                text="Normal Mode"
+                resource-text="normalMode"
                 font-scale="1.2"
                 y="10" />
             
             <button
                 id="btnChallenge"
                 action="screen=fullchallenge"
-                text="Full Challenge"
+                resource-text="fullChallenge"
                 font-scale="1.2"
                 y="6" />
             
