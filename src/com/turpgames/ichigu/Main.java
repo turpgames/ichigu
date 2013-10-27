@@ -10,7 +10,7 @@ public class Main {
 		cfg.title = "ichigu";
 		cfg.useGL20 = true;
 
-		float w = 13f;
+		float w = 11f;
 		float h = 16f;
 		float x = 55f;
 
