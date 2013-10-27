@@ -3,6 +3,8 @@ package com.turpgames.ichigu.model.display;
 import com.turpgames.framework.v0.impl.AttachedText;
 import com.turpgames.framework.v0.impl.Text;
 import com.turpgames.framework.v0.util.Color;
+import com.turpgames.framework.v0.util.Game;
+import com.turpgames.framework.v0.util.Utils;
 
 public class IchiguTextButton extends IchiguButton {
 	private Text text;
@@ -35,5 +37,10 @@ public class IchiguTextButton extends IchiguButton {
 	@Override
 	protected void onDraw() {
 		text.draw();
+	}
+
+	@Override
+	public void registerSelf() {
+		Game.getInputManager().register(this, Utils.LAYER_SCREEN);
 	}
 }

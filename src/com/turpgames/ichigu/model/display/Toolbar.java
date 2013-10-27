@@ -108,4 +108,9 @@ public class Toolbar extends IchiguObject {
 		soundButton.draw();
 		vibrationButton.draw();
 	}
+
+	@Override
+	public void registerSelf() {
+		Game.getInputManager().register(this, Utils.LAYER_SCREEN);
+	}
 }

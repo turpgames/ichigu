@@ -28,7 +28,7 @@ public abstract class IchiguState implements IIchiguController {
 
 	@Override
 	public void onScreenActivated() {
-
+		
 	}
 
 	@Override

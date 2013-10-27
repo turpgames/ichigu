@@ -1,21 +1,24 @@
 package com.turpgames.ichigu.model.fullgame;
 
 import com.turpgames.framework.v0.impl.Text;
+import com.turpgames.framework.v0.util.Game;
 import com.turpgames.framework.v0.util.Timer;
+import com.turpgames.framework.v0.util.Utils;
+import com.turpgames.ichigu.model.game.BlinkingGameInfo;
 import com.turpgames.ichigu.model.game.Card;
-import com.turpgames.ichigu.model.game.BlinkingTimeInfo;
 import com.turpgames.ichigu.model.game.GameInfo;
-import com.turpgames.ichigu.model.game.IScreenTouchListener;
+import com.turpgames.ichigu.model.game.IResultScreenButtonsListener;
 import com.turpgames.ichigu.model.game.IchiguMode;
 import com.turpgames.ichigu.model.game.PointsInfo;
-import com.turpgames.ichigu.model.game.ScreenTouchHandler;
+import com.turpgames.ichigu.model.game.ResultScreenButtons;
+import com.turpgames.ichigu.model.game.TryAgainToast;
 import com.turpgames.ichigu.utils.IchiguResources;
+import com.turpgames.ichigu.utils.R;
 
-public abstract class FullGameMode extends IchiguMode {
+public abstract class FullGameMode extends IchiguMode implements IResultScreenButtonsListener {
 
 	protected FullGameCards cards;
 	protected FullGameHint hint;
-	protected ScreenTouchHandler touchHandler;
 	protected int selectedCardCount;
 	
 	protected int ichigusFound;
@@ -25,12 +28,16 @@ public abstract class FullGameMode extends IchiguMode {
 	protected GameInfo remaingCardInfo;
 	
 	protected Timer timer;
-	protected BlinkingTimeInfo timeInfo;
-	protected String modeCompleteTime;
+	protected BlinkingGameInfo timeInfo;
+	protected int modeCompleteTime;
 
 	protected PointsInfo pointsInfo;
 	
 	private boolean areExtraCardsOpened;
+	
+	private TryAgainToast tryAgain;
+	
+	protected ResultScreenButtons resultScreenButtons;
 
 	protected void openCloseCards(boolean open) {
 		for (int i = 0; i < FullGameCards.ActiveCardCount; i++) {
@@ -55,17 +62,10 @@ public abstract class FullGameMode extends IchiguMode {
 		}
 	}
 
-	protected final IScreenTouchListener touchListener = new IScreenTouchListener() {
-		@Override
-		public void onScreenTouched() {
-			notifyNewGame();
-		}
-	};
-
 	public FullGameMode() {
 		cards = new FullGameCards();
 		dealer = new FullGameCardDealer(cards);
-		touchHandler = new ScreenTouchHandler();
+		resultScreenButtons = new ResultScreenButtons(this);
 		
 		ichigusFoundInfo = new GameInfo();
 		ichigusFoundInfo.locate(Text.HAlignRight, Text.VAlignTop);
@@ -75,7 +75,7 @@ public abstract class FullGameMode extends IchiguMode {
 		remaingCardInfo.locate(Text.HAlignCenter, Text.VAlignBottom);
 		remaingCardInfo.setPadding(0, 65);
 		
-		timeInfo = new BlinkingTimeInfo();
+		timeInfo = new BlinkingGameInfo();
 		timeInfo.locate(Text.HAlignCenter, Text.VAlignBottom);
 		timeInfo.setPadding(0, 20);
 		
@@ -85,18 +85,15 @@ public abstract class FullGameMode extends IchiguMode {
 			@Override
 			public void timerTick(Timer timer) {
 				int elapsed = (int) timer.getTotalElapsedTime();
-				int min = elapsed / 60;
-				int sec = elapsed % 60;
-
-				timeInfo.setText((min < 10 ? ("0" + min) : ("" + min)) +
-						":" +
-						(sec < 10 ? ("0" + sec) : ("" + sec)));
+				timeInfo.setText(Utils.getTimeString(elapsed));
 			}
 		});
 
 		hint = new FullGameHint();
 		
 		pointsInfo = new PointsInfo();
+		
+		tryAgain = new TryAgainToast();
 	}
 
 	public FullGameCards getCards() {
@@ -151,6 +148,7 @@ public abstract class FullGameMode extends IchiguMode {
 			areExtraCardsOpened = false;
 		}
 		else {
+			tryAgain.show(1000, 200);
 			notifyInvalidIchiguSelected();
 		}
 		return score;
@@ -210,7 +208,7 @@ public abstract class FullGameMode extends IchiguMode {
 	public void startMode() {
 		cards.empty();
 		dealer.reset();
-		touchHandler.deactivate();
+		resultScreenButtons.listenInput(false);
 		deckCount = 1;
 		ichigusFound = 0;
 		selectedCardCount = 0;
@@ -221,16 +219,16 @@ public abstract class FullGameMode extends IchiguMode {
 
 	public void endMode() {
 		IchiguResources.playSoundTimeUp();
-		modeCompleteTime = timeInfo.getText();
+		modeCompleteTime = (int) timer.getTotalElapsedTime();
 		timer.stop();
 		cards.empty();
 		deactivateCards();
 		hint.deactivate();
-		touchHandler.activate(touchListener);
+		resultScreenButtons.listenInput(true);
 	}
 
 	public boolean exitMode() {
-		touchHandler.deactivate();
+		resultScreenButtons.listenInput(false);
 		deactivateCards();
 		cards.empty();
 		timer.stop();
@@ -262,7 +260,7 @@ public abstract class FullGameMode extends IchiguMode {
 	}
 	
 	protected void drawIchigusFound() {
-		ichigusFoundInfo.setText("Found: " + ichigusFound);
+		ichigusFoundInfo.setText(Game.getResourceManager().getString(R.strings.found) + ": " + ichigusFound);
 		ichigusFoundInfo.draw();
 	}
 }

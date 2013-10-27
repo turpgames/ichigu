@@ -5,10 +5,10 @@ import com.turpgames.framework.v0.effects.flash.IFlashEffectSubject;
 import com.turpgames.framework.v0.util.Color;
 import com.turpgames.ichigu.utils.R;
 
-public class BlinkingTimeInfo extends GameInfo implements IFlashEffectSubject {
+public class BlinkingGameInfo extends GameInfo implements IFlashEffectSubject {
 	private FlashEffect flashEffect;
 	
-	public BlinkingTimeInfo() {
+	public BlinkingGameInfo() {
 		super();
 		flashEffect = new FlashEffect(this, R.colors.ichiguRed, 5);
 		flashEffect.setDuration(30f);

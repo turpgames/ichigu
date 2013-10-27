@@ -21,6 +21,6 @@ public class MiniChallengeModeEndState extends MiniChallengeModeState {
 
 	@Override
 	public void draw() {
-		model.drawResults();
+		model.drawResultScreen();
 	}
 }

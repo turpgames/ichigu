@@ -1,5 +1,8 @@
 package com.turpgames.ichigu.model.game;
 
+import com.turpgames.framework.v0.util.Game;
+import com.turpgames.ichigu.utils.R;
+
 public final class CardAttributes {
 	public static final int AllDiff = 7;
 
@@ -104,10 +107,10 @@ public final class CardAttributes {
 
 	public static String getShapeName(int shape) {
 		if (shape == Shape_Circle)
-			return "Circle";
+			return Game.getResourceManager().getString(R.strings.circle);
 		if (shape == Shape_Square)
-			return "Square";
-		return "Triangle";
+			return Game.getResourceManager().getString(R.strings.square);
+		return Game.getResourceManager().getString(R.strings.triangle);
 	}
 
 	private int color;

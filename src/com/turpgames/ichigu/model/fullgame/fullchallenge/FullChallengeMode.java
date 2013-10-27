@@ -3,9 +3,12 @@ package com.turpgames.ichigu.model.fullgame.fullchallenge;
 import com.turpgames.framework.v0.forms.xml.Dialog;
 import com.turpgames.framework.v0.impl.Settings;
 import com.turpgames.framework.v0.impl.Text;
+import com.turpgames.framework.v0.util.Game;
 import com.turpgames.framework.v0.util.Timer;
+import com.turpgames.framework.v0.util.Utils;
 import com.turpgames.ichigu.model.fullgame.FullGameMode;
 import com.turpgames.ichigu.model.game.GameInfo;
+import com.turpgames.ichigu.model.game.IchiguDialog;
 import com.turpgames.ichigu.model.game.ScoreInfo;
 import com.turpgames.ichigu.utils.R;
 
@@ -38,11 +41,11 @@ public class FullChallengeMode extends FullGameMode {
 		scoreInfo.locate(Text.HAlignLeft, Text.VAlignTop);
 		scoreInfo.setPadding(7, 110);
 
-		confirmExitDialog = new Dialog();
+		confirmExitDialog = new IchiguDialog();
 		confirmExitDialog.setListener(new Dialog.IDialogListener() {
 			@Override
 			public void onDialogButtonClicked(String id) {
-				onExitConfirmed("Yes".equals(id));
+				onExitConfirmed(R.strings.yes.equals(id));
 			}
 		});
 
@@ -55,9 +58,7 @@ public class FullChallengeMode extends FullGameMode {
 				int min = 4 - elapsed / 60;
 				int sec = 60 - elapsed % 60;
 
-				timeInfo.setText((min < 10 ? ("0" + min) : ("" + min)) +
-						":" +
-						(sec < 10 ? ("0" + sec) : ("" + sec)));
+				timeInfo.setText(Utils.getTimeString(5*60-elapsed));
 				
 				if (min < 0 || sec < 0)
 					timerFinished();
@@ -86,7 +87,7 @@ public class FullChallengeMode extends FullGameMode {
 	private void confirmModeExit() {
 		timer.pause();
 		openCloseCards(false);
-		confirmExitDialog.open("Are you sure you want to exit game? All progress will be lost!");
+		confirmExitDialog.open(Game.getResourceManager().getString(R.strings.exitConfirm));
 	}
 
 	@Override
@@ -107,12 +108,14 @@ public class FullChallengeMode extends FullGameMode {
 		if (score > hiScore)
 			Settings.putInteger(R.settings.hiscores.fullchallenge, score);
 
-		resultInfo.setText(
-				"Game over!\n\nCongratulations,\n" +
-						String.format("You found %d ichigu%s!", ichigusFound, ichigusFound != 1 ? "s" : "") +
-						"\n\n" + scoreInfo.getText() +
-						(score > hiScore ? "\n\nNew High Score!!!" : "") + 
-						"\n\nTouch Screen To Continue");
+		if (ichigusFound != 1)
+			resultInfo.setText(String.format(Game.getResourceManager().getString(R.strings.fullChallengeResultMultiple), 
+				ichigusFound, scoreInfo.getText(), 
+						(score > hiScore ? Game.getResourceManager().getString(R.strings.newHiscore) : "")));
+		else 
+			resultInfo.setText(String.format(Game.getResourceManager().getString(R.strings.fullChallengeResultSingle), 
+				ichigusFound, scoreInfo.getText(), 
+						(score > hiScore ? Game.getResourceManager().getString(R.strings.newHiscore) : "")));
 		
 		isExitConfirmed = true;
 	}
@@ -140,6 +143,7 @@ public class FullChallengeMode extends FullGameMode {
 	@Override
 	public void drawResult() {
 		resultInfo.draw();
+		resultScreenButtons.draw();
 	}
 
 	@Override
@@ -174,5 +178,15 @@ public class FullChallengeMode extends FullGameMode {
 	
 	protected void drawScore() {
 		scoreInfo.draw();
+	}
+
+	@Override
+	public void onBackToMenuTapped() {
+		getChallengeModeListener().onExitConfirmed();
+	}
+
+	@Override
+	public void onNewGameTapped() {
+		notifyNewGame();
 	}
 }

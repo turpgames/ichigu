@@ -7,6 +7,7 @@ import com.turpgames.framework.v0.impl.FormScreen;
 import com.turpgames.framework.v0.util.Game;
 import com.turpgames.ichigu.model.display.Logo;
 import com.turpgames.ichigu.model.display.Toolbar;
+import com.turpgames.ichigu.model.game.IchiguDialog;
 import com.turpgames.ichigu.utils.R;
 
 public class MenuScreen extends FormScreen implements IGameExitListener {
@@ -25,11 +26,11 @@ public class MenuScreen extends FormScreen implements IGameExitListener {
 		registerDrawable(logo, 1);
 		registerDrawable(IchiguGame.getToolbar(), 1);
 		
-		exitConfirm = new Dialog();
+		exitConfirm = new IchiguDialog();
 		exitConfirm.setListener(new Dialog.IDialogListener() {			
 			@Override
 			public void onDialogButtonClicked(String id) {
-				if ("Yes".equals(id)) {
+				if (R.strings.yes.equals(id)) {
 					Game.exitListener = null;
 					Game.exit();		
 				}
@@ -50,7 +51,7 @@ public class MenuScreen extends FormScreen implements IGameExitListener {
 	
 	@Override
 	public boolean onGameExit() {
-		exitConfirm.open("Are you sure you want to exit?");
+		exitConfirm.open(Game.getResourceManager().getString(R.strings.exitProgramConfirm));
 		return false;
 	}
 	

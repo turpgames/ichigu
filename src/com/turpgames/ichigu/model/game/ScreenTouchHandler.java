@@ -1,6 +1,7 @@
 package com.turpgames.ichigu.model.game;
 
 import com.turpgames.framework.v0.util.Game;
+import com.turpgames.framework.v0.util.Utils;
 import com.turpgames.ichigu.model.IchiguObject;
 
 public class ScreenTouchHandler extends IchiguObject {
@@ -33,5 +34,10 @@ public class ScreenTouchHandler extends IchiguObject {
 			return true;
 		}
 		return false;
+	}
+
+	@Override
+	public void registerSelf() {
+		Game.getInputManager().register(this, Utils.LAYER_SCREEN);
 	}
 }

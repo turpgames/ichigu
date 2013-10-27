@@ -1,8 +1,10 @@
 package com.turpgames.ichigu.model.game;
 
 import com.turpgames.framework.v0.ITexture;
+import com.turpgames.framework.v0.util.Game;
 import com.turpgames.framework.v0.util.Rotation;
 import com.turpgames.framework.v0.util.TextureDrawer;
+import com.turpgames.framework.v0.util.Utils;
 import com.turpgames.framework.v0.util.Vector;
 import com.turpgames.ichigu.model.IchiguObject;
 import com.turpgames.ichigu.utils.R;
@@ -46,5 +48,10 @@ class Symbol extends IchiguObject {
 	@Override
 	public Rotation getRotation() {
 		return parent.getRotation();
+	}
+
+	@Override
+	public void registerSelf() {
+		Game.getInputManager().register(this, Utils.LAYER_GAME);
 	}
 }

@@ -2,6 +2,8 @@ package com.turpgames.ichigu.model.tutorial;
 
 import com.turpgames.framework.v0.impl.TexturedGameObject;
 import com.turpgames.framework.v0.util.Color;
+import com.turpgames.framework.v0.util.Game;
+import com.turpgames.framework.v0.util.Utils;
 import com.turpgames.ichigu.model.game.Card;
 
 public class TutorialSymbol extends TexturedGameObject {
@@ -10,5 +12,10 @@ public class TutorialSymbol extends TexturedGameObject {
 		setWidth(Card.SymbolWidth);
 		setHeight(Card.SymbolHeight);		
 		getColor().set(color);
+	}
+
+	@Override
+	public void registerSelf() {
+		Game.getInputManager().register(this, Utils.LAYER_SCREEN);
 	}
 }

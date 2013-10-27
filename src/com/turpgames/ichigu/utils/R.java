@@ -96,6 +96,10 @@ public final class R {
 			public static final String normaltime = "hiscore_normal_time";
 			public static final String fullchallenge = "hiscore_challenge";
 		}
+		
+
+		public static final String language = "language";
+		public static final String country = "country";
 	}
 
 	public static final class learningModeScreen {
@@ -145,6 +149,102 @@ public final class R {
 		public final static float imageButtonSize = 64;
 	}
 
+	public static final class strings {
+		public final static String newGame = "newGame";
+		public final static String backToMenu = "backToMenu";
+		
+		public final static String circle = "circle";
+		public final static String square = "square";
+		public final static String triangle = "triangle";
+		
+		public final static String sameShapes = "sameShapes";
+		public final static String sameColors = "sameColors";
+		public final static String samePatterns = "samePatterns";
+		public final static String sameCounts = "sameCounts";
+		public final static String differentShapes = "differentShapes";
+		public final static String differentColors = "differentColors";
+		public final static String differentPatterns = "differentPatterns";
+		public final static String differentCounts = "differentCounts";
+		
+		public final static String score = "score";
+		public final static String found = "found";
+		
+		public final static String exitConfirm = "exitConfirm";
+		public final static String resetConfirm = "resetConfirm";
+		public final static String hiscoreResetConfirm = "hiscoreResetConfirm";
+		public final static String exitProgramConfirm = "exitProgramConfirm";
+		
+		public final static String yes = "yes";
+		public final static String no = "no";
+		
+		public final static String noIchigu = "noIchigu";
+		public final static String oneIchigu = "oneIchigu";
+		public final static String someIchigu = "someIchigu";
+		
+		public final static String tryAgain = "tryAgain";
+		public final static String wait = "wait";
+
+		public final static String fullChallengeResultSingle = "fullChallengeResultSingle";
+		public final static String miniChallengeResultSingle = "miniChallengeResultSingle";
+		public final static String normalResultSingle = "normalResultSingle";
+		public final static String relaxResultSingle = "relaxResultSingle";
+		public final static String fullChallengeResultMultiple = "fullChallengeResultMultiple";
+		public final static String miniChallengeResultMultiple = "miniChallengeResultMultiple";
+		public final static String normalResultMultiple = "normalResultMultiple";
+		public final static String relaxResultMultiple = "relaxResultMultiple";
+		public final static String newHiscore = "newHiscore";
+		
+		public final static String hiscoreReseted = "hiscoreReseted";
+		public final static String resetHiscore = "resetHiscore";
+		public final static String hiscoreInfo = "hiscoreInfo";
+
+		public final static String tutOverviewTitle = "tutOverviewTitle";
+		public final static String tutOverview = "tutOverview";
+		public final static String tutSymbolsTitle = "tutSymbolsTitle";
+		public final static String tutSymbols1 = "tutSymbols1";
+		public final static String tutSymbols2 = "tutSymbols2";
+		public final static String tutIchiguTitle = "tutIchiguTitle";
+		public final static String tutIchigu = "tutIchigu";
+		public final static String tutSampleIchiguTitle = "tutSampleIchiguTitle";
+		public final static String tutSameShape = "tutSameShape";
+		public final static String tutSameColor = "tutSameColor";
+		public final static String tutSamePattern = "tutSamePattern";
+		public final static String tutSameCount = "tutSameCount";
+		public final static String tutDifferentShapes = "tutDifferentShapes";
+		public final static String tutDifferentColors = "tutDifferentColors";
+		public final static String tutDifferentPatterns = "tutDifferentPatterns";
+		public final static String tutDifferentCounts = "tutDifferentCounts";
+
+		public final static String tutGameModesTitle = "tutGameModesTitle";
+		public final static String tutSingleIchiguModes = "tutSingleIchiguModes";
+		public final static String tutFullGameModes = "tutFullGameModes";
+		
+		public final static String tutPracticeModeTitle = "tutSampleIchiguTitle";
+		public final static String tutPracticeMode = "tutSameShape";
+		
+		public final static String tutMiniChallengeModeTitle = "tutMiniChallengeModeTitle";
+		public final static String tutMiniChallengeMode = "tutMiniChallengeMode";
+		
+		public final static String tutRelaxModeTitle = "tutRelaxModeTitle";
+		public final static String tutRelaxMode = "tutRelaxMode";
+		
+		public final static String tutNormalModeTitle = "tutNormalModeTitle";
+		public final static String tutNormalMode = "tutNormalMode";
+		
+		public final static String tutFullChallengeModeTitle = "tutFullChallengeModeTitle";
+		public final static String tutFullChallengeMode = "tutNormalMode";
+
+		public final static String tutScoreTitle = "tutFullChallengeModeTitle";
+		public final static String tutScore = "tutNormalMode";
+
+		public final static String tutSampleIchiguScoreTitle = "tutSampleIchiguScoreTitle";
+		public final static String tutScoreSameShape = "tutScoreSameShape";
+		public final static String tutScoreDifferentColors = "tutScoreDifferentColors";
+		public final static String tutScoreSamePattern = "tutNtutScoreSamePatternormalMode";
+		public final static String tutScoreDifferentCounts = "tutScoreDifferentCounts";
+		public final static String tutScoreTotal = "tutScoreTotal";
+	}
+	
 	private R() {
 	}
 }

@@ -3,6 +3,7 @@ package com.turpgames.ichigu.model.fullgame;
 import com.turpgames.framework.v0.IDrawable;
 import com.turpgames.framework.v0.effects.IEffectEndListener;
 import com.turpgames.framework.v0.forms.xml.Toast;
+import com.turpgames.framework.v0.util.Game;
 import com.turpgames.framework.v0.util.Timer;
 import com.turpgames.framework.v0.util.Vector;
 import com.turpgames.ichigu.model.display.IIchiguButtonListener;
@@ -118,23 +119,21 @@ public class FullGameHint implements IDrawable, IEffectEndListener, Toast.IToast
 		colorIndex++;
 
 		if (colorIndex % 3 == 0)
-			toast.getColor().set(R.colors.ichiguRed);
+			toast.setToastColor(R.colors.ichiguRed);
 		else if (colorIndex % 3 == 1)
-			toast.getColor().set(R.colors.ichiguGreen);
+			toast.setToastColor(R.colors.ichiguGreen);
 		else if (colorIndex % 3 == 2)
-			toast.getColor().set(R.colors.ichiguBlue);
-
-		toast.getColor().a = 0.85f;
+			toast.setToastColor(R.colors.ichiguBlue);
 	}
 
 	private void updateText() {
 		int count = ichiguInfo.getIchiguCount();
 		if (count < 1)
-			text = "No ichigu exists on table";
+			text = Game.getResourceManager().getString(R.strings.noIchigu);
 		else if (count == 1)
-			text = "1 ichigu exists on table";
+			text = Game.getResourceManager().getString(R.strings.oneIchigu);
 		else
-			text = count + " ichigus exist on table";
+			text = count + " " + Game.getResourceManager().getString(R.strings.someIchigu);
 	}
 
 	private void hintEnd() {

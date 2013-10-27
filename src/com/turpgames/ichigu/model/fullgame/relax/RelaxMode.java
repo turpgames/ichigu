@@ -1,12 +1,14 @@
 package com.turpgames.ichigu.model.fullgame.relax;
 
 import com.turpgames.framework.v0.forms.xml.Dialog;
+import com.turpgames.framework.v0.impl.ScreenManager;
 import com.turpgames.framework.v0.impl.Text;
 import com.turpgames.framework.v0.util.Game;
 import com.turpgames.ichigu.model.display.IIchiguButtonListener;
 import com.turpgames.ichigu.model.display.IchiguImageButton;
 import com.turpgames.ichigu.model.fullgame.FullGameMode;
 import com.turpgames.ichigu.model.game.GameInfo;
+import com.turpgames.ichigu.model.game.IchiguDialog;
 import com.turpgames.ichigu.utils.R;
 
 public class RelaxMode extends FullGameMode {
@@ -24,11 +26,11 @@ public class RelaxMode extends FullGameMode {
 
 		remaingCardInfo.setPadding(0, 55);
 		
-		resetConfirmDialog = new Dialog();
+		resetConfirmDialog = new IchiguDialog();
 		resetConfirmDialog.setListener(new Dialog.IDialogListener() {
 			@Override
 			public void onDialogButtonClicked(String id) {
-				onResetConfirmed("Yes".equals(id));
+				onResetConfirmed(R.strings.yes.equals(id));
 			}
 		});
 
@@ -53,7 +55,7 @@ public class RelaxMode extends FullGameMode {
 	}
 
 	private void confirmResetMode() {
-		resetConfirmDialog.open("Are you sure you want to reset game?");
+		resetConfirmDialog.open(Game.getResourceManager().getString(R.strings.resetConfirm));
 		openCloseCards(false);
 	}
 
@@ -72,6 +74,7 @@ public class RelaxMode extends FullGameMode {
 	public void resume() {
 		hint.activate();
 		resetButton.listenInput(true);
+		openCloseCards(true);
 	}
 
 	@Override
@@ -84,12 +87,14 @@ public class RelaxMode extends FullGameMode {
 	@Override
 	public void endMode() {
 		super.endMode();
+		
 		resetConfirmDialog.close();
-		resetButton.listenInput(false);
-
-		resultInfo.setText("Game over!\n\nCongratulations,\n" +
-				String.format("You found %d ichigu%s!", ichigusFound, ichigusFound != 1 ? "s" : "") +
-				"\n\nTouch Screen To Continue");
+		
+		if (ichigusFound != 1)
+			resultInfo.setText(String.format(Game.getResourceManager().getString(R.strings.relaxResultMultiple), ichigusFound));
+		else 
+			resultInfo.setText(String.format(Game.getResourceManager().getString(R.strings.relaxResultSingle), ichigusFound));
+		
 	}
 
 	@Override
@@ -119,6 +124,7 @@ public class RelaxMode extends FullGameMode {
 	 
 	public void drawResult() {
 		resultInfo.draw();
+		resultScreenButtons.draw();
 	}
 
 	protected void drawHint() {
@@ -127,5 +133,16 @@ public class RelaxMode extends FullGameMode {
 
 	protected void drawResetButton() {
 		resetButton.draw();
+	}
+
+	@Override
+	public void onBackToMenuTapped() {
+		exitMode();
+		ScreenManager.instance.switchTo(R.game.screens.menu, true);
+	}
+
+	@Override
+	public void onNewGameTapped() {
+		notifyNewGame();
 	}
 }

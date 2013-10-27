@@ -172,4 +172,9 @@ public class Card extends IchiguObject {
 		card.getLocation().set(x, y);
 		return card;
 	}
+
+	@Override
+	public void registerSelf() {
+		Game.getInputManager().register(this, Utils.LAYER_GAME);
+	}
 }

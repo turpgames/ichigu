@@ -3,6 +3,7 @@ package com.turpgames.ichigu.model.game;
 import com.turpgames.framework.v0.effects.flash.FlashEffect;
 import com.turpgames.framework.v0.effects.flash.IFlashEffectSubject;
 import com.turpgames.framework.v0.util.Color;
+import com.turpgames.framework.v0.util.Game;
 import com.turpgames.ichigu.utils.R;
 
 public class ScoreInfo extends GameInfo implements IFlashEffectSubject {
@@ -37,7 +38,7 @@ public class ScoreInfo extends GameInfo implements IFlashEffectSubject {
 	}
 	
 	private void updateText() {
-		setText("Score: " + this.score);
+		setText(Game.getResourceManager().getString(R.strings.score) + ": " + this.score);
 	}
 
 	@Override

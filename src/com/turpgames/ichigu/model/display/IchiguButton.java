@@ -1,5 +1,6 @@
 package com.turpgames.ichigu.model.display;
 
+import com.turpgames.framework.v0.util.Color;
 import com.turpgames.framework.v0.util.Game;
 import com.turpgames.ichigu.model.IchiguObject;
 import com.turpgames.ichigu.utils.IchiguResources;
@@ -8,9 +9,15 @@ import com.turpgames.ichigu.utils.R;
 abstract class IchiguButton extends IchiguObject {
 	protected boolean isActive;
 	protected IIchiguButtonListener listener;
-
+	protected Color defaultColor;
+	protected Color touchedColor;
+	
 	protected IchiguButton() {
 		activate();
+		defaultColor = new Color();
+		touchedColor = new Color();
+		setDefaultColor(Color.white());
+		setTouchedColor(R.colors.ichiguYellow);
 	}
 
 	public void activate() {
@@ -35,6 +42,14 @@ abstract class IchiguButton extends IchiguObject {
 		this.listener = listener;
 	}
 
+	public void setDefaultColor(Color color) {
+		defaultColor.set(color.r, color.g, color.b, color.a);
+	}
+	
+	public void setTouchedColor(Color color) {
+		touchedColor.set(color.r, color.g, color.b, color.a);
+	}
+	
 	@Override
 	protected boolean onTap() {
 		IchiguResources.playSoundFlip();
@@ -52,12 +67,12 @@ abstract class IchiguButton extends IchiguObject {
 			return;
 
 		if (isTouched()) {
-			getColor().set(R.colors.ichiguYellow.r, R.colors.ichiguYellow.g, R.colors.ichiguYellow.b, getColor().a);
+			getColor().set(touchedColor.r, touchedColor.g, touchedColor.b, getColor().a);
 			getScale().set(1.2f);
 			getRotation().origin.set(getLocation().x + getWidth() / 2, getLocation().y + getHeight() / 2);
 		}
 		else {
-			getColor().set(1, 1, 1, getColor().a);
+			getColor().set(defaultColor.r, defaultColor.g, defaultColor.b, getColor().a);
 			getScale().set(1f);
 		}
 

@@ -5,6 +5,7 @@ import com.turpgames.framework.v0.forms.xml.Dialog;
 import com.turpgames.framework.v0.impl.Settings;
 import com.turpgames.framework.v0.impl.Text;
 import com.turpgames.framework.v0.util.Game;
+import com.turpgames.framework.v0.util.Utils;
 import com.turpgames.ichigu.model.display.IIchiguButtonListener;
 import com.turpgames.ichigu.model.display.IchiguTextButton;
 import com.turpgames.ichigu.utils.R;
@@ -19,25 +20,27 @@ public class HiScores implements IDrawable {
 		info.locate(Text.HAlignCenter, Text.VAlignCenter);
 
 		resetScores = new IchiguTextButton();
-		resetScores.setText("Reset Hi Scores");
+		resetScores.setText(Game.getResourceManager().getString(R.strings.resetHiscore));
+		resetScores.setDefaultColor(R.colors.ichiguYellow);
+		resetScores.setTouchedColor(R.colors.ichiguRed);
 		resetScores.listenInput(false);
 		resetScores.setListener(new IIchiguButtonListener() {
 			@Override
 			public void onButtonTapped() {
-				confirmDialog.open("Are you sure that you want to reset hi-scores?");
+				confirmDialog.open(Game.getResourceManager().getString(R.strings.hiscoreResetConfirm));
 			}
 		});
 
-		confirmDialog = new Dialog();
+		confirmDialog = new IchiguDialog();
 		confirmDialog.setListener(new Dialog.IDialogListener() {
 			@Override
 			public void onDialogButtonClicked(String id) {
-				if ("Yes".equals(id)) {
+				if (R.strings.yes.equals(id)) {
 					Settings.putInteger(R.settings.hiscores.minichallenge, 0);
 					Settings.putInteger(R.settings.hiscores.normal, 0);
 					Settings.putInteger(R.settings.hiscores.normaltime, 0);
 					Settings.putInteger(R.settings.hiscores.fullchallenge, 0);
-					info.setText("Mini Challenge: 0\n\nNormal: 0\nTime: 00:00\n\nFull Challenge: 0\n\n\n\n");
+					info.setText(Game.getResourceManager().getString(R.strings.hiscoreReseted));
 				}
 			}
 		});
@@ -55,12 +58,8 @@ public class HiScores implements IDrawable {
 		int normalTime = Settings.getInteger(R.settings.hiscores.normaltime, 0);
 		int fullchallengeScore = Settings.getInteger(R.settings.hiscores.fullchallenge, 0);
 		
-		int min = normalTime / 60;
-		int sec = normalTime % 60;
-		
-		info.setText("Mini Challenge: " + minichallengeScore + "\n\nNormal: " + normalScore + 
-				"\nTime: " + (min < 10 ? ("0" + min) : ("" + min)) + ":" + (sec < 10 ? ("0" + sec) : ("" + sec)) + 
-				"\n\nFull Challenge: " + fullchallengeScore + "\n\n\n\n");
+		info.setText(String.format(Game.getResourceManager().getString(R.strings.hiscoreInfo),
+				minichallengeScore, normalScore, Utils.getTimeString(normalTime), fullchallengeScore));
 	}
 
 	public void deactivate() {

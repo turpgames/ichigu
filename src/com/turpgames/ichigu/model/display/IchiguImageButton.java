@@ -3,6 +3,7 @@ package com.turpgames.ichigu.model.display;
 import com.turpgames.framework.v0.ITexture;
 import com.turpgames.framework.v0.util.Game;
 import com.turpgames.framework.v0.util.TextureDrawer;
+import com.turpgames.framework.v0.util.Utils;
 import com.turpgames.ichigu.utils.R;
 
 public class IchiguImageButton extends IchiguButton {	
@@ -21,5 +22,10 @@ public class IchiguImageButton extends IchiguButton {
 	@Override
 	protected void onDraw() {
 		TextureDrawer.draw(texture, this);
+	}
+
+	@Override
+	public void registerSelf() {
+		Game.getInputManager().register(this, Utils.LAYER_SCREEN);
 	}
 }

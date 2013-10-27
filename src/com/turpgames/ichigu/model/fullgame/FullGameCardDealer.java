@@ -73,8 +73,8 @@ public class FullGameCardDealer extends CardDealer {
 				deck[i].close();
 		}
 
-//		index = FullGameCards.TotalCardsOnTable + 66;
-		index = FullGameCards.TotalCardsOnTable;
+		index = FullGameCards.TotalCardsOnTable + 66;
+//		index = FullGameCards.TotalCardsOnTable;
 	}
 
 	private void removeIchiguCards() {

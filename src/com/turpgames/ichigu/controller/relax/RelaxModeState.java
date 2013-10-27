@@ -22,7 +22,13 @@ public abstract class RelaxModeState extends IchiguState implements IRelaxModeAc
 
 	@Override
 	public void onNewGame() {
-
+		model.startMode();
+		controller.setDealingState();
+	}
+	
+	@Override
+	public void onScreenActivated() {
+		onNewGame();
 	}
 	
 	@Override

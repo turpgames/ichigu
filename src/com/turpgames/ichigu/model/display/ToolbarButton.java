@@ -3,6 +3,7 @@ package com.turpgames.ichigu.model.display;
 import com.turpgames.framework.v0.ITexture;
 import com.turpgames.framework.v0.util.Game;
 import com.turpgames.framework.v0.util.TextureDrawer;
+import com.turpgames.framework.v0.util.Utils;
 import com.turpgames.ichigu.utils.R;
 
 class ToolbarButton extends IchiguButton {
@@ -68,5 +69,10 @@ class ToolbarButton extends IchiguButton {
 			y = (Game.getScreenHeight() - height) / 2 + marginY;
 
 		getLocation().set(x, y);
+	}
+
+	@Override
+	public void registerSelf() {
+		Game.getInputManager().register(this, Utils.LAYER_SCREEN);
 	}
 }

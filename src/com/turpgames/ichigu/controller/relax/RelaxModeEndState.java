@@ -9,13 +9,7 @@ public class RelaxModeEndState extends RelaxModeState {
 	protected void activated() {
 		model.endMode();
 	}
-
-	@Override
-	public void onNewGame() {
-		model.startMode();
-		controller.setDealingState();
-	}
-
+	
 	@Override
 	public void draw() {
 		model.drawResult();

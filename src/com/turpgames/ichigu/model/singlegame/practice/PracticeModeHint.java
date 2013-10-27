@@ -75,15 +75,17 @@ class PracticeModeHint implements IDrawable, Toast.IToastListener, IEffectEndLis
 			toast.hide();
 			return;
 		}
-		isDisplayingHint = true;
-		String hint = hints.get(index++);
-
-		setToastColor();
-		toast.show(hint, 5000);
-
+		
 		if (index == hints.size()) {
 			index = 0;
 			thirdCard.blink(this, true);
+		}
+		else {
+			isDisplayingHint = true;
+			String hint = hints.get(index++);
+		
+			setToastColor();
+			toast.show(hint, 5000);
 		}
 	}
 
@@ -91,13 +93,11 @@ class PracticeModeHint implements IDrawable, Toast.IToastListener, IEffectEndLis
 		colorIndex++;
 
 		if (colorIndex % 3 == 0)
-			toast.getColor().set(R.colors.ichiguRed);
+			toast.setToastColor(R.colors.ichiguRed);
 		else if (colorIndex % 3 == 1)
-			toast.getColor().set(R.colors.ichiguGreen);
+			toast.setToastColor(R.colors.ichiguGreen);
 		else if (colorIndex % 3 == 2)
-			toast.getColor().set(R.colors.ichiguBlue);
-		
-		toast.getColor().a = 0.85f;
+			toast.setToastColor(R.colors.ichiguBlue);
 	}
 
 	public void update(Card card1, Card card2, Card card3) {
@@ -114,110 +114,58 @@ class PracticeModeHint implements IDrawable, Toast.IToastListener, IEffectEndLis
 		addColorHint(ca1, ca2);
 		addPatternHint(ca1, ca2);
 		addCountHint(ca1, ca2);
-		addFinalHint(ca1, ca2);
+//		addFinalHint(ca1, ca2);
 	}
 
 	private void addShapeHint(CardAttributes ca1, CardAttributes ca2) {
 		if (ca1.getShape() == ca2.getShape()) {
-			hints.add(String.format(
-					"Both first and second cards are %s. " +
-							"So third card must have same shape with them, %s.",
-					ca1.getShapeName(),
-					ca1.getShapeName()));
-			return;
+			hints.add(Game.getResourceManager().getString(R.strings.sameShapes));
 		}
-
-		int shape3 = CardAttributes.getCompleting(ca1.getShape(), ca2.getShape());
-		hints.add(String.format(
-				"First card is %s and second card is %s. " +
-						"Since they have different shapes, third card should have a different shape than the others. " +
-						"So third card must be %s.",
-				ca1.getShapeName(),
-				ca2.getShapeName(),
-				CardAttributes.getShapeName(shape3)
-				));
+		else {
+			hints.add(Game.getResourceManager().getString(R.strings.differentShapes));
+		}
 	}
 
 	private void addColorHint(CardAttributes ca1, CardAttributes ca2) {
 		if (ca1.getColor() == ca2.getColor()) {
-			hints.add(String.format(
-					"Both first and second cards are %s. " +
-							"So third card must have same color with them, %s.",
-					ca1.getColorName(),
-					ca1.getColorName()));
-			return;
+			hints.add(Game.getResourceManager().getString(R.strings.sameColors));
 		}
-
-		int color3 = CardAttributes.getCompleting(ca1.getColor(), ca2.getColor());
-		hints.add(String.format(
-				"First card is %s and second card is %s. " +
-						"Since they have different colors, third card should have a different color than the others. " +
-						"So third card must be %s.",
-				ca1.getColorName(),
-				ca2.getColorName(),
-				CardAttributes.getColorName(color3)
-				));
+		else {
+			hints.add(Game.getResourceManager().getString(R.strings.differentColors));
+		}
 	}
 
 	private void addPatternHint(CardAttributes ca1, CardAttributes ca2) {
 		if (ca1.getPattern() == ca2.getPattern()) {
-			hints.add(String.format(
-					"Both first and second cards are %s. " +
-							"So third card must have same backfilling with them, %s.",
-					ca1.getPatternName(),
-					ca1.getPatternName()));
-			return;
+			hints.add(Game.getResourceManager().getString(R.strings.samePatterns));
 		}
-
-		int pattern3 = CardAttributes.getCompleting(ca1.getPattern(), ca2.getPattern());
-		hints.add(String.format(
-				"First card is %s and second card is %s. " +
-						"Since they have different backfillings, third card should have a different backfilling than the others. " +
-						"So third card must be %s.",
-				ca1.getPatternName(),
-				ca2.getPatternName(),
-				CardAttributes.getPatternName(pattern3)
-				));
+		else {
+			hints.add(Game.getResourceManager().getString(R.strings.differentPatterns));
+		}
 	}
 
 	private void addCountHint(CardAttributes ca1, CardAttributes ca2) {
 		if (ca1.getCount() == ca2.getCount()) {
-			hints.add(String.format(
-					"Both first and second cards have %d symbol%s. " +
-							"So third card must have same symbol count with them, %d.",
-					ca1.getCountValue(),
-					ca1.getCountValue() > 1 ? "s" : "",
-					ca1.getCountValue()
-					));
-			return;
+			hints.add(Game.getResourceManager().getString(R.strings.sameCounts));
 		}
-
-		int count3 = CardAttributes.getCompleting(ca1.getCount(), ca2.getCount());
-		hints.add(String.format(
-				"First card has %d symbol%s and second card has %d symbol%s. " +
-						"Since they have different symbol counts, third card should have a different symbol count than the others. " +
-						"So third card must have %d symbol%s.",
-				ca1.getCountValue(),
-				ca1.getCountValue() > 1 ? "s" : "",
-				ca2.getCountValue(),
-				ca2.getCountValue() > 1 ? "s" : "",
-				CardAttributes.getCountValue(count3),
-				CardAttributes.getCountValue(count3) > 1 ? "s" : ""
-				));
+		else 
+		{
+			hints.add(Game.getResourceManager().getString(R.strings.differentCounts));
+		}
 	}
 
-	private void addFinalHint(CardAttributes ca1, CardAttributes ca2) {
-		int color3 = CardAttributes.getCompleting(ca1.getColor(), ca2.getColor());
-		int count3 = CardAttributes.getCompleting(ca1.getCount(), ca2.getCount());
-		int pattern3 = CardAttributes.getCompleting(ca1.getPattern(), ca2.getPattern());
-		int shape3 = CardAttributes.getCompleting(ca1.getShape(), ca2.getShape());
-
-		hints.add(String.format("Third card must have %d %s %s %s%s",
-				CardAttributes.getCountValue(count3),
-				CardAttributes.getPatternName(pattern3),
-				CardAttributes.getColorName(color3),
-				CardAttributes.getShapeName(shape3),
-				CardAttributes.getCountValue(count3) > 1 ? "s" : ""
-				));
-	}
+//	private void addFinalHint(CardAttributes ca1, CardAttributes ca2) {
+//		int color3 = CardAttributes.getCompleting(ca1.getColor(), ca2.getColor());
+//		int count3 = CardAttributes.getCompleting(ca1.getCount(), ca2.getCount());
+//		int pattern3 = CardAttributes.getCompleting(ca1.getPattern(), ca2.getPattern());
+//		int shape3 = CardAttributes.getCompleting(ca1.getShape(), ca2.getShape());
+//
+//		hints.add(String.format("Third card must have %d %s %s %s%s",
+//				CardAttributes.getCountValue(count3),
+//				CardAttributes.getPatternName(pattern3),
+//				CardAttributes.getColorName(color3),
+//				CardAttributes.getShapeName(shape3),
+//				CardAttributes.getCountValue(count3) > 1 ? "s" : ""
+//				));
+//	}
 }

@@ -11,6 +11,7 @@ import com.turpgames.framework.v0.util.Drawer;
 import com.turpgames.framework.v0.util.Game;
 import com.turpgames.framework.v0.util.TextureDrawer;
 import com.turpgames.framework.v0.util.Timer;
+import com.turpgames.framework.v0.util.Utils;
 import com.turpgames.ichigu.utils.R;
 
 public class PointsInfo extends GameObject implements IFadingEffectSubject {
@@ -70,6 +71,11 @@ public class PointsInfo extends GameObject implements IFadingEffectSubject {
 			this.text.getColor().a = alpha;
 			this.extraText.getColor().a = alpha;
 			getColor().a = alpha;
+		}
+
+		@Override
+		public void registerSelf() {
+			Game.getInputManager().register(this, Utils.LAYER_INFO);
 		}
 	}
 
@@ -253,5 +259,10 @@ public class PointsInfo extends GameObject implements IFadingEffectSubject {
 		colorInfo.setAlpha(alpha);
 		countInfo.setAlpha(alpha);
 		patternInfo.setAlpha(alpha);
+	}
+
+	@Override
+	public void registerSelf() {
+		Game.getInputManager().register(this, Utils.LAYER_INFO);
 	}
 }
