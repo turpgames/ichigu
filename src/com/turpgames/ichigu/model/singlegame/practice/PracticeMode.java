@@ -2,20 +2,32 @@ package com.turpgames.ichigu.model.singlegame.practice;
 
 import com.turpgames.framework.v0.util.Game;
 import com.turpgames.ichigu.model.game.Card;
-import com.turpgames.ichigu.model.game.TryAgainToast;
+import com.turpgames.ichigu.model.game.info.FadingPointsInfo;
+import com.turpgames.ichigu.model.game.info.TryAgainToast;
 import com.turpgames.ichigu.model.singlegame.SingleGameCards;
 import com.turpgames.ichigu.model.singlegame.SingleGameMode;
 
 public class PracticeMode extends SingleGameMode {
 	private PracticeModeHint hint;
 	private TryAgainToast tryAgain;
+	private FadingPointsInfo pointsInfo;
 	
 	public PracticeMode() {
 		super();
 		hint = new PracticeModeHint();
 		tryAgain = new TryAgainToast();
+		pointsInfo = new FadingPointsInfo();
 		
 		pointsInfo.getLocation().set(0, Game.getVirtualHeight() - pointsInfo.getHeight() - 45);
+	}
+	
+	@Override
+	public void onCardSelected(Card selectedCard) {
+		int score = cards.checkScore(selectedCard);
+		if (score > 0) {
+			pointsInfo.show(cards.getIchiguCards(selectedCard));
+		}
+		super.onCardSelected(selectedCard);
 	}
 	
 	@Override
@@ -50,7 +62,7 @@ public class PracticeMode extends SingleGameMode {
 
 	@Override
 	protected void wrongCardSelected() {
-		tryAgain.show(1000, 200);
+		tryAgain.show();
 		super.wrongCardSelected();
 	}
 	

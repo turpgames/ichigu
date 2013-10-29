@@ -119,38 +119,38 @@ class PracticeModeHint implements IDrawable, Toast.IToastListener, IEffectEndLis
 
 	private void addShapeHint(CardAttributes ca1, CardAttributes ca2) {
 		if (ca1.getShape() == ca2.getShape()) {
-			hints.add(Game.getResourceManager().getString(R.strings.sameShapes));
+			hints.add(Game.getLanguageManager().getString(R.strings.sameShapes));
 		}
 		else {
-			hints.add(Game.getResourceManager().getString(R.strings.differentShapes));
+			hints.add(Game.getLanguageManager().getString(R.strings.differentShapes));
 		}
 	}
 
 	private void addColorHint(CardAttributes ca1, CardAttributes ca2) {
 		if (ca1.getColor() == ca2.getColor()) {
-			hints.add(Game.getResourceManager().getString(R.strings.sameColors));
+			hints.add(Game.getLanguageManager().getString(R.strings.sameColors));
 		}
 		else {
-			hints.add(Game.getResourceManager().getString(R.strings.differentColors));
+			hints.add(Game.getLanguageManager().getString(R.strings.differentColors));
 		}
 	}
 
 	private void addPatternHint(CardAttributes ca1, CardAttributes ca2) {
 		if (ca1.getPattern() == ca2.getPattern()) {
-			hints.add(Game.getResourceManager().getString(R.strings.samePatterns));
+			hints.add(Game.getLanguageManager().getString(R.strings.samePatterns));
 		}
 		else {
-			hints.add(Game.getResourceManager().getString(R.strings.differentPatterns));
+			hints.add(Game.getLanguageManager().getString(R.strings.differentPatterns));
 		}
 	}
 
 	private void addCountHint(CardAttributes ca1, CardAttributes ca2) {
 		if (ca1.getCount() == ca2.getCount()) {
-			hints.add(Game.getResourceManager().getString(R.strings.sameCounts));
+			hints.add(Game.getLanguageManager().getString(R.strings.sameCounts));
 		}
 		else 
 		{
-			hints.add(Game.getResourceManager().getString(R.strings.differentCounts));
+			hints.add(Game.getLanguageManager().getString(R.strings.differentCounts));
 		}
 	}
 

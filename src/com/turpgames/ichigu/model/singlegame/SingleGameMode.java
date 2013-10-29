@@ -2,17 +2,14 @@ package com.turpgames.ichigu.model.singlegame;
 
 import com.turpgames.ichigu.model.game.Card;
 import com.turpgames.ichigu.model.game.IchiguMode;
-import com.turpgames.ichigu.model.game.PointsInfo;
 import com.turpgames.ichigu.utils.R;
 
 public abstract class SingleGameMode extends IchiguMode {
 	protected SingleGameCards cards;
-	protected PointsInfo pointsInfo;
 	
 	protected SingleGameMode() {
 		cards = new SingleGameCards();
 		dealer = new SingleGameCardDealer(cards);
-		pointsInfo = new PointsInfo();
 	}
 
 	public SingleGameCards getCards() {
@@ -24,7 +21,6 @@ public abstract class SingleGameMode extends IchiguMode {
 		int score = cards.checkScore(selectedCard);
 		if (score > 0) {
 			notifyIchiguFound();
-			pointsInfo.show(cards.getIchiguCards(selectedCard));
 		} else
 			wrongCardSelected();
 	}

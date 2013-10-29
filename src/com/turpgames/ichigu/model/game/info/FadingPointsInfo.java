@@ -1,4 +1,4 @@
-package com.turpgames.ichigu.model.game;
+package com.turpgames.ichigu.model.game.info;
 
 import com.turpgames.framework.v0.ITexture;
 import com.turpgames.framework.v0.effects.IEffectEndListener;
@@ -12,9 +12,10 @@ import com.turpgames.framework.v0.util.Game;
 import com.turpgames.framework.v0.util.TextureDrawer;
 import com.turpgames.framework.v0.util.Timer;
 import com.turpgames.framework.v0.util.Utils;
+import com.turpgames.ichigu.model.game.CardAttributes;
 import com.turpgames.ichigu.utils.R;
 
-public class PointsInfo extends GameObject implements IFadingEffectSubject {
+public class FadingPointsInfo extends GameObject implements IFadingEffectSubject {
 	private Timer timer;
 	private FadeOutEffect fadeOutEffect;
 	private boolean isActive;
@@ -141,7 +142,7 @@ public class PointsInfo extends GameObject implements IFadingEffectSubject {
 		setPointInfosPositions();
 	}
 
-	public PointsInfo() {
+	public FadingPointsInfo() {
 		this.setWidth(Game.getVirtualWidth());
 		this.setHeight(PointInfo.pointImageSize + 10);
 		this.getLocation().set(0, Game.getVirtualHeight() - this.getHeight());

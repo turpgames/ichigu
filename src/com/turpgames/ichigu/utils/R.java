@@ -147,6 +147,8 @@ public final class R {
 
 	public static final class ui {
 		public final static float imageButtonSize = 64;
+		public final static float flagButtonWidth = 64;
+		public final static float flagButtonHeight = 64;
 	}
 
 	public static final class strings {
@@ -183,7 +185,12 @@ public final class R {
 		
 		public final static String tryAgain = "tryAgain";
 		public final static String wait = "wait";
+		public final static String points = "points";
 
+		public final static String fullChallengeResult = "fullChallengeResult";
+		public final static String normalResult = "normalResult";
+		public final static String relaxResult = "relaxResult";
+		
 		public final static String fullChallengeResultSingle = "fullChallengeResultSingle";
 		public final static String miniChallengeResultSingle = "miniChallengeResultSingle";
 		public final static String normalResultSingle = "normalResultSingle";

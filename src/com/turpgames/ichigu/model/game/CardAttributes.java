@@ -107,10 +107,10 @@ public final class CardAttributes {
 
 	public static String getShapeName(int shape) {
 		if (shape == Shape_Circle)
-			return Game.getResourceManager().getString(R.strings.circle);
+			return Game.getLanguageManager().getString(R.strings.circle);
 		if (shape == Shape_Square)
-			return Game.getResourceManager().getString(R.strings.square);
-		return Game.getResourceManager().getString(R.strings.triangle);
+			return Game.getLanguageManager().getString(R.strings.square);
+		return Game.getLanguageManager().getString(R.strings.triangle);
 	}
 
 	private int color;

@@ -6,10 +6,10 @@ import com.turpgames.framework.v0.impl.Text;
 import com.turpgames.framework.v0.util.Game;
 import com.turpgames.framework.v0.util.Timer;
 import com.turpgames.framework.v0.util.Utils;
+import com.turpgames.ichigu.model.display.IchiguDialog;
 import com.turpgames.ichigu.model.fullgame.FullGameMode;
-import com.turpgames.ichigu.model.game.GameInfo;
-import com.turpgames.ichigu.model.game.IchiguDialog;
-import com.turpgames.ichigu.model.game.ScoreInfo;
+import com.turpgames.ichigu.model.game.info.GameInfo;
+import com.turpgames.ichigu.model.game.info.ScoreInfo;
 import com.turpgames.ichigu.utils.R;
 
 public class FullChallengeMode extends FullGameMode {
@@ -87,7 +87,7 @@ public class FullChallengeMode extends FullGameMode {
 	private void confirmModeExit() {
 		timer.pause();
 		openCloseCards(false);
-		confirmExitDialog.open(Game.getResourceManager().getString(R.strings.exitConfirm));
+		confirmExitDialog.open(Game.getLanguageManager().getString(R.strings.exitConfirm));
 	}
 
 	@Override
@@ -108,14 +108,17 @@ public class FullChallengeMode extends FullGameMode {
 		if (score > hiScore)
 			Settings.putInteger(R.settings.hiscores.fullchallenge, score);
 
-		if (ichigusFound != 1)
-			resultInfo.setText(String.format(Game.getResourceManager().getString(R.strings.fullChallengeResultMultiple), 
-				ichigusFound, scoreInfo.getText(), 
-						(score > hiScore ? Game.getResourceManager().getString(R.strings.newHiscore) : "")));
-		else 
-			resultInfo.setText(String.format(Game.getResourceManager().getString(R.strings.fullChallengeResultSingle), 
-				ichigusFound, scoreInfo.getText(), 
-						(score > hiScore ? Game.getResourceManager().getString(R.strings.newHiscore) : "")));
+//		if (ichigusFound != 1)
+//			resultInfo.setText(String.format(Game.getLanguageManager().getString(R.strings.fullChallengeResultMultiple), 
+//				ichigusFound, scoreInfo.getText(), 
+//						(score > hiScore ? Game.getLanguageManager().getString(R.strings.newHiscore) : "")));
+//		else 
+//			resultInfo.setText(String.format(Game.getLanguageManager().getString(R.strings.fullChallengeResultSingle), 
+//				ichigusFound, scoreInfo.getText(), 
+//						(score > hiScore ? Game.getLanguageManager().getString(R.strings.newHiscore) : "")));
+		
+		resultInfo.setText(String.format(Game.getLanguageManager().getString(R.strings.fullChallengeResult), 
+				scoreInfo.getText(), (score > hiScore ? Game.getLanguageManager().getString(R.strings.newHiscore) : "")));
 		
 		isExitConfirmed = true;
 	}

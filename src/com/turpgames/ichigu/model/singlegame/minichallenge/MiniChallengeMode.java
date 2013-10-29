@@ -6,14 +6,13 @@ import com.turpgames.framework.v0.impl.Text;
 import com.turpgames.framework.v0.util.Game;
 import com.turpgames.framework.v0.util.Timer;
 import com.turpgames.framework.v0.util.Utils;
-import com.turpgames.ichigu.model.game.BlinkingGameInfo;
+import com.turpgames.ichigu.model.display.IchiguDialog;
 import com.turpgames.ichigu.model.game.Card;
-import com.turpgames.ichigu.model.game.GameInfo;
 import com.turpgames.ichigu.model.game.IResultScreenButtonsListener;
-import com.turpgames.ichigu.model.game.IchiguDialog;
 import com.turpgames.ichigu.model.game.ResultScreenButtons;
-import com.turpgames.ichigu.model.game.ScoreInfo;
-import com.turpgames.ichigu.model.game.ToastGameInfo;
+import com.turpgames.ichigu.model.game.info.BlinkingGameInfo;
+import com.turpgames.ichigu.model.game.info.GameInfo;
+import com.turpgames.ichigu.model.game.info.WaitToast;
 import com.turpgames.ichigu.model.singlegame.SingleGameCards;
 import com.turpgames.ichigu.model.singlegame.SingleGameMode;
 import com.turpgames.ichigu.utils.R;
@@ -28,14 +27,14 @@ public class MiniChallengeMode extends SingleGameMode implements IResultScreenBu
 	private final Timer challengeTimer;
 
 //	private int deals = 0;
-	private int score = 0;
+//	private int score = 0;
 
 	private int ichigusFound;
 	private GameInfo ichigusFoundInfo;
 	
 	private BlinkingGameInfo timeInfo;
-	private ToastGameInfo waitInfo;
-	private ScoreInfo scoreInfo;
+	private WaitToast waitInfo;
+//	private ScoreInfo scoreInfo;
 //	private GameInfo remainingCardsInfo;
 	private GameInfo resultInfo;
 
@@ -53,18 +52,15 @@ public class MiniChallengeMode extends SingleGameMode implements IResultScreenBu
 		timeInfo.locate(Text.HAlignCenter, Text.VAlignBottom);
 		timeInfo.setPadding(0, 75);
 		
-		waitInfo = new ToastGameInfo();
-		waitInfo.setAlpha(1.0f);
-		waitInfo.setToastColor(R.colors.ichiguYellow);
-		waitInfo.setTextColor(R.colors.ichiguRed);
+		waitInfo = new WaitToast();
 		
 		ichigusFoundInfo = new GameInfo();
-		ichigusFoundInfo.locate(Text.HAlignRight, Text.VAlignTop);
+		ichigusFoundInfo.locate(Text.HAlignLeft, Text.VAlignTop);
 		ichigusFoundInfo.setPadding(20, 125);
 
-		scoreInfo = new ScoreInfo();
-		scoreInfo.locate(Text.HAlignLeft, Text.VAlignTop);
-		scoreInfo.setPadding(20, 125);
+//		scoreInfo = new ScoreInfo();
+//		scoreInfo.locate(Text.HAlignLeft, Text.VAlignTop);
+//		scoreInfo.setPadding(20, 125);
 
 //		remainingCardsInfo = new GameInfo();
 //		remainingCardsInfo.locate(Text.HAlignRight, Text.VAlignBottom);
@@ -145,7 +141,7 @@ public class MiniChallengeMode extends SingleGameMode implements IResultScreenBu
 //		dealTimer.pause();
 		challengeTimer.pause();
 		openCloseCards(false);
-		confirmExitDialog.open(Game.getResourceManager().getString(R.strings.exitConfirm));
+		confirmExitDialog.open(Game.getLanguageManager().getString(R.strings.exitConfirm));
 	}
 
 	private void onBlockTimerTick() {
@@ -201,7 +197,7 @@ public class MiniChallengeMode extends SingleGameMode implements IResultScreenBu
 
 	private void block() {
 		blockTimer.start();
-		waitInfo.show(Game.getResourceManager().getString(R.strings.wait) + ": ", blockDuration*1000, 200);
+		waitInfo.show(blockDuration*1000);
 	}
 
 	public void dealEnd() {
@@ -210,8 +206,9 @@ public class MiniChallengeMode extends SingleGameMode implements IResultScreenBu
 	}
 
 	public void startMode() {
-		score = 0;
+//		score = 0;
 		ichigusFound = 0;
+		ichigusFoundInfo.setText(Game.getLanguageManager().getString(R.strings.found) + ": " + ichigusFound);
 //		deals = 0;
 		timeInfo.setText("01:00");
 	}
@@ -224,17 +221,15 @@ public class MiniChallengeMode extends SingleGameMode implements IResultScreenBu
 		cards.empty();
 		isExitConfirmed = true;
 		int hiScore = Settings.getInteger(R.settings.hiscores.minichallenge, 0);
-		if (score > hiScore)
-			Settings.putInteger(R.settings.hiscores.minichallenge, score);
+		if (ichigusFound > hiScore)
+			Settings.putInteger(R.settings.hiscores.minichallenge, ichigusFound);
 		
 		if (ichigusFound != 1)
-			resultInfo.setText(String.format(Game.getResourceManager().getString(R.strings.miniChallengeResultMultiple), 
-				ichigusFound, scoreInfo.getText(), 
-						(score > hiScore ? Game.getResourceManager().getString(R.strings.newHiscore) : "")));
+			resultInfo.setText(String.format(Game.getLanguageManager().getString(R.strings.miniChallengeResultMultiple), 
+				ichigusFound, (ichigusFound > hiScore ? Game.getLanguageManager().getString(R.strings.newHiscore) : "")));
 		else
-			resultInfo.setText(String.format(Game.getResourceManager().getString(R.strings.miniChallengeResultSingle), 
-					ichigusFound, scoreInfo.getText(), 
-							(score > hiScore ? Game.getResourceManager().getString(R.strings.newHiscore) : "")));
+			resultInfo.setText(String.format(Game.getLanguageManager().getString(R.strings.miniChallengeResultSingle), 
+					ichigusFound, (ichigusFound > hiScore ? Game.getLanguageManager().getString(R.strings.newHiscore) : "")));
 	}
 
 	@Override
@@ -244,7 +239,7 @@ public class MiniChallengeMode extends SingleGameMode implements IResultScreenBu
 //			dealTimer.stop();
 			challengeTimer.stop();
 			resultScreenButtons.listenInput(false);
-			score = 0;
+//			score = 0;
 //			deals = 0;
 			confirmExitDialog.close();
 			isExitConfirmed = false;
@@ -260,9 +255,9 @@ public class MiniChallengeMode extends SingleGameMode implements IResultScreenBu
 	public void onCardSelected(Card selectedCard) {
 		int ichiguScore = cards.checkScore(selectedCard);
 		if (ichiguScore > 0) {
-			scoreInfo.increaseScore(ichiguScore);
+//			scoreInfo.increaseScore(ichiguScore);
 			ichigusFound++;
-			ichigusFoundInfo.setText(Game.getResourceManager().getString(R.strings.found) + ": " + ichigusFound);
+			ichigusFoundInfo.setText(Game.getLanguageManager().getString(R.strings.found) + ": " + ichigusFound);
 		}
 		else {
 			block();
@@ -286,7 +281,7 @@ public class MiniChallengeMode extends SingleGameMode implements IResultScreenBu
 
 	public void drawGame() {
 		drawCards();
-		drawScore();
+//		drawScore();
 //		drawRemainingDeals();
 		drawRemainingTime();
 		drawIchigusFound();
@@ -312,9 +307,9 @@ public class MiniChallengeMode extends SingleGameMode implements IResultScreenBu
 		timeInfo.draw();
 	}
 
-	private void drawScore() {
+//	private void drawScore() {
 //		scoreInfo.draw();
-	}
+//	}
 
 //	private void drawRemainingDeals() {
 //		remainingCardsInfo.setText(deals + "/" + totalDeals);
@@ -322,7 +317,7 @@ public class MiniChallengeMode extends SingleGameMode implements IResultScreenBu
 //	}
 
 	private void drawWaitMessage() {
-		waitInfo.setText(Game.getResourceManager().getString(R.strings.wait) + ": " + String.format("%.1f", blockDuration - blockTimer.getElapsedTime()));
+		waitInfo.setText(String.format("%.1f", blockDuration - blockTimer.getElapsedTime()));
 	}
 	
 	protected void drawIchigusFound() {

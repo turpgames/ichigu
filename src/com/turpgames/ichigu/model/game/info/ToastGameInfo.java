@@ -1,43 +1,30 @@
-package com.turpgames.ichigu.model.game;
+package com.turpgames.ichigu.model.game.info;
 
-import com.turpgames.framework.v0.effects.IEffectEndListener;
 import com.turpgames.framework.v0.forms.xml.Toast;
 import com.turpgames.framework.v0.util.Color;
 
-public class ToastGameInfo implements IEffectEndListener, Toast.IToastListener {
-	private boolean isActive;
-
-	private Toast toast;
+public abstract class ToastGameInfo implements Toast.IToastListener {
+	protected Toast toast;
 	
 	public ToastGameInfo() {
 		toast = new Toast();
 		toast.setListener(this);
 	}
 
+	/***
+	 * 
+	 * @param message
+	 * @param duration in milliseconds
+	 * @param toastDuration in milliseconds
+	 */
 	public void show(String message, float duration, float toastDuration) {
 		toast.setDuration(toastDuration);
 		toast.show(message, duration);
-	
-		isActive = true;
-	}
-
-	private void hintEnd() {
-		isActive = false;
-	}
-
-	@Override
-	public boolean onEffectEnd(Object card) {
-		hintEnd();
-		return true;
 	}
 
 	@Override
 	public void onToastHidden(Toast toast) {
-		hintEnd();
-	}
 
-	public boolean isActive() {
-		return isActive;
 	}
 
 	public void setTextColor(Color color) {
@@ -55,5 +42,4 @@ public class ToastGameInfo implements IEffectEndListener, Toast.IToastListener {
 	public void setAlpha(float f) {
 		toast.setAlpha(f);
 	}
-
 }

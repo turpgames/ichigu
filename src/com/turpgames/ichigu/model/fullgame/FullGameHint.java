@@ -21,7 +21,7 @@ public class FullGameHint implements IDrawable, IEffectEndListener, Toast.IToast
 	private int hintIndex;
 	private boolean isActive;
 	private Timer notificationTimer;
-	private int colorIndex;
+//	private int colorIndex;
 
 	private Toast toast;
 
@@ -52,6 +52,7 @@ public class FullGameHint implements IDrawable, IEffectEndListener, Toast.IToast
 
 		toast = new Toast();
 		toast.setListener(this);
+		toast.setToastColor(R.colors.ichiguYellow);
 	}
 
 	public Vector getLocation() {
@@ -100,7 +101,7 @@ public class FullGameHint implements IDrawable, IEffectEndListener, Toast.IToast
 		}
 
 		if (hintIndex == 0) {
-			setToastColor();
+//			setToastColor();
 			toast.show(text, 3000);
 			if (prevIchiguCount != ichiguInfo.getIchiguCount())
 				toast.setText(text);
@@ -115,25 +116,25 @@ public class FullGameHint implements IDrawable, IEffectEndListener, Toast.IToast
 		prevIchiguCount = ichiguInfo.getIchiguCount();
 	}
 
-	private void setToastColor() {
-		colorIndex++;
-
-		if (colorIndex % 3 == 0)
-			toast.setToastColor(R.colors.ichiguRed);
-		else if (colorIndex % 3 == 1)
-			toast.setToastColor(R.colors.ichiguGreen);
-		else if (colorIndex % 3 == 2)
-			toast.setToastColor(R.colors.ichiguBlue);
-	}
+//	private void setToastColor() {
+//		colorIndex++;
+//
+//		if (colorIndex % 3 == 0)
+//			toast.setToastColor(R.colors.ichiguRed);
+//		else if (colorIndex % 3 == 1)
+//			toast.setToastColor(R.colors.ichiguGreen);
+//		else if (colorIndex % 3 == 2)
+//			toast.setToastColor(R.colors.ichiguBlue);
+//	}
 
 	private void updateText() {
 		int count = ichiguInfo.getIchiguCount();
 		if (count < 1)
-			text = Game.getResourceManager().getString(R.strings.noIchigu);
+			text = Game.getLanguageManager().getString(R.strings.noIchigu);
 		else if (count == 1)
-			text = Game.getResourceManager().getString(R.strings.oneIchigu);
+			text = Game.getLanguageManager().getString(R.strings.oneIchigu);
 		else
-			text = count + " " + Game.getResourceManager().getString(R.strings.someIchigu);
+			text = count + " " + Game.getLanguageManager().getString(R.strings.someIchigu);
 	}
 
 	private void hintEnd() {

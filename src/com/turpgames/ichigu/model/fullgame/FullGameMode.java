@@ -1,19 +1,17 @@
 package com.turpgames.ichigu.model.fullgame;
 
 import com.turpgames.framework.v0.impl.Text;
-import com.turpgames.framework.v0.util.Game;
 import com.turpgames.framework.v0.util.Timer;
 import com.turpgames.framework.v0.util.Utils;
-import com.turpgames.ichigu.model.game.BlinkingGameInfo;
 import com.turpgames.ichigu.model.game.Card;
-import com.turpgames.ichigu.model.game.GameInfo;
 import com.turpgames.ichigu.model.game.IResultScreenButtonsListener;
 import com.turpgames.ichigu.model.game.IchiguMode;
-import com.turpgames.ichigu.model.game.PointsInfo;
 import com.turpgames.ichigu.model.game.ResultScreenButtons;
-import com.turpgames.ichigu.model.game.TryAgainToast;
+import com.turpgames.ichigu.model.game.info.BlinkingGameInfo;
+import com.turpgames.ichigu.model.game.info.GameInfo;
+import com.turpgames.ichigu.model.game.info.PointsToast;
+import com.turpgames.ichigu.model.game.info.TryAgainToast;
 import com.turpgames.ichigu.utils.IchiguResources;
-import com.turpgames.ichigu.utils.R;
 
 public abstract class FullGameMode extends IchiguMode implements IResultScreenButtonsListener {
 
@@ -21,8 +19,8 @@ public abstract class FullGameMode extends IchiguMode implements IResultScreenBu
 	protected FullGameHint hint;
 	protected int selectedCardCount;
 	
-	protected int ichigusFound;
-	protected GameInfo ichigusFoundInfo;
+//	protected int ichigusFound;
+//	protected GameInfo ichigusFoundInfo;
 	
 	protected int deckCount;	
 	protected GameInfo remaingCardInfo;
@@ -31,7 +29,8 @@ public abstract class FullGameMode extends IchiguMode implements IResultScreenBu
 	protected BlinkingGameInfo timeInfo;
 	protected int modeCompleteTime;
 
-	protected PointsInfo pointsInfo;
+	protected PointsToast pointsInfo;
+	protected boolean pointsInfoActive;
 	
 	private boolean areExtraCardsOpened;
 	
@@ -67,10 +66,10 @@ public abstract class FullGameMode extends IchiguMode implements IResultScreenBu
 		dealer = new FullGameCardDealer(cards);
 		resultScreenButtons = new ResultScreenButtons(this);
 		
-		ichigusFoundInfo = new GameInfo();
-		ichigusFoundInfo.locate(Text.HAlignRight, Text.VAlignTop);
-		ichigusFoundInfo.setPadding(10, 110);
-		
+//		ichigusFoundInfo = new GameInfo();
+//		ichigusFoundInfo.locate(Text.HAlignRight, Text.VAlignTop);
+//		ichigusFoundInfo.setPadding(10, 110);
+
 		remaingCardInfo = new GameInfo();
 		remaingCardInfo.locate(Text.HAlignCenter, Text.VAlignBottom);
 		remaingCardInfo.setPadding(0, 65);
@@ -91,7 +90,8 @@ public abstract class FullGameMode extends IchiguMode implements IResultScreenBu
 
 		hint = new FullGameHint();
 		
-		pointsInfo = new PointsInfo();
+		pointsInfo = new PointsToast();
+		pointsInfoActive = true;
 		
 		tryAgain = new TryAgainToast();
 	}
@@ -142,13 +142,14 @@ public abstract class FullGameMode extends IchiguMode implements IResultScreenBu
 	protected int checkIchigu() {
 		int score = cards.getScore();
 		if (score > 0) {
-			ichigusFound++;
+//			ichigusFound++;
 			notifyIchiguFound();
-			pointsInfo.show(cards.getIchiguCards());
+			if (pointsInfoActive)
+				pointsInfo.show(score);
 			areExtraCardsOpened = false;
 		}
 		else {
-			tryAgain.show(1000, 200);
+			tryAgain.show();
 			notifyInvalidIchiguSelected();
 		}
 		return score;
@@ -180,7 +181,13 @@ public abstract class FullGameMode extends IchiguMode implements IResultScreenBu
 		for (int i = 0; i < FullGameCards.ExtraCardCount; i++)
 			cards.getExtraCard(i).open();
 	}
-
+	
+	protected void closeExtraCards() {
+		areExtraCardsOpened = false;
+		for (int i = 0; i < FullGameCards.ExtraCardCount; i++)
+			cards.getExtraCard(i).close();
+	}
+	
 	protected void updateHints() {
 		cards.updateHint(hint);
 
@@ -210,7 +217,7 @@ public abstract class FullGameMode extends IchiguMode implements IResultScreenBu
 		dealer.reset();
 		resultScreenButtons.listenInput(false);
 		deckCount = 1;
-		ichigusFound = 0;
+//		ichigusFound = 0;
 		selectedCardCount = 0;
 		timer.start();
 		hint.activate();
@@ -240,7 +247,7 @@ public abstract class FullGameMode extends IchiguMode implements IResultScreenBu
 		drawTime();
 		drawCards();
 		drawRemainingCards();
-		drawIchigusFound();
+//		drawIchigusFound();
 	}
 
 	public abstract void drawResult();
@@ -259,8 +266,8 @@ public abstract class FullGameMode extends IchiguMode implements IResultScreenBu
 		timeInfo.draw();
 	}
 	
-	protected void drawIchigusFound() {
-		ichigusFoundInfo.setText(Game.getResourceManager().getString(R.strings.found) + ": " + ichigusFound);
-		ichigusFoundInfo.draw();
-	}
+//	protected void drawIchigusFound() {
+//		ichigusFoundInfo.setText(Game.getResourceManager().getString(R.strings.found) + ": " + ichigusFound);
+//		ichigusFoundInfo.draw();
+//	}
 }

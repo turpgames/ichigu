@@ -1,12 +1,13 @@
 package com.turpgames.ichigu.model.game;
 
 import com.turpgames.framework.v0.IDrawable;
+import com.turpgames.framework.v0.ILanguageListener;
 import com.turpgames.framework.v0.util.Game;
 import com.turpgames.ichigu.model.display.IIchiguButtonListener;
 import com.turpgames.ichigu.model.display.IchiguTextButton;
 import com.turpgames.ichigu.utils.R;
 
-public class ResultScreenButtons implements IDrawable {
+public class ResultScreenButtons implements IDrawable, ILanguageListener {
 	private IchiguTextButton backToMenu;
 	private IchiguTextButton newGame;
 	private IResultScreenButtonsListener listener;
@@ -15,7 +16,7 @@ public class ResultScreenButtons implements IDrawable {
 		this.listener = l;
 		
 		backToMenu = new IchiguTextButton();
-		backToMenu.setText(Game.getResourceManager().getString(R.strings.backToMenu));
+		
 		backToMenu.setDefaultColor(R.colors.ichiguYellow);
 		backToMenu.setTouchedColor(R.colors.ichiguRed);
 		backToMenu.listenInput(false);
@@ -25,12 +26,8 @@ public class ResultScreenButtons implements IDrawable {
 				listener.onBackToMenuTapped();
 			}
 		});
-		backToMenu.getLocation().set(
-				(Game.getVirtualWidth() - backToMenu.getWidth()) / 2, 80
-				);
 		
 		newGame = new IchiguTextButton();
-		newGame.setText(Game.getResourceManager().getString(R.strings.newGame));
 		newGame.setDefaultColor(R.colors.ichiguYellow);
 		newGame.setTouchedColor(R.colors.ichiguRed);
 		newGame.listenInput(false);
@@ -40,9 +37,9 @@ public class ResultScreenButtons implements IDrawable {
 				listener.onNewGameTapped();
 			}
 		});
-		newGame.getLocation().set(
-				(Game.getVirtualWidth() - newGame.getWidth()) / 2, 150
-				);
+		
+		setLanguageSensitiveInfo();
+		Game.getLanguageManager().register(this);
 	}
 	
 	public void listenInput(boolean listen) {
@@ -54,5 +51,16 @@ public class ResultScreenButtons implements IDrawable {
 	public void draw() {
 		backToMenu.draw();
 		newGame.draw();
+	}
+
+	private void setLanguageSensitiveInfo() {
+		backToMenu.setText(Game.getLanguageManager().getString(R.strings.backToMenu));
+		backToMenu.getLocation().set((Game.getScreenWidth() - backToMenu.getWidth()) / 2, 80);
+		newGame.setText(Game.getLanguageManager().getString(R.strings.newGame));
+		newGame.getLocation().set((Game.getScreenWidth() - backToMenu.getWidth()) / 2, 150);
+	}
+	@Override
+	public void onLanguageChanged() {
+		setLanguageSensitiveInfo();
 	}
 }

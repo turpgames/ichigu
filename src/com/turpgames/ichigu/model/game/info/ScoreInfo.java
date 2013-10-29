@@ -1,4 +1,4 @@
-package com.turpgames.ichigu.model.game;
+package com.turpgames.ichigu.model.game.info;
 
 import com.turpgames.framework.v0.effects.flash.FlashEffect;
 import com.turpgames.framework.v0.effects.flash.IFlashEffectSubject;
@@ -38,7 +38,7 @@ public class ScoreInfo extends GameInfo implements IFlashEffectSubject {
 	}
 	
 	private void updateText() {
-		setText(Game.getResourceManager().getString(R.strings.score) + ": " + this.score);
+		setText(Game.getLanguageManager().getString(R.strings.score) + ": " + this.score);
 	}
 
 	@Override

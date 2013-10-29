@@ -5,12 +5,12 @@ import com.turpgames.framework.v0.impl.Settings;
 import com.turpgames.framework.v0.impl.Text;
 import com.turpgames.framework.v0.util.Game;
 import com.turpgames.framework.v0.util.Utils;
+import com.turpgames.ichigu.model.display.IchiguDialog;
 import com.turpgames.ichigu.model.fullgame.FullGameMode;
 import com.turpgames.ichigu.model.fullgame.IHintListener;
 import com.turpgames.ichigu.model.game.Card;
-import com.turpgames.ichigu.model.game.GameInfo;
-import com.turpgames.ichigu.model.game.IchiguDialog;
-import com.turpgames.ichigu.model.game.ScoreInfo;
+import com.turpgames.ichigu.model.game.info.GameInfo;
+import com.turpgames.ichigu.model.game.info.ScoreInfo;
 import com.turpgames.ichigu.utils.R;
 
 public class NormalMode extends FullGameMode implements IHintListener {
@@ -73,7 +73,7 @@ public class NormalMode extends FullGameMode implements IHintListener {
 	private void confirmModeExit() {
 		timer.pause();
 		openCloseCards(false);
-		confirmExitDialog.open(Game.getResourceManager().getString(R.strings.exitConfirm));
+		confirmExitDialog.open(Game.getLanguageManager().getString(R.strings.exitConfirm));
 	}
 
 	@Override
@@ -97,15 +97,17 @@ public class NormalMode extends FullGameMode implements IHintListener {
 			Settings.putInteger(R.settings.hiscores.normaltime, modeCompleteTime);
 		}
 
-		if (ichigusFound != 1)
-			resultInfo.setText(String.format(Game.getResourceManager().getString(R.strings.normalResultMultiple),
-				ichigusFound, Utils.getTimeString(modeCompleteTime), scoreInfo.getText(),
-						(score > hiScore || modeCompleteTime < hiTime ? Game.getResourceManager().getString(R.strings.newHiscore) : "")));
-		else
-			resultInfo.setText(String.format(Game.getResourceManager().getString(R.strings.normalResultSingle),
-					ichigusFound, Utils.getTimeString(modeCompleteTime), scoreInfo.getText(),
-							(score > hiScore || modeCompleteTime < hiTime ? Game.getResourceManager().getString(R.strings.newHiscore) : "")));
-		
+//		if (ichigusFound != 1)
+//			resultInfo.setText(String.format(Game.getLanguageManager().getString(R.strings.normalResultMultiple),
+//				ichigusFound, Utils.getTimeString(modeCompleteTime), scoreInfo.getText(),
+//						(score > hiScore || modeCompleteTime < hiTime ? Game.getLanguageManager().getString(R.strings.newHiscore) : "")));
+//		else
+//			resultInfo.setText(String.format(Game.getLanguageManager().getString(R.strings.normalResultSingle),
+//					ichigusFound, Utils.getTimeString(modeCompleteTime), scoreInfo.getText(),
+//							(score > hiScore || modeCompleteTime < hiTime ? Game.getLanguageManager().getString(R.strings.newHiscore) : "")));
+		resultInfo.setText(String.format(Game.getLanguageManager().getString(R.strings.normalResult),
+				Utils.getTimeString(modeCompleteTime), scoreInfo.getText(),
+						(score > hiScore || modeCompleteTime < hiTime ? Game.getLanguageManager().getString(R.strings.newHiscore) : "")));
 		isExitConfirmed = true;
 	}
 

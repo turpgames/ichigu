@@ -1,4 +1,4 @@
-package com.turpgames.ichigu.model.game;
+package com.turpgames.ichigu.model.game.info;
 
 import com.turpgames.framework.v0.util.Game;
 import com.turpgames.ichigu.utils.R;
@@ -12,7 +12,7 @@ public class TryAgainToast extends ToastGameInfo {
 		setTextColor(R.colors.ichiguYellow);
 	}
 	
-	public void show(float duration, float toastDuration) {
-		super.show(Game.getResourceManager().getString(R.strings.tryAgain), duration, toastDuration);
+	public void show() {
+		super.show(Game.getLanguageManager().getString(R.strings.tryAgain), 1000, 200);
 	}
 }

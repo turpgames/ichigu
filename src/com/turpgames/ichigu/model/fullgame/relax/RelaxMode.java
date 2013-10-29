@@ -5,10 +5,10 @@ import com.turpgames.framework.v0.impl.ScreenManager;
 import com.turpgames.framework.v0.impl.Text;
 import com.turpgames.framework.v0.util.Game;
 import com.turpgames.ichigu.model.display.IIchiguButtonListener;
+import com.turpgames.ichigu.model.display.IchiguDialog;
 import com.turpgames.ichigu.model.display.IchiguImageButton;
 import com.turpgames.ichigu.model.fullgame.FullGameMode;
-import com.turpgames.ichigu.model.game.GameInfo;
-import com.turpgames.ichigu.model.game.IchiguDialog;
+import com.turpgames.ichigu.model.game.info.GameInfo;
 import com.turpgames.ichigu.utils.R;
 
 public class RelaxMode extends FullGameMode {
@@ -43,6 +43,8 @@ public class RelaxMode extends FullGameMode {
 				confirmResetMode();
 			}
 		});
+		
+		pointsInfoActive = false;
 	}
 
 	private void onResetConfirmed(boolean reset) {
@@ -55,7 +57,7 @@ public class RelaxMode extends FullGameMode {
 	}
 
 	private void confirmResetMode() {
-		resetConfirmDialog.open(Game.getResourceManager().getString(R.strings.resetConfirm));
+		resetConfirmDialog.open(Game.getLanguageManager().getString(R.strings.resetConfirm));
 		openCloseCards(false);
 	}
 
@@ -63,6 +65,7 @@ public class RelaxMode extends FullGameMode {
 		endMode();
 		startMode();
 		deal();
+		closeExtraCards();
 	}
 
 	public void pause() {
@@ -90,11 +93,12 @@ public class RelaxMode extends FullGameMode {
 		
 		resetConfirmDialog.close();
 		
-		if (ichigusFound != 1)
-			resultInfo.setText(String.format(Game.getResourceManager().getString(R.strings.relaxResultMultiple), ichigusFound));
-		else 
-			resultInfo.setText(String.format(Game.getResourceManager().getString(R.strings.relaxResultSingle), ichigusFound));
+//		if (ichigusFound != 1)
+//			resultInfo.setText(String.format(Game.getLanguageManager().getString(R.strings.relaxResultMultiple), ichigusFound));
+//		else 
+//			resultInfo.setText(String.format(Game.getLanguageManager().getString(R.strings.relaxResultSingle), ichigusFound));
 		
+		resultInfo.setText(Game.getLanguageManager().getString(R.strings.relaxResult));
 	}
 
 	@Override
