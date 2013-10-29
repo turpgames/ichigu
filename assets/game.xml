@@ -364,6 +364,12 @@
                 id="colorall"
                 path="img/points/colorall.png" />
             
+            <texture
+                id="flag_us"
+                path="img/flags/US.png" />
+            <texture
+                id="flag_tr"
+                path="img/flags/TR.png" />
         </textures>
 
         <sounds>
@@ -391,6 +397,20 @@
 
     </resources>
 
+    <languages>
+    
+        <language 
+            id="en"
+            country="US"
+            flag-texture-id="flag_us" />
+        
+        <language
+            id="tr"
+            country="TR"
+            flag-texture-id="flag_tr" />
+        
+    </languages>
+    
     <skins>
 
         <skin id="ppt" >
