@@ -49,8 +49,8 @@ public class MiniChallengeMode extends SingleGameMode implements IResultScreenBu
 		resultScreenButtons = new ResultScreenButtons(this); 
 		
 		timeInfo = new BlinkingGameInfo();
-		timeInfo.locate(Text.HAlignCenter, Text.VAlignBottom);
-		timeInfo.setPadding(0, 75);
+		timeInfo.locate(Text.HAlignRight, Text.VAlignTop);
+		timeInfo.setPadding(20, 125);
 		
 		waitInfo = new WaitToast();
 		

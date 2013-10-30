@@ -13,6 +13,7 @@ public class IchiguTextButton extends IchiguButton {
 		text = new AttachedText(this);
 		text.setPadX(10);
 		text.setPadY(5);
+		text.setWrapped(false);
 	}
 
 	public String getText() {

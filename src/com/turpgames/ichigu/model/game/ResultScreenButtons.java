@@ -55,9 +55,9 @@ public class ResultScreenButtons implements IDrawable, ILanguageListener {
 
 	private void setLanguageSensitiveInfo() {
 		backToMenu.setText(Game.getLanguageManager().getString(R.strings.backToMenu));
-		backToMenu.getLocation().set((Game.getScreenWidth() - backToMenu.getWidth()) / 2, 80);
+		backToMenu.getLocation().set((Game.getVirtualWidth() - backToMenu.getWidth()) / 2, 80);
 		newGame.setText(Game.getLanguageManager().getString(R.strings.newGame));
-		newGame.getLocation().set((Game.getScreenWidth() - backToMenu.getWidth()) / 2, 150);
+		newGame.getLocation().set((Game.getVirtualWidth() - newGame.getWidth()) / 2, 150);
 	}
 	@Override
 	public void onLanguageChanged() {
