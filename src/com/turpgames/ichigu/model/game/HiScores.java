@@ -76,7 +76,7 @@ public class HiScores implements IDrawable, ILanguageListener {
 
 	private void setLanguageSensitiveInfo() {
 		resetScores.setText(Game.getLanguageManager().getString(R.strings.resetHiscore));
-		resetScores.getLocation().set((Game.getVirtualWidth() - resetScores.getWidth()) / 2, 100);
+		resetScores.getLocation().set((Game.getVirtualWidth() - resetScores.getWidth()) / 2, 50);
 	}
 	
 	@Override
