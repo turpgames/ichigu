@@ -23,7 +23,7 @@
 
         <param
             key="default-font"
-            value="JetSet,1" />
+            value="Foobar,1" />
 
         <param
             key="default-skin"
@@ -35,11 +35,11 @@
 
         <param
             key="screen-switcher"
-            value="sliding,0.5" />
+            value="sliding,0.30" />
 
         <param
             key="form-switcher"
-            value="sliding,0.25" />
+            value="sliding,0.30" />
 
         <param
             key="tutorial-page-switcher"
@@ -204,10 +204,38 @@
     <resources>
 
         <fonts>
-
+            
             <font
-                id="JetSet"
-                path="fonts/JetSet.fnt" />
+                id="Gluk"
+                path="fonts/gluk.fnt" />
+            
+            <font
+                id="Aver"
+                path="fonts/aver.fnt" />
+            
+            <font
+                id="Champagne"
+                path="fonts/champagne.fnt" />
+            
+            <font
+                id="Champagne_Bold"
+                path="fonts/champagne_bold.fnt" />
+            
+            <font
+                id="Akachen"
+                path="fonts/akachen.fnt" />
+            
+            <font
+                id="Corbert"
+                path="fonts/corbert.fnt" />
+            
+            <font
+                id="Vegur"
+                path="fonts/vegur.fnt" />
+            
+            <font
+                id="Vegur_Bold"
+                path="fonts/vegur_bold.fnt" />
         </fonts>
 
         <textures>
