@@ -23,7 +23,7 @@
 
         <param
             key="default-font"
-            value="Foobar,1" />
+            value="Akachen,1" />
 
         <param
             key="default-skin"
@@ -393,11 +393,32 @@
                 path="img/points/colorall.png" />
             
             <texture
-                id="flag_us"
-                path="img/flags/US.png" />
+                id="flag_en_us"
+                path="img/flags/EN_US.png" />
             <texture
                 id="flag_tr"
                 path="img/flags/TR.png" />
+            <texture
+                id="flag_it"
+                path="img/flags/IT.png" />
+            <texture
+                id="flag_se"
+                path="img/flags/SE.png" />
+            <texture
+                id="flag_bh"
+                path="img/flags/BH.png" />
+            <texture
+                id="flag_cn"
+                path="img/flags/CN.png" />
+            <texture
+                id="flag_es"
+                path="img/flags/ES.png" />
+            <texture
+                id="flag_de"
+                path="img/flags/DE.png" />
+            <texture
+                id="flag_fr"
+                path="img/flags/FR.png" />
         </textures>
 
         <sounds>
@@ -428,15 +449,58 @@
     <languages>
     
         <language 
-            id="en"
-            country="US"
-            flag-texture-id="flag_us" />
+            id="en-US"
+            flag-texture-id="flag_en_us" 
+            path="lang/Strings_en_US.properties"
+            encoding="Default" />
         
         <language
-            id="tr"
-            country="TR"
-            flag-texture-id="flag_tr" />
+            id="tr-TR"
+            flag-texture-id="flag_tr" 
+            path="lang/Strings_tr_TR.properties"
+            encoding="UTF8" />
         
+        <language 
+            id="it-IT"
+            flag-texture-id="flag_it" 
+            path="lang/Strings_it_IT.properties"
+            encoding="Default" />
+        
+        <language 
+            id="se-SE"
+            flag-texture-id="flag_se" 
+            path="lang/Strings_se_SE.properties"
+            encoding="UTF8" />
+        
+        <language 
+            id="bh-BH"
+            flag-texture-id="flag_bh" 
+            path="lang/Strings_bh_BH.properties"
+            encoding="UTF8" />
+        
+        <language 
+            id="cn-CN"
+            flag-texture-id="flag_cn" 
+            path="lang/Strings_cn_CN.properties"
+            encoding="UTF8" />
+        
+        <language 
+            id="es-ES"
+            flag-texture-id="flag_es" 
+            path="lang/Strings_es_ES.properties"
+            encoding="UTF8" />
+        
+        <language 
+            id="de-DE"
+            flag-texture-id="flag_de" 
+            path="lang/Strings_de_DE.properties"
+            encoding="UTF8" />
+        
+        <language 
+            id="fr-FR"
+            flag-texture-id="flag_fr" 
+            path="lang/Strings_fr_FR.properties"
+            encoding="UTF8" />
     </languages>
     
     <skins>
