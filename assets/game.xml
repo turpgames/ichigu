@@ -55,23 +55,23 @@
         <screen
             id="tutorial"
             class="com.turpgames.ichigu.view.TutorialModeScreen" />
-        
+
         <screen
             id="practice"
             class="com.turpgames.ichigu.view.PracticeModeScreen" />
-        
+
         <screen
             id="minichallenge"
             class="com.turpgames.ichigu.view.MiniChallengeModeScreen" />
-        
+
         <screen
             id="relax"
             class="com.turpgames.ichigu.view.RelaxModeScreen" />
-        
+
         <screen
             id="normal"
             class="com.turpgames.ichigu.view.NormalModeScreen" />
-        
+
         <screen
             id="fullchallenge"
             class="com.turpgames.ichigu.view.FullChallengeModeScreen" />
@@ -83,7 +83,7 @@
         <screen
             id="menu"
             class="com.turpgames.ichigu.view.MenuScreen" />
-        
+
         <screen
             id="splash"
             class="com.turpgames.ichigu.view.SplashScreen" />
@@ -91,7 +91,7 @@
         <screen
             id="scoreBoard"
             class="com.turpgames.ichigu.view.ScoreBoardScreen" />
-        
+
         <screen
             id="about"
             class="com.turpgames.ichigu.view.AboutScreen" />
@@ -113,10 +113,10 @@
 
             <label
                 id="lblBeta"
-                font-scale="0.5"
-                text="beta"
                 cols="16"
+                font-scale="0.5"
                 rows="1"
+                text="beta"
                 x="0"
                 y="25"
                 color="#f9b000ff" />
@@ -124,77 +124,76 @@
             <button
                 id="btnPlay"
                 action="form=playMenu"
-                resource-text="play"
                 font-scale="1.2"
+                resource-text="play"
                 y="20" />
-            
+
             <button
                 id="btnLearning"
                 action="screen=tutorial"
-                resource-text="howToPlay"
                 font-scale="1.2"
+                resource-text="howToPlay"
                 y="15" />
 
             <button
                 id="btnScoreBoard"
                 action="screen=scoreBoard"
-                resource-text="hiScores"
                 font-scale="1.2"
+                resource-text="hiScores"
                 y="12" />
 
             <button
                 id="btnAbout"
                 action="screen=about"
-                resource-text="about"
                 font-scale="1.2"
+                resource-text="about"
                 y="9" />
-            
+
             <button
                 id="btnExitGame"
                 action="exit"
                 focus-color="#d0583bff"
-                resource-text="exitGame"
                 font-scale="1.2"
+                resource-text="exitGame"
                 y="4" />
         </form>
-        
-        <form id="playMenu">
-            
+
+        <form id="playMenu" >
+
             <button
                 id="btnPractice"
                 action="screen=practice"
-                resource-text="practice"
                 font-scale="1.2"
+                resource-text="practice"
                 y="24" />
 
             <button
                 id="btnMiniChallenge"
                 action="screen=minichallenge"
-                resource-text="miniChallenge"
                 font-scale="1.2"
+                resource-text="miniChallenge"
                 y="20" />
-            
+
             <button
                 id="btnRelax"
                 action="screen=relax"
-                resource-text="relaxMode"
                 font-scale="1.2"
+                resource-text="relaxMode"
                 y="14" />
 
             <button
                 id="btnRelax"
                 action="screen=normal"
-                resource-text="normalMode"
                 font-scale="1.2"
+                resource-text="normalMode"
                 y="10" />
-            
+
             <button
                 id="btnChallenge"
                 action="screen=fullchallenge"
-                resource-text="fullChallenge"
                 font-scale="1.2"
+                resource-text="fullChallenge"
                 y="6" />
-            
         </form>
     </forms>
 
@@ -204,38 +203,10 @@
     <resources>
 
         <fonts>
-            
-            <font
-                id="Gluk"
-                path="fonts/gluk.fnt" />
-            
-            <font
-                id="Aver"
-                path="fonts/aver.fnt" />
-            
-            <font
-                id="Champagne"
-                path="fonts/champagne.fnt" />
-            
-            <font
-                id="Champagne_Bold"
-                path="fonts/champagne_bold.fnt" />
-            
+
             <font
                 id="Akachen"
                 path="fonts/akachen.fnt" />
-            
-            <font
-                id="Corbert"
-                path="fonts/corbert.fnt" />
-            
-            <font
-                id="Vegur"
-                path="fonts/vegur.fnt" />
-            
-            <font
-                id="Vegur_Bold"
-                path="fonts/vegur_bold.fnt" />
         </fonts>
 
         <textures>
@@ -268,7 +239,7 @@
             <texture
                 id="refresh"
                 path="img/refresh.png" />
-            
+
             <texture
                 id="card-11"
                 path="img/cards/11.png" />
@@ -340,82 +311,99 @@
             <texture
                 id="tb_vibration_on"
                 path="img/toolbar/vibration-on.png" />
-            
+
             <texture
                 id="bg"
                 path="img/bg.png" />
-            
-            
+
             <texture
                 id="shapecircle"
                 path="img/points/shapecircle.png" />
+
             <texture
                 id="shaperectangle"
                 path="img/points/shaperectangle.png" />
+
             <texture
                 id="shapetriangle"
                 path="img/points/shapetriangle.png" />
+
             <texture
                 id="shapeall"
                 path="img/points/shapeall.png" />
-            
+
             <texture
                 id="countone"
                 path="img/points/countone.png" />
+
             <texture
                 id="counttwo"
                 path="img/points/counttwo.png" />
+
             <texture
                 id="countthree"
                 path="img/points/countthree.png" />
+
             <texture
                 id="countall"
                 path="img/points/countall.png" />
-            
+
             <texture
                 id="fillempty"
                 path="img/points/fillempty.png" />
+
             <texture
                 id="fillstriped"
                 path="img/points/fillstriped.png" />
+
             <texture
                 id="fillfull"
                 path="img/points/fillfull.png" />
+
             <texture
                 id="fillall"
                 path="img/points/fillall.png" />
-            
+
             <texture
                 id="colorone"
                 path="img/points/colorone.png" />
+
             <texture
                 id="colorall"
                 path="img/points/colorall.png" />
-            
+
             <texture
                 id="flag_en_us"
                 path="img/flags/EN_US.png" />
+
             <texture
                 id="flag_tr"
                 path="img/flags/TR.png" />
+
             <texture
                 id="flag_it"
                 path="img/flags/IT.png" />
+
             <texture
                 id="flag_se"
                 path="img/flags/SE.png" />
+
             <texture
                 id="flag_bh"
                 path="img/flags/BH.png" />
+
             <texture
                 id="flag_cn"
                 path="img/flags/CN.png" />
+
             <texture
                 id="flag_es"
                 path="img/flags/ES.png" />
+
             <texture
                 id="flag_de"
                 path="img/flags/DE.png" />
+
             <texture
                 id="flag_fr"
                 path="img/flags/FR.png" />
@@ -425,84 +413,83 @@
 
             <sound
                 id="success"
-                path="sound/success.ogg" />
+                path="sound/success.mp3" />
 
             <sound
                 id="error"
-                path="sound/error.ogg" />
+                path="sound/error.mp3" />
 
             <sound
                 id="flip"
-                path="sound/flip.ogg" />
+                path="sound/flip.mp3" />
 
             <sound
                 id="wait"
-                path="sound/wait.ogg" />
+                path="sound/wait.mp3" />
 
             <sound
                 id="time-up"
-                path="sound/time-up.ogg" />
+                path="sound/time-up.mp3" />
         </sounds>
-
     </resources>
 
     <languages>
-    
-        <language 
+
+        <language
             id="en-US"
-            flag-texture-id="flag_en_us" 
-            path="lang/Strings_en_US.properties"
-            encoding="Default" />
-        
+            encoding="UTF8"
+            flag-texture-id="flag_en_us"
+            path="lang/Strings_en_US.properties" />
+
         <language
             id="tr-TR"
-            flag-texture-id="flag_tr" 
-            path="lang/Strings_tr_TR.properties"
-            encoding="UTF8" />
-        
-        <language 
+            encoding="UTF8"
+            flag-texture-id="flag_tr"
+            path="lang/Strings_tr_TR.properties" />
+
+        <language
             id="it-IT"
-            flag-texture-id="flag_it" 
-            path="lang/Strings_it_IT.properties"
-            encoding="Default" />
-        
-        <language 
+            encoding="UTF8"
+            flag-texture-id="flag_it"
+            path="lang/Strings_it_IT.properties" />
+
+        <language
             id="se-SE"
-            flag-texture-id="flag_se" 
-            path="lang/Strings_se_SE.properties"
-            encoding="UTF8" />
-        
-        <language 
+            encoding="UTF8"
+            flag-texture-id="flag_se"
+            path="lang/Strings_se_SE.properties" />
+
+        <language
             id="bh-BH"
-            flag-texture-id="flag_bh" 
-            path="lang/Strings_bh_BH.properties"
-            encoding="UTF8" />
-        
-        <language 
+            encoding="UTF8"
+            flag-texture-id="flag_bh"
+            path="lang/Strings_bh_BH.properties" />
+
+        <language
             id="cn-CN"
-            flag-texture-id="flag_cn" 
-            path="lang/Strings_cn_CN.properties"
-            encoding="UTF8" />
-        
-        <language 
+            encoding="UTF8"
+            flag-texture-id="flag_cn"
+            path="lang/Strings_cn_CN.properties" />
+
+        <language
             id="es-ES"
-            flag-texture-id="flag_es" 
-            path="lang/Strings_es_ES.properties"
-            encoding="UTF8" />
-        
-        <language 
+            encoding="UTF8"
+            flag-texture-id="flag_es"
+            path="lang/Strings_es_ES.properties" />
+
+        <language
             id="de-DE"
-            flag-texture-id="flag_de" 
-            path="lang/Strings_de_DE.properties"
-            encoding="UTF8" />
-        
-        <language 
+            encoding="UTF8"
+            flag-texture-id="flag_de"
+            path="lang/Strings_de_DE.properties" />
+
+        <language
             id="fr-FR"
-            flag-texture-id="flag_fr" 
-            path="lang/Strings_fr_FR.properties"
-            encoding="UTF8" />
+            encoding="UTF8"
+            flag-texture-id="flag_fr"
+            path="lang/Strings_fr_FR.properties" />
     </languages>
-    
+
     <skins>
 
         <skin id="ppt" >
@@ -519,7 +506,7 @@
                 sound-click="flip"
                 vibrate="50"
                 x="4" />
-            
+
             <label
                 halign="center"
                 rows="2"
