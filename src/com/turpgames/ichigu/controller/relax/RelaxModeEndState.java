@@ -16,8 +16,13 @@ public class RelaxModeEndState extends RelaxModeState {
 	}
 	
 	@Override
+	public void onScreenActivated() {
+		model.startMode();
+		controller.setDealingState();		
+	}
+	
+	@Override
 	public boolean onScreenDeactivated() {
-		model.exitMode();
-		return true;
+		return model.exitMode();
 	}
 }

@@ -74,6 +74,7 @@ public class FullGameHint implements IDrawable, IEffectEndListener, Toast.IToast
 	public void update(Card[] cards) {
 		ichiguInfo.update(cards);
 		updateText();
+		toast.hide();
 		hintIndex = 0;
 		isActive = false;
 		this.cards = cards;
