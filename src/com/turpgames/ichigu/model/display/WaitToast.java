@@ -9,8 +9,8 @@ public class WaitToast extends ToastGameInfo {
 	public WaitToast() {
 		super();
 		setAlpha(1.0f);
-		setToastColor(R.colors.ichiguWhite);
-		setTextColor(R.colors.ichiguYellow);
+		setToastColor(R.colors.ichiguRed);
+		setTextColor(R.colors.ichiguWhite);
 	}
 	
 	public void show(float duration) {
