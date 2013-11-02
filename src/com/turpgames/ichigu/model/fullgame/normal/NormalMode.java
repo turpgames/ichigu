@@ -31,7 +31,7 @@ public class NormalMode extends FullGameMode implements IHintListener {
 
 	public NormalMode() {
 		super();
-		hint.getLocation().set(Game.getVirtualWidth() - hint.getWidth() - 10, 30);
+		hint.getLocation().set(Game.getScreenWidth() - hint.getWidth() - 10, Game.viewportToScreenY(30));
 		hint.activate();
 		hint.setHintListener(this);
 		

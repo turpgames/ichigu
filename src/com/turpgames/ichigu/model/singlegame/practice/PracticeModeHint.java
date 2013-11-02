@@ -26,7 +26,7 @@ class PracticeModeHint implements IDrawable, Toast.IToastListener, IEffectEndLis
 		hints = new ArrayList<String>();
 
 		hintButton = new ImageButton(R.ui.imageButtonWidth, R.ui.imageButtonHeight, R.game.textures.hint, R.colors.buttonDefault, R.colors.buttonTouched);
-		hintButton.getLocation().set((Game.getVirtualWidth() - hintButton.getWidth()) / 2, 50);
+		hintButton.getLocation().set((Game.getScreenWidth() - hintButton.getWidth()) / 2, Game.viewportToScreenY(50));
 		hintButton.setListener(new IButtonListener() {
 			@Override
 			public void onButtonTapped() {

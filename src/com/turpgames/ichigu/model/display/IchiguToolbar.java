@@ -21,9 +21,17 @@ public class IchiguToolbar extends Toolbar {
 	}
 
 	private IchiguToolbar() {
-		super();
+		
 	}
 
+	public void enable() {
+		settingsButton.activate();
+	}
+
+	public void disable() {
+		settingsButton.deactivate();
+	}
+	
 	@Override
 	protected void concreteAddBackButton() {
 		backButton = new ImageButton(R.ui.imageButtonWidth, R.ui.imageButtonHeight, R.game.textures.toolbar.back, R.colors.buttonDefault, R.colors.buttonTouched);

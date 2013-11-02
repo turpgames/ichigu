@@ -1,6 +1,7 @@
 package com.turpgames.ichigu.view;
 
 import com.turpgames.framework.v0.IResourceManager;
+import com.turpgames.framework.v0.component.Button;
 import com.turpgames.framework.v0.impl.Screen;
 import com.turpgames.framework.v0.impl.ScreenManager;
 import com.turpgames.framework.v0.util.Color;
@@ -28,17 +29,21 @@ public class SplashScreen extends Screen {
 		super.draw();
 
 		float width = 500 * resourceManager.getProgress();
+		float height = 10;
 		float x = (Game.getVirtualWidth() - width) / 2;
 
-		ShapeDrawer.drawRect(x, 100, width, 10, progressColor, true, false);
+		ShapeDrawer.drawRect(x, 100, width, height, progressColor, true, false);
 	}
 
 	@Override
 	public void update() {
-		if (!resourceManager.isLoading())
+		if (!resourceManager.isLoading()) {
+			Button.defaultClickSound = Game.getResourceManager().getSound(R.game.sounds.flip);
 			switchToMenu();
-		else
+		}
+		else {
 			setProgressColor(resourceManager.getProgress());
+		}
 	}
 
 	private void setProgressColor(float progress) {

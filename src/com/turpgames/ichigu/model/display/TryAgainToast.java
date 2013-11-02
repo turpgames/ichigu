@@ -10,7 +10,7 @@ public class TryAgainToast extends ToastGameInfo {
 		super();
 		setAlpha(1.0f);
 		setToastColor(R.colors.ichiguRed);
-		setTextColor(R.colors.ichiguYellow);
+		setTextColor(R.colors.ichiguWhite);
 	}
 	
 	public void show() {

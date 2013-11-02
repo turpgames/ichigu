@@ -19,7 +19,7 @@ public class RelaxMode extends FullGameMode {
 
 	public RelaxMode() {
 		super();
-		hint.getLocation().set(Game.getVirtualWidth() - hint.getWidth() - 10, 30);
+		hint.getLocation().set(Game.getScreenWidth() - hint.getWidth() - 10, Game.viewportToScreenY(30));
 
 		resultInfo = new GameInfo();
 		resultInfo.locate(Text.HAlignCenter, Text.VAlignCenter);
@@ -35,7 +35,7 @@ public class RelaxMode extends FullGameMode {
 		});
 
 		resetButton = new ImageButton(R.ui.imageButtonWidth, R.ui.imageButtonHeight, R.game.textures.refresh, R.colors.buttonDefault, R.colors.buttonTouched);
-		resetButton.getLocation().set(10, 30);
+		resetButton.getLocation().set(10,  Game.viewportToScreenY(30));
 		resetButton.setListener(new IButtonListener() {
 			@Override
 			public void onButtonTapped() {

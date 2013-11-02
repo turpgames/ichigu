@@ -22,8 +22,20 @@ public class MenuScreen extends FormScreen implements IGameExitListener {
 		super.init();
 
 		languageBar = new IchiguLanguageMenu();
-//		languageBar.activate();
-//		registerDrawable(languageBar, 1);
+		languageBar.setListener(new LanguageMenu.ILanguageMenuListener() {
+			
+			@Override
+			public void onLanguageMenuDeactivated() {
+				getCurrentForm().enable();
+				IchiguToolbar.getInstance().enable();
+			}
+			
+			@Override
+			public void onLanguageMenuActivated() {
+				getCurrentForm().disable();
+				IchiguToolbar.getInstance().disable();		
+			}
+		});
 		
 		Dialog.clickSound = Game.getResourceManager().getSound(R.game.sounds.flip);
 		
@@ -79,20 +91,4 @@ public class MenuScreen extends FormScreen implements IGameExitListener {
 		}
 		super.onFormActivated(activatedForm);
 	}
-	
-//	@Override
-//	public boolean keyDown(int keycode) {
-//		if (keycode == Keys.BACK || keycode == Keys.ESCAPE) {
-//			if (formHistory.size() == 0) {
-//				if ("true".equals(Game.getParam("allow-exit-on-back"))) {
-//					Game.exit();
-//				}
-//			}
-//			else {
-//				setForm(formHistory.peek(), true);
-//				return true;
-//			}
-//		}
-//		return super.keyDown(keycode);
-//	}
 }

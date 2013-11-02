@@ -31,14 +31,14 @@ public class IchiguTutorial extends Tutorial {
 	@Override
 	protected void concreteAddNextButton() {
 		nextButton = new ImageButton(R.ui.imageButtonWidth, R.ui.imageButtonHeight, R.game.textures.next, R.colors.buttonDefault, R.colors.buttonTouched);
-		nextButton.getLocation().set(Game.getVirtualWidth() - (nextButton.getWidth() + 10), 100);
+		nextButton.getLocation().set(Game.getScreenWidth() - (nextButton.getWidth() + Game.viewportToScreenX(30)), Game.viewportToScreenY(50));
 	}
 
 	@Override
 	protected void concreteAddPrevButton() {
 		prevButton = new ImageButton(R.ui.imageButtonWidth, R.ui.imageButtonHeight, R.game.textures.prev, R.colors.buttonDefault, R.colors.buttonTouched);
 		prevButton.deactivate();
-		prevButton.getLocation().set(10, 100);
+		prevButton.getLocation().set(Game.viewportToScreenX(30), Game.viewportToScreenY(50));
 	}
 
 	@Override
@@ -154,55 +154,36 @@ public class IchiguTutorial extends Tutorial {
 		page.addInfo("- " + Game.getLanguageManager().getString(R.strings.tutRelaxModeTitle), Text.HAlignLeft, 30).setPadX(100);
 		page.addInfo("- " + Game.getLanguageManager().getString(R.strings.tutNormalModeTitle), Text.HAlignLeft, 30).setPadX(100);
 		page.addInfo("- " + Game.getLanguageManager().getString(R.strings.tutFullChallengeModeTitle), Text.HAlignLeft, 30).setPadX(100);
-//		page.addInfo("- Multiplayer Mode", Text.HAlignLeft, 30).setPadX(100);
 		pages.add(page);
 
 		page = new TutorialPage("11", R.fontSize.medium);
-		page.addInfo(Game.getLanguageManager().getString(R.strings.tutPracticeModeTitle), Text.HAlignCenter, marginTop).getColor().set(R.colors.ichiguYellow);
-		page.addInfo(Game.getLanguageManager().getString(R.strings.tutPracticeMode), Text.HAlignLeft, 50).setPadX(10);
-		pages.add(page);
-
-		page = new TutorialPage("12", R.fontSize.medium);
 		page.addInfo(Game.getLanguageManager().getString(R.strings.tutMiniChallengeModeTitle), Text.HAlignCenter, marginTop).getColor().set(R.colors.ichiguYellow);
 		page.addInfo(Game.getLanguageManager().getString(R.strings.tutMiniChallengeMode), Text.HAlignLeft, 50).setPadX(10);
 		pages.add(page);
 
-		page = new TutorialPage("13", R.fontSize.medium);
+		page = new TutorialPage("12", R.fontSize.medium);
 		page.addInfo(Game.getLanguageManager().getString(R.strings.tutRelaxModeTitle), Text.HAlignCenter, marginTop).getColor().set(R.colors.ichiguYellow);
 		page.addInfo(Game.getLanguageManager().getString(R.strings.tutRelaxMode), Text.HAlignLeft, 50).setPadX(10);
 		page.addInfo("", Text.HAlignLeft, 30).setPadX(10);
 		page.addInfo("", Text.HAlignLeft, 30).setPadX(10);
 		pages.add(page);
 		
-		page = new TutorialPage("14", R.fontSize.medium);
+		page = new TutorialPage("13", R.fontSize.medium);
 		page.addInfo(Game.getLanguageManager().getString(R.strings.tutNormalModeTitle), Text.HAlignCenter, marginTop).getColor().set(R.colors.ichiguYellow);
 		page.addInfo(Game.getLanguageManager().getString(R.strings.tutNormalMode), Text.HAlignLeft, 50).setPadX(10);
 		pages.add(page);
 		
-		page = new TutorialPage("15", R.fontSize.medium);
+		page = new TutorialPage("14", R.fontSize.medium);
 		page.addInfo(Game.getLanguageManager().getString(R.strings.tutFullChallengeModeTitle), Text.HAlignCenter, marginTop).getColor().set(R.colors.ichiguYellow);
 		page.addInfo(Game.getLanguageManager().getString(R.strings.tutFullChallengeMode), Text.HAlignLeft, 50).setPadX(10);
 		pages.add(page);
 
-//		page = new TutorialPage("15");
-//		page.addInfo("Multiplayer Mode", Text.HAlignCenter, marginTop).getColor().set(R.colors.ichiguYellow);
-//		page.addInfo("Multiplayer Mode will be available soon where you can play a Full Game with other players online.", Text.HAlignLeft, 50).setPadX(10);
-//		page.addInfo("Multiplayer Mode can be played with 2, 3 or 4 players at the same time.", Text.HAlignLeft, 30).setPadX(10);
-//		pages.add(page);
-
-		page = new TutorialPage("16", R.fontSize.medium);
+		page = new TutorialPage("15", R.fontSize.medium);
 		page.addInfo(Game.getLanguageManager().getString(R.strings.tutScoreTitle), Text.HAlignCenter, marginTop).getColor().set(R.colors.ichiguYellow);
 		page.addInfo(Game.getLanguageManager().getString(R.strings.tutScore), Text.HAlignLeft, 50).setPadX(10);
 		pages.add(page);
 
-//		page = new TutorialPage("17");
-//		page.addInfo("Score", Text.HAlignCenter, marginTop).getColor().set(R.colors.ichiguYellow);
-//		page.addInfo("Taking hints in Normal Mode and Challenge Mode decreases score.", Text.HAlignLeft, 50).setPadX(10);
-//		page.addInfo("In Challenge Mode, if you find an ichigu after opening extra cards you get half of the normal points.", Text.HAlignLeft, 25).setPadX(10);
-//		page.addInfo("Your score won't be deducted if there were no ichigus in the 12 open cards before opening the extra cards.", Text.HAlignLeft, 25).setPadX(10);
-//		pages.add(page);
-
-		page = new TutorialPage("18", R.fontSize.medium);
+		page = new TutorialPage("16", R.fontSize.medium);
 		info = page.addInfo(Game.getLanguageManager().getString(R.strings.tutSampleIchiguScoreTitle), Text.HAlignCenter, marginTop);
 		info.getColor().set(R.colors.ichiguYellow);
 		y = Game.getVirtualHeight() - marginTop - info.getTextAreaHeight() - Card.Height - 30;

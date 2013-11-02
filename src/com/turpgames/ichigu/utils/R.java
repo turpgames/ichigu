@@ -138,7 +138,7 @@ public final class R {
 		
 
 		public static final Color buttonDefault = ichiguWhite;
-		public static final Color buttonTouched = ichiguBlue;
+		public static final Color buttonTouched = ichiguYellow;
 	}
 
 	public static final class fontSize {
