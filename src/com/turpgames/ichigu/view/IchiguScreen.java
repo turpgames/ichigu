@@ -2,7 +2,8 @@ package com.turpgames.ichigu.view;
 
 import com.turpgames.framework.v0.impl.Screen;
 import com.turpgames.framework.v0.impl.ScreenManager;
-import com.turpgames.ichigu.model.display.Toolbar;
+import com.turpgames.framework.v0.util.Utils;
+import com.turpgames.ichigu.model.display.IchiguToolbar;
 import com.turpgames.ichigu.model.game.Background;
 import com.turpgames.ichigu.utils.R;
 
@@ -10,7 +11,7 @@ public abstract class IchiguScreen extends Screen {
 	protected IIchiguViewListener screenListener = IIchiguViewListener.NULL;
 
 	protected void notifyScreenActivated() {
-		registerDrawable(screenListener, 2);
+		registerDrawable(screenListener, Utils.LAYER_SCREEN);
 		screenListener.onScreenActivated();
 	}
 
@@ -29,7 +30,7 @@ public abstract class IchiguScreen extends Screen {
 	@Override
 	protected void onAfterActivate() {
 		notifyScreenActivated();
-		Toolbar.getInstance().activateBackButton();
+		IchiguToolbar.getInstance().activateBackButton();
 	}
 	
 	@Override
@@ -41,8 +42,8 @@ public abstract class IchiguScreen extends Screen {
 	public void init() {
 		super.init();
 
-		registerDrawable(new Background(), 1);
-		registerDrawable(IchiguGame.getToolbar(), 2);
+		registerDrawable(new Background(), Utils.LAYER_BACKGROUND);
+		registerDrawable(IchiguGame.getToolbar(), Utils.LAYER_INFO);
 
 		registerInputListener(this);
 	}

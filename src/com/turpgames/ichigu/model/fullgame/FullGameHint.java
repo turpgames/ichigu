@@ -1,20 +1,20 @@
 package com.turpgames.ichigu.model.fullgame;
 
 import com.turpgames.framework.v0.IDrawable;
+import com.turpgames.framework.v0.component.BlinkingImageButton;
+import com.turpgames.framework.v0.component.IButtonListener;
 import com.turpgames.framework.v0.effects.IEffectEndListener;
 import com.turpgames.framework.v0.forms.xml.Toast;
 import com.turpgames.framework.v0.util.Game;
 import com.turpgames.framework.v0.util.Timer;
 import com.turpgames.framework.v0.util.Vector;
-import com.turpgames.ichigu.model.display.IIchiguButtonListener;
-import com.turpgames.ichigu.model.display.IchiguImageButton;
 import com.turpgames.ichigu.model.game.Card;
 import com.turpgames.ichigu.utils.R;
 
 public class FullGameHint implements IDrawable, IEffectEndListener, Toast.IToastListener {
 	private final static int notificationInterval = 30;
 
-	private IchiguImageButton button;
+	private BlinkingImageButton button;
 	private FullGameIchiguInfo ichiguInfo;
 	private Card[] cards;
 	private String text;
@@ -28,9 +28,9 @@ public class FullGameHint implements IDrawable, IEffectEndListener, Toast.IToast
 	private IHintListener hintListener;
 	
 	FullGameHint() {
-		button = new IchiguImageButton();
+		button = new BlinkingImageButton(R.ui.imageButtonWidth, R.ui.imageButtonHeight, R.colors.ichiguWhite, R.colors.ichiguCyan, 1f, 10);
 		button.setTexture(R.game.textures.hint);
-		button.setListener(new IIchiguButtonListener() {
+		button.setListener(new IButtonListener() {
 			@Override
 			public void onButtonTapped() {
 				notifyHintListener();
@@ -46,7 +46,7 @@ public class FullGameHint implements IDrawable, IEffectEndListener, Toast.IToast
 		notificationTimer.setTickListener(new Timer.ITimerTickListener() {
 			@Override
 			public void timerTick(Timer timer) {
-				button.blink(null, false);
+				button.blink();
 			}
 		});
 

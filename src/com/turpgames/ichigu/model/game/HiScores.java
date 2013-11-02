@@ -2,31 +2,29 @@ package com.turpgames.ichigu.model.game;
 
 import com.turpgames.framework.v0.IDrawable;
 import com.turpgames.framework.v0.ILanguageListener;
+import com.turpgames.framework.v0.component.IButtonListener;
+import com.turpgames.framework.v0.component.TextButton;
+import com.turpgames.framework.v0.component.info.GameInfo;
 import com.turpgames.framework.v0.forms.xml.Dialog;
 import com.turpgames.framework.v0.impl.Settings;
 import com.turpgames.framework.v0.impl.Text;
 import com.turpgames.framework.v0.util.Game;
 import com.turpgames.framework.v0.util.Utils;
-import com.turpgames.ichigu.model.display.IIchiguButtonListener;
 import com.turpgames.ichigu.model.display.IchiguDialog;
-import com.turpgames.ichigu.model.display.IchiguTextButton;
-import com.turpgames.ichigu.model.game.info.GameInfo;
 import com.turpgames.ichigu.utils.R;
 
 public class HiScores implements IDrawable, ILanguageListener {
 	private GameInfo info;
-	private IchiguTextButton resetScores;
+	private TextButton resetScores;
 	private Dialog confirmDialog;
 
 	public HiScores() {
 		info = new GameInfo();
 		info.locate(Text.HAlignCenter, Text.VAlignCenter);
 
-		resetScores = new IchiguTextButton();
-		resetScores.setDefaultColor(R.colors.ichiguYellow);
-		resetScores.setTouchedColor(R.colors.ichiguRed);
+		resetScores = new TextButton(R.colors.ichiguYellow, R.colors.ichiguRed);
 		resetScores.listenInput(false);
-		resetScores.setListener(new IIchiguButtonListener() {
+		resetScores.setListener(new IButtonListener() {
 			@Override
 			public void onButtonTapped() {
 				confirmDialog.open(Game.getLanguageManager().getString(R.strings.hiscoreResetConfirm));
@@ -42,7 +40,8 @@ public class HiScores implements IDrawable, ILanguageListener {
 					Settings.putInteger(R.settings.hiscores.normal, 0);
 					Settings.putInteger(R.settings.hiscores.normaltime, 0);
 					Settings.putInteger(R.settings.hiscores.fullchallenge, 0);
-					info.setText(Game.getLanguageManager().getString(R.strings.hiscoreReseted));
+					info.setText(String.format(Game.getLanguageManager().getString(R.strings.hiscoreInfo),
+							0, 0, Utils.getTimeString(0), 0));
 				}
 			}
 		});

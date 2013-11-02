@@ -6,6 +6,7 @@ import com.turpgames.framework.v0.impl.ScreenManager;
 import com.turpgames.framework.v0.util.Color;
 import com.turpgames.framework.v0.util.Game;
 import com.turpgames.framework.v0.util.ShapeDrawer;
+import com.turpgames.framework.v0.util.Utils;
 import com.turpgames.ichigu.model.display.Logo;
 import com.turpgames.ichigu.utils.R;
 
@@ -17,7 +18,7 @@ public class SplashScreen extends Screen {
 	@Override
 	public void init() {
 		super.init();
-		registerDrawable(new Logo(), 1);
+		registerDrawable(new Logo(), Utils.LAYER_BACKGROUND);
 		progressColor = new Color(R.colors.ichiguRed);
 		resourceManager = Game.getResourceManager();
 	}

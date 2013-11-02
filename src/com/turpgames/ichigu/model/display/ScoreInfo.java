@@ -1,20 +1,15 @@
-package com.turpgames.ichigu.model.game.info;
+package com.turpgames.ichigu.model.display;
 
-import com.turpgames.framework.v0.effects.flash.FlashEffect;
-import com.turpgames.framework.v0.effects.flash.IFlashEffectSubject;
-import com.turpgames.framework.v0.util.Color;
+import com.turpgames.framework.v0.component.info.FlashingGameInfo;
 import com.turpgames.framework.v0.util.Game;
 import com.turpgames.ichigu.utils.R;
 
-public class ScoreInfo extends GameInfo implements IFlashEffectSubject {
+public class ScoreInfo extends FlashingGameInfo {
 	int score;
-	private FlashEffect flashEffect;
 	
 	public ScoreInfo() {
-		super();
+		super(R.colors.ichiguRed, 8, 0.5f);
 		init();
-		flashEffect = new FlashEffect(this, R.colors.ichiguRed, 8);
-		flashEffect.setDuration(0.5f);
 	}
 	
 	public int getScore() {
@@ -29,7 +24,7 @@ public class ScoreInfo extends GameInfo implements IFlashEffectSubject {
 	public void decreaseScore(int score) {
 		this.score -= score;
 		updateText();
-		flashEffect.start();
+		start();
 	}
 
 	public void init() {
@@ -39,10 +34,5 @@ public class ScoreInfo extends GameInfo implements IFlashEffectSubject {
 	
 	private void updateText() {
 		setText(Game.getLanguageManager().getString(R.strings.score) + ": " + this.score);
-	}
-
-	@Override
-	public Color getColor() {
-		return text.getColor();
 	}
 }

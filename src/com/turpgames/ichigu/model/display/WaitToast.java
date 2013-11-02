@@ -1,5 +1,6 @@
-package com.turpgames.ichigu.model.game.info;
+package com.turpgames.ichigu.model.display;
 
+import com.turpgames.framework.v0.component.info.ToastGameInfo;
 import com.turpgames.framework.v0.util.Game;
 import com.turpgames.ichigu.utils.R;
 

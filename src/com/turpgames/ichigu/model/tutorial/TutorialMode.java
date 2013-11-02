@@ -1,14 +1,15 @@
 package com.turpgames.ichigu.model.tutorial;
 
 import com.turpgames.framework.v0.IDrawable;
+import com.turpgames.framework.v0.component.ITutorialListener;
 
 public class TutorialMode implements IDrawable {
 	
-	private Tutorial tutorial;
-	protected ITutorialModeListener modeListener;
+	private IchiguTutorial tutorial;
+	protected ITutorialListener modeListener;
 	
 	public TutorialMode() {
-		tutorial = new Tutorial(new ITutorialModeListener() {
+		tutorial = new IchiguTutorial(new ITutorialListener() {
 			@Override
 			public void onTutorialEnd() {
 				notifyTutorialEnd();
@@ -16,11 +17,11 @@ public class TutorialMode implements IDrawable {
 		});
 	}
 
-	public void setModeListener(ITutorialModeListener modeListener) {
+	public void setModeListener(ITutorialListener modeListener) {
 		this.modeListener = modeListener;
 	}
 	
-	private ITutorialModeListener getModeListener() {
+	private ITutorialListener getModeListener() {
 		return modeListener;
 	}
 

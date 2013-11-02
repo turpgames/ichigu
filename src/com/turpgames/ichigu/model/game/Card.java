@@ -7,7 +7,6 @@ import com.turpgames.framework.v0.ITexture;
 import com.turpgames.framework.v0.util.Game;
 import com.turpgames.framework.v0.util.Rotation;
 import com.turpgames.framework.v0.util.Utils;
-import com.turpgames.ichigu.model.IchiguObject;
 import com.turpgames.ichigu.utils.IchiguResources;
 import com.turpgames.ichigu.utils.R;
 

@@ -1,4 +1,4 @@
-package com.turpgames.ichigu.model.game.info;
+package com.turpgames.ichigu.model.display;
 
 import com.turpgames.framework.v0.ITexture;
 import com.turpgames.framework.v0.effects.IEffectEndListener;
@@ -199,7 +199,7 @@ public class FadingPointsInfo extends GameObject implements IFadingEffectSubject
 		fadeOutEffect.start();
 
 		this.listenInput(true);
-		Drawer.getCurrent().register(this, 1000);
+		Drawer.getCurrent().register(this, Utils.LAYER_INFO);
 	}
 
 	public void dispose() {

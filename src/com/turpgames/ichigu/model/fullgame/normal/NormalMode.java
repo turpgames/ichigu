@@ -1,16 +1,16 @@
 package com.turpgames.ichigu.model.fullgame.normal;
 
+import com.turpgames.framework.v0.component.info.GameInfo;
 import com.turpgames.framework.v0.forms.xml.Dialog;
 import com.turpgames.framework.v0.impl.Settings;
 import com.turpgames.framework.v0.impl.Text;
 import com.turpgames.framework.v0.util.Game;
 import com.turpgames.framework.v0.util.Utils;
 import com.turpgames.ichigu.model.display.IchiguDialog;
+import com.turpgames.ichigu.model.display.ScoreInfo;
 import com.turpgames.ichigu.model.fullgame.FullGameMode;
 import com.turpgames.ichigu.model.fullgame.IHintListener;
 import com.turpgames.ichigu.model.game.Card;
-import com.turpgames.ichigu.model.game.info.GameInfo;
-import com.turpgames.ichigu.model.game.info.ScoreInfo;
 import com.turpgames.ichigu.utils.R;
 
 public class NormalMode extends FullGameMode implements IHintListener {

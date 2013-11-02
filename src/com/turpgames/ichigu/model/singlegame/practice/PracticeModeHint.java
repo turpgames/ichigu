@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.turpgames.framework.v0.IDrawable;
+import com.turpgames.framework.v0.component.IButtonListener;
+import com.turpgames.framework.v0.component.ImageButton;
 import com.turpgames.framework.v0.effects.IEffectEndListener;
 import com.turpgames.framework.v0.forms.xml.Toast;
 import com.turpgames.framework.v0.util.Game;
-import com.turpgames.ichigu.model.display.IIchiguButtonListener;
-import com.turpgames.ichigu.model.display.IchiguImageButton;
 import com.turpgames.ichigu.model.game.Card;
 import com.turpgames.ichigu.model.game.CardAttributes;
 import com.turpgames.ichigu.utils.R;
@@ -19,16 +19,15 @@ class PracticeModeHint implements IDrawable, Toast.IToastListener, IEffectEndLis
 	private Toast toast;
 	private Card thirdCard;
 	private boolean isDisplayingHint;
-	private IchiguImageButton hintButton;
+	private ImageButton hintButton;
 	private int colorIndex;
 
 	PracticeModeHint() {
 		hints = new ArrayList<String>();
 
-		hintButton = new IchiguImageButton();
-		hintButton.setTexture(R.game.textures.hint);
+		hintButton = new ImageButton(R.ui.imageButtonWidth, R.ui.imageButtonHeight, R.game.textures.hint, R.colors.buttonDefault, R.colors.buttonTouched);
 		hintButton.getLocation().set((Game.getVirtualWidth() - hintButton.getWidth()) / 2, 50);
-		hintButton.setListener(new IIchiguButtonListener() {
+		hintButton.setListener(new IButtonListener() {
 			@Override
 			public void onButtonTapped() {
 				showNextHint();
@@ -38,6 +37,7 @@ class PracticeModeHint implements IDrawable, Toast.IToastListener, IEffectEndLis
 		toast = new Toast();
 		toast.setListener(this);
 		toast.setFontScale(R.fontSize.small);
+		toast.setToastColor(R.colors.ichiguYellow);
 	}
 
 	@Override

@@ -1,5 +1,7 @@
 package com.turpgames.ichigu.model.singlegame.minichallenge;
 
+import com.turpgames.framework.v0.component.info.FlashingGameInfo;
+import com.turpgames.framework.v0.component.info.GameInfo;
 import com.turpgames.framework.v0.forms.xml.Dialog;
 import com.turpgames.framework.v0.impl.Settings;
 import com.turpgames.framework.v0.impl.Text;
@@ -7,12 +9,10 @@ import com.turpgames.framework.v0.util.Game;
 import com.turpgames.framework.v0.util.Timer;
 import com.turpgames.framework.v0.util.Utils;
 import com.turpgames.ichigu.model.display.IchiguDialog;
+import com.turpgames.ichigu.model.display.WaitToast;
 import com.turpgames.ichigu.model.game.Card;
 import com.turpgames.ichigu.model.game.IResultScreenButtonsListener;
 import com.turpgames.ichigu.model.game.ResultScreenButtons;
-import com.turpgames.ichigu.model.game.info.BlinkingGameInfo;
-import com.turpgames.ichigu.model.game.info.GameInfo;
-import com.turpgames.ichigu.model.game.info.WaitToast;
 import com.turpgames.ichigu.model.singlegame.SingleGameCards;
 import com.turpgames.ichigu.model.singlegame.SingleGameMode;
 import com.turpgames.ichigu.utils.R;
@@ -32,7 +32,7 @@ public class MiniChallengeMode extends SingleGameMode implements IResultScreenBu
 	private int ichigusFound;
 	private GameInfo ichigusFoundInfo;
 	
-	private BlinkingGameInfo timeInfo;
+	private FlashingGameInfo timeInfo;
 	private WaitToast waitInfo;
 //	private ScoreInfo scoreInfo;
 //	private GameInfo remainingCardsInfo;
@@ -48,7 +48,7 @@ public class MiniChallengeMode extends SingleGameMode implements IResultScreenBu
 //		pointsInfo.initPointInfos();
 		resultScreenButtons = new ResultScreenButtons(this); 
 		
-		timeInfo = new BlinkingGameInfo();
+		timeInfo = new FlashingGameInfo(R.colors.ichiguRed, 5, 30);
 		timeInfo.locate(Text.HAlignRight, Text.VAlignTop);
 		timeInfo.setPadding(20, 125);
 		

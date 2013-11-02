@@ -135,6 +135,10 @@ public final class R {
 		public static final Color ichiguYellow = Color.fromHex("#f9b000ff");
 		public static final Color ichiguCyan = Color.fromHex("#00f9b0ff");
 		public static final Color ichiguMagenta = Color.fromHex("#f900b0ff");
+		
+
+		public static final Color buttonDefault = ichiguWhite;
+		public static final Color buttonTouched = ichiguBlue;
 	}
 
 	public static final class fontSize {
@@ -146,9 +150,12 @@ public final class R {
 	}
 
 	public static final class ui {
-		public final static float imageButtonSize = 64;
-		public final static float flagButtonWidth = 64;
-		public final static float flagButtonHeight = 64;
+		public final static float imageButtonWidth = 64;
+		public final static float imageButtonHeight = 64;
+		public final static float flagButtonWidth = 128;
+		public final static float flagButtonHeight = 128;
+		public final static float flagControlButtonWidth = 64;
+		public final static float flagControlButtonHeight = 64;
 	}
 
 	public static final class strings {
@@ -201,7 +208,6 @@ public final class R {
 		public final static String relaxResultMultiple = "relaxResultMultiple";
 		public final static String newHiscore = "newHiscore";
 		
-		public final static String hiscoreReseted = "hiscoreReseted";
 		public final static String resetHiscore = "resetHiscore";
 		public final static String hiscoreInfo = "hiscoreInfo";
 

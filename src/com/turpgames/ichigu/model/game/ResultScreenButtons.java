@@ -2,36 +2,33 @@ package com.turpgames.ichigu.model.game;
 
 import com.turpgames.framework.v0.IDrawable;
 import com.turpgames.framework.v0.ILanguageListener;
+import com.turpgames.framework.v0.component.IButtonListener;
+import com.turpgames.framework.v0.component.TextButton;
 import com.turpgames.framework.v0.util.Game;
-import com.turpgames.ichigu.model.display.IIchiguButtonListener;
-import com.turpgames.ichigu.model.display.IchiguTextButton;
 import com.turpgames.ichigu.utils.R;
 
 public class ResultScreenButtons implements IDrawable, ILanguageListener {
-	private IchiguTextButton backToMenu;
-	private IchiguTextButton newGame;
+	private TextButton backToMenu;
+	private TextButton newGame;
 	private IResultScreenButtonsListener listener;
 	
 	public ResultScreenButtons(IResultScreenButtonsListener l) {
 		this.listener = l;
 		
-		backToMenu = new IchiguTextButton();
-		
-		backToMenu.setDefaultColor(R.colors.ichiguYellow);
-		backToMenu.setTouchedColor(R.colors.ichiguRed);
+		backToMenu = new TextButton(R.colors.ichiguYellow, R.colors.ichiguRed);
 		backToMenu.listenInput(false);
-		backToMenu.setListener(new IIchiguButtonListener() {
+		backToMenu.setListener(new IButtonListener() {
 			@Override
 			public void onButtonTapped() {
 				listener.onBackToMenuTapped();
 			}
 		});
 		
-		newGame = new IchiguTextButton();
+		newGame = new TextButton(R.colors.ichiguYellow, R.colors.ichiguRed);
 		newGame.setDefaultColor(R.colors.ichiguYellow);
 		newGame.setTouchedColor(R.colors.ichiguRed);
 		newGame.listenInput(false);
-		newGame.setListener(new IIchiguButtonListener() {
+		newGame.setListener(new IButtonListener() {
 			@Override
 			public void onButtonTapped() {
 				listener.onNewGameTapped();

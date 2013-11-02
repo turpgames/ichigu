@@ -1,17 +1,18 @@
 package com.turpgames.ichigu.model.fullgame;
 
+import com.turpgames.framework.v0.component.info.FlashingGameInfo;
+import com.turpgames.framework.v0.component.info.GameInfo;
 import com.turpgames.framework.v0.impl.Text;
 import com.turpgames.framework.v0.util.Timer;
 import com.turpgames.framework.v0.util.Utils;
+import com.turpgames.ichigu.model.display.PointsToast;
+import com.turpgames.ichigu.model.display.TryAgainToast;
 import com.turpgames.ichigu.model.game.Card;
 import com.turpgames.ichigu.model.game.IResultScreenButtonsListener;
 import com.turpgames.ichigu.model.game.IchiguMode;
 import com.turpgames.ichigu.model.game.ResultScreenButtons;
-import com.turpgames.ichigu.model.game.info.BlinkingGameInfo;
-import com.turpgames.ichigu.model.game.info.GameInfo;
-import com.turpgames.ichigu.model.game.info.PointsToast;
-import com.turpgames.ichigu.model.game.info.TryAgainToast;
 import com.turpgames.ichigu.utils.IchiguResources;
+import com.turpgames.ichigu.utils.R;
 
 public abstract class FullGameMode extends IchiguMode implements IResultScreenButtonsListener {
 
@@ -26,7 +27,7 @@ public abstract class FullGameMode extends IchiguMode implements IResultScreenBu
 	protected GameInfo remaingCardInfo;
 	
 	protected Timer timer;
-	protected BlinkingGameInfo timeInfo;
+	protected FlashingGameInfo timeInfo;
 	protected int modeCompleteTime;
 
 	protected PointsToast pointsInfo;
@@ -74,7 +75,7 @@ public abstract class FullGameMode extends IchiguMode implements IResultScreenBu
 		remaingCardInfo.locate(Text.HAlignCenter, Text.VAlignBottom);
 		remaingCardInfo.setPadding(0, 55);
 		
-		timeInfo = new BlinkingGameInfo();
+		timeInfo = new FlashingGameInfo(R.colors.ichiguRed, 5, 30);
 		timeInfo.locate(Text.HAlignRight, Text.VAlignTop);
 		timeInfo.setPadding(7, 110);
 		

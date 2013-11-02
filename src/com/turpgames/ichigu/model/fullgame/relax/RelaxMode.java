@@ -1,18 +1,18 @@
 package com.turpgames.ichigu.model.fullgame.relax;
 
+import com.turpgames.framework.v0.component.IButtonListener;
+import com.turpgames.framework.v0.component.ImageButton;
+import com.turpgames.framework.v0.component.info.GameInfo;
 import com.turpgames.framework.v0.forms.xml.Dialog;
 import com.turpgames.framework.v0.impl.ScreenManager;
 import com.turpgames.framework.v0.impl.Text;
 import com.turpgames.framework.v0.util.Game;
-import com.turpgames.ichigu.model.display.IIchiguButtonListener;
 import com.turpgames.ichigu.model.display.IchiguDialog;
-import com.turpgames.ichigu.model.display.IchiguImageButton;
 import com.turpgames.ichigu.model.fullgame.FullGameMode;
-import com.turpgames.ichigu.model.game.info.GameInfo;
 import com.turpgames.ichigu.utils.R;
 
 public class RelaxMode extends FullGameMode {
-	protected IchiguImageButton resetButton;
+	protected ImageButton resetButton;
 
 	private GameInfo resultInfo;
 	private Dialog resetConfirmDialog;
@@ -34,10 +34,9 @@ public class RelaxMode extends FullGameMode {
 			}
 		});
 
-		resetButton = new IchiguImageButton();
+		resetButton = new ImageButton(R.ui.imageButtonWidth, R.ui.imageButtonHeight, R.game.textures.refresh, R.colors.buttonDefault, R.colors.buttonTouched);
 		resetButton.getLocation().set(10, 30);
-		resetButton.setTexture(R.game.textures.refresh);
-		resetButton.setListener(new IIchiguButtonListener() {
+		resetButton.setListener(new IButtonListener() {
 			@Override
 			public void onButtonTapped() {
 				confirmResetMode();

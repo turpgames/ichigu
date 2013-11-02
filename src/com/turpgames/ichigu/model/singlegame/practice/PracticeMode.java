@@ -1,9 +1,9 @@
 package com.turpgames.ichigu.model.singlegame.practice;
 
 import com.turpgames.framework.v0.util.Game;
+import com.turpgames.ichigu.model.display.FadingPointsInfo;
+import com.turpgames.ichigu.model.display.TryAgainToast;
 import com.turpgames.ichigu.model.game.Card;
-import com.turpgames.ichigu.model.game.info.FadingPointsInfo;
-import com.turpgames.ichigu.model.game.info.TryAgainToast;
 import com.turpgames.ichigu.model.singlegame.SingleGameCards;
 import com.turpgames.ichigu.model.singlegame.SingleGameMode;
 

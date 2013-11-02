@@ -1,102 +1,63 @@
 package com.turpgames.ichigu.model.tutorial;
 
 import java.util.ArrayList;
-import java.util.List;
 
-import com.turpgames.framework.v0.IView;
-import com.turpgames.framework.v0.IViewFinder;
-import com.turpgames.framework.v0.IViewSwitcher;
+import com.turpgames.framework.v0.component.ITutorialListener;
+import com.turpgames.framework.v0.component.ImageButton;
+import com.turpgames.framework.v0.component.Tutorial;
+import com.turpgames.framework.v0.component.TutorialPage;
+import com.turpgames.framework.v0.component.info.GameInfo;
 import com.turpgames.framework.v0.impl.Text;
-import com.turpgames.framework.v0.impl.ViewSwitcher;
 import com.turpgames.framework.v0.util.Game;
-import com.turpgames.framework.v0.util.Utils;
-import com.turpgames.ichigu.model.IchiguObject;
-import com.turpgames.ichigu.model.display.IIchiguButtonListener;
-import com.turpgames.ichigu.model.display.IchiguImageButton;
 import com.turpgames.ichigu.model.game.Card;
 import com.turpgames.ichigu.model.game.CardAttributes;
-import com.turpgames.ichigu.model.game.info.GameInfo;
 import com.turpgames.ichigu.utils.R;
 
-public class Tutorial extends IchiguObject implements IViewFinder {
+public class IchiguTutorial extends Tutorial {
 	private final static float marginTop = 160f;
 
-	private int pageIndex;
-	private List<TutorialPage> pages;
-	private IViewSwitcher switcher;
-
-	private IchiguImageButton nextButton;
-	private IchiguImageButton prevButton;
-	private IchiguImageButton skipButton;
-
-	private ITutorialModeListener listener;
-
-	private GameInfo pageInfo;
-
-	public Tutorial(ITutorialModeListener listener) {
-		this.listener = listener;
-
-		pageInfo = new GameInfo();
-		pageInfo.locate(Text.HAlignCenter, Text.VAlignTop);
-		pageInfo.setPadding(0, 100f);
-		pageInfo.setColor(R.colors.ichiguCyan);
-
-		String pageSwitcher = Game.getParam("tutorial-page-switcher");
-		switcher = ViewSwitcher.createInstance(pageSwitcher);
-		switcher.setViewFinder(this);
-
-		populatePages();
-
-		nextButton = new IchiguImageButton();
-		nextButton.setTexture(R.game.textures.next);
-		nextButton.getLocation().set(Game.getVirtualWidth() - (nextButton.getWidth() + 10), 100);
-		nextButton.setListener(new IIchiguButtonListener() {
-			@Override
-			public void onButtonTapped() {
-				next();
-			}
-		});
-
-		prevButton = new IchiguImageButton();
-		prevButton.setTexture(R.game.textures.prev);
-		prevButton.deactivate();
-		prevButton.getLocation().set(10, 100);
-		prevButton.setListener(new IIchiguButtonListener() {
-			@Override
-			public void onButtonTapped() {
-				prev();
-			}
-		});
-
-		skipButton = new IchiguImageButton();
-		skipButton.setTexture(R.game.textures.skip);
-		skipButton.getLocation().set((Game.getVirtualWidth() - skipButton.getWidth()) / 2, 50);
-		skipButton.setListener(new IIchiguButtonListener() {
-			@Override
-			public void onButtonTapped() {
-				skip();
-			}
-		});
-
-		updatePageInfoText();
+	public IchiguTutorial(ITutorialListener listener) {
+		super(listener);
 	}
 
-	private void populatePages() {
+	@Override
+	protected void addPagesInfo() {
+		pagesInfo = new GameInfo();
+		pagesInfo.locate(Text.HAlignCenter, Text.VAlignTop);
+		pagesInfo.setPadding(0, 100f);
+		pagesInfo.setColor(R.colors.ichiguCyan);
+	}
+
+	@Override
+	protected void concreteAddNextButton() {
+		nextButton = new ImageButton(R.ui.imageButtonWidth, R.ui.imageButtonHeight, R.game.textures.next, R.colors.buttonDefault, R.colors.buttonTouched);
+		nextButton.getLocation().set(Game.getVirtualWidth() - (nextButton.getWidth() + 10), 100);
+	}
+
+	@Override
+	protected void concreteAddPrevButton() {
+		prevButton = new ImageButton(R.ui.imageButtonWidth, R.ui.imageButtonHeight, R.game.textures.prev, R.colors.buttonDefault, R.colors.buttonTouched);
+		prevButton.deactivate();
+		prevButton.getLocation().set(10, 100);
+	}
+
+	@Override
+	protected void populatePages() {
 		pages = new ArrayList<TutorialPage>();
 
 		TutorialPage page;
 
-		page = new TutorialPage("1");
+		page = new TutorialPage("1", R.fontSize.medium);
 		page.addInfo(Game.getLanguageManager().getString(R.strings.tutOverviewTitle), Text.HAlignCenter, marginTop).getColor().set(R.colors.ichiguYellow);
 		page.addInfo(Game.getLanguageManager().getString(R.strings.tutOverview), Text.HAlignLeft, 50).setPadX(10);
 		pages.add(page);
 
-		page = new TutorialPage("2");
+		page = new TutorialPage("2", R.fontSize.medium);
 		page.addInfo(Game.getLanguageManager().getString(R.strings.tutSymbolsTitle), Text.HAlignCenter, marginTop).getColor().set(R.colors.ichiguYellow);
 		page.addInfo(Game.getLanguageManager().getString(R.strings.tutSymbols1), Text.HAlignLeft, 30).setPadX(10);
 		pages.add(page);
 
-		page = new TutorialPage("3");
+		page = new TutorialPage("3", R.fontSize.medium);
 		page.addInfo(Game.getLanguageManager().getString(R.strings.tutSymbolsTitle), Text.HAlignCenter, marginTop).getColor().set(R.colors.ichiguYellow);
 		Text info = page.addInfo(Game.getLanguageManager().getString(R.strings.tutSymbols2), Text.HAlignCenter, 50);
 		float cardSpace = 50;
@@ -109,12 +70,12 @@ public class Tutorial extends IchiguObject implements IViewFinder {
 		page.addImage(Card.createTutorialCard(CardAttributes.Color_Blue, CardAttributes.Shape_Circle, CardAttributes.Count_3, CardAttributes.Pattern_Filled, x3, y));
 		pages.add(page);
 
-		page = new TutorialPage("4");
+		page = new TutorialPage("4", R.fontSize.medium);
 		page.addInfo(Game.getLanguageManager().getString(R.strings.tutIchiguTitle), Text.HAlignCenter, marginTop).getColor().set(R.colors.ichiguYellow);
 		page.addInfo(Game.getLanguageManager().getString(R.strings.tutIchigu), Text.HAlignLeft, 50).setPadX(10);
 		pages.add(page);
 
-		page = new TutorialPage("5");
+		page = new TutorialPage("5", R.fontSize.medium);
 		info = page.addInfo(Game.getLanguageManager().getString(R.strings.tutSampleIchiguTitle), Text.HAlignCenter, marginTop);
 		info.getColor().set(R.colors.ichiguYellow);
 		y = Game.getVirtualHeight() - marginTop - info.getTextAreaHeight() - Card.Height - 50;
@@ -128,7 +89,7 @@ public class Tutorial extends IchiguObject implements IViewFinder {
 		page.addInfo("- " + Game.getLanguageManager().getString(R.strings.tutSameCount), Text.HAlignLeft, 20).setPadX(50);
 		pages.add(page);
 
-		page = new TutorialPage("6");
+		page = new TutorialPage("6", R.fontSize.medium);
 		info = page.addInfo(Game.getLanguageManager().getString(R.strings.tutSampleIchiguTitle), Text.HAlignCenter, marginTop);
 		info.getColor().set(R.colors.ichiguYellow);
 		y = Game.getVirtualHeight() - marginTop - info.getTextAreaHeight() - Card.Height - 50;
@@ -142,7 +103,7 @@ public class Tutorial extends IchiguObject implements IViewFinder {
 		page.addInfo("- " + Game.getLanguageManager().getString(R.strings.tutSameCount), Text.HAlignLeft, 20).setPadX(50);
 		pages.add(page);
 
-		page = new TutorialPage("7");
+		page = new TutorialPage("7", R.fontSize.medium);
 		info = page.addInfo(Game.getLanguageManager().getString(R.strings.tutSampleIchiguTitle), Text.HAlignCenter, marginTop);
 		info.getColor().set(R.colors.ichiguYellow);
 		y = Game.getVirtualHeight() - marginTop - info.getTextAreaHeight() - Card.Height - 50;
@@ -156,7 +117,7 @@ public class Tutorial extends IchiguObject implements IViewFinder {
 		page.addInfo("- " + Game.getLanguageManager().getString(R.strings.tutDifferentCounts), Text.HAlignLeft, 20).setPadX(50);
 		pages.add(page);
 
-		page = new TutorialPage("8");
+		page = new TutorialPage("8", R.fontSize.medium);
 		info = page.addInfo(Game.getLanguageManager().getString(R.strings.tutSampleIchiguTitle), Text.HAlignCenter, marginTop);
 		info.getColor().set(R.colors.ichiguYellow);
 		y = Game.getVirtualHeight() - marginTop - info.getTextAreaHeight() - Card.Height - 50;
@@ -170,7 +131,7 @@ public class Tutorial extends IchiguObject implements IViewFinder {
 		page.addInfo("- " + Game.getLanguageManager().getString(R.strings.tutDifferentCounts), Text.HAlignLeft, 20).setPadX(50);
 		pages.add(page);
 
-		page = new TutorialPage("9");
+		page = new TutorialPage("9", R.fontSize.medium);
 		info = page.addInfo(Game.getLanguageManager().getString(R.strings.tutSampleIchiguTitle), Text.HAlignCenter, marginTop);
 		info.getColor().set(R.colors.ichiguYellow);
 		y = Game.getVirtualHeight() - marginTop - info.getTextAreaHeight() - Card.Height - 50;
@@ -184,7 +145,7 @@ public class Tutorial extends IchiguObject implements IViewFinder {
 		page.addInfo("- " + Game.getLanguageManager().getString(R.strings.tutDifferentCounts), Text.HAlignLeft, 20).setPadX(50);
 		pages.add(page);
 
-		page = new TutorialPage("10");
+		page = new TutorialPage("10", R.fontSize.medium);
 		page.addInfo(Game.getLanguageManager().getString(R.strings.tutGameModesTitle), Text.HAlignCenter, marginTop).getColor().set(R.colors.ichiguYellow);
 		page.addInfo("- " + Game.getLanguageManager().getString(R.strings.tutSingleIchiguModes), Text.HAlignLeft, 50).setPadX(50);
 		page.addInfo("- " + Game.getLanguageManager().getString(R.strings.tutPracticeModeTitle), Text.HAlignLeft, 30).setPadX(100);
@@ -196,29 +157,29 @@ public class Tutorial extends IchiguObject implements IViewFinder {
 //		page.addInfo("- Multiplayer Mode", Text.HAlignLeft, 30).setPadX(100);
 		pages.add(page);
 
-		page = new TutorialPage("11");
+		page = new TutorialPage("11", R.fontSize.medium);
 		page.addInfo(Game.getLanguageManager().getString(R.strings.tutPracticeModeTitle), Text.HAlignCenter, marginTop).getColor().set(R.colors.ichiguYellow);
 		page.addInfo(Game.getLanguageManager().getString(R.strings.tutPracticeMode), Text.HAlignLeft, 50).setPadX(10);
 		pages.add(page);
 
-		page = new TutorialPage("12");
+		page = new TutorialPage("12", R.fontSize.medium);
 		page.addInfo(Game.getLanguageManager().getString(R.strings.tutMiniChallengeModeTitle), Text.HAlignCenter, marginTop).getColor().set(R.colors.ichiguYellow);
 		page.addInfo(Game.getLanguageManager().getString(R.strings.tutMiniChallengeMode), Text.HAlignLeft, 50).setPadX(10);
 		pages.add(page);
 
-		page = new TutorialPage("13");
+		page = new TutorialPage("13", R.fontSize.medium);
 		page.addInfo(Game.getLanguageManager().getString(R.strings.tutRelaxModeTitle), Text.HAlignCenter, marginTop).getColor().set(R.colors.ichiguYellow);
 		page.addInfo(Game.getLanguageManager().getString(R.strings.tutRelaxMode), Text.HAlignLeft, 50).setPadX(10);
 		page.addInfo("", Text.HAlignLeft, 30).setPadX(10);
 		page.addInfo("", Text.HAlignLeft, 30).setPadX(10);
 		pages.add(page);
 		
-		page = new TutorialPage("14");
+		page = new TutorialPage("14", R.fontSize.medium);
 		page.addInfo(Game.getLanguageManager().getString(R.strings.tutNormalModeTitle), Text.HAlignCenter, marginTop).getColor().set(R.colors.ichiguYellow);
 		page.addInfo(Game.getLanguageManager().getString(R.strings.tutNormalMode), Text.HAlignLeft, 50).setPadX(10);
 		pages.add(page);
 		
-		page = new TutorialPage("15");
+		page = new TutorialPage("15", R.fontSize.medium);
 		page.addInfo(Game.getLanguageManager().getString(R.strings.tutFullChallengeModeTitle), Text.HAlignCenter, marginTop).getColor().set(R.colors.ichiguYellow);
 		page.addInfo(Game.getLanguageManager().getString(R.strings.tutFullChallengeMode), Text.HAlignLeft, 50).setPadX(10);
 		pages.add(page);
@@ -229,7 +190,7 @@ public class Tutorial extends IchiguObject implements IViewFinder {
 //		page.addInfo("Multiplayer Mode can be played with 2, 3 or 4 players at the same time.", Text.HAlignLeft, 30).setPadX(10);
 //		pages.add(page);
 
-		page = new TutorialPage("16");
+		page = new TutorialPage("16", R.fontSize.medium);
 		page.addInfo(Game.getLanguageManager().getString(R.strings.tutScoreTitle), Text.HAlignCenter, marginTop).getColor().set(R.colors.ichiguYellow);
 		page.addInfo(Game.getLanguageManager().getString(R.strings.tutScore), Text.HAlignLeft, 50).setPadX(10);
 		pages.add(page);
@@ -241,7 +202,7 @@ public class Tutorial extends IchiguObject implements IViewFinder {
 //		page.addInfo("Your score won't be deducted if there were no ichigus in the 12 open cards before opening the extra cards.", Text.HAlignLeft, 25).setPadX(10);
 //		pages.add(page);
 
-		page = new TutorialPage("18");
+		page = new TutorialPage("18", R.fontSize.medium);
 		info = page.addInfo(Game.getLanguageManager().getString(R.strings.tutSampleIchiguScoreTitle), Text.HAlignCenter, marginTop);
 		info.getColor().set(R.colors.ichiguYellow);
 		y = Game.getVirtualHeight() - marginTop - info.getTextAreaHeight() - Card.Height - 30;
@@ -255,85 +216,5 @@ public class Tutorial extends IchiguObject implements IViewFinder {
 		page.addInfo("- " + Game.getLanguageManager().getString(R.strings.tutScoreDifferentCounts), Text.HAlignLeft, 20).setPadX(50);
 		page.addInfo("- " + Game.getLanguageManager().getString(R.strings.tutScoreTotal), Text.HAlignLeft, 20).setPadX(50);
 		pages.add(page);
-	}
-
-	public void start() {
-		pageIndex = 0;
-		switcher.switchTo(pages.get(pageIndex).getId(), false);
-		prevButton.deactivate();
-		nextButton.activate();
-		skipButton.activate();
-		updatePageInfoText();
-	}
-
-	public void end() {
-		prevButton.deactivate();
-		nextButton.deactivate();
-		skipButton.deactivate();
-	}
-
-	private void next() {
-		if (pageIndex < pages.size() - 1) {
-			pageIndex++;
-			switcher.switchTo(pages.get(pageIndex).getId(), false);
-		}
-		else
-			notifyTutorialEnd();
-		prevButton.activate();
-		updatePageInfoText();
-	}
-
-	private void prev() {
-		if (pageIndex > 0) {
-			pageIndex--;
-			switcher.switchTo(pages.get(pageIndex).getId(), true);
-		}
-		if (pageIndex > 0) {
-			prevButton.activate();
-		}
-		else {
-			prevButton.deactivate();
-		}
-		updatePageInfoText();
-	}
-
-	private void updatePageInfoText() {
-		pageInfo.setText((pageIndex + 1) + "/" + pages.size());
-	}
-
-	private void skip() {
-		notifyTutorialEnd();
-	}
-
-	private void notifyTutorialEnd() {
-		if (listener != null)
-			listener.onTutorialEnd();
-	}
-
-	@Override
-	public void draw() {
-		drawPage();
-		nextButton.draw();
-		prevButton.draw();
-		skipButton.draw();
-	}
-
-	private void drawPage() {
-		pageInfo.draw();
-		switcher.draw();
-	}
-
-	@Override
-	public IView findView(String id) {
-		for (TutorialPage page : pages) {
-			if (id.equals(page.getId()))
-				return page;
-		}
-		return null;
-	}
-
-	@Override
-	public void registerSelf() {
-		Game.getInputManager().register(this, Utils.LAYER_SCREEN);
 	}
 }

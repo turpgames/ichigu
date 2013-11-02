@@ -1,11 +1,12 @@
 package com.turpgames.ichigu.view;
 
+import com.turpgames.framework.v0.component.Toolbar;
 import com.turpgames.framework.v0.forms.xml.Dialog;
 import com.turpgames.framework.v0.impl.BaseGame;
 import com.turpgames.framework.v0.impl.FormScreen;
 import com.turpgames.framework.v0.impl.Screen;
 import com.turpgames.framework.v0.impl.ScreenManager;
-import com.turpgames.ichigu.model.display.Toolbar;
+import com.turpgames.ichigu.model.display.IchiguToolbar;
 import com.turpgames.ichigu.utils.R;
 
 public class IchiguGame extends BaseGame {
@@ -20,8 +21,7 @@ public class IchiguGame extends BaseGame {
 
 	public static Toolbar getToolbar() {
 		if (toolbar == null) {
-			Toolbar.init();
-			toolbar = Toolbar.getInstance();
+			toolbar = IchiguToolbar.getInstance();
 			toolbar.setListener(new Toolbar.IToolbarListener() {
 				@Override
 				public void onToolbarBack() {
