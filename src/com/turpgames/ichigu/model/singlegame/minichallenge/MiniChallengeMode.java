@@ -1,13 +1,12 @@
 package com.turpgames.ichigu.model.singlegame.minichallenge;
 
-import com.turpgames.framework.v0.component.info.FlashingGameInfo;
 import com.turpgames.framework.v0.component.info.GameInfo;
 import com.turpgames.framework.v0.forms.xml.Dialog;
 import com.turpgames.framework.v0.impl.Settings;
 import com.turpgames.framework.v0.impl.Text;
 import com.turpgames.framework.v0.util.Game;
 import com.turpgames.framework.v0.util.Timer;
-import com.turpgames.framework.v0.util.Utils;
+import com.turpgames.ichigu.model.display.DisplayTimer;
 import com.turpgames.ichigu.model.display.IchiguDialog;
 import com.turpgames.ichigu.model.display.WaitToast;
 import com.turpgames.ichigu.model.game.Card;
@@ -19,6 +18,7 @@ import com.turpgames.ichigu.utils.R;
 
 public class MiniChallengeMode extends SingleGameMode implements IResultScreenButtonsListener {
 	private final static float blockDuration = 2f;
+	private final static int challengeTime = 60;
 //	private final static float timePerDeal = 5;
 //	private final static int totalDeals = 20;
 
@@ -32,7 +32,7 @@ public class MiniChallengeMode extends SingleGameMode implements IResultScreenBu
 	private int ichigusFound;
 	private GameInfo ichigusFoundInfo;
 	
-	private FlashingGameInfo timeInfo;
+	private DisplayTimer timeInfo;
 	private WaitToast waitInfo;
 //	private ScoreInfo scoreInfo;
 //	private GameInfo remainingCardsInfo;
@@ -48,7 +48,7 @@ public class MiniChallengeMode extends SingleGameMode implements IResultScreenBu
 //		pointsInfo.initPointInfos();
 		resultScreenButtons = new ResultScreenButtons(this); 
 		
-		timeInfo = new FlashingGameInfo(R.colors.ichiguRed, 5, 30);
+		timeInfo = new DisplayTimer(R.colors.ichiguRed, 5, 30);
 		timeInfo.locate(Text.HAlignRight, Text.VAlignTop);
 		timeInfo.setPadding(20, 125);
 		
@@ -103,10 +103,10 @@ public class MiniChallengeMode extends SingleGameMode implements IResultScreenBu
 			@Override
 			public void timerTick(Timer timer) {
 				int elapsed = (int) timer.getTotalElapsedTime();
-				int min = 0 - elapsed / 60;
+				int min = (challengeTime / 60 - 1) - elapsed / 60;
 				int sec = 60 - elapsed % 60;
 
-				timeInfo.setText(Utils.getTimeString(60-elapsed));
+				timeInfo.setTimeText(challengeTime-elapsed);
 				
 				if (min < 0 || sec < 0)
 					timerFinished();
@@ -210,7 +210,7 @@ public class MiniChallengeMode extends SingleGameMode implements IResultScreenBu
 		ichigusFound = 0;
 		ichigusFoundInfo.setText(Game.getLanguageManager().getString(R.strings.found) + ": " + ichigusFound);
 //		deals = 0;
-		timeInfo.setText("01:00");
+		timeInfo.setTimeText(challengeTime);
 	}
 
 	public void endMode() {

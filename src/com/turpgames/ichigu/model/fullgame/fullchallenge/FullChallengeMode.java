@@ -6,7 +6,6 @@ import com.turpgames.framework.v0.impl.Settings;
 import com.turpgames.framework.v0.impl.Text;
 import com.turpgames.framework.v0.util.Game;
 import com.turpgames.framework.v0.util.Timer;
-import com.turpgames.framework.v0.util.Utils;
 import com.turpgames.ichigu.model.display.IchiguDialog;
 import com.turpgames.ichigu.model.display.ScoreInfo;
 import com.turpgames.ichigu.model.fullgame.FullGameMode;
@@ -17,13 +16,13 @@ public class FullChallengeMode extends FullGameMode {
 
 //	private Timer ichiguTimer;
 //	private boolean deductScore;
+	private static int challengeTime = 5*60;
 	
 	private GameInfo resultInfo;
 	private ScoreInfo scoreInfo;
 
 	private Dialog confirmExitDialog;
 	private boolean isExitConfirmed;
-
 	
 	private IFullChallengeModeListener getChallengeModeListener() {
 		return (IFullChallengeModeListener) super.modeListener;
@@ -55,10 +54,10 @@ public class FullChallengeMode extends FullGameMode {
 			@Override
 			public void timerTick(Timer timer) {
 				int elapsed = (int) timer.getTotalElapsedTime();
-				int min = 4 - elapsed / 60;
+				int min = (challengeTime / 60 - 1) - elapsed / 60;
 				int sec = 60 - elapsed % 60;
 
-				timeInfo.setText(Utils.getTimeString(5*60-elapsed));
+				timeInfo.setTimeText(challengeTime-elapsed);
 				
 				if (min < 0 || sec < 0)
 					timerFinished();
@@ -96,7 +95,7 @@ public class FullChallengeMode extends FullGameMode {
 		scoreInfo.init();
 //		ichiguTimer.restart();
 		isExitConfirmed = false;
-		timeInfo.setText("05:00");
+		timeInfo.setTimeText(challengeTime );
 	}
 
 	@Override

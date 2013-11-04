@@ -59,18 +59,27 @@ public class MenuScreen extends FormScreen implements IGameExitListener {
 
 		setForm(R.game.forms.mainMenu, false);
 	}
-
+	
 	@Override
 	protected void onAfterActivate() {
 		super.onAfterActivate();
 		if (getCurrentForm().getId().equals(R.game.forms.playMenu)) {
 			IchiguToolbar.getInstance().activateBackButton();
 			unregisterDrawable(languageBar);
+			languageBar.listenInput(false);
 		}
 		else if (getCurrentForm().getId().equals(R.game.forms.mainMenu)) {
 			IchiguToolbar.getInstance().deactivateBackButton();
 			registerDrawable(languageBar, 1);
+			languageBar.listenInput(true);
 		}
+	}
+	
+	@Override
+	protected boolean onBeforeDeactivate() {
+		unregisterDrawable(languageBar);
+		languageBar.listenInput(false);
+		return super.onBeforeDeactivate();
 	}
 	
 	@Override
@@ -84,10 +93,12 @@ public class MenuScreen extends FormScreen implements IGameExitListener {
 		if (activatedForm.getId().equals(R.game.forms.playMenu)) {
 			IchiguToolbar.getInstance().activateBackButton();
 			unregisterDrawable(languageBar);
+			languageBar.listenInput(false);
 		}
 		else if (activatedForm.getId().equals(R.game.forms.mainMenu)) {
 			IchiguToolbar.getInstance().deactivateBackButton();
 			registerDrawable(languageBar, 1);
+			languageBar.listenInput(true);
 		}
 		super.onFormActivated(activatedForm);
 	}
