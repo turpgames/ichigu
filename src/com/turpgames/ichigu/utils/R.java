@@ -263,15 +263,15 @@ public final class R {
 		public final static String tutNormalMode = "tutNormalMode";
 		
 		public final static String tutFullChallengeModeTitle = "tutFullChallengeModeTitle";
-		public final static String tutFullChallengeMode = "tutNormalMode";
+		public final static String tutFullChallengeMode = "tutFullChallengeMode";
 
-		public final static String tutScoreTitle = "tutFullChallengeModeTitle";
-		public final static String tutScore = "tutNormalMode";
+		public final static String tutScoreTitle = "tutScoreTitle";
+		public final static String tutScore = "tutScore";
 
 		public final static String tutSampleIchiguScoreTitle = "tutSampleIchiguScoreTitle";
 		public final static String tutScoreSameShape = "tutScoreSameShape";
 		public final static String tutScoreDifferentColors = "tutScoreDifferentColors";
-		public final static String tutScoreSamePattern = "tutNtutScoreSamePatternormalMode";
+		public final static String tutScoreSamePattern = "tutScoreSamePattern";
 		public final static String tutScoreDifferentCounts = "tutScoreDifferentCounts";
 		public final static String tutScoreTotal = "tutScoreTotal";
 		
