@@ -16,6 +16,7 @@ public class ScoreBoardScreen extends IchiguScreen {
 	@Override
 	protected boolean onBeforeDeactivate() {
 		hiScores.deactivate();
+		IchiguToolbar.getInstance().deactivateBackButton();
 		return true;
 	}
 

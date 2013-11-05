@@ -14,11 +14,18 @@ import com.turpgames.ichigu.model.display.IchiguDialog;
 import com.turpgames.ichigu.utils.R;
 
 public class HiScores implements IDrawable, ILanguageListener {
+	private GameInfo pageTitle;
 	private GameInfo info;
 	private TextButton resetScores;
 	private Dialog confirmDialog;
 
 	public HiScores() {
+		pageTitle = new GameInfo();
+		pageTitle.locate(Text.HAlignCenter, Text.VAlignTop);
+		pageTitle.setColor(R.colors.ichiguBlue);
+		pageTitle.setFontScale(1.5f);
+		pageTitle.setPadding(0, 25);
+		
 		info = new GameInfo();
 		info.locate(Text.HAlignCenter, Text.VAlignCenter);
 
@@ -69,11 +76,13 @@ public class HiScores implements IDrawable, ILanguageListener {
 
 	@Override
 	public void draw() {
+		pageTitle.draw();
 		info.draw();
 		resetScores.draw();
 	}
 
 	private void setLanguageSensitiveInfo() {
+		pageTitle.setText(Game.getLanguageManager().getString(R.strings.hiScores));
 		resetScores.setText(Game.getLanguageManager().getString(R.strings.resetHiscore));
 		resetScores.getLocation().set((Game.getVirtualWidth() - resetScores.getWidth()) / 2, 50);
 	}

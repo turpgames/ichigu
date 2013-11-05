@@ -159,12 +159,24 @@ public final class R {
 	}
 
 	public static final class strings {
+		public final static String howToPlay = "howToPlay";
+		public final static String hiScores = "hiScores";
+		public final static String about = "about";
+		
 		public final static String newGame = "newGame";
 		public final static String backToMenu = "backToMenu";
 		
 		public final static String circle = "circle";
 		public final static String square = "square";
 		public final static String triangle = "triangle";
+		
+		public final static String blue = "blue";
+		public final static String red = "red";
+		public final static String green = "green";
+
+		public final static String empty = "empty";
+		public final static String striped = "striped";
+		public final static String filled = "filled";		
 		
 		public final static String sameShapes = "sameShapes";
 		public final static String sameColors = "sameColors";
@@ -209,7 +221,7 @@ public final class R {
 		public final static String newHiscore = "newHiscore";
 		
 		public final static String resetHiscore = "resetHiscore";
-		public final static String hiscoreInfo = "hiscoreInfo";
+		public final static String hiscoreInfo = "hiscoreInfo"; 
 
 		public final static String tutOverviewTitle = "tutOverviewTitle";
 		public final static String tutOverview = "tutOverview";
@@ -227,6 +239,12 @@ public final class R {
 		public final static String tutDifferentColors = "tutDifferentColors";
 		public final static String tutDifferentPatterns = "tutDifferentPatterns";
 		public final static String tutDifferentCounts = "tutDifferentCounts";
+		
+		public final static String tutSampleNotIchiguTitle = "tutSampleNotIchiguTitle";
+		public final static String tutTwoAndOneShape = "tutTwoAndOneShape";
+		public final static String tutTwoAndOneColor = "tutTwoAndOneColor";
+		public final static String tutTwoAndOnePattern = "tutTwoAndOnePattern";
+		public final static String tutTwoAndOneCount = "tutTwoAndOneCount";
 
 		public final static String tutGameModesTitle = "tutGameModesTitle";
 		public final static String tutSingleIchiguModes = "tutSingleIchiguModes";
@@ -256,6 +274,8 @@ public final class R {
 		public final static String tutScoreSamePattern = "tutNtutScoreSamePatternormalMode";
 		public final static String tutScoreDifferentCounts = "tutScoreDifferentCounts";
 		public final static String tutScoreTotal = "tutScoreTotal";
+		
+		public final static String aboutInfo = "aboutInfo";
 	}
 	
 	private R() {

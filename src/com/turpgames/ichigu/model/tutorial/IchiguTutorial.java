@@ -6,7 +6,6 @@ import com.turpgames.framework.v0.component.ITutorialListener;
 import com.turpgames.framework.v0.component.ImageButton;
 import com.turpgames.framework.v0.component.Tutorial;
 import com.turpgames.framework.v0.component.TutorialPage;
-import com.turpgames.framework.v0.component.info.GameInfo;
 import com.turpgames.framework.v0.impl.Text;
 import com.turpgames.framework.v0.util.Game;
 import com.turpgames.ichigu.model.game.Card;
@@ -19,10 +18,18 @@ public class IchiguTutorial extends Tutorial {
 	public IchiguTutorial(ITutorialListener listener) {
 		super(listener);
 	}
+	
+	@Override
+	protected void addPageTitle() {
+		pageTitle.locate(Text.HAlignCenter, Text.VAlignTop);
+		pageTitle.setText(Game.getLanguageManager().getString(R.strings.howToPlay));
+		pageTitle.setColor(R.colors.ichiguBlue);
+		pageTitle.setFontScale(1.5f);
+		pageTitle.setPadding(0, 25);	
+	}
 
 	@Override
 	protected void addPagesInfo() {
-		pagesInfo = new GameInfo();
 		pagesInfo.locate(Text.HAlignCenter, Text.VAlignTop);
 		pagesInfo.setPadding(0, 100f);
 		pagesInfo.setColor(R.colors.ichiguCyan);
@@ -93,20 +100,6 @@ public class IchiguTutorial extends Tutorial {
 		info = page.addInfo(Game.getLanguageManager().getString(R.strings.tutSampleIchiguTitle), Text.HAlignCenter, marginTop);
 		info.getColor().set(R.colors.ichiguYellow);
 		y = Game.getVirtualHeight() - marginTop - info.getTextAreaHeight() - Card.Height - 50;
-		page.addImage(Card.createTutorialCard(CardAttributes.Color_Blue, CardAttributes.Shape_Square, CardAttributes.Count_1, CardAttributes.Pattern_Striped, x1, y));
-		page.addImage(Card.createTutorialCard(CardAttributes.Color_Green, CardAttributes.Shape_Square, CardAttributes.Count_1, CardAttributes.Pattern_Striped, x2, y));
-		page.addImage(Card.createTutorialCard(CardAttributes.Color_Red, CardAttributes.Shape_Square, CardAttributes.Count_1, CardAttributes.Pattern_Striped, x3, y));
-
-		page.addInfo("- " + Game.getLanguageManager().getString(R.strings.tutSameShape), Text.HAlignLeft, Card.Height + 50 + 30).setPadX(50);
-		page.addInfo("- " + Game.getLanguageManager().getString(R.strings.tutDifferentColors), Text.HAlignLeft, 20).setPadX(50);
-		page.addInfo("- " + Game.getLanguageManager().getString(R.strings.tutSamePattern), Text.HAlignLeft, 20).setPadX(50);
-		page.addInfo("- " + Game.getLanguageManager().getString(R.strings.tutSameCount), Text.HAlignLeft, 20).setPadX(50);
-		pages.add(page);
-
-		page = new TutorialPage("7", R.fontSize.medium);
-		info = page.addInfo(Game.getLanguageManager().getString(R.strings.tutSampleIchiguTitle), Text.HAlignCenter, marginTop);
-		info.getColor().set(R.colors.ichiguYellow);
-		y = Game.getVirtualHeight() - marginTop - info.getTextAreaHeight() - Card.Height - 50;
 		page.addImage(Card.createTutorialCard(CardAttributes.Color_Blue, CardAttributes.Shape_Triangle, CardAttributes.Count_1, CardAttributes.Pattern_Filled, x1, y));
 		page.addImage(Card.createTutorialCard(CardAttributes.Color_Green, CardAttributes.Shape_Triangle, CardAttributes.Count_2, CardAttributes.Pattern_Filled, x2, y));
 		page.addImage(Card.createTutorialCard(CardAttributes.Color_Red, CardAttributes.Shape_Triangle, CardAttributes.Count_3, CardAttributes.Pattern_Filled, x3, y));
@@ -117,21 +110,7 @@ public class IchiguTutorial extends Tutorial {
 		page.addInfo("- " + Game.getLanguageManager().getString(R.strings.tutDifferentCounts), Text.HAlignLeft, 20).setPadX(50);
 		pages.add(page);
 
-		page = new TutorialPage("8", R.fontSize.medium);
-		info = page.addInfo(Game.getLanguageManager().getString(R.strings.tutSampleIchiguTitle), Text.HAlignCenter, marginTop);
-		info.getColor().set(R.colors.ichiguYellow);
-		y = Game.getVirtualHeight() - marginTop - info.getTextAreaHeight() - Card.Height - 50;
-		page.addImage(Card.createTutorialCard(CardAttributes.Color_Green, CardAttributes.Shape_Circle, CardAttributes.Count_1, CardAttributes.Pattern_Empty, x1, y));
-		page.addImage(Card.createTutorialCard(CardAttributes.Color_Green, CardAttributes.Shape_Square, CardAttributes.Count_2, CardAttributes.Pattern_Striped, x2, y));
-		page.addImage(Card.createTutorialCard(CardAttributes.Color_Green, CardAttributes.Shape_Triangle, CardAttributes.Count_3, CardAttributes.Pattern_Filled, x3, y));
-
-		page.addInfo("- " + Game.getLanguageManager().getString(R.strings.tutDifferentShapes), Text.HAlignLeft, Card.Height + 50 + 30).setPadX(50);
-		page.addInfo("- " + Game.getLanguageManager().getString(R.strings.tutSameColor), Text.HAlignLeft, 20).setPadX(50);
-		page.addInfo("- " + Game.getLanguageManager().getString(R.strings.tutDifferentPatterns), Text.HAlignLeft, 20).setPadX(50);
-		page.addInfo("- " + Game.getLanguageManager().getString(R.strings.tutDifferentCounts), Text.HAlignLeft, 20).setPadX(50);
-		pages.add(page);
-
-		page = new TutorialPage("9", R.fontSize.medium);
+		page = new TutorialPage("7", R.fontSize.medium);
 		info = page.addInfo(Game.getLanguageManager().getString(R.strings.tutSampleIchiguTitle), Text.HAlignCenter, marginTop);
 		info.getColor().set(R.colors.ichiguYellow);
 		y = Game.getVirtualHeight() - marginTop - info.getTextAreaHeight() - Card.Height - 50;
@@ -145,6 +124,38 @@ public class IchiguTutorial extends Tutorial {
 		page.addInfo("- " + Game.getLanguageManager().getString(R.strings.tutDifferentCounts), Text.HAlignLeft, 20).setPadX(50);
 		pages.add(page);
 
+		page = new TutorialPage("8", R.fontSize.medium);
+		info = page.addInfo(Game.getLanguageManager().getString(R.strings.tutSampleNotIchiguTitle), Text.HAlignCenter, marginTop);
+		info.getColor().set(R.colors.ichiguYellow);
+		y = Game.getVirtualHeight() - marginTop - info.getTextAreaHeight() - Card.Height - 50;
+		page.addImage(Card.createTutorialCard(CardAttributes.Color_Blue, CardAttributes.Shape_Square, CardAttributes.Count_1, CardAttributes.Pattern_Filled, x1, y));
+		page.addImage(Card.createTutorialCard(CardAttributes.Color_Green, CardAttributes.Shape_Circle, CardAttributes.Count_2, CardAttributes.Pattern_Filled, x2, y));
+		page.addImage(Card.createTutorialCard(CardAttributes.Color_Red, CardAttributes.Shape_Square, CardAttributes.Count_3, CardAttributes.Pattern_Filled, x3, y));
+
+		page.addInfo("!! " + String.format(Game.getLanguageManager().getString(R.strings.tutTwoAndOneShape),
+				Game.getLanguageManager().getString(R.strings.square), Game.getLanguageManager().getString(R.strings.circle))
+				, Text.HAlignLeft, Card.Height + 50 + 30).setPadX(50);
+		page.addInfo("- " + Game.getLanguageManager().getString(R.strings.tutDifferentColors), Text.HAlignLeft, 20).setPadX(50);
+		page.addInfo("- " + Game.getLanguageManager().getString(R.strings.tutSamePattern), Text.HAlignLeft, 20).setPadX(50);
+		page.addInfo("- " + Game.getLanguageManager().getString(R.strings.tutDifferentCounts), Text.HAlignLeft, 20).setPadX(50);
+		pages.add(page);
+
+		page = new TutorialPage("9", R.fontSize.medium);
+		info = page.addInfo(Game.getLanguageManager().getString(R.strings.tutSampleNotIchiguTitle), Text.HAlignCenter, marginTop);
+		info.getColor().set(R.colors.ichiguYellow);
+		y = Game.getVirtualHeight() - marginTop - info.getTextAreaHeight() - Card.Height - 50;
+		page.addImage(Card.createTutorialCard(CardAttributes.Color_Blue, CardAttributes.Shape_Square, CardAttributes.Count_2, CardAttributes.Pattern_Empty, x1, y));
+		page.addImage(Card.createTutorialCard(CardAttributes.Color_Blue, CardAttributes.Shape_Circle, CardAttributes.Count_2, CardAttributes.Pattern_Empty, x2, y));
+		page.addImage(Card.createTutorialCard(CardAttributes.Color_Red, CardAttributes.Shape_Triangle, CardAttributes.Count_2, CardAttributes.Pattern_Empty, x3, y));
+
+		page.addInfo("- " + Game.getLanguageManager().getString(R.strings.tutDifferentShapes), Text.HAlignLeft, Card.Height + 50 + 30).setPadX(50);
+		page.addInfo("!! " + String.format(Game.getLanguageManager().getString(R.strings.tutTwoAndOneColor),
+				Game.getLanguageManager().getString(R.strings.blue), Game.getLanguageManager().getString(R.strings.red))
+				, Text.HAlignLeft, 20).setPadX(50);
+		page.addInfo("- " + Game.getLanguageManager().getString(R.strings.tutSamePattern), Text.HAlignLeft, 20).setPadX(50);
+		page.addInfo("- " + Game.getLanguageManager().getString(R.strings.tutSameCount), Text.HAlignLeft, 20).setPadX(50);
+		pages.add(page);
+		
 		page = new TutorialPage("10", R.fontSize.medium);
 		page.addInfo(Game.getLanguageManager().getString(R.strings.tutGameModesTitle), Text.HAlignCenter, marginTop).getColor().set(R.colors.ichiguYellow);
 		page.addInfo("- " + Game.getLanguageManager().getString(R.strings.tutSingleIchiguModes), Text.HAlignLeft, 50).setPadX(50);
