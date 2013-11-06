@@ -48,6 +48,15 @@
         <param
             key="allow-exit-on-back"
             value="true" />
+        
+        <param
+            key="turp-address"
+            value="http://www.turpgames.com" />
+        
+        <param
+            key="libgdx-address"
+            value="http://libgdx.badlogicgames.com" />
+        
     </params>
 
     <screens>
