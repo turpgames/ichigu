@@ -84,8 +84,14 @@ public class MenuScreen extends FormScreen implements IGameExitListener {
 	
 	@Override
 	public boolean onGameExit() {
-		exitConfirm.open(Game.getLanguageManager().getString(R.strings.exitProgramConfirm));
-		return false;
+		if (languageBar.isActive()) {
+			languageBar.deactivate();
+			return false;
+		}
+		else {
+			exitConfirm.open(Game.getLanguageManager().getString(R.strings.exitProgramConfirm));
+			return false;
+		}
 	}
 	
 	@Override
