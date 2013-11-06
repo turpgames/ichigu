@@ -48,15 +48,26 @@
         <param
             key="allow-exit-on-back"
             value="true" />
-        
+
         <param
             key="turp-address"
             value="http://www.turpgames.com" />
-        
+
         <param
             key="libgdx-address"
             value="http://libgdx.badlogicgames.com" />
-        
+
+        <param
+            key="play-store-address"
+            value="https://play.google.com/store/apps/details?id=com.turpgames.ichigu" />
+
+        <param
+            key="app-store-address-ios7"
+            value="itms-apps://itunes.apple.com/app/idYOUR_APP_ID" />
+
+        <param
+            key="app-store-address-old"
+            value="itms-apps://itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&amp;id=YOUR_APP_ID" />
     </params>
 
     <screens>
@@ -404,6 +415,10 @@
             <texture
                 id="flag_fr"
                 path="img/flags/FR.png" />
+
+            <texture
+                id="libgdx"
+                path="img/about/libgdx.png" />
         </textures>
 
         <sounds>
@@ -437,19 +452,19 @@
             encoding="UTF8"
             flag-texture-id="flag_se"
             path="lang/Strings_se_SE.properties" />
-        
+
         <language
             id="fr-FR"
             encoding="UTF8"
             flag-texture-id="flag_fr"
             path="lang/Strings_fr_FR.properties" />
-        
+
         <language
             id="cn-CN"
             encoding="UTF8"
             flag-texture-id="flag_cn"
             path="lang/Strings_cn_CN.properties" />
-        
+
         <language
             id="en-US"
             encoding="UTF8"
@@ -461,13 +476,12 @@
             encoding="UTF8"
             flag-texture-id="flag_it"
             path="lang/Strings_it_IT.properties" />
-        
+
         <language
             id="tr-TR"
             encoding="UTF8"
             flag-texture-id="flag_tr"
             path="lang/Strings_tr_TR.properties" />
-
     </languages>
 
     <skins>
