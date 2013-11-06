@@ -146,7 +146,7 @@ public final class R {
 		public static final float small = FontManager.defaultFontSize * 0.625f;
 		public static final float medium = FontManager.defaultFontSize * 0.75f;
 		public static final float large = FontManager.defaultFontSize * 1f;
-		public static final float xLarge = FontManager.defaultFontSize * 0.25f;
+		public static final float xLarge = FontManager.defaultFontSize * 1.25f;
 	}
 
 	public static final class ui {
@@ -275,7 +275,12 @@ public final class R {
 		public final static String tutScoreDifferentCounts = "tutScoreDifferentCounts";
 		public final static String tutScoreTotal = "tutScoreTotal";
 		
-		public final static String aboutInfo = "aboutInfo";
+		public final static String aboutInfo1 = "aboutInfo1";
+		public final static String aboutInfo2 = "aboutInfo2";
+		public final static String aboutInfo3 = "aboutInfo3";
+		
+		public final static String turpAddress = "turp-address";
+		public final static String libgdxAddress = "libgdx-address";
 	}
 	
 	private R() {

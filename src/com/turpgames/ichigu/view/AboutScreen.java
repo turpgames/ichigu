@@ -22,6 +22,6 @@ public class AboutScreen extends IchiguScreen {
 	public void init() {
 		super.init();
 		aboutInfo = new AboutInfo();
-		registerDrawable(aboutInfo, Utils.LAYER_INFO);
+		registerDrawable(aboutInfo, Utils.LAYER_SCREEN);
 	}
 }

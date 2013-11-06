@@ -13,7 +13,7 @@ import com.turpgames.ichigu.model.game.CardAttributes;
 import com.turpgames.ichigu.utils.R;
 
 public class IchiguTutorial extends Tutorial {
-	private final static float marginTop = 160f;
+	private final static float marginTop = 220f;
 
 	public IchiguTutorial(ITutorialListener listener) {
 		super(listener);
@@ -23,29 +23,29 @@ public class IchiguTutorial extends Tutorial {
 	protected void addPageTitle() {
 		pageTitle.locate(Text.HAlignCenter, Text.VAlignTop);
 		pageTitle.setText(Game.getLanguageManager().getString(R.strings.howToPlay));
-		pageTitle.setColor(R.colors.ichiguBlue);
+		pageTitle.setColor(R.colors.ichiguYellow);
 		pageTitle.setFontScale(1.5f);
-		pageTitle.setPadding(0, 25);	
+		pageTitle.setPadding(0, 85);	
 	}
 
 	@Override
 	protected void addPagesInfo() {
 		pagesInfo.locate(Text.HAlignCenter, Text.VAlignTop);
-		pagesInfo.setPadding(0, 100f);
+		pagesInfo.setPadding(0, 160f);
 		pagesInfo.setColor(R.colors.ichiguCyan);
 	}
 
 	@Override
 	protected void concreteAddNextButton() {
 		nextButton = new ImageButton(R.ui.imageButtonWidth, R.ui.imageButtonHeight, R.game.textures.next, R.colors.buttonDefault, R.colors.buttonTouched);
-		nextButton.getLocation().set(Game.getScreenWidth() - (nextButton.getWidth() + Game.viewportToScreenX(30)), Game.viewportToScreenY(50));
+		nextButton.getLocation().set(Game.getScreenWidth() - (nextButton.getWidth() + Game.viewportToScreenX(30)), Game.viewportToScreenY(30));
 	}
 
 	@Override
 	protected void concreteAddPrevButton() {
 		prevButton = new ImageButton(R.ui.imageButtonWidth, R.ui.imageButtonHeight, R.game.textures.prev, R.colors.buttonDefault, R.colors.buttonTouched);
 		prevButton.deactivate();
-		prevButton.getLocation().set(Game.viewportToScreenX(30), Game.viewportToScreenY(50));
+		prevButton.getLocation().set(Game.viewportToScreenX(30), Game.viewportToScreenY(30));
 	}
 
 	@Override

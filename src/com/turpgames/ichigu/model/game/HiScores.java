@@ -22,9 +22,9 @@ public class HiScores implements IDrawable, ILanguageListener {
 	public HiScores() {
 		pageTitle = new GameInfo();
 		pageTitle.locate(Text.HAlignCenter, Text.VAlignTop);
-		pageTitle.setColor(R.colors.ichiguBlue);
+		pageTitle.setColor(R.colors.ichiguYellow);
 		pageTitle.setFontScale(1.5f);
-		pageTitle.setPadding(0, 25);
+		pageTitle.setPadding(0, 85);
 		
 		info = new GameInfo();
 		info.locate(Text.HAlignCenter, Text.VAlignCenter);

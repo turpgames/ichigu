@@ -24,6 +24,6 @@ public class ScoreBoardScreen extends IchiguScreen {
 	public void init() {
 		super.init();
 		hiScores = new HiScores();
-		registerDrawable(hiScores, Utils.LAYER_INFO);
+		registerDrawable(hiScores, Utils.LAYER_SCREEN);
 	}
 }
