@@ -52,6 +52,8 @@ public final class R {
 			public static final String filledSquare = "card-22";
 			public static final String emptyTriangle = "card-41";
 
+			public static final String libgdx = "libgdx";
+			
 			public static final class toolbar {
 				public static final String back = "tb_back";
 				public static final String settings = "tb_settings";
@@ -156,6 +158,8 @@ public final class R {
 		public final static float flagButtonHeight = 128;
 		public final static float flagControlButtonWidth = 64;
 		public final static float flagControlButtonHeight = 64;
+		public final static float libgdxLogoWidth = 200;
+		public final static float libgdxLogoHeight = 33;
 	}
 
 	public static final class strings {
@@ -278,9 +282,12 @@ public final class R {
 		public final static String aboutInfo1 = "aboutInfo1";
 		public final static String aboutInfo2 = "aboutInfo2";
 		public final static String aboutInfo3 = "aboutInfo3";
-		
+
 		public final static String turpAddress = "turp-address";
 		public final static String libgdxAddress = "libgdx-address";
+		public final static String playStoreAddress = "play-store-address";
+		public final static String appStoreAddressIOS7 = "app-store-address-ios7";
+		public final static String appStoreAddressOld = "app-store-address-old";
 	}
 	
 	private R() {

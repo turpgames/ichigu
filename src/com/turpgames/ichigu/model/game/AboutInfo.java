@@ -1,9 +1,10 @@
 package com.turpgames.ichigu.model.game;
 
-import com.badlogic.gdx.Gdx;
 import com.turpgames.framework.v0.IDrawable;
+import com.turpgames.framework.v0.IGameProvider;
 import com.turpgames.framework.v0.ILanguageListener;
 import com.turpgames.framework.v0.component.IButtonListener;
+import com.turpgames.framework.v0.component.ImageButton;
 import com.turpgames.framework.v0.component.TextButton;
 import com.turpgames.framework.v0.component.info.GameInfo;
 import com.turpgames.framework.v0.impl.Text;
@@ -16,8 +17,8 @@ public class AboutInfo implements IDrawable, ILanguageListener {
 	private GameInfo info1;
 	private TextButton turpLink;
 	private GameInfo info2;
-	private TextButton libgdxLink;
-	private GameInfo info3;
+	private ImageButton libgdxLink;
+	private TextButton rateLink;
 
 	public AboutInfo() {
 		pageTitle = new GameInfo();
@@ -30,46 +31,51 @@ public class AboutInfo implements IDrawable, ILanguageListener {
 		version.locate(Text.HAlignCenter, Text.VAlignTop);
 		version.setPadding(0, 200);
 		version.setText("Ichigu v1.1");
-		
+
 		info1 = new GameInfo();
 		info1.locate(Text.HAlignCenter, Text.VAlignTop);
 		info1.setFontScale(R.fontSize.medium);
 		info1.setPadding(35, 300);
-		
+
 		turpLink = new TextButton(R.colors.ichiguYellow, R.colors.ichiguRed);
 		turpLink.setFontScale(R.fontSize.medium);
-		turpLink.setText(Game.getParam(R.strings.turpAddress));
-		turpLink.getLocation().set((Game.getVirtualWidth() - turpLink.getWidth()) / 2, Game.getVirtualHeight() - 380);
-		turpLink.listenInput(true);
+		turpLink.setText("www.turpgames.com");
+		turpLink.getLocation().set((Game.getVirtualWidth() - turpLink.getWidth()) / 2, Game.getVirtualHeight() - 360);
 		turpLink.setListener(new IButtonListener() {
 			@Override
 			public void onButtonTapped() {
-				Gdx.net.openURI(Game.getParam(R.strings.turpAddress));
+				Game.openUrl(Game.getParam(R.strings.turpAddress));
 			}
 		});
-		
+
 		info2 = new GameInfo();
 		info2.locate(Text.HAlignCenter, Text.VAlignTop);
 		info2.setFontScale(R.fontSize.medium);
-		info2.setPadding(35, 500);
+		info2.setPadding(35, 450);
 
-		libgdxLink = new TextButton(R.colors.ichiguYellow, R.colors.ichiguRed);
-		libgdxLink.setFontScale(R.fontSize.medium);
-		libgdxLink.setText(Game.getParam(R.strings.libgdxAddress));
-		libgdxLink.getLocation().set((Game.getVirtualWidth() - libgdxLink.getWidth()) / 2, Game.getVirtualHeight() - 620);
-		libgdxLink.listenInput(true);
+		libgdxLink = new ImageButton(R.ui.libgdxLogoWidth, R.ui.libgdxLogoHeight, R.game.textures.libgdx);
+		libgdxLink.getLocation().set((Game.getScreenWidth() - libgdxLink.getWidth()) / 2, Game.viewportToScreenY(Game.getVirtualHeight() - 520));
 		libgdxLink.setListener(new IButtonListener() {
 			@Override
 			public void onButtonTapped() {
-				Gdx.net.openURI(Game.getParam(R.strings.libgdxAddress));
+				Game.openUrl(Game.getParam(R.strings.libgdxAddress));
 			}
 		});
-		
-		info3 = new GameInfo();
-		info3.locate(Text.HAlignCenter, Text.VAlignTop);
-		info3.setFontScale(R.fontSize.medium);
-		info3.setPadding(35, 700);
-		
+
+		rateLink = new TextButton(R.colors.ichiguYellow, R.colors.ichiguRed);
+		rateLink.setFontScale(R.fontSize.medium);
+		rateLink.setListener(new IButtonListener() {
+			@Override
+			public void onButtonTapped() {
+				if (Game.getAppType() == IGameProvider.AppTypeAndroid)
+					Game.openUrl(Game.getParam(R.strings.playStoreAddress));
+				else if (Game.getAppType() == IGameProvider.AppTypeIOS)
+					Game.openUrl(Game.getParam(R.strings.appStoreAddressIOS7));
+				else
+					Game.openUrl(Game.getParam(R.strings.playStoreAddress));
+			}
+		});
+
 		setLanguageSensitiveInfo();
 		Game.getLanguageManager().register(this);
 	}
@@ -82,17 +88,32 @@ public class AboutInfo implements IDrawable, ILanguageListener {
 		turpLink.draw();
 		info2.draw();
 		libgdxLink.draw();
-		info3.draw();
+		rateLink.draw();
+	}
+
+	public void activate() {
+		turpLink.activate();
+		libgdxLink.activate();
+		rateLink.activate();
+	}
+
+	public void deactivate() {
+		turpLink.deactivate();
+		libgdxLink.deactivate();
+		rateLink.deactivate();
 	}
 
 	private void setLanguageSensitiveInfo() {
 		info1.setText(Game.getLanguageManager().getString(R.strings.aboutInfo1));
 		info2.setText(Game.getLanguageManager().getString(R.strings.aboutInfo2));
-		info3.setText(Game.getLanguageManager().getString(R.strings.aboutInfo3));
+		
 		pageTitle.setText(Game.getLanguageManager().getString(R.strings.about));
 		pageTitle.locate(Text.HAlignCenter, Text.VAlignTop);
+
+		rateLink.setText(Game.getLanguageManager().getString(R.strings.aboutInfo3));
+		rateLink.getLocation().set((Game.getVirtualWidth() - rateLink.getWidth()) / 2, Game.getVirtualHeight() - 620);
 	}
-	
+
 	@Override
 	public void onLanguageChanged() {
 		setLanguageSensitiveInfo();

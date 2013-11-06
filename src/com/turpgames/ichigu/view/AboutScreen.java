@@ -10,11 +10,13 @@ public class AboutScreen extends IchiguScreen {
 	@Override
 	protected void onAfterActivate() {
 		IchiguToolbar.getInstance().activateBackButton();
+		aboutInfo.activate();
 	}
 	
 	@Override
 	protected boolean onBeforeDeactivate() {
 		IchiguToolbar.getInstance().deactivateBackButton();
+		aboutInfo.deactivate();
 		return true;
 	}
 
