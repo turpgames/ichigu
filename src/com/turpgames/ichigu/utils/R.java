@@ -250,8 +250,8 @@ public final class R {
 		public final static String tutSingleIchiguModes = "tutSingleIchiguModes";
 		public final static String tutFullGameModes = "tutFullGameModes";
 		
-		public final static String tutPracticeModeTitle = "tutSampleIchiguTitle";
-		public final static String tutPracticeMode = "tutSameShape";
+		public final static String tutPracticeModeTitle = "tutPracticeModeTitle";
+		public final static String tutPracticeMode = "tutPracticeMode";
 		
 		public final static String tutMiniChallengeModeTitle = "tutMiniChallengeModeTitle";
 		public final static String tutMiniChallengeMode = "tutMiniChallengeMode";

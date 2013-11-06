@@ -168,33 +168,36 @@ public class IchiguTutorial extends Tutorial {
 		pages.add(page);
 
 		page = new TutorialPage("11", R.fontSize.medium);
+		page.addInfo(Game.getLanguageManager().getString(R.strings.tutPracticeModeTitle), Text.HAlignCenter, marginTop).getColor().set(R.colors.ichiguYellow);
+		page.addInfo(Game.getLanguageManager().getString(R.strings.tutPracticeMode), Text.HAlignLeft, 50).setPadX(10);
+		pages.add(page);
+
+		page = new TutorialPage("12", R.fontSize.medium);
 		page.addInfo(Game.getLanguageManager().getString(R.strings.tutMiniChallengeModeTitle), Text.HAlignCenter, marginTop).getColor().set(R.colors.ichiguYellow);
 		page.addInfo(Game.getLanguageManager().getString(R.strings.tutMiniChallengeMode), Text.HAlignLeft, 50).setPadX(10);
 		pages.add(page);
 
-		page = new TutorialPage("12", R.fontSize.medium);
+		page = new TutorialPage("13", R.fontSize.medium);
 		page.addInfo(Game.getLanguageManager().getString(R.strings.tutRelaxModeTitle), Text.HAlignCenter, marginTop).getColor().set(R.colors.ichiguYellow);
-		page.addInfo(Game.getLanguageManager().getString(R.strings.tutRelaxMode), Text.HAlignLeft, 50).setPadX(10);
-		page.addInfo("", Text.HAlignLeft, 30).setPadX(10);
-		page.addInfo("", Text.HAlignLeft, 30).setPadX(10);
+		page.addInfo(Game.getLanguageManager().getString(R.strings.tutRelaxMode), Text.HAlignLeft, 30).setPadX(10);
 		pages.add(page);
 		
-		page = new TutorialPage("13", R.fontSize.medium);
+		page = new TutorialPage("14", R.fontSize.medium);
 		page.addInfo(Game.getLanguageManager().getString(R.strings.tutNormalModeTitle), Text.HAlignCenter, marginTop).getColor().set(R.colors.ichiguYellow);
 		page.addInfo(Game.getLanguageManager().getString(R.strings.tutNormalMode), Text.HAlignLeft, 50).setPadX(10);
 		pages.add(page);
 		
-		page = new TutorialPage("14", R.fontSize.medium);
+		page = new TutorialPage("15", R.fontSize.medium);
 		page.addInfo(Game.getLanguageManager().getString(R.strings.tutFullChallengeModeTitle), Text.HAlignCenter, marginTop).getColor().set(R.colors.ichiguYellow);
-		page.addInfo(Game.getLanguageManager().getString(R.strings.tutFullChallengeMode), Text.HAlignLeft, 50).setPadX(10);
+		page.addInfo(Game.getLanguageManager().getString(R.strings.tutFullChallengeMode), Text.HAlignLeft, 30).setPadX(10);
 		pages.add(page);
 
-		page = new TutorialPage("15", R.fontSize.medium);
+		page = new TutorialPage("16", R.fontSize.medium);
 		page.addInfo(Game.getLanguageManager().getString(R.strings.tutScoreTitle), Text.HAlignCenter, marginTop).getColor().set(R.colors.ichiguYellow);
 		page.addInfo(Game.getLanguageManager().getString(R.strings.tutScore), Text.HAlignLeft, 50).setPadX(10);
 		pages.add(page);
 
-		page = new TutorialPage("16", R.fontSize.medium);
+		page = new TutorialPage("17", R.fontSize.medium);
 		info = page.addInfo(Game.getLanguageManager().getString(R.strings.tutSampleIchiguScoreTitle), Text.HAlignCenter, marginTop);
 		info.getColor().set(R.colors.ichiguYellow);
 		y = Game.getVirtualHeight() - marginTop - info.getTextAreaHeight() - Card.Height - 30;
