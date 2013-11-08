@@ -18,7 +18,9 @@ public abstract class IchiguController<T extends IchiguState> implements IIchigu
 
 	@Override
 	public boolean onScreenDeactivated() {
-		return currentState.onScreenDeactivated();
+		if (currentState != null)
+			return currentState.onScreenDeactivated();
+		return false;
 	}
 
 	@Override

@@ -75,7 +75,7 @@ public abstract class FullGameMode extends IchiguMode implements IResultScreenBu
 		remaingCardInfo.setPadding(0, 55);
 		
 		timeInfo = new DisplayTimer(R.colors.ichiguRed, 5, 30);
-		timeInfo.locate(Text.HAlignCenter, Text.VAlignTop);
+		timeInfo.locate(Text.HAlignRight, Text.VAlignTop);
 		timeInfo.setPadding(0, 110);
 		
 		timer = new Timer();
