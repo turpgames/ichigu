@@ -131,16 +131,6 @@
                 y="26"
                 color="#56bd89ff" />
 
-            <label
-                id="lblBeta"
-                cols="16"
-                font-scale="0.5"
-                rows="1"
-                text="beta"
-                x="0"
-                y="25"
-                color="#f9b000ff" />
-
             <button
                 id="btnPlay"
                 action="form=playMenu"
