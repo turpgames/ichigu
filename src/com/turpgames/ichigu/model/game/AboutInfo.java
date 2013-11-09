@@ -1,7 +1,6 @@
 package com.turpgames.ichigu.model.game;
 
 import com.turpgames.framework.v0.IDrawable;
-import com.turpgames.framework.v0.IGameProvider;
 import com.turpgames.framework.v0.ILanguageListener;
 import com.turpgames.framework.v0.component.IButtonListener;
 import com.turpgames.framework.v0.component.ImageButton;
@@ -9,6 +8,7 @@ import com.turpgames.framework.v0.component.TextButton;
 import com.turpgames.framework.v0.component.info.GameInfo;
 import com.turpgames.framework.v0.impl.Text;
 import com.turpgames.framework.v0.util.Game;
+import com.turpgames.framework.v0.util.Utils;
 import com.turpgames.ichigu.utils.R;
 
 public class AboutInfo implements IDrawable, ILanguageListener {
@@ -61,18 +61,22 @@ public class AboutInfo implements IDrawable, ILanguageListener {
 				Game.openUrl(Game.getParam(R.strings.libgdxAddress));
 			}
 		});
+		libgdxLink.deactivate();
 
 		rateLink = new TextButton(R.colors.ichiguYellow, R.colors.ichiguRed);
 		rateLink.setFontScale(R.fontSize.medium);
 		rateLink.setListener(new IButtonListener() {
 			@Override
 			public void onButtonTapped() {
-				if (Game.getAppType() == IGameProvider.AppTypeAndroid)
+				if (Game.isIOS()) {
+					if (Utils.getOSVersion().startsWith("7"))
+						Game.openUrl(Game.getParam(R.strings.appStoreAddressIOS7));
+					else
+						Game.openUrl(Game.getParam(R.strings.appStoreAddressOld));
+				}
+				else {
 					Game.openUrl(Game.getParam(R.strings.playStoreAddress));
-				else if (Game.getAppType() == IGameProvider.AppTypeIOS)
-					Game.openUrl(Game.getParam(R.strings.appStoreAddressIOS7));
-				else
-					Game.openUrl(Game.getParam(R.strings.playStoreAddress));
+				}
 			}
 		});
 
