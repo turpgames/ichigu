@@ -23,8 +23,8 @@
 
         <param
             key="default-font"
-            value="Akachen,1" />
-
+            value="Yahei,1" />
+        
         <param
             key="default-skin"
             value="ppt" />
@@ -227,6 +227,10 @@
             <font
                 id="Akachen"
                 path="fonts/akachen.fnt" />
+
+            <font
+                id="Yahei"
+                path="fonts/chinese/yaheiui.fnt" />
         </fonts>
 
         <textures>
