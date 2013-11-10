@@ -16,4 +16,7 @@ public class TryAgainToast extends ToastGameInfo {
 	public void show() {
 		super.show(Game.getLanguageManager().getString(R.strings.tryAgain), 1000, 200);
 	}
+
+	@Override
+	public void onTap() { }
 }

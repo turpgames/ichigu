@@ -42,7 +42,7 @@ class PracticeModeHint implements IDrawable, Toast.IToastListener, IEffectEndLis
 
 	@Override
 	public boolean onEffectEnd(Object obj) {
-		// Yazý kaymaya devam ediyorsa, kart da yanýp sönmeye devam etsin
+		// Yazi kaymaya devam ediyorsa, kart da yanip sonmeye devam etsin
 		return !isDisplayingHint;
 	}
 
@@ -152,6 +152,11 @@ class PracticeModeHint implements IDrawable, Toast.IToastListener, IEffectEndLis
 		{
 			hints.add(Game.getLanguageManager().getString(R.strings.differentCounts));
 		}
+	}
+
+	@Override
+	public void onTap() {
+		toast.hide();
 	}
 
 //	private void addFinalHint(CardAttributes ca1, CardAttributes ca2) {

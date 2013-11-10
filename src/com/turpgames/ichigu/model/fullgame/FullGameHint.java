@@ -175,4 +175,9 @@ public class FullGameHint implements IDrawable, IEffectEndListener, Toast.IToast
 	public boolean isActive() {
 		return isActive;
 	}
+
+	@Override
+	public void onTap() {
+		toast.hide();
+	}
 }

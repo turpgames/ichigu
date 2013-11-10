@@ -21,4 +21,7 @@ public class WaitToast extends ToastGameInfo {
 	public void setText(String message) {
 		toast.setText(Game.getLanguageManager().getString(R.strings.wait) + ": " + message); 
 	}
+
+	@Override
+	public void onTap() { }
 }

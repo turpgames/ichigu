@@ -19,7 +19,7 @@ public class FadingPointsInfo extends GameObject implements IFadingEffectSubject
 	private Timer timer;
 	private FadeOutEffect fadeOutEffect;
 	private boolean isActive;
-	private float millis = 4000;
+	private float millis = 6000;
 
 	class PointInfo extends GameObject implements IFadingEffectSubject {
 		static final int pointImageSize = 64;

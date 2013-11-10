@@ -16,4 +16,7 @@ public class PointsToast extends ToastGameInfo {
 	public void show(int points) {
 		super.show(points + " " + Game.getLanguageManager().getString(R.strings.points), 1000, 200);
 	}
+
+	@Override
+	public void onTap() { }
 }
