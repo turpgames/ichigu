@@ -63,11 +63,11 @@
 
         <param
             key="app-store-address-ios7"
-            value="itms-apps://itunes.apple.com/app/idYOUR_APP_ID" />
+            value="itms-apps://itunes.apple.com/app/id737312134" />
 
         <param
             key="app-store-address-old"
-            value="itms-apps://itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&amp;id=YOUR_APP_ID" />
+            value="itms-apps://itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&amp;id=737312134" />
     </params>
 
     <screens>
@@ -165,6 +165,7 @@
                 focus-color="#d0583bff"
                 font-scale="1.2"
                 resource-text="exitGame"
+                hidden-ios="true"
                 y="4" />
         </form>
 
