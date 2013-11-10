@@ -23,7 +23,7 @@
 
         <param
             key="default-font"
-            value="Yahei,1" />
+            value="Akachen_chinese,1" />
         
         <param
             key="default-skin"
@@ -131,16 +131,6 @@
                 y="26"
                 color="#56bd89ff" />
 
-            <label
-                id="lblBeta"
-                cols="16"
-                font-scale="0.5"
-                rows="1"
-                text="beta"
-                x="0"
-                y="25"
-                color="#f9b000ff" />
-
             <button
                 id="btnPlay"
                 action="form=playMenu"
@@ -225,12 +215,9 @@
         <fonts>
 
             <font
-                id="Akachen"
-                path="fonts/akachen.fnt" />
+                id="Akachen_chinese"
+                path="fonts/chinese/akachen_chinese.fnt" />
 
-            <font
-                id="Yahei"
-                path="fonts/chinese/yaheiui.fnt" />
         </fonts>
 
         <textures>
