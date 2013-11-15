@@ -1,19 +1,17 @@
-<b>Overview</b>
+Symbols on the cards have four properties and each of them have three different values
+<i>Ichigu</i> ¨¨ un gioco di carte giocato con un mazzo da 81 carte. Ogni carta nel mazzo ¨¨ unica. Obiettivo del gioco ¨¨ trovare gruppi di tre carte, gli ichigu.
+I simboli sulle carte hanno quattro propriet¨¤, ognuna delle quali ha 3 valori differenti
 
-<i>Ichigu</i> is a card game played with a deck of 81 cards. Each card in deck is unique and has some symbols on it. Objective of the game is to find groups of three cards: ichigus. Symbols on the cards have four properties and each of them have three different values
-	
-&nbsp;&nbsp;&nbsp;- Shape:   Triangle, Circle, Square
-&nbsp;&nbsp;&nbsp;- Color:   Red, Green, Blue
-&nbsp;&nbsp;&nbsp;- Pattern: Empty, Striped, Filled
-&nbsp;&nbsp;&nbsp;- Count:   One, Two, Three
+&nbsp;&nbsp;&nbsp;- Forma: triangolo, cerchio, quadrato
+&nbsp;&nbsp;&nbsp;- Colore: rosso, verde, blue
+&nbsp;&nbsp;&nbsp;- Trama: vuoto, striato, pieno
+&nbsp;&nbsp;&nbsp;- Numero di simboli: uno, due, tre.
 
-This totals to 81 unique cards in a deck : 3 x 3 x 3 x 3 = 81	
-	
-To make an ichigu all 3 cards must have
+Per fare un ichigu, tutte le 3 carte devono avere simboli;
 
-&nbsp;&nbsp;&nbsp;- Same or different shapes
-&nbsp;&nbsp;&nbsp;- Same or different colors
-&nbsp;&nbsp;&nbsp;- Same or different patterns
-&nbsp;&nbsp;&nbsp;- Same or different counts
-	
-In other words, it is NOT an ichigu if you can seperate three cards into: Two As and one B
+&nbsp;&nbsp;&nbsp;- della stessa o diversa forma
+&nbsp;&nbsp;&nbsp;- dello stesso o diverso colore
+&nbsp;&nbsp;&nbsp;- della stessa o diversa trama
+&nbsp;&nbsp;&nbsp;- dello stesso o diverso numero
+
+NON ¨¨ un ichigu se tu puoi suddividere le tre carte in due A e un B.

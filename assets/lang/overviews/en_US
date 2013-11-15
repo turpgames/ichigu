@@ -1,5 +1,3 @@
-<b>Overview</b>
-
 <i>Ichigu</i> is a card game played with a deck of 81 cards. Each card in deck is unique and has some symbols on it. Objective of the game is to find groups of three cards: ichigus. Symbols on the cards have four properties and each of them have three different values
 	
 &nbsp;&nbsp;&nbsp;- Shape:   Triangle, Circle, Square
