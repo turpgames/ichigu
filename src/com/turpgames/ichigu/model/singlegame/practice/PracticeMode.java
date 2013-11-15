@@ -1,7 +1,7 @@
 package com.turpgames.ichigu.model.singlegame.practice;
 
 import com.turpgames.framework.v0.util.Game;
-import com.turpgames.ichigu.model.display.FadingPointsInfo;
+import com.turpgames.ichigu.model.display.FadingScoreInfo;
 import com.turpgames.ichigu.model.display.TryAgainToast;
 import com.turpgames.ichigu.model.game.Card;
 import com.turpgames.ichigu.model.singlegame.SingleGameCards;
@@ -10,23 +10,23 @@ import com.turpgames.ichigu.model.singlegame.SingleGameMode;
 public class PracticeMode extends SingleGameMode {
 	private PracticeModeHint hint;
 	private TryAgainToast tryAgain;
-	private FadingPointsInfo pointsInfo;
+	private FadingScoreInfo scoreInfo;
 	
 	public PracticeMode() {
-		super();
 		hint = new PracticeModeHint();
 		tryAgain = new TryAgainToast();
-		pointsInfo = new FadingPointsInfo();
+		scoreInfo = new FadingScoreInfo();
 		
-		pointsInfo.getLocation().set(0, Game.getVirtualHeight() - pointsInfo.getHeight() - 45);
+		scoreInfo.getLocation().set(0, Game.getVirtualHeight() - scoreInfo.getHeight() - 45);
 	}
 	
 	@Override
 	public void onCardSelected(Card selectedCard) {
 		int score = cards.checkScore(selectedCard);
-		if (score > 0) {
-			pointsInfo.show(cards.getIchiguCards(selectedCard));
-		}
+		if (score > 0)
+			scoreInfo.show(cards.getIchiguCards(selectedCard));
+		else
+			tryAgain.show();
 		super.onCardSelected(selectedCard);
 	}
 	
@@ -59,11 +59,11 @@ public class PracticeMode extends SingleGameMode {
 		hint.deactivate();
 		return super.exitMode();
 	}
-
+	
 	@Override
-	protected void wrongCardSelected() {
-		tryAgain.show();
-		super.wrongCardSelected();
+	public void deal() {
+		tryAgain.hide();
+		super.deal();
 	}
 	
 	public void drawGame() {

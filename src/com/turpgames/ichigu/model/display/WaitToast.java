@@ -14,14 +14,11 @@ public class WaitToast extends ToastGameInfo {
 	}
 	
 	public void show(float duration) {
-		super.show(Game.getLanguageManager().getString(R.strings.wait) + ": ", duration, 200);
+		super.show(Game.getLanguageManager().getString(R.strings.wait) + ": ", duration, 0.2f);
 	}
 	
 	@Override
 	public void setText(String message) {
 		toast.setText(Game.getLanguageManager().getString(R.strings.wait) + ": " + message); 
 	}
-
-	@Override
-	public void onTap() { }
 }

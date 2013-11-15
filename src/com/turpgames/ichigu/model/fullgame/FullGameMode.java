@@ -4,7 +4,7 @@ import com.turpgames.framework.v0.component.info.GameInfo;
 import com.turpgames.framework.v0.impl.Text;
 import com.turpgames.framework.v0.util.Timer;
 import com.turpgames.ichigu.model.display.DisplayTimer;
-import com.turpgames.ichigu.model.display.PointsToast;
+import com.turpgames.ichigu.model.display.ScoreToast;
 import com.turpgames.ichigu.model.display.TryAgainToast;
 import com.turpgames.ichigu.model.game.Card;
 import com.turpgames.ichigu.model.game.IResultScreenButtonsListener;
@@ -29,7 +29,7 @@ public abstract class FullGameMode extends IchiguMode implements IResultScreenBu
 	protected DisplayTimer timeInfo;
 	protected int modeCompleteTime;
 
-	protected PointsToast pointsInfo;
+	protected ScoreToast pointsInfo;
 	protected boolean pointsInfoActive;
 	
 	private boolean areExtraCardsOpened;
@@ -90,7 +90,7 @@ public abstract class FullGameMode extends IchiguMode implements IResultScreenBu
 
 		hint = new FullGameHint();
 		
-		pointsInfo = new PointsToast();
+		pointsInfo = new ScoreToast();
 		pointsInfoActive = true;
 		
 		tryAgain = new TryAgainToast();

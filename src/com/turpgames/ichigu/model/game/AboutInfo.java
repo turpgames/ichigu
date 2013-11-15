@@ -53,7 +53,7 @@ public class AboutInfo implements IDrawable, ILanguageListener {
 		info2.setFontScale(R.fontSize.medium);
 		info2.setPadding(35, 450);
 
-		libgdxLink = new ImageButton(R.ui.libgdxLogoWidth, R.ui.libgdxLogoHeight, R.game.textures.libgdx);
+		libgdxLink = new ImageButton(Game.scale(R.ui.libgdxLogoWidth), Game.scale(R.ui.libgdxLogoHeight), R.game.textures.libgdx);
 		libgdxLink.getLocation().set((Game.getScreenWidth() - libgdxLink.getWidth()) / 2, Game.viewportToScreenY(Game.getVirtualHeight() - 520));
 		libgdxLink.setListener(new IButtonListener() {
 			@Override

@@ -19,14 +19,10 @@ public abstract class SingleGameMode extends IchiguMode {
 	public void onCardSelected(Card selectedCard) {
 		selectedCard.deselect();
 		int score = cards.checkScore(selectedCard);
-		if (score > 0) {
+		if (score > 0)
 			notifyIchiguFound();
-		} else
-			wrongCardSelected();
-	}
-
-	protected void wrongCardSelected() {
-		notifyInvalidIchiguSelected();
+		else
+			notifyInvalidIchiguSelected();
 	}
 
 	public void activateCards() {

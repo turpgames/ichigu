@@ -14,6 +14,7 @@ import com.turpgames.ichigu.utils.R;
 
 public class IchiguTutorial extends Tutorial {
 	private final static float marginTop = 220f;
+	private final static float buttonSize = Game.scale(R.ui.imageButtonWidth);
 
 	public IchiguTutorial(ITutorialListener listener) {
 		super(listener);
@@ -37,13 +38,13 @@ public class IchiguTutorial extends Tutorial {
 
 	@Override
 	protected void concreteAddNextButton() {
-		nextButton = new ImageButton(R.ui.imageButtonWidth, R.ui.imageButtonHeight, R.game.textures.next, R.colors.buttonDefault, R.colors.buttonTouched);
+		nextButton = new ImageButton(buttonSize, buttonSize, R.game.textures.next, R.colors.buttonDefault, R.colors.buttonTouched);
 		nextButton.getLocation().set(Game.getScreenWidth() - (nextButton.getWidth() + Game.viewportToScreenX(30)), Game.viewportToScreenY(30));
 	}
 
 	@Override
 	protected void concreteAddPrevButton() {
-		prevButton = new ImageButton(R.ui.imageButtonWidth, R.ui.imageButtonHeight, R.game.textures.prev, R.colors.buttonDefault, R.colors.buttonTouched);
+		prevButton = new ImageButton(buttonSize, buttonSize, R.game.textures.prev, R.colors.buttonDefault, R.colors.buttonTouched);
 		prevButton.deactivate();
 		prevButton.getLocation().set(Game.viewportToScreenX(30), Game.viewportToScreenY(30));
 	}

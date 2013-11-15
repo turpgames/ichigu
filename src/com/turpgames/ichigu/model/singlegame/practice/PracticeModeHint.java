@@ -14,6 +14,8 @@ import com.turpgames.ichigu.model.game.CardAttributes;
 import com.turpgames.ichigu.utils.R;
 
 class PracticeModeHint implements IDrawable, Toast.IToastListener, IEffectEndListener {
+	private static final float buttonSize = Game.scale(R.ui.imageButtonWidth);
+	
 	private List<String> hints;
 	private int index;
 	private Toast toast;
@@ -25,7 +27,7 @@ class PracticeModeHint implements IDrawable, Toast.IToastListener, IEffectEndLis
 	PracticeModeHint() {
 		hints = new ArrayList<String>();
 
-		hintButton = new ImageButton(R.ui.imageButtonWidth, R.ui.imageButtonHeight, R.game.textures.hint, R.colors.buttonDefault, R.colors.buttonTouched);
+		hintButton = new ImageButton(buttonSize, buttonSize, R.game.textures.hint, R.colors.buttonDefault, R.colors.buttonTouched);
 		hintButton.getLocation().set((Game.getScreenWidth() - hintButton.getWidth()) / 2, Game.viewportToScreenY(50));
 		hintButton.setListener(new IButtonListener() {
 			@Override
@@ -85,7 +87,7 @@ class PracticeModeHint implements IDrawable, Toast.IToastListener, IEffectEndLis
 			String hint = hints.get(index++);
 		
 			setToastColor();
-			toast.show(hint, 5000);
+			toast.show(hint, 5f);
 		}
 	}
 
@@ -153,24 +155,4 @@ class PracticeModeHint implements IDrawable, Toast.IToastListener, IEffectEndLis
 			hints.add(Game.getLanguageManager().getString(R.strings.differentCounts));
 		}
 	}
-
-	@Override
-	public void onTap() {
-		toast.hide();
-	}
-
-//	private void addFinalHint(CardAttributes ca1, CardAttributes ca2) {
-//		int color3 = CardAttributes.getCompleting(ca1.getColor(), ca2.getColor());
-//		int count3 = CardAttributes.getCompleting(ca1.getCount(), ca2.getCount());
-//		int pattern3 = CardAttributes.getCompleting(ca1.getPattern(), ca2.getPattern());
-//		int shape3 = CardAttributes.getCompleting(ca1.getShape(), ca2.getShape());
-//
-//		hints.add(String.format("Third card must have %d %s %s %s%s",
-//				CardAttributes.getCountValue(count3),
-//				CardAttributes.getPatternName(pattern3),
-//				CardAttributes.getColorName(color3),
-//				CardAttributes.getShapeName(shape3),
-//				CardAttributes.getCountValue(count3) > 1 ? "s" : ""
-//				));
-//	}
 }

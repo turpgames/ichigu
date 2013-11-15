@@ -12,6 +12,8 @@ import com.turpgames.ichigu.model.fullgame.FullGameMode;
 import com.turpgames.ichigu.utils.R;
 
 public class RelaxMode extends FullGameMode {
+	private static final float buttonSize = Game.scale(R.ui.imageButtonWidth);
+	
 	protected ImageButton resetButton;
 
 	private GameInfo resultInfo;
@@ -34,7 +36,7 @@ public class RelaxMode extends FullGameMode {
 			}
 		});
 
-		resetButton = new ImageButton(R.ui.imageButtonWidth, R.ui.imageButtonHeight, R.game.textures.refresh, R.colors.buttonDefault, R.colors.buttonTouched);
+		resetButton = new ImageButton(buttonSize, buttonSize, R.game.textures.refresh, R.colors.buttonDefault, R.colors.buttonTouched);
 		resetButton.getLocation().set(10,  Game.viewportToScreenY(30));
 		resetButton.setListener(new IButtonListener() {
 			@Override

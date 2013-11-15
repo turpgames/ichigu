@@ -15,23 +15,21 @@ import com.turpgames.framework.v0.util.Utils;
 import com.turpgames.ichigu.model.game.CardAttributes;
 import com.turpgames.ichigu.utils.R;
 
-public class FadingPointsInfo extends GameObject implements IFadingEffectSubject {
+public class FadingScoreInfo extends GameObject implements IFadingEffectSubject {
 	private Timer timer;
 	private FadeOutEffect fadeOutEffect;
 	private boolean isActive;
-	private float millis = 6000;
+	private float fadeDuration = 5f;
 
-	class PointInfo extends GameObject implements IFadingEffectSubject {
-		static final int pointImageSize = 64;
+	class ScoreInfo extends GameObject implements IFadingEffectSubject {
+		static final int scoreImageSize = 64;
 		ITexture texture;
 		AttachedText text;
 		AttachedText extraText;
 
-		PointInfo() {
+		ScoreInfo() {
 			this.text = new AttachedText(this);
 			this.text.setHorizontalAlignment(Text.HAlignCenter);
-//			this.text.setVerticalAlignment(Text.VAlignCenter);
-//			this.text.setPadX(30);
 			this.text.setPadY(-15);
 			this.text.setWrapped(false);
 			
@@ -39,8 +37,8 @@ public class FadingPointsInfo extends GameObject implements IFadingEffectSubject
 			this.extraText.setPadY(-15);
 			this.extraText.setText(" +");
 			
-			setWidth(pointImageSize);
-			setHeight(pointImageSize);
+			setWidth(scoreImageSize);
+			setHeight(scoreImageSize);
 		}
 
 		public void setText(String text) {
@@ -80,71 +78,71 @@ public class FadingPointsInfo extends GameObject implements IFadingEffectSubject
 		}
 	}
 
-	int points;
-	PointInfo shapeInfo;
-	PointInfo colorInfo;
-	PointInfo patternInfo;
-	PointInfo countInfo;
+	private int score;
+	private ScoreInfo shapeScoreInfo;
+	private ScoreInfo colorScoreInfo;
+	private ScoreInfo patternScoreInfo;
+	private ScoreInfo countScoreInfo;
 
 	private void setPoints(CardAttributes[] attr) {
-		points = 0;
+		score = 0;
 		
 		if (CardAttributes.isSameColor(attr[0], attr[1], attr[2])) {
-			points += 1;
-			colorInfo.setText("1");
-			colorInfo.setTexture(Game.getResourceManager().getTexture(R.game.textures.points.colorone));
-			colorInfo.getColor().set(
+			score += 1;
+			colorScoreInfo.setText("1");
+			colorScoreInfo.setTexture(Game.getResourceManager().getTexture(R.game.textures.points.colorone));
+			colorScoreInfo.getColor().set(
 					attr[0].getColor() == CardAttributes.Color_Blue ? R.colors.ichiguBlue : attr[0].getColor() == CardAttributes.Color_Green ? R.colors.ichiguGreen : R.colors.ichiguRed);
 		} else {
-			points += 3;
-			colorInfo.setText("3");
-			colorInfo.setTexture(Game.getResourceManager().getTexture(R.game.textures.points.colorall));
-			colorInfo.getColor().set(1, 1, 1);
+			score += 3;
+			colorScoreInfo.setText("3");
+			colorScoreInfo.setTexture(Game.getResourceManager().getTexture(R.game.textures.points.colorall));
+			colorScoreInfo.getColor().set(1, 1, 1);
 		}
 		
 		if (CardAttributes.isSameShape(attr[0], attr[1], attr[2])) {
-			points += 1;
-			shapeInfo.setText("1");
-			shapeInfo.setTexture(Game.getResourceManager().getTexture(
+			score += 1;
+			shapeScoreInfo.setText("1");
+			shapeScoreInfo.setTexture(Game.getResourceManager().getTexture(
 					attr[0].getShape() == CardAttributes.Shape_Circle ? R.game.textures.points.shapecircle : attr[0].getShape() == CardAttributes.Shape_Square ? R.game.textures.points.shaperectangle
 							: R.game.textures.points.shapetriangle));
 		} else {
-			points += 3;
-			shapeInfo.setText("3");
-			shapeInfo.setTexture(Game.getResourceManager().getTexture(R.game.textures.points.shapeall));
+			score += 3;
+			shapeScoreInfo.setText("3");
+			shapeScoreInfo.setTexture(Game.getResourceManager().getTexture(R.game.textures.points.shapeall));
 		}
 		
 		if (CardAttributes.isSamePattern(attr[0], attr[1], attr[2])) {
-			points += 1;
-			patternInfo.setText("1");
-			patternInfo.setTexture(Game.getResourceManager().getTexture(
+			score += 1;
+			patternScoreInfo.setText("1");
+			patternScoreInfo.setTexture(Game.getResourceManager().getTexture(
 					attr[0].getPattern() == CardAttributes.Pattern_Empty ? R.game.textures.points.fillempty : attr[0].getPattern() == CardAttributes.Pattern_Filled ? R.game.textures.points.fillfull
 							: R.game.textures.points.fillstriped));
 		} else {
-			points += 3;
-			patternInfo.setText("3");
-			patternInfo.setTexture(Game.getResourceManager().getTexture(R.game.textures.points.fillall));
+			score += 3;
+			patternScoreInfo.setText("3");
+			patternScoreInfo.setTexture(Game.getResourceManager().getTexture(R.game.textures.points.fillall));
 		}
 
 		if (CardAttributes.isSameCount(attr[0], attr[1], attr[2])) {
-			points += 1;
-			countInfo.setText("1");
-			countInfo.setTexture(Game.getResourceManager().getTexture(
+			score += 1;
+			countScoreInfo.setText("1");
+			countScoreInfo.setTexture(Game.getResourceManager().getTexture(
 					attr[0].getCount() == CardAttributes.Count_1 ? R.game.textures.points.countone : attr[0].getCount() == CardAttributes.Count_2 ? R.game.textures.points.counttwo
 							: R.game.textures.points.countthree));
 		} else {
-			points += 3;
-			countInfo.setText("3");
-			countInfo.setTexture(Game.getResourceManager().getTexture(R.game.textures.points.countall));
+			score += 3;
+			countScoreInfo.setText("3");
+			countScoreInfo.setTexture(Game.getResourceManager().getTexture(R.game.textures.points.countall));
 		}
-		countInfo.setExtraText(" = " + points);
+		countScoreInfo.setExtraText(" = " + score);
 		
-		setPointInfosPositions();
+		setScoreInfosPositions();
 	}
 
-	public FadingPointsInfo() {
+	public FadingScoreInfo() {
 		this.setWidth(Game.getVirtualWidth());
-		this.setHeight(PointInfo.pointImageSize + 10);
+		this.setHeight(ScoreInfo.scoreImageSize + 10);
 		this.getLocation().set(0, Game.getVirtualHeight() - this.getHeight());
 		this.getColor().set(R.colors.ichiguRed);
 
@@ -156,30 +154,30 @@ public class FadingPointsInfo extends GameObject implements IFadingEffectSubject
 		fadeOutEffect.setMaxAlpha(1);
 		fadeOutEffect.setListener(effectListener);
 
-		initPointInfos();
+		initScoreInfos();
 	}
 
-	public void initPointInfos() {
-		colorInfo = new PointInfo();
+	public void initScoreInfos() {
+		colorScoreInfo = new ScoreInfo();
 
-		shapeInfo = new PointInfo();
-		shapeInfo.getColor().set(R.colors.ichiguYellow);
+		shapeScoreInfo = new ScoreInfo();
+		shapeScoreInfo.getColor().set(R.colors.ichiguYellow);
 		
-		patternInfo = new PointInfo();
-		patternInfo.getColor().set(R.colors.ichiguYellow);
+		patternScoreInfo = new ScoreInfo();
+		patternScoreInfo.getColor().set(R.colors.ichiguYellow);
 
-		countInfo = new PointInfo();
-		countInfo.getColor().set(R.colors.ichiguYellow);
+		countScoreInfo = new ScoreInfo();
+		countScoreInfo.getColor().set(R.colors.ichiguYellow);
 	}
 	
-	public void setPointInfosPositions() {
-		int totalWidth = (int) (3 * PointInfo.pointImageSize + countInfo.getTotalWidth());
+	public void setScoreInfosPositions() {
+		int totalWidth = (int) (3 * ScoreInfo.scoreImageSize + countScoreInfo.getTotalWidth());
 		int x = (int) (Game.getVirtualWidth() - totalWidth) / 2;
 		int y = (int) this.getLocation().y;
-		colorInfo.getLocation().set(x, y);
-		shapeInfo.getLocation().set(x + PointInfo.pointImageSize, y);
-		patternInfo.getLocation().set(x + 2 * PointInfo.pointImageSize, y);
-		countInfo.getLocation().set(x + 3 * PointInfo.pointImageSize, y);
+		colorScoreInfo.getLocation().set(x, y);
+		shapeScoreInfo.getLocation().set(x + ScoreInfo.scoreImageSize, y);
+		patternScoreInfo.getLocation().set(x + 2 * ScoreInfo.scoreImageSize, y);
+		countScoreInfo.getLocation().set(x + 3 * ScoreInfo.scoreImageSize, y);
 	}
 
 	public void show(CardAttributes[] attr) {
@@ -193,9 +191,9 @@ public class FadingPointsInfo extends GameObject implements IFadingEffectSubject
 
 		setPoints(attr);
 
-		timer.setInterval(millis / 1000f);
+		timer.setInterval(fadeDuration);
 
-		fadeOutEffect.setDuration(millis / 1000f);
+		fadeOutEffect.setDuration(fadeDuration);
 		fadeOutEffect.start();
 
 		this.listenInput(true);
@@ -241,10 +239,10 @@ public class FadingPointsInfo extends GameObject implements IFadingEffectSubject
 
 	@Override
 	public void draw() {
-		shapeInfo.draw();
-		colorInfo.draw();
-		countInfo.draw();
-		patternInfo.draw();
+		shapeScoreInfo.draw();
+		colorScoreInfo.draw();
+		countScoreInfo.draw();
+		patternScoreInfo.draw();
 	}
 
 	@Override
@@ -256,10 +254,10 @@ public class FadingPointsInfo extends GameObject implements IFadingEffectSubject
 	@Override
 	public void setAlpha(float alpha) {
 		getColor().a = alpha;
-		shapeInfo.setAlpha(alpha);
-		colorInfo.setAlpha(alpha);
-		countInfo.setAlpha(alpha);
-		patternInfo.setAlpha(alpha);
+		shapeScoreInfo.setAlpha(alpha);
+		colorScoreInfo.setAlpha(alpha);
+		countScoreInfo.setAlpha(alpha);
+		patternScoreInfo.setAlpha(alpha);
 	}
 
 	@Override

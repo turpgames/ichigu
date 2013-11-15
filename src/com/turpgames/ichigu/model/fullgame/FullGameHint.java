@@ -13,6 +13,7 @@ import com.turpgames.ichigu.utils.R;
 
 public class FullGameHint implements IDrawable, IEffectEndListener, Toast.IToastListener {
 	private final static int notificationInterval = 30;
+	private static final float buttonSize = Game.scale(R.ui.imageButtonWidth);
 
 	private BlinkingImageButton button;
 	private FullGameIchiguInfo ichiguInfo;
@@ -21,14 +22,13 @@ public class FullGameHint implements IDrawable, IEffectEndListener, Toast.IToast
 	private int hintIndex;
 	private boolean isActive;
 	private Timer notificationTimer;
-//	private int colorIndex;
 
 	private Toast toast;
 
 	private IHintListener hintListener;
 	
 	FullGameHint() {
-		button = new BlinkingImageButton(R.ui.imageButtonWidth, R.ui.imageButtonHeight, R.colors.ichiguWhite, R.colors.ichiguCyan, 1f, 10);
+		button = new BlinkingImageButton(buttonSize, buttonSize, R.colors.ichiguWhite, R.colors.ichiguCyan, 1f, 10);
 		button.setTexture(R.game.textures.hint);
 		button.setListener(new IButtonListener() {
 			@Override
@@ -102,8 +102,7 @@ public class FullGameHint implements IDrawable, IEffectEndListener, Toast.IToast
 		}
 
 		if (hintIndex == 0) {
-//			setToastColor();
-			toast.show(text, 3000);
+			toast.show(text, 3f);
 			if (prevIchiguCount != ichiguInfo.getIchiguCount())
 				toast.setText(text);
 		}
@@ -116,17 +115,6 @@ public class FullGameHint implements IDrawable, IEffectEndListener, Toast.IToast
 
 		prevIchiguCount = ichiguInfo.getIchiguCount();
 	}
-
-//	private void setToastColor() {
-//		colorIndex++;
-//
-//		if (colorIndex % 3 == 0)
-//			toast.setToastColor(R.colors.ichiguRed);
-//		else if (colorIndex % 3 == 1)
-//			toast.setToastColor(R.colors.ichiguGreen);
-//		else if (colorIndex % 3 == 2)
-//			toast.setToastColor(R.colors.ichiguBlue);
-//	}
 
 	private void updateText() {
 		int count = ichiguInfo.getIchiguCount();
@@ -174,10 +162,5 @@ public class FullGameHint implements IDrawable, IEffectEndListener, Toast.IToast
 
 	public boolean isActive() {
 		return isActive;
-	}
-
-	@Override
-	public void onTap() {
-		toast.hide();
 	}
 }
