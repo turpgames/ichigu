@@ -24,7 +24,7 @@
         <param
             key="default-font"
             value="Akachen_chinese,1" />
-        
+
         <param
             key="default-skin"
             value="ppt" />
@@ -164,8 +164,8 @@
                 action="exit"
                 focus-color="#d0583bff"
                 font-scale="1.2"
-                resource-text="exitGame"
                 hidden-ios="true"
+                resource-text="exitGame"
                 y="4" />
         </form>
 
@@ -218,7 +218,6 @@
             <font
                 id="Akachen_chinese"
                 path="fonts/chinese/akachen_chinese.fnt" />
-
         </fonts>
 
         <textures>
@@ -438,6 +437,11 @@
     </resources>
 
     <languages>
+        <language
+            id="en-US"
+            encoding="UTF8"
+            flag-texture-id="flag_en_us"
+            path="lang/Strings_en_US.properties" />
 
         <language
             id="it-IT"
@@ -450,18 +454,12 @@
             encoding="UTF8"
             flag-texture-id="flag_tr"
             path="lang/Strings_tr_TR.properties" />
-        <language
-            id="en-US"
-            encoding="UTF8"
-            flag-texture-id="flag_en_us"
-            path="lang/Strings_en_US.properties" />
-        
-        <language
+
+        <languageX
             id="cn-CN"
             encoding="UTF8"
             flag-texture-id="flag_cn"
             path="lang/Strings_cn_CN.properties" />
-
     </languages>
 
     <skins>
