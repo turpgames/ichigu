@@ -1,9 +1,14 @@
 package com.turpgames.ichigu.model.fullgame;
 
+import com.turpgames.framework.v0.component.IButtonListener;
+import com.turpgames.framework.v0.component.ImageButton;
 import com.turpgames.framework.v0.component.info.GameInfo;
+import com.turpgames.framework.v0.forms.xml.Dialog;
 import com.turpgames.framework.v0.impl.Text;
+import com.turpgames.framework.v0.util.Game;
 import com.turpgames.framework.v0.util.Timer;
 import com.turpgames.ichigu.model.display.DisplayTimer;
+import com.turpgames.ichigu.model.display.IchiguDialog;
 import com.turpgames.ichigu.model.display.ScoreToast;
 import com.turpgames.ichigu.model.display.TryAgainToast;
 import com.turpgames.ichigu.model.game.Card;
@@ -14,13 +19,14 @@ import com.turpgames.ichigu.utils.IchiguResources;
 import com.turpgames.ichigu.utils.R;
 
 public abstract class FullGameMode extends IchiguMode implements IResultScreenButtonsListener {
-
+	private static final float buttonSize = Game.scale(R.ui.imageButtonWidth);
+	
 	protected FullGameCards cards;
 	protected FullGameHint hint;
 	protected int selectedCardCount;
-	
-//	protected int ichigusFound;
-//	protected GameInfo ichigusFoundInfo;
+
+	private ImageButton resetButton;
+	private Dialog resetConfirmDialog;
 	
 	protected int deckCount;	
 	protected GameInfo remaingCardInfo;
@@ -66,9 +72,22 @@ public abstract class FullGameMode extends IchiguMode implements IResultScreenBu
 		dealer = new FullGameCardDealer(cards);
 		resultScreenButtons = new ResultScreenButtons(this);
 		
-//		ichigusFoundInfo = new GameInfo();
-//		ichigusFoundInfo.locate(Text.HAlignRight, Text.VAlignTop);
-//		ichigusFoundInfo.setPadding(10, 110);
+		resetButton = new ImageButton(buttonSize, buttonSize, R.game.textures.refresh, R.colors.buttonDefault, R.colors.buttonTouched);
+		resetButton.getLocation().set(10,  Game.viewportToScreenY(30));
+		resetButton.setListener(new IButtonListener() {
+			@Override
+			public void onButtonTapped() {
+				confirmResetMode();
+			}
+		});
+
+		resetConfirmDialog = new IchiguDialog();
+		resetConfirmDialog.setListener(new Dialog.IDialogListener() {
+			@Override
+			public void onDialogButtonClicked(String id) {
+				onResetConfirmed(R.strings.yes.equals(id));
+			}
+		});
 
 		remaingCardInfo = new GameInfo();
 		remaingCardInfo.locate(Text.HAlignCenter, Text.VAlignBottom);
@@ -96,6 +115,37 @@ public abstract class FullGameMode extends IchiguMode implements IResultScreenBu
 		tryAgain = new TryAgainToast();
 	}
 
+	private void onResetConfirmed(boolean reset) {
+		if (reset) {
+			resetMode();
+		}
+		else {
+			openCloseCards(true);
+		}
+	}
+
+	private void confirmResetMode() {
+		resetConfirmDialog.open(Game.getLanguageManager().getString(R.strings.resetConfirm));
+		openCloseCards(false);
+	}
+
+	private void resetMode() {
+		endMode();
+		startMode();
+		deal();
+		closeExtraCards();
+	}
+
+	public void pause() {
+		resetConfirmDialog.close();
+		resetButton.listenInput(false);
+	}
+	
+	public void resume() {
+		resetButton.listenInput(true);
+		openCloseCards(true);
+	}
+	
 	public FullGameCards getCards() {
 		return cards;
 	}
@@ -217,7 +267,7 @@ public abstract class FullGameMode extends IchiguMode implements IResultScreenBu
 		dealer.reset();
 		resultScreenButtons.listenInput(false);
 		deckCount = 1;
-//		ichigusFound = 0;
+		resetButton.listenInput(true);
 		selectedCardCount = 0;
 		timer.start();
 		hint.activate();
@@ -230,6 +280,7 @@ public abstract class FullGameMode extends IchiguMode implements IResultScreenBu
 		timer.stop();
 		cards.empty();
 		deactivateCards();
+		resetConfirmDialog.close();
 		hint.deactivate();
 		resultScreenButtons.listenInput(true);
 	}
@@ -240,6 +291,8 @@ public abstract class FullGameMode extends IchiguMode implements IResultScreenBu
 		cards.empty();
 		timer.stop();
 		hint.deactivate();
+		resetConfirmDialog.close();
+		resetButton.listenInput(false);
 		return true;
 	}
 
@@ -247,9 +300,13 @@ public abstract class FullGameMode extends IchiguMode implements IResultScreenBu
 		drawTime();
 		drawCards();
 		drawRemainingCards();
-//		drawIchigusFound();
+		drawResetButton();
 	}
 
+	protected void drawResetButton() {
+		resetButton.draw();
+	}
+	
 	public abstract void drawResult();
 
 	protected void drawCards() {
@@ -265,9 +322,4 @@ public abstract class FullGameMode extends IchiguMode implements IResultScreenBu
 	protected void drawTime() {
 		timeInfo.draw();
 	}
-	
-//	protected void drawIchigusFound() {
-//		ichigusFoundInfo.setText(Game.getResourceManager().getString(R.strings.found) + ": " + ichigusFound);
-//		ichigusFoundInfo.draw();
-//	}
 }
