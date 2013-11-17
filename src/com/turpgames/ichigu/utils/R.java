@@ -282,6 +282,7 @@ public final class R {
 		public final static String aboutInfo1 = "aboutInfo1";
 		public final static String aboutInfo2 = "aboutInfo2";
 		public final static String aboutInfo3 = "aboutInfo3";
+		public final static String aboutThanks = "aboutThanks";
 
 		public final static String turpAddress = "turp-address";
 		public final static String libgdxAddress = "libgdx-address";

@@ -19,6 +19,7 @@ public class AboutInfo implements IDrawable, ILanguageListener {
 	private GameInfo info2;
 	private ImageButton libgdxLink;
 	private TextButton rateLink;
+	private GameInfo thanksInfo;
 
 	public AboutInfo() {
 		pageTitle = new GameInfo();
@@ -80,6 +81,11 @@ public class AboutInfo implements IDrawable, ILanguageListener {
 			}
 		});
 
+		thanksInfo = new GameInfo();
+		thanksInfo.locate(Text.HAlignCenter, Text.VAlignTop);
+		thanksInfo.setFontScale(R.fontSize.medium);
+		thanksInfo.setPadding(35, 700);
+		
 		setLanguageSensitiveInfo();
 		Game.getLanguageManager().register(this);
 	}
@@ -93,6 +99,7 @@ public class AboutInfo implements IDrawable, ILanguageListener {
 		info2.draw();
 		libgdxLink.draw();
 		rateLink.draw();
+		thanksInfo.draw();
 	}
 
 	public void activate() {
@@ -116,6 +123,8 @@ public class AboutInfo implements IDrawable, ILanguageListener {
 
 		rateLink.setText(Game.getLanguageManager().getString(R.strings.aboutInfo3));
 		rateLink.getLocation().set((Game.getVirtualWidth() - rateLink.getWidth()) / 2, Game.getVirtualHeight() - 620);
+		
+		thanksInfo.setText(Game.getLanguageManager().getString(R.strings.aboutThanks));
 	}
 
 	@Override
