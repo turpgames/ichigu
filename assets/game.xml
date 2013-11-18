@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <game
     id="Ichigu"
-    class="com.turpgames.ichigu.view.IchiguGame" >
+    class="com.turpgames.ichigu.view.IchiguGame"
+    version="1.1.0" >
 
     <params>
 
@@ -437,7 +438,8 @@
     </resources>
 
     <languages>
-        <language
+
+        <language
             id="en-US"
             encoding="UTF8"
             flag-texture-id="flag_en_us"
