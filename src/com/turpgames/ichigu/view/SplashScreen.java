@@ -4,6 +4,7 @@ import com.turpgames.framework.v0.IResourceManager;
 import com.turpgames.framework.v0.component.Button;
 import com.turpgames.framework.v0.impl.Screen;
 import com.turpgames.framework.v0.impl.ScreenManager;
+import com.turpgames.framework.v0.impl.UpdateProcessor;
 import com.turpgames.framework.v0.util.Color;
 import com.turpgames.framework.v0.util.Game;
 import com.turpgames.framework.v0.util.ShapeDrawer;
@@ -18,6 +19,8 @@ public class SplashScreen extends Screen {
 
 	@Override
 	public void init() {
+		// AfterUpdateProcess's must be added here UpdateProcessor.instance.addProcess();
+		
 		super.init();
 		registerDrawable(new Logo(), Utils.LAYER_BACKGROUND);
 		progressColor = new Color(R.colors.ichiguRed);
@@ -38,6 +41,10 @@ public class SplashScreen extends Screen {
 	@Override
 	public void update() {
 		if (!resourceManager.isLoading()) {
+			
+			// Execute AfterUpdateProcess's after loading resources
+			UpdateProcessor.instance.execute();
+			
 			Button.defaultClickSound = Game.getResourceManager().getSound(R.game.sounds.flip);
 			switchToMenu();
 		}

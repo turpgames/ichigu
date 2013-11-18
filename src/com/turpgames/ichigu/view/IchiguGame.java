@@ -13,8 +13,9 @@ public class IchiguGame extends BaseGame {
 	public static Toolbar toolbar;
 
 	@Override
-	public void init() {
+	public void init() {		
 		super.init();
+		
 		Dialog.activeButtonColor.set(R.colors.ichiguYellow);
 		Dialog.closeButtonFocusColor.set(R.colors.ichiguRed);
 	}

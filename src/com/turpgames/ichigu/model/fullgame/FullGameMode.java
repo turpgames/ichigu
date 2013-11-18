@@ -192,7 +192,6 @@ public abstract class FullGameMode extends IchiguMode implements IResultScreenBu
 	protected int checkIchigu() {
 		int score = cards.getScore();
 		if (score > 0) {
-//			ichigusFound++;
 			notifyIchiguFound();
 			if (pointsInfoActive)
 				pointsInfo.show(score);

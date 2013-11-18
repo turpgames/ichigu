@@ -8,7 +8,6 @@ import com.turpgames.framework.v0.component.TextButton;
 import com.turpgames.framework.v0.component.info.GameInfo;
 import com.turpgames.framework.v0.impl.Text;
 import com.turpgames.framework.v0.util.Game;
-import com.turpgames.framework.v0.util.Utils;
 import com.turpgames.ichigu.utils.R;
 
 public class AboutInfo implements IDrawable, ILanguageListener {
@@ -69,10 +68,10 @@ public class AboutInfo implements IDrawable, ILanguageListener {
 			@Override
 			public void onButtonTapped() {
 				if (Game.isIOS()) {
-					if (Utils.getOSVersion().startsWith("7"))
-						Game.openUrl(Game.getParam(R.strings.appStoreAddressIOS7));
-					else
+					if (Game.getOSVersion().getMajor() < 7)
 						Game.openUrl(Game.getParam(R.strings.appStoreAddressOld));
+					else
+						Game.openUrl(Game.getParam(R.strings.appStoreAddressIOS7));
 				}
 				else {
 					Game.openUrl(Game.getParam(R.strings.playStoreAddress));
@@ -110,7 +109,7 @@ public class AboutInfo implements IDrawable, ILanguageListener {
 	private void setLanguageSensitiveInfo() {
 		info1.setText(Game.getLanguageManager().getString(R.strings.aboutInfo1));
 		info2.setText(Game.getLanguageManager().getString(R.strings.aboutInfo2));
-		
+
 		pageTitle.setText(Game.getLanguageManager().getString(R.strings.about));
 		pageTitle.locate(Text.HAlignCenter, Text.VAlignTop);
 
