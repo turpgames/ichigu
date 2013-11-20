@@ -135,28 +135,24 @@
             <button
                 id="btnPlay"
                 action="form=playMenu"
-                font-scale="1.2"
                 resource-text="play"
                 y="20" />
 
             <button
                 id="btnLearning"
                 action="screen=tutorial"
-                font-scale="1.2"
                 resource-text="howToPlay"
                 y="15" />
 
             <button
                 id="btnScoreBoard"
                 action="screen=scoreBoard"
-                font-scale="1.2"
                 resource-text="hiScores"
                 y="12" />
 
             <button
                 id="btnAbout"
                 action="screen=about"
-                font-scale="1.2"
                 resource-text="about"
                 y="9" />
 
@@ -164,7 +160,6 @@
                 id="btnExitGame"
                 action="exit"
                 focus-color="#d0583bff"
-                font-scale="1.2"
                 hidden-ios="true"
                 resource-text="exitGame"
                 y="4" />
@@ -175,37 +170,26 @@
             <button
                 id="btnPractice"
                 action="screen=practice"
-                font-scale="1.2"
                 resource-text="practice"
                 y="24" />
 
             <button
                 id="btnMiniChallenge"
                 action="screen=minichallenge"
-                font-scale="1.2"
                 resource-text="miniChallenge"
                 y="20" />
 
             <button
-                id="btnRelax"
-                action="screen=relax"
-                font-scale="1.2"
-                resource-text="relaxMode"
-                y="14" />
-
-            <button
-                id="btnRelax"
+                id="btnNormal"
                 action="screen=normal"
-                font-scale="1.2"
                 resource-text="normalMode"
-                y="10" />
+                y="12" />
 
             <button
                 id="btnChallenge"
                 action="screen=fullchallenge"
-                font-scale="1.2"
                 resource-text="fullChallenge"
-                y="6" />
+                y="8" />
         </form>
     </forms>
 
@@ -475,6 +459,7 @@
             <button
                 cols="8"
                 focus-color="#3974b1ff"
+                font-scale="1.2"
                 halign="center"
                 rows="2"
                 sound-click="flip"
