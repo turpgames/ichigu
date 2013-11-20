@@ -8,6 +8,7 @@ import com.turpgames.framework.v0.component.TextButton;
 import com.turpgames.framework.v0.component.info.GameInfo;
 import com.turpgames.framework.v0.impl.Text;
 import com.turpgames.framework.v0.util.Game;
+import com.turpgames.ichigu.utils.Ichigu;
 import com.turpgames.ichigu.utils.R;
 
 public class AboutInfo implements IDrawable, ILanguageListener {
@@ -27,12 +28,12 @@ public class AboutInfo implements IDrawable, ILanguageListener {
 
 		version = new GameInfo();
 		version.setColor(R.colors.ichiguCyan);
-		version.locate(Text.HAlignCenter, Text.VAlignTop);
+		version.setAlignment(Text.HAlignCenter, Text.VAlignTop);
 		version.setPadding(0, 200);
 		version.setText("Ichigu v1.1");
 
 		info1 = new GameInfo();
-		info1.locate(Text.HAlignCenter, Text.VAlignTop);
+		info1.setAlignment(Text.HAlignCenter, Text.VAlignTop);
 		info1.setFontScale(R.fontSize.medium);
 		info1.setPadding(35, 300);
 
@@ -48,7 +49,7 @@ public class AboutInfo implements IDrawable, ILanguageListener {
 		});
 
 		info2 = new GameInfo();
-		info2.locate(Text.HAlignCenter, Text.VAlignTop);
+		info2.setAlignment(Text.HAlignCenter, Text.VAlignTop);
 		info2.setFontScale(R.fontSize.medium);
 		info2.setPadding(35, 450);
 
@@ -107,13 +108,13 @@ public class AboutInfo implements IDrawable, ILanguageListener {
 	}
 
 	private void setLanguageSensitiveInfo() {
-		info1.setText(Game.getLanguageManager().getString(R.strings.aboutInfo1));
-		info2.setText(Game.getLanguageManager().getString(R.strings.aboutInfo2));
+		info1.setText(Ichigu.getString(R.strings.aboutInfo1));
+		info2.setText(Ichigu.getString(R.strings.aboutInfo2));
 
-		pageTitle.setText(Game.getLanguageManager().getString(R.strings.about));
-		pageTitle.locate(Text.HAlignCenter, Text.VAlignTop);
+		pageTitle.setText(Ichigu.getString(R.strings.about));
+		pageTitle.setAlignment(Text.HAlignCenter, Text.VAlignTop);
 
-		rateLink.setText(Game.getLanguageManager().getString(R.strings.aboutInfo3));
+		rateLink.setText(Ichigu.getString(R.strings.aboutInfo3));
 		rateLink.getLocation().set((Game.getVirtualWidth() - rateLink.getWidth()) / 2, Game.getVirtualHeight() - 620);
 	}
 

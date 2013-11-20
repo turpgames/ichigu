@@ -14,9 +14,14 @@ public abstract class PracticeModeState extends IchiguState {
 		this.model = controller.model;
 		this.view = controller.view;
 	}
+
+	@Override
+	public void onExitConfirmed() {
+				
+	}
 	
 	@Override
 	public void draw() {
-		model.drawGame();
+		model.draw();
 	}
 }

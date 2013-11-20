@@ -14,6 +14,11 @@ public class MiniChallengeModeEndState extends MiniChallengeModeState {
 	}
 
 	@Override
+	public void onUnblock() {
+
+	}
+	
+	@Override
 	public void onNewGame() {
 		model.startMode();
 		controller.setDealingState();

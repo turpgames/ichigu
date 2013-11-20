@@ -4,4 +4,6 @@ public interface IIchiguModeListener extends ICardListener {
 	void onIchiguFound();
 
 	void onInvalidIchiguSelected();
+
+	void onExitConfirmed();
 }

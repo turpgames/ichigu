@@ -43,7 +43,8 @@ class SingleGameCardDealer extends CardDealer {
 			beginMoveOldCards();
 	}
 
-	void abortDeal() {
+	@Override
+	public void abortDeal() {
 		for (int i = 0; i < cards.getLength(); i++) {
 			if (cards.get(i) != null)
 				cards.get(i).stopEffects();

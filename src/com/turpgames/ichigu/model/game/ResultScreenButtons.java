@@ -5,6 +5,7 @@ import com.turpgames.framework.v0.ILanguageListener;
 import com.turpgames.framework.v0.component.IButtonListener;
 import com.turpgames.framework.v0.component.TextButton;
 import com.turpgames.framework.v0.util.Game;
+import com.turpgames.ichigu.utils.Ichigu;
 import com.turpgames.ichigu.utils.R;
 
 public class ResultScreenButtons implements IDrawable, ILanguageListener {
@@ -51,9 +52,9 @@ public class ResultScreenButtons implements IDrawable, ILanguageListener {
 	}
 
 	private void setLanguageSensitiveInfo() {
-		backToMenu.setText(Game.getLanguageManager().getString(R.strings.backToMenu));
+		backToMenu.setText(Ichigu.getString(R.strings.backToMenu));
 		backToMenu.getLocation().set((Game.getVirtualWidth() - backToMenu.getWidth()) / 2, 80);
-		newGame.setText(Game.getLanguageManager().getString(R.strings.newGame));
+		newGame.setText(Ichigu.getString(R.strings.newGame));
 		newGame.getLocation().set((Game.getVirtualWidth() - newGame.getWidth()) / 2, 150);
 	}
 	@Override

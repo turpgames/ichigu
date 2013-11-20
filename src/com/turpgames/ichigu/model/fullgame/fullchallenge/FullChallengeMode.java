@@ -1,194 +1,81 @@
 package com.turpgames.ichigu.model.fullgame.fullchallenge;
 
-import com.turpgames.framework.v0.component.info.GameInfo;
-import com.turpgames.framework.v0.forms.xml.Dialog;
 import com.turpgames.framework.v0.impl.Settings;
 import com.turpgames.framework.v0.impl.Text;
-import com.turpgames.framework.v0.util.Game;
+import com.turpgames.framework.v0.util.CountDownTimer;
 import com.turpgames.framework.v0.util.Timer;
-import com.turpgames.ichigu.model.display.IchiguDialog;
-import com.turpgames.ichigu.model.display.ScoreInfo;
+import com.turpgames.ichigu.model.display.FoundInfo;
 import com.turpgames.ichigu.model.fullgame.FullGameMode;
+import com.turpgames.ichigu.utils.Ichigu;
 import com.turpgames.ichigu.utils.R;
 
 public class FullChallengeMode extends FullGameMode {
-//	private static final int maxTimeToFindIchigu = 100;
+	private static int challengeTime = 5 * 60;
 
-//	private Timer ichiguTimer;
-//	private boolean deductScore;
-	private static int challengeTime = 5*60;
-	
-	private GameInfo resultInfo;
-	private ScoreInfo scoreInfo;
-
-	private Dialog confirmExitDialog;
-	private boolean isExitConfirmed;
-	
-	private IFullChallengeModeListener getChallengeModeListener() {
-		return (IFullChallengeModeListener) super.modeListener;
-	}
+	private FoundInfo foundInfo;
+	private CountDownTimer timer;
 
 	public FullChallengeMode() {
-		hint.deactivate();
-
-//		ichiguTimer = new Timer();
-
-		resultInfo = new GameInfo();
-		resultInfo.locate(Text.HAlignCenter, Text.VAlignCenter);
-
-		scoreInfo = new ScoreInfo();
-		scoreInfo.locate(Text.HAlignLeft, Text.VAlignTop);
-		scoreInfo.setPadding(7, 110);
-
-		confirmExitDialog = new IchiguDialog();
-		confirmExitDialog.setListener(new Dialog.IDialogListener() {
-			@Override
-			public void onDialogButtonClicked(String id) {
-				onExitConfirmed(R.strings.yes.equals(id));
-			}
-		});
-
-		timer = new Timer();
-		timer.setInterval(1);
-		timer.setTickListener(new Timer.ITimerTickListener() {
-			@Override
-			public void timerTick(Timer timer) {
-				int elapsed = (int) timer.getTotalElapsedTime();
-				int min = (challengeTime / 60 - 1) - elapsed / 60;
-				int sec = 60 - elapsed % 60;
-
-				timeInfo.setTimeText(challengeTime-elapsed);
-				
-				if (min < 0 || sec < 0)
-					timerFinished();
-				if (min == 0 && sec == 10)
-					timeInfo.start();
-			}
-		});
-	}
-
-	protected void timerFinished() {
-		notifyModeEnd();
-		timeInfo.stop();
-	}
-
-	private void onExitConfirmed(boolean exit) {
-		isExitConfirmed = exit;
-		if (isExitConfirmed) {
-			getChallengeModeListener().onExitConfirmed();
-		}
-		else {
-			timer.start();
-			openCloseCards(true);
-		}
-	}
-
-	private void confirmModeExit() {
-		timer.pause();
-		openCloseCards(false);
-		confirmExitDialog.open(Game.getLanguageManager().getString(R.strings.exitConfirm));
+		foundInfo = new FoundInfo();
+		foundInfo.setAlignment(Text.HAlignLeft, Text.VAlignTop);
+		foundInfo.setPadding(7, 110);
 	}
 
 	@Override
-	public void startMode() {
-		super.startMode();
-		scoreInfo.init();
-//		ichiguTimer.restart();
-		isExitConfirmed = false;
-		timeInfo.setTimeText(challengeTime );
+	protected Timer getTimer() {
+		if (timer == null) {
+			timer = new CountDownTimer(challengeTime);
+			timer.setInterval(0.5f);
+			timer.setCountDownListener(new CountDownTimer.ICountDownListener() {
+				@Override
+				public void onCountDownEnd(CountDownTimer timer) {
+					notifyModeEnd();
+				}
+			});
+		}
+		return timer;
 	}
 
 	@Override
-	public void endMode() {
-		super.endMode();
-//		ichiguTimer.stop();
+	protected void openExtraCards() {
+		if (timer.getRemaining() > secondsPerHint || getAvailableIchiguCount() == 0)
+			super.openExtraCards();
+	}
+
+	@Override
+	protected void onStartMode() {
+		super.onStartMode();
+		foundInfo.reset();
+	}
+
+	@Override
+	protected void onEndMode() {
 		int hiScore = Settings.getInteger(R.settings.hiscores.fullchallenge, 0);
-		int score = scoreInfo.getScore();
+		int score = foundInfo.getFound();
 		if (score > hiScore)
 			Settings.putInteger(R.settings.hiscores.fullchallenge, score);
 
-//		if (ichigusFound != 1)
-//			resultInfo.setText(String.format(Game.getLanguageManager().getString(R.strings.fullChallengeResultMultiple), 
-//				ichigusFound, scoreInfo.getText(), 
-//						(score > hiScore ? Game.getLanguageManager().getString(R.strings.newHiscore) : "")));
-//		else 
-//			resultInfo.setText(String.format(Game.getLanguageManager().getString(R.strings.fullChallengeResultSingle), 
-//				ichigusFound, scoreInfo.getText(), 
-//						(score > hiScore ? Game.getLanguageManager().getString(R.strings.newHiscore) : "")));
-		
-		resultInfo.setText(String.format(Game.getLanguageManager().getString(R.strings.fullChallengeResult), 
-				scoreInfo.getText(), (score > hiScore ? Game.getLanguageManager().getString(R.strings.newHiscore) : "")));
-		
-		isExitConfirmed = true;
-	}
+		setResultText(String.format(Ichigu.getString(R.strings.fullChallengeResult),
+				foundInfo.getText(), (score > hiScore ? Ichigu.getString(R.strings.newHiscore) : "")));
 
-	@Override
-	public boolean exitMode() {
-		if (isExitConfirmed) {
-			confirmExitDialog.close();
-//			ichiguTimer.stop();
-			isExitConfirmed = false;
-			return super.exitMode();
-		}
-		else {
-			confirmModeExit();
-			return false;
-		}
+		super.onEndMode();
 	}
-
+	
 	@Override
-	public void drawGame() {
+	protected void onDraw() {
 		drawScore();
-		super.drawGame();
-	}
-
-	@Override
-	public void drawResult() {
-		resultInfo.draw();
-		resultScreenButtons.draw();
+		super.onDraw();
 	}
 
 	@Override
 	protected int checkIchigu() {
 		int score = super.checkIchigu();
-		if (score > 0) {
-//			float elapsed = ichiguTimer.getElapsedTime();
-//			if (elapsed > maxTimeToFindIchigu)
-//				elapsed = maxTimeToFindIchigu;
-			// -3: Score is in the range of min=6 and max=12
-			// To increase max/min ratio we subtract 3 from the score
-//			totalScore += (int) (((score - 3) * ((maxTimeToFindIchigu - elapsed) / 10f) * (deductScore ? 0.5f : 1)));
-			scoreInfo.increaseScore(score);
-//			ichiguTimer.restart();
-//			deductScore = false;
-		}
+		if (score > 0)
+			foundInfo.increaseFound();
 		return score;
 	}
 
-	@Override
-	protected void openExtraCards() {
-		super.openExtraCards();
-		if (hint.getIchiguCount() != 0)
-			scoreInfo.decreaseScore(10);
-	}
-
-//	@Override
-//	public void deckFinished() {
-//		dealer.reset();
-//		deckCount++;
-//	}
-	
 	protected void drawScore() {
-		scoreInfo.draw();
-	}
-
-	@Override
-	public void onBackToMenuTapped() {
-		getChallengeModeListener().onExitConfirmed();
-	}
-
-	@Override
-	public void onNewGameTapped() {
-		notifyNewGame();
+		foundInfo.draw();
 	}
 }

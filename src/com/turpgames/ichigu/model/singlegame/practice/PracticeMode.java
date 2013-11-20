@@ -1,7 +1,5 @@
 package com.turpgames.ichigu.model.singlegame.practice;
 
-import com.turpgames.framework.v0.util.Game;
-import com.turpgames.ichigu.model.display.FadingScoreInfo;
 import com.turpgames.ichigu.model.display.TryAgainToast;
 import com.turpgames.ichigu.model.game.Card;
 import com.turpgames.ichigu.model.singlegame.SingleGameCards;
@@ -10,22 +8,16 @@ import com.turpgames.ichigu.model.singlegame.SingleGameMode;
 public class PracticeMode extends SingleGameMode {
 	private PracticeModeHint hint;
 	private TryAgainToast tryAgain;
-	private FadingScoreInfo scoreInfo;
 	
 	public PracticeMode() {
 		hint = new PracticeModeHint();
 		tryAgain = new TryAgainToast();
-		scoreInfo = new FadingScoreInfo();
-		
-		scoreInfo.getLocation().set(0, Game.getVirtualHeight() - scoreInfo.getHeight() - 45);
 	}
 	
 	@Override
 	public void onCardSelected(Card selectedCard) {
 		int score = cards.checkScore(selectedCard);
-		if (score > 0)
-			scoreInfo.show(cards.getIchiguCards(selectedCard));
-		else
+		if (score == 0)
 			tryAgain.show();
 		super.onCardSelected(selectedCard);
 	}
@@ -55,9 +47,20 @@ public class PracticeMode extends SingleGameMode {
 	}
 
 	@Override
-	public boolean exitMode() {
+	protected void onStartMode() {
+		
+	}
+
+	@Override
+	protected void onEndMode() {
+		
+	}
+
+	@Override
+	protected boolean onExitMode() {
 		hint.deactivate();
-		return super.exitMode();
+		isExitConfirmed = true;
+		return super.onExitMode();
 	}
 	
 	@Override
@@ -65,8 +68,9 @@ public class PracticeMode extends SingleGameMode {
 		tryAgain.hide();
 		super.deal();
 	}
-	
-	public void drawGame() {
+
+	@Override
+	protected void onDraw() {
 		drawCards();
 		hint.draw();
 	}
@@ -75,5 +79,20 @@ public class PracticeMode extends SingleGameMode {
 		Card[] allCards = cards.getAllCards();
 		for (int i = 0; i < allCards.length; i++)
 			allCards[i].draw();
+	}
+
+	@Override
+	protected void pauseTimer() {
+		
+	}
+
+	@Override
+	protected void startTimer() {
+		
+	}
+
+	@Override
+	protected void openCloseCards(boolean open) {
+		
 	}
 }

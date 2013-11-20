@@ -17,6 +17,7 @@ public class NormalModeController extends IchiguController<NormalModeState> impl
 
 		this.model = new NormalMode();
 		this.model.setModeListener(this);
+		this.model.setDealerListener(this);
 
 		waitingState = new NormalModeWaitingState(this);
 		dealingState = new NormalModeDealingState(this);
@@ -43,7 +44,11 @@ public class NormalModeController extends IchiguController<NormalModeState> impl
 	public void onExitConfirmed() {
 		currentState.onExitConfirmed();
 	}
-	
+
+	@Override
+	public void onDealEnd() {
+		currentState.onDealEnd();		
+	}
 
 	void setDealingState() {
 		setState(dealingState);

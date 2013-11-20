@@ -26,13 +26,18 @@ public abstract class NormalModeState extends IchiguState implements INormalMode
 	}
 
 	@Override
+	public void onDealEnd() {
+				
+	}
+	
+	@Override
 	public void onExitConfirmed() {
 		view.onExitConfirmed();
 	}
 
 	@Override
 	public void draw() {
-		model.drawGame();
+		model.draw();
 	}
 
 	@Override

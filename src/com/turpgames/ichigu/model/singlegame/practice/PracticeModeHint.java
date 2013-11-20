@@ -11,6 +11,7 @@ import com.turpgames.framework.v0.forms.xml.Toast;
 import com.turpgames.framework.v0.util.Game;
 import com.turpgames.ichigu.model.game.Card;
 import com.turpgames.ichigu.model.game.CardAttributes;
+import com.turpgames.ichigu.utils.Ichigu;
 import com.turpgames.ichigu.utils.R;
 
 class PracticeModeHint implements IDrawable, Toast.IToastListener, IEffectEndListener {
@@ -121,38 +122,38 @@ class PracticeModeHint implements IDrawable, Toast.IToastListener, IEffectEndLis
 
 	private void addShapeHint(CardAttributes ca1, CardAttributes ca2) {
 		if (ca1.getShape() == ca2.getShape()) {
-			hints.add(Game.getLanguageManager().getString(R.strings.sameShapes));
+			hints.add(Ichigu.getString(R.strings.sameShapes));
 		}
 		else {
-			hints.add(Game.getLanguageManager().getString(R.strings.differentShapes));
+			hints.add(Ichigu.getString(R.strings.differentShapes));
 		}
 	}
 
 	private void addColorHint(CardAttributes ca1, CardAttributes ca2) {
 		if (ca1.getColor() == ca2.getColor()) {
-			hints.add(Game.getLanguageManager().getString(R.strings.sameColors));
+			hints.add(Ichigu.getString(R.strings.sameColors));
 		}
 		else {
-			hints.add(Game.getLanguageManager().getString(R.strings.differentColors));
+			hints.add(Ichigu.getString(R.strings.differentColors));
 		}
 	}
 
 	private void addPatternHint(CardAttributes ca1, CardAttributes ca2) {
 		if (ca1.getPattern() == ca2.getPattern()) {
-			hints.add(Game.getLanguageManager().getString(R.strings.samePatterns));
+			hints.add(Ichigu.getString(R.strings.samePatterns));
 		}
 		else {
-			hints.add(Game.getLanguageManager().getString(R.strings.differentPatterns));
+			hints.add(Ichigu.getString(R.strings.differentPatterns));
 		}
 	}
 
 	private void addCountHint(CardAttributes ca1, CardAttributes ca2) {
 		if (ca1.getCount() == ca2.getCount()) {
-			hints.add(Game.getLanguageManager().getString(R.strings.sameCounts));
+			hints.add(Ichigu.getString(R.strings.sameCounts));
 		}
 		else 
 		{
-			hints.add(Game.getLanguageManager().getString(R.strings.differentCounts));
+			hints.add(Ichigu.getString(R.strings.differentCounts));
 		}
 	}
 }

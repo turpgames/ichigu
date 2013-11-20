@@ -15,7 +15,7 @@ public class NormalModeEndState extends NormalModeState {
 		model.startMode();
 		controller.setDealingState();
 	}
-
+	
 	@Override
 	public void draw() {
 		model.drawResult();

@@ -17,6 +17,7 @@ public class FullChallengeModeController extends IchiguController<FullChallengeM
 
 		this.model = new FullChallengeMode();
 		this.model.setModeListener(this);
+		this.model.setDealerListener(this);
 
 		waitingState = new FullChallengeModeWaitingState(this);
 		dealingState = new FullChallengeModeDealingState(this);
@@ -38,12 +39,16 @@ public class FullChallengeModeController extends IchiguController<FullChallengeM
 	public void onNewGame() {
 		currentState.onNewGame();
 	}
+
+	@Override
+	public void onDealEnd() {
+		currentState.onDealEnd();		
+	}
 	
 	@Override
 	public void onExitConfirmed() {
 		currentState.onExitConfirmed();
 	}
-	
 
 	void setDealingState() {
 		setState(dealingState);

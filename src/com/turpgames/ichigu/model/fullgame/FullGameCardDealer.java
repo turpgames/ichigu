@@ -105,7 +105,12 @@ public class FullGameCardDealer extends CardDealer {
 			cardsToMove++;
 		}
 	}
-
+	
+	@Override
+	public void abortDeal() {
+			
+	}
+	
 	private void startMovingExtraCard(int extraCardIndex, int targetActiveCardIndex) {
 		Card extraCard = cards.getExtraCard(extraCardIndex);
 		extraCard.open();

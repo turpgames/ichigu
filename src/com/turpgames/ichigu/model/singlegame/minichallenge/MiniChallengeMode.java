@@ -1,129 +1,86 @@
 package com.turpgames.ichigu.model.singlegame.minichallenge;
 
 import com.turpgames.framework.v0.component.info.GameInfo;
-import com.turpgames.framework.v0.forms.xml.Dialog;
 import com.turpgames.framework.v0.forms.xml.Toast;
 import com.turpgames.framework.v0.impl.Settings;
 import com.turpgames.framework.v0.impl.Text;
+import com.turpgames.framework.v0.util.CountDownTimer;
 import com.turpgames.framework.v0.util.Game;
 import com.turpgames.framework.v0.util.Timer;
-import com.turpgames.ichigu.model.display.DisplayTimer;
-import com.turpgames.ichigu.model.display.IchiguDialog;
+import com.turpgames.ichigu.model.display.TimerText;
 import com.turpgames.ichigu.model.display.WaitToast;
 import com.turpgames.ichigu.model.game.Card;
 import com.turpgames.ichigu.model.game.IResultScreenButtonsListener;
 import com.turpgames.ichigu.model.game.ResultScreenButtons;
 import com.turpgames.ichigu.model.singlegame.SingleGameCards;
 import com.turpgames.ichigu.model.singlegame.SingleGameMode;
+import com.turpgames.ichigu.utils.Ichigu;
 import com.turpgames.ichigu.utils.R;
 
 public class MiniChallengeMode extends SingleGameMode implements IResultScreenButtonsListener {
 	private final static float blockDuration = 2f;
 	private final static int challengeTime = 60;
 
-	private final Timer blockTimer;
-	private final Timer challengeTimer;
+	private final CountDownTimer blockTimer;
+	private final CountDownTimer challengeTimer;
 
 	private int ichigusFound;
 	private GameInfo ichigusFoundInfo;
-	
-	private DisplayTimer timeInfo;
+
+	private TimerText timeInfo;
 	private WaitToast waitInfo;
 	private GameInfo resultInfo;
 
 	private ResultScreenButtons resultScreenButtons;
 
-	private Dialog confirmExitDialog;
-	private boolean isExitConfirmed;
-
 	public MiniChallengeMode() {
-		resultScreenButtons = new ResultScreenButtons(this); 
-		
-		timeInfo = new DisplayTimer(R.colors.ichiguRed, 5, 30);
-		timeInfo.locate(Text.HAlignRight, Text.VAlignTop);
-		timeInfo.setPadding(20, 125);
-		
+		resultScreenButtons = new ResultScreenButtons(this);
+
 		waitInfo = new WaitToast();
-		waitInfo.setToastListener(new Toast.IToastListener() {			
+		waitInfo.setToastListener(new Toast.IToastListener() {
 			@Override
 			public void onToastHidden(Toast toast) {
 				notifyUnblocked();
 			}
 		});
-		
+
 		ichigusFoundInfo = new GameInfo();
-		ichigusFoundInfo.locate(Text.HAlignLeft, Text.VAlignTop);
+		ichigusFoundInfo.setAlignment(Text.HAlignLeft, Text.VAlignTop);
 		ichigusFoundInfo.setPadding(20, 125);
 
 		resultInfo = new GameInfo();
-		resultInfo.locate(Text.HAlignCenter, Text.VAlignCenter);
+		resultInfo.setAlignment(Text.HAlignCenter, Text.VAlignCenter);
 
-		confirmExitDialog = new IchiguDialog();
-		confirmExitDialog.setListener(new Dialog.IDialogListener() {
-			@Override
-			public void onDialogButtonClicked(String id) {
-				onExitConfirmed(R.strings.yes.equals(id));
-			}
-		});
-
-		blockTimer = new Timer();
+		blockTimer = new CountDownTimer(challengeTime);
 		blockTimer.setInterval(blockDuration);
-		blockTimer.setTickListener(new Timer.ITimerTickListener() {			
+		blockTimer.setTickListener(new Timer.ITimerTickListener() {
 			@Override
 			public void timerTick(Timer timer) {
-				timer.stop();			
+				timer.stop();
 			}
 		});
 
-		challengeTimer = new Timer();
-		challengeTimer.setInterval(1);
-		challengeTimer.setTickListener(new Timer.ITimerTickListener() {
+		challengeTimer = new CountDownTimer(challengeTime);
+		challengeTimer.setInterval(0.5f);
+		challengeTimer.setCountDownListener(new CountDownTimer.ICountDownListener() {
 			@Override
-			public void timerTick(Timer timer) {
-				int elapsed = (int) timer.getTotalElapsedTime();
-				int min = (challengeTime / 60 - 1) - elapsed / 60;
-				int sec = 60 - elapsed % 60;
-
-				timeInfo.setTimeText(challengeTime-elapsed);
-				
-				if (min < 0 || sec < 0)
-					timerFinished();
-				if (min == 0 && sec == 10)
-					timeInfo.start();
+			public void onCountDownEnd(CountDownTimer timer) {
+				notifyModeEnd();
 			}
 		});
-	}
 
-	protected void timerFinished() {
-		notifyModeEnd();
-		timeInfo.stop();
-	}
+		timeInfo = new TimerText(challengeTimer);
+		timeInfo.setAlignment(Text.HAlignLeft, Text.VAlignTop);
+		timeInfo.setPadding(Game.getVirtualWidth() - 120, 125);
 
-	private void onExitConfirmed(boolean exit) {
-		isExitConfirmed = exit;
-		if (isExitConfirmed) {
-			getModeListener().onExitConfirmed();
-		}
-		else {
-			if (blockTimer.isPaused())
-				blockTimer.start();
-			challengeTimer.start();
-			openCloseCards(true);
-		}
-	}
-
-	private void confirmModeExit() {
-		if (blockTimer.isRunning())
-			blockTimer.pause();
-		challengeTimer.pause();
-		openCloseCards(false);
-		confirmExitDialog.open(Game.getLanguageManager().getString(R.strings.exitConfirm));
+		centerResetButton();
 	}
 
 	private IMiniChallengeModeListener getModeListener() {
 		return (IMiniChallengeModeListener) super.modeListener;
 	}
 
+	@Override
 	protected void openCloseCards(boolean open) {
 		for (int i = 0; i < SingleGameCards.TotalCardCount; i++) {
 			if (open)
@@ -155,48 +112,47 @@ public class MiniChallengeMode extends SingleGameMode implements IResultScreenBu
 		waitInfo.show(blockDuration);
 	}
 
-	public void dealEnd() {
-		challengeTimer.start();
-	}
-
-	public void startMode() {
+	@Override
+	protected void onStartMode() {
 		ichigusFound = 0;
-		ichigusFoundInfo.setText(Game.getLanguageManager().getString(R.strings.found) + ": " + ichigusFound);
-		timeInfo.setTimeText(challengeTime);
-	}
-
-	public void endMode() {
-		deactivateCards();
+		ichigusFoundInfo.setText(Ichigu.getString(R.strings.found) + ": " + ichigusFound);
 		blockTimer.stop();
-		challengeTimer.stop();
-		cards.empty();
-		isExitConfirmed = true;
-		int hiScore = Settings.getInteger(R.settings.hiscores.minichallenge, 0);
-		if (ichigusFound > hiScore)
-			Settings.putInteger(R.settings.hiscores.minichallenge, ichigusFound);
-		
-		if (ichigusFound != 1)
-			resultInfo.setText(String.format(Game.getLanguageManager().getString(R.strings.miniChallengeResultMultiple), 
-				ichigusFound, (ichigusFound > hiScore ? Game.getLanguageManager().getString(R.strings.newHiscore) : "")));
-		else
-			resultInfo.setText(String.format(Game.getLanguageManager().getString(R.strings.miniChallengeResultSingle), 
-					ichigusFound, (ichigusFound > hiScore ? Game.getLanguageManager().getString(R.strings.newHiscore) : "")));
+		challengeTimer.restart();
+		timeInfo.syncText();
+		super.onStartMode();
 	}
 
 	@Override
-	public boolean exitMode() {
-		if (isExitConfirmed) {
-			blockTimer.stop();
-			challengeTimer.stop();
-			resultScreenButtons.listenInput(false);
-			confirmExitDialog.close();
-			isExitConfirmed = false;
-			return super.exitMode();
-		}
-		else {
-			confirmModeExit();
+	protected void onEndMode() {
+		deactivateCards();
+		blockTimer.stop();
+		challengeTimer.stop();
+		timeInfo.syncText();
+		cards.empty();
+		int hiScore = Settings.getInteger(R.settings.hiscores.minichallenge, 0);
+		if (ichigusFound > hiScore)
+			Settings.putInteger(R.settings.hiscores.minichallenge, ichigusFound);
+
+		if (ichigusFound != 1)
+			resultInfo.setText(String.format(Ichigu.getString(R.strings.miniChallengeResultMultiple),
+					ichigusFound, (ichigusFound > hiScore ? Ichigu.getString(R.strings.newHiscore) : "")));
+		else
+			resultInfo.setText(String.format(Ichigu.getString(R.strings.miniChallengeResultSingle),
+					ichigusFound, (ichigusFound > hiScore ? Ichigu.getString(R.strings.newHiscore) : "")));
+
+		super.onEndMode();
+	}
+
+	@Override
+	protected boolean onExitMode() {
+		if (!super.onExitMode())
 			return false;
-		}
+		
+		blockTimer.stop();
+		challengeTimer.stop();
+		timeInfo.syncText();
+		resultScreenButtons.listenInput(false);
+		return true;
 	}
 
 	@Override
@@ -204,7 +160,7 @@ public class MiniChallengeMode extends SingleGameMode implements IResultScreenBu
 		int ichiguScore = cards.checkScore(selectedCard);
 		if (ichiguScore > 0) {
 			ichigusFound++;
-			ichigusFoundInfo.setText(Game.getLanguageManager().getString(R.strings.found) + ": " + ichigusFound);
+			ichigusFoundInfo.setText(Ichigu.getString(R.strings.found) + ": " + ichigusFound);
 		}
 		else {
 			block();
@@ -215,16 +171,17 @@ public class MiniChallengeMode extends SingleGameMode implements IResultScreenBu
 	@Override
 	public void deal() {
 		blockTimer.stop();
-		challengeTimer.pause();
 		super.deal();
 	}
 
-	public void drawGame() {
+	@Override
+	protected void onDraw() {
 		drawCards();
 		drawRemainingTime();
 		drawIchigusFound();
 		if (!blockTimer.isStopped())
 			drawWaitMessage();
+		super.onDraw();
 	}
 
 	public void drawResultScreen() {
@@ -246,7 +203,7 @@ public class MiniChallengeMode extends SingleGameMode implements IResultScreenBu
 	private void drawWaitMessage() {
 		waitInfo.setText(String.format("%.1f", blockDuration - blockTimer.getElapsedTime()));
 	}
-	
+
 	protected void drawIchigusFound() {
 		ichigusFoundInfo.draw();
 	}
@@ -259,5 +216,15 @@ public class MiniChallengeMode extends SingleGameMode implements IResultScreenBu
 	@Override
 	public void onNewGameTapped() {
 		notifyNewGame();
+	}
+
+	@Override
+	protected void pauseTimer() {
+		challengeTimer.pause();
+	}
+
+	@Override
+	protected void startTimer() {
+		challengeTimer.start();
 	}
 }

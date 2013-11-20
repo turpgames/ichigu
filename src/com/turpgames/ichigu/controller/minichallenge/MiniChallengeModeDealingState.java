@@ -15,7 +15,6 @@ public class MiniChallengeModeDealingState extends MiniChallengeModeState implem
 
 	@Override
 	public void onDealEnd() {
-		model.dealEnd();
 		controller.setWaitingState();
 	}
 

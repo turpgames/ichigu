@@ -11,7 +11,7 @@ public class TutorialMode implements IDrawable {
 	public TutorialMode() {
 		tutorial = new IchiguTutorial(new ITutorialListener() {
 			@Override
-			public void onTutorialEnd() {
+			public void onModeEnd() {
 				notifyTutorialEnd();
 			}
 		});
@@ -27,7 +27,7 @@ public class TutorialMode implements IDrawable {
 
 	private void notifyTutorialEnd() {
 		if (getModeListener() != null)
-			getModeListener().onTutorialEnd();
+			getModeListener().onModeEnd();
 	}
 	
 	public void beginTutorial() {

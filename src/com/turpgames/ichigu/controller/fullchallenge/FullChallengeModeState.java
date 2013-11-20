@@ -29,10 +29,15 @@ public abstract class FullChallengeModeState extends IchiguState implements IFul
 	public void onExitConfirmed() {
 		view.onExitConfirmed();
 	}
-
+	
+	@Override
+	public void onDealEnd() {
+		
+	}
+	
 	@Override
 	public void draw() {
-		model.drawGame();
+		model.draw();
 	}
 
 	@Override

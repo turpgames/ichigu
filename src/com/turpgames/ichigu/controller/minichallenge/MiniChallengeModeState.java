@@ -3,7 +3,7 @@ package com.turpgames.ichigu.controller.minichallenge;
 import com.turpgames.framework.v0.util.Game;
 import com.turpgames.ichigu.controller.IchiguState;
 import com.turpgames.ichigu.model.singlegame.minichallenge.MiniChallengeMode;
-import com.turpgames.ichigu.utils.IchiguResources;
+import com.turpgames.ichigu.utils.Ichigu;
 import com.turpgames.ichigu.view.MiniChallengeModeScreen;
 
 public abstract class MiniChallengeModeState extends IchiguState implements IMiniChallengeModeActionListener {
@@ -29,7 +29,7 @@ public abstract class MiniChallengeModeState extends IchiguState implements IMin
 
 	@Override
 	public void onDealTimeUp() {
-		IchiguResources.playSoundTimeUp();
+		Ichigu.playSoundTimeUp();
 		Game.vibrate(100);
 		controller.setDealingState();
 	}
@@ -51,6 +51,6 @@ public abstract class MiniChallengeModeState extends IchiguState implements IMin
 	
 	@Override
 	public void draw() {
-		model.drawGame();
+		model.draw();
 	}
 }

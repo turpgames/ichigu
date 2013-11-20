@@ -11,6 +11,7 @@ import com.turpgames.framework.v0.impl.Text;
 import com.turpgames.framework.v0.util.Game;
 import com.turpgames.framework.v0.util.Utils;
 import com.turpgames.ichigu.model.display.IchiguDialog;
+import com.turpgames.ichigu.utils.Ichigu;
 import com.turpgames.ichigu.utils.R;
 
 public class HiScores implements IDrawable, ILanguageListener {
@@ -21,20 +22,20 @@ public class HiScores implements IDrawable, ILanguageListener {
 
 	public HiScores() {
 		pageTitle = new GameInfo();
-		pageTitle.locate(Text.HAlignCenter, Text.VAlignTop);
+		pageTitle.setAlignment(Text.HAlignCenter, Text.VAlignTop);
 		pageTitle.setColor(R.colors.ichiguYellow);
 		pageTitle.setFontScale(1.5f);
 		pageTitle.setPadding(0, 85);
 		
 		info = new GameInfo();
-		info.locate(Text.HAlignCenter, Text.VAlignCenter);
+		info.setAlignment(Text.HAlignCenter, Text.VAlignCenter);
 
 		resetScores = new TextButton(R.colors.ichiguYellow, R.colors.ichiguRed);
 		resetScores.listenInput(false);
 		resetScores.setListener(new IButtonListener() {
 			@Override
 			public void onButtonTapped() {
-				confirmDialog.open(Game.getLanguageManager().getString(R.strings.hiscoreResetConfirm));
+				confirmDialog.open(Ichigu.getString(R.strings.hiscoreResetConfirm));
 			}
 		});
 
@@ -47,8 +48,8 @@ public class HiScores implements IDrawable, ILanguageListener {
 					Settings.putInteger(R.settings.hiscores.normal, 0);
 					Settings.putInteger(R.settings.hiscores.normaltime, 0);
 					Settings.putInteger(R.settings.hiscores.fullchallenge, 0);
-					info.setText(String.format(Game.getLanguageManager().getString(R.strings.hiscoreInfo),
-							0, 0, Utils.getTimeString(0), 0));
+					info.setText(String.format(Ichigu.getString(R.strings.hiscoreInfo),
+							0, Utils.getTimeString(0), 0));
 				}
 			}
 		});
@@ -61,12 +62,11 @@ public class HiScores implements IDrawable, ILanguageListener {
 		resetScores.listenInput(true);
 		
 		int minichallengeScore = Settings.getInteger(R.settings.hiscores.minichallenge, 0);
-		int normalScore = Settings.getInteger(R.settings.hiscores.normal, 0);
 		int normalTime = Settings.getInteger(R.settings.hiscores.normaltime, 0);
 		int fullchallengeScore = Settings.getInteger(R.settings.hiscores.fullchallenge, 0);
 		
-		info.setText(String.format(Game.getLanguageManager().getString(R.strings.hiscoreInfo),
-				minichallengeScore, normalScore, Utils.getTimeString(normalTime), fullchallengeScore));
+		info.setText(String.format(Ichigu.getString(R.strings.hiscoreInfo),
+				minichallengeScore, Utils.getTimeString(normalTime), fullchallengeScore));
 	}
 
 	public void deactivate() {
@@ -82,8 +82,8 @@ public class HiScores implements IDrawable, ILanguageListener {
 	}
 
 	private void setLanguageSensitiveInfo() {
-		pageTitle.setText(Game.getLanguageManager().getString(R.strings.hiScores));
-		resetScores.setText(Game.getLanguageManager().getString(R.strings.resetHiscore));
+		pageTitle.setText(Ichigu.getString(R.strings.hiScores));
+		resetScores.setText(Ichigu.getString(R.strings.resetHiscore));
 		resetScores.getLocation().set((Game.getVirtualWidth() - resetScores.getWidth()) / 2, 50);
 	}
 	

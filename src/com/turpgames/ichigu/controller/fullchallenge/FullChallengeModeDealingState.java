@@ -5,7 +5,6 @@ import com.turpgames.ichigu.model.game.ICardDealerListener;
 public class FullChallengeModeDealingState extends FullChallengeModeState implements ICardDealerListener {
 	public FullChallengeModeDealingState(FullChallengeModeController controller) {
 		super(controller);
-		model.setDealerListener(this);
 	}
 
 	@Override

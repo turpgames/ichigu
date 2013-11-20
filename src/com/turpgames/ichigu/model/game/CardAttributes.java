@@ -1,6 +1,6 @@
 package com.turpgames.ichigu.model.game;
 
-import com.turpgames.framework.v0.util.Game;
+import com.turpgames.ichigu.utils.Ichigu;
 import com.turpgames.ichigu.utils.R;
 
 public final class CardAttributes {
@@ -107,10 +107,10 @@ public final class CardAttributes {
 
 	public static String getShapeName(int shape) {
 		if (shape == Shape_Circle)
-			return Game.getLanguageManager().getString(R.strings.circle);
+			return Ichigu.getString(R.strings.circle);
 		if (shape == Shape_Square)
-			return Game.getLanguageManager().getString(R.strings.square);
-		return Game.getLanguageManager().getString(R.strings.triangle);
+			return Ichigu.getString(R.strings.square);
+		return Ichigu.getString(R.strings.triangle);
 	}
 
 	private int color;

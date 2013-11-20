@@ -7,8 +7,8 @@ import com.turpgames.framework.v0.ITexture;
 import com.turpgames.framework.v0.util.Game;
 import com.turpgames.framework.v0.util.TextureDrawer;
 
-public final class IchiguResources {
-	private IchiguResources() {
+public final class Ichigu {
+	private Ichigu() {
 
 	}
 
@@ -66,5 +66,9 @@ public final class IchiguResources {
 
 	public static void playSoundFlip() {
 		soundFlip.play();
+	}
+
+	public static String getString(String resourceKey) {
+		return Game.getLanguageManager().getString(resourceKey);
 	}
 }

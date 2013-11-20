@@ -9,7 +9,7 @@ public class FullChallengeModeEndState extends FullChallengeModeState {
 	protected void activated() {
 		model.endMode();
 	}
-
+	
 	@Override
 	public void onNewGame() {
 		model.startMode();

@@ -2,7 +2,7 @@ package com.turpgames.ichigu.controller.practice;
 
 import com.turpgames.framework.v0.util.Game;
 import com.turpgames.ichigu.model.game.Card;
-import com.turpgames.ichigu.utils.IchiguResources;
+import com.turpgames.ichigu.utils.Ichigu;
 
 public class PracticeModeWaitingState extends PracticeModeState {
 	public PracticeModeWaitingState(PracticeModeController controller) {
@@ -26,14 +26,14 @@ public class PracticeModeWaitingState extends PracticeModeState {
 
 	@Override
 	public void onIchiguFound() {
-		IchiguResources.playSoundSuccess();
+		Ichigu.playSoundSuccess();
 		Game.vibrate(50);
 		controller.setDealingState();
 	}
 
 	@Override
 	public void onInvalidIchiguSelected() {
-		IchiguResources.playSoundError();
+		Ichigu.playSoundError();
 		Game.vibrate(100);
 	}
 }

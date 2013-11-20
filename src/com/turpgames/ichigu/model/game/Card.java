@@ -7,7 +7,7 @@ import com.turpgames.framework.v0.ITexture;
 import com.turpgames.framework.v0.util.Game;
 import com.turpgames.framework.v0.util.Rotation;
 import com.turpgames.framework.v0.util.Utils;
-import com.turpgames.ichigu.utils.IchiguResources;
+import com.turpgames.ichigu.utils.Ichigu;
 import com.turpgames.ichigu.utils.R;
 
 public class Card extends IchiguObject {
@@ -133,18 +133,18 @@ public class Card extends IchiguObject {
 	@Override
 	public void draw() {
 		if (!isOpened) {
-			IchiguResources.drawTextureCardClosed(this);
+			Ichigu.drawTextureCardClosed(this);
 			return;
 		}
 
-		IchiguResources.drawTextureCardEmpty(this);
+		Ichigu.drawTextureCardEmpty(this);
 		for (int i = 0; i < symbols.size(); i++) {
 			symbols.get(i).getColor().a = getColor().a;
 			symbols.get(i).draw();
 		}
 
 		if (isSelected)
-			IchiguResources.drawTextureCardBorder(this);
+			Ichigu.drawTextureCardBorder(this);
 	}
 
 	@Override

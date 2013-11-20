@@ -6,7 +6,7 @@ import com.turpgames.ichigu.utils.R;
 
 public abstract class SingleGameMode extends IchiguMode {
 	protected SingleGameCards cards;
-	
+
 	protected SingleGameMode() {
 		cards = new SingleGameCards();
 		dealer = new SingleGameCardDealer(cards);
@@ -42,8 +42,11 @@ public abstract class SingleGameMode extends IchiguMode {
 			cards.get(i).getLocation().set(R.learningModeScreen.layout.positions[i]);
 	}
 
-	public boolean exitMode() {
-		((SingleGameCardDealer) dealer).abortDeal();
+	@Override
+	protected boolean onExitMode() {
+		if (!super.onExitMode())
+			return false;
+		dealer.abortDeal();
 		deactivateCards();
 		cards.empty();
 		return true;

@@ -11,6 +11,7 @@ import com.turpgames.ichigu.model.display.IchiguDialog;
 import com.turpgames.ichigu.model.display.IchiguLanguageMenu;
 import com.turpgames.ichigu.model.display.IchiguToolbar;
 import com.turpgames.ichigu.model.display.Logo;
+import com.turpgames.ichigu.utils.Ichigu;
 import com.turpgames.ichigu.utils.R;
 
 public class MenuScreen extends FormScreen implements IGameExitListener {
@@ -89,7 +90,7 @@ public class MenuScreen extends FormScreen implements IGameExitListener {
 			return false;
 		}
 		else {
-			exitConfirm.open(Game.getLanguageManager().getString(R.strings.exitProgramConfirm));
+			exitConfirm.open(Ichigu.getString(R.strings.exitProgramConfirm));
 			return false;
 		}
 	}

@@ -1,7 +1,7 @@
 package com.turpgames.ichigu.controller.minichallenge;
 
 import com.turpgames.ichigu.model.game.Card;
-import com.turpgames.ichigu.utils.IchiguResources;
+import com.turpgames.ichigu.utils.Ichigu;
 
 public class MiniChallengeModeBlockedState extends MiniChallengeModeState {
 	public MiniChallengeModeBlockedState(MiniChallengeModeController controller) {
@@ -21,6 +21,6 @@ public class MiniChallengeModeBlockedState extends MiniChallengeModeState {
 	@Override
 	public void onCardTapped(Card card) {
 		card.deselect();
-		IchiguResources.playSoundWait();
+		Ichigu.playSoundWait();
 	}
 }
