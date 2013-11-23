@@ -36,7 +36,7 @@ public abstract class FullGameMode extends IchiguMode implements IResultScreenBu
 		resultScreenButtons = new ResultScreenButtons(this);
 
 		hint = new FullGameHint();
-		hint.setLocation(Game.getScreenWidth() - hint.getWidth() - 10, Game.viewportToScreenY(30));
+		hint.setLocation(10, Game.viewportToScreenY(30));
 		hint.activate();
 		hint.setHintListener(this);
 

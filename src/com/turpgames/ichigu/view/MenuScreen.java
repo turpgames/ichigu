@@ -56,6 +56,11 @@ public class MenuScreen extends FormScreen implements IGameExitListener {
 					Game.exit();		
 				}
 			}
+
+			@Override
+			public void onDialogClosed() {
+				
+			}
 		});
 
 		setForm(R.game.forms.mainMenu, false);

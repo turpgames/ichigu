@@ -53,7 +53,7 @@ public final class R {
 			public static final String emptyTriangle = "card-41";
 
 			public static final String libgdx = "libgdx";
-			
+
 			public static final class toolbar {
 				public static final String back = "tb_back";
 				public static final String settings = "tb_settings";
@@ -64,7 +64,7 @@ public final class R {
 				public static final String soundOn = "tb_sound_on";
 				public static final String soundOff = "tb_sound_off";
 			}
-			
+
 			public static final class points {
 				public static final String shapecircle = "shapecircle";
 				public static final String shaperectangle = "shaperectangle";
@@ -101,7 +101,7 @@ public final class R {
 
 		public static final String language = "language";
 		public static final String country = "country";
-		
+
 		public static final String ichiguBalance = "ichigu-points";
 		public static final String hintCount = "hint-count";
 	}
@@ -139,7 +139,6 @@ public final class R {
 		public static final Color ichiguYellow = Color.fromHex("#f9b000ff");
 		public static final Color ichiguCyan = Color.fromHex("#00f9b0ff");
 		public static final Color ichiguMagenta = Color.fromHex("#f900b0ff");
-		
 
 		public static final Color buttonDefault = ichiguWhite;
 		public static final Color buttonTouched = ichiguYellow;
@@ -168,22 +167,22 @@ public final class R {
 		public final static String howToPlay = "howToPlay";
 		public final static String hiScores = "hiScores";
 		public final static String about = "about";
-		
+
 		public final static String newGame = "newGame";
 		public final static String backToMenu = "backToMenu";
-		
+
 		public final static String circle = "circle";
 		public final static String square = "square";
 		public final static String triangle = "triangle";
-		
+
 		public final static String blue = "blue";
 		public final static String red = "red";
 		public final static String green = "green";
 
 		public final static String empty = "empty";
 		public final static String striped = "striped";
-		public final static String filled = "filled";		
-		
+		public final static String filled = "filled";
+
 		public final static String sameShapes = "sameShapes";
 		public final static String sameColors = "sameColors";
 		public final static String samePatterns = "samePatterns";
@@ -192,22 +191,22 @@ public final class R {
 		public final static String differentColors = "differentColors";
 		public final static String differentPatterns = "differentPatterns";
 		public final static String differentCounts = "differentCounts";
-		
+
 		public final static String score = "score";
 		public final static String found = "found";
-		
+
 		public final static String exitConfirm = "exitConfirm";
 		public final static String resetConfirm = "resetConfirm";
 		public final static String hiscoreResetConfirm = "hiscoreResetConfirm";
 		public final static String exitProgramConfirm = "exitProgramConfirm";
-		
+
 		public final static String yes = "yes";
 		public final static String no = "no";
-		
+
 		public final static String noIchigu = "noIchigu";
 		public final static String oneIchigu = "oneIchigu";
 		public final static String someIchigu = "someIchigu";
-		
+
 		public final static String noTip = "noTip";
 		public final static String tryAgain = "tryAgain";
 		public final static String wait = "wait";
@@ -216,7 +215,7 @@ public final class R {
 		public final static String fullChallengeResult = "fullChallengeResult";
 		public final static String normalResult = "normalResult";
 		public final static String relaxResult = "relaxResult";
-		
+
 		public final static String fullChallengeResultSingle = "fullChallengeResultSingle";
 		public final static String miniChallengeResultSingle = "miniChallengeResultSingle";
 		public final static String normalResultSingle = "normalResultSingle";
@@ -226,9 +225,9 @@ public final class R {
 		public final static String normalResultMultiple = "normalResultMultiple";
 		public final static String relaxResultMultiple = "relaxResultMultiple";
 		public final static String newHiscore = "newHiscore";
-		
+
 		public final static String resetHiscore = "resetHiscore";
-		public final static String hiscoreInfo = "hiscoreInfo"; 
+		public final static String hiscoreInfo = "hiscoreInfo";
 
 		public final static String tutOverviewTitle = "tutOverviewTitle";
 		public final static String tutOverview = "tutOverview";
@@ -246,7 +245,7 @@ public final class R {
 		public final static String tutDifferentColors = "tutDifferentColors";
 		public final static String tutDifferentPatterns = "tutDifferentPatterns";
 		public final static String tutDifferentCounts = "tutDifferentCounts";
-		
+
 		public final static String tutSampleNotIchiguTitle = "tutSampleNotIchiguTitle";
 		public final static String tutTwoAndOneShape = "tutTwoAndOneShape";
 		public final static String tutTwoAndOneColor = "tutTwoAndOneColor";
@@ -256,19 +255,19 @@ public final class R {
 		public final static String tutGameModesTitle = "tutGameModesTitle";
 		public final static String tutSingleIchiguModes = "tutSingleIchiguModes";
 		public final static String tutFullGameModes = "tutFullGameModes";
-		
+
 		public final static String tutPracticeModeTitle = "tutPracticeModeTitle";
 		public final static String tutPracticeMode = "tutPracticeMode";
-		
+
 		public final static String tutMiniChallengeModeTitle = "tutMiniChallengeModeTitle";
 		public final static String tutMiniChallengeMode = "tutMiniChallengeMode";
-		
+
 		public final static String tutRelaxModeTitle = "tutRelaxModeTitle";
 		public final static String tutRelaxMode = "tutRelaxMode";
-		
+
 		public final static String tutNormalModeTitle = "tutNormalModeTitle";
 		public final static String tutNormalMode = "tutNormalMode";
-		
+
 		public final static String tutFullChallengeModeTitle = "tutFullChallengeModeTitle";
 		public final static String tutFullChallengeMode = "tutFullChallengeMode";
 
@@ -281,7 +280,7 @@ public final class R {
 		public final static String tutScoreSamePattern = "tutScoreSamePattern";
 		public final static String tutScoreDifferentCounts = "tutScoreDifferentCounts";
 		public final static String tutScoreTotal = "tutScoreTotal";
-		
+
 		public final static String aboutInfo1 = "aboutInfo1";
 		public final static String aboutInfo2 = "aboutInfo2";
 		public final static String aboutInfo3 = "aboutInfo3";
@@ -290,9 +289,16 @@ public final class R {
 		public final static String libgdxAddress = "libgdx-address";
 		public final static String playStoreAddress = "play-store-address";
 		public final static String appStoreAddressIOS7 = "app-store-address-ios7";
-		public final static String appStoreAddressOld = "app-store-address-old";		
+		public final static String appStoreAddressOld = "app-store-address-old";
+
+		public final static String insufficientIchiguBalance = "insufficientIchiguBalance";
+		public final static String market = "market";
+		public final static String marketInfo = "marketInfo";
+		public final static String bankInfo = "bankInfo";
+		public final static String ok = "ok";
+		public final static String buy = "buy";
 	}
-	
+
 	private R() {
 	}
 }

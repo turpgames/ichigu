@@ -49,10 +49,6 @@ public final class IchiguBank {
 
 	public static synchronized void increaseBalance() {
 		ichiguBalance++;
-		if (ichiguBalance >= hintPrice) {
-			ichiguBalance -= hintPrice;
-			hintCount++;
-		}
 	}
 	
 	public static synchronized void decreaseHintCount() {

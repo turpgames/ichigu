@@ -25,7 +25,7 @@ class IchiguTutorial extends Tutorial {
 	protected void addPageTitle() {
 		pageTitle.setAlignment(Text.HAlignCenter, Text.VAlignTop);
 		pageTitle.setText(Ichigu.getString(R.strings.howToPlay));
-		pageTitle.setColor(R.colors.ichiguYellow);
+		pageTitle.getColor().set(R.colors.ichiguYellow);
 		pageTitle.setFontScale(1.5f);
 		pageTitle.setPadding(0, 85);	
 	}
@@ -34,7 +34,7 @@ class IchiguTutorial extends Tutorial {
 	protected void addPagesInfo() {
 		pagesInfo.setAlignment(Text.HAlignCenter, Text.VAlignTop);
 		pagesInfo.setPadding(0, 160f);
-		pagesInfo.setColor(R.colors.ichiguCyan);
+		pagesInfo.getColor().set(R.colors.ichiguCyan);
 	}
 
 	@Override

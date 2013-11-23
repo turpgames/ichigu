@@ -1,6 +1,5 @@
 package com.turpgames.ichigu.model.fullgame.normal;
 
-import com.turpgames.framework.v0.component.info.GameInfo;
 import com.turpgames.framework.v0.impl.Settings;
 import com.turpgames.framework.v0.impl.Text;
 import com.turpgames.framework.v0.util.Timer;
@@ -11,12 +10,16 @@ import com.turpgames.ichigu.utils.R;
 
 public class NormalMode extends FullGameMode {
 	private Timer timer;
-	private GameInfo remaingCardInfo;
+	private Text remaingCardInfo;
 
 	public NormalMode() {
-		remaingCardInfo = new GameInfo();
-		remaingCardInfo.setAlignment(Text.HAlignCenter, Text.VAlignBottom);
-		remaingCardInfo.setPadding(0, 55);
+		remaingCardInfo = new Text();
+		
+//		remaingCardInfo.setAlignment(Text.HAlignCenter, Text.VAlignBottom);
+//		remaingCardInfo.setPadding(0, 55);
+		
+		remaingCardInfo.setAlignment(Text.HAlignLeft, Text.VAlignTop);
+		remaingCardInfo.setPadding(10, 110);
 	}	
 	
 	@Override

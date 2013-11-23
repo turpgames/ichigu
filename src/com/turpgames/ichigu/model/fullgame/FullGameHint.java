@@ -73,7 +73,7 @@ public class FullGameHint implements IDrawable, IEffectEndListener, Toast.IToast
 
 	public void setLocation(float x, float y) {
 		button.getLocation().set(x, y);
-		hintCountText.setLocation(x - getWidth() * 0.66f, y + getHeight() * 0.33f);
+		hintCountText.setLocation(x + buttonSize * 0.8f, y + buttonSize * 0.8f);
 	}
 
 	public float getWidth() {

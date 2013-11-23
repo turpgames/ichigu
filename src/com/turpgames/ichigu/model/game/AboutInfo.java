@@ -5,34 +5,33 @@ import com.turpgames.framework.v0.ILanguageListener;
 import com.turpgames.framework.v0.component.IButtonListener;
 import com.turpgames.framework.v0.component.ImageButton;
 import com.turpgames.framework.v0.component.TextButton;
-import com.turpgames.framework.v0.component.info.GameInfo;
 import com.turpgames.framework.v0.impl.Text;
 import com.turpgames.framework.v0.util.Game;
 import com.turpgames.ichigu.utils.Ichigu;
 import com.turpgames.ichigu.utils.R;
 
 public class AboutInfo implements IDrawable, ILanguageListener {
-	private GameInfo pageTitle;
-	private GameInfo version;
-	private GameInfo info1;
+	private Text pageTitle;
+	private Text version;
+	private Text info1;
 	private TextButton turpLink;
-	private GameInfo info2;
+	private Text info2;
 	private ImageButton libgdxLink;
 	private TextButton rateLink;
 
 	public AboutInfo() {
-		pageTitle = new GameInfo();
-		pageTitle.setColor(R.colors.ichiguYellow);
+		pageTitle = new Text();
+		pageTitle.getColor().set(R.colors.ichiguYellow);
 		pageTitle.setFontScale(1.5f);
 		pageTitle.setPadding(0, 85);
 
-		version = new GameInfo();
-		version.setColor(R.colors.ichiguCyan);
+		version = new Text();
+		version.getColor().set(R.colors.ichiguCyan);
 		version.setAlignment(Text.HAlignCenter, Text.VAlignTop);
 		version.setPadding(0, 200);
 		version.setText("Ichigu v" + Game.getVersion().toString());
 
-		info1 = new GameInfo();
+		info1 = new Text();
 		info1.setAlignment(Text.HAlignCenter, Text.VAlignTop);
 		info1.setFontScale(R.fontSize.medium);
 		info1.setPadding(35, 300);
@@ -48,7 +47,7 @@ public class AboutInfo implements IDrawable, ILanguageListener {
 			}
 		});
 
-		info2 = new GameInfo();
+		info2 = new Text();
 		info2.setAlignment(Text.HAlignCenter, Text.VAlignTop);
 		info2.setFontScale(R.fontSize.medium);
 		info2.setPadding(35, 450);

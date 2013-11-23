@@ -23,7 +23,7 @@ public abstract class IchiguMode implements IDrawable {
 
 	public IchiguMode() {
 		resetButton = new ImageButton(buttonSize, buttonSize, R.game.textures.refresh, R.colors.buttonDefault, R.colors.buttonTouched);
-		resetButton.getLocation().set(10, Game.viewportToScreenY(30));
+		resetButton.getLocation().set(Game.getScreenWidth() - buttonSize - 10, Game.viewportToScreenY(30));
 		resetButton.setListener(new IButtonListener() {
 			@Override
 			public void onButtonTapped() {
@@ -37,6 +37,11 @@ public abstract class IchiguMode implements IDrawable {
 			public void onDialogButtonClicked(String id) {
 				onResetConfirmed(R.strings.yes.equals(id));
 			}
+
+			@Override
+			public void onDialogClosed() {
+				onResetConfirmed(false);			
+			}
 		});
 
 		confirmExitDialog = new IchiguDialog();
@@ -44,6 +49,11 @@ public abstract class IchiguMode implements IDrawable {
 			@Override
 			public void onDialogButtonClicked(String id) {
 				onExitConfirmed(R.strings.yes.equals(id));
+			}
+
+			@Override
+			public void onDialogClosed() {
+				onExitConfirmed(false);			
 			}
 		});
 	}

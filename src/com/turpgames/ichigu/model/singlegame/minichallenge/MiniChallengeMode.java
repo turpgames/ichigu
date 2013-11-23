@@ -1,6 +1,5 @@
 package com.turpgames.ichigu.model.singlegame.minichallenge;
 
-import com.turpgames.framework.v0.component.info.GameInfo;
 import com.turpgames.framework.v0.forms.xml.Toast;
 import com.turpgames.framework.v0.impl.Settings;
 import com.turpgames.framework.v0.impl.Text;
@@ -25,11 +24,11 @@ public class MiniChallengeMode extends SingleGameMode implements IResultScreenBu
 	private final CountDownTimer challengeTimer;
 
 	private int ichigusFound;
-	private GameInfo ichigusFoundInfo;
+	private Text ichigusFoundInfo;
 
 	private TimerText timeInfo;
 	private WaitToast waitInfo;
-	private GameInfo resultInfo;
+	private Text resultInfo;
 
 	private ResultScreenButtons resultScreenButtons;
 
@@ -44,11 +43,11 @@ public class MiniChallengeMode extends SingleGameMode implements IResultScreenBu
 			}
 		});
 
-		ichigusFoundInfo = new GameInfo();
+		ichigusFoundInfo = new Text();
 		ichigusFoundInfo.setAlignment(Text.HAlignLeft, Text.VAlignTop);
 		ichigusFoundInfo.setPadding(20, 125);
 
-		resultInfo = new GameInfo();
+		resultInfo = new Text();
 		resultInfo.setAlignment(Text.HAlignCenter, Text.VAlignCenter);
 
 		blockTimer = new CountDownTimer(challengeTime);
