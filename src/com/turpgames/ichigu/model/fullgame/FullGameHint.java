@@ -22,11 +22,9 @@ public class FullGameHint implements IDrawable, IEffectEndListener, Toast.IToast
 	private Text hintCountText;
 	private FullGameIchiguInfo ichiguInfo;
 	private Card[] cards;
-	private String text;
 	private int hintIndex;
 	private boolean isActive;
 	private Timer notificationTimer;
-	private int prevIchiguCount = 0;
 
 	private Toast toast;
 
@@ -91,7 +89,6 @@ public class FullGameHint implements IDrawable, IEffectEndListener, Toast.IToast
 
 	public void update(Card[] cards) {
 		ichiguInfo.update(cards);
-		updateText();
 		toast.hide();
 		hintIndex = 0;
 		isActive = false;
@@ -112,33 +109,20 @@ public class FullGameHint implements IDrawable, IEffectEndListener, Toast.IToast
 			return;
 		}
 
-		if (hintIndex == 0) {
-			toast.show(text, 3f);
-			if (prevIchiguCount != ichiguInfo.getIchiguCount())
-				toast.setText(text);
+		if (ichiguInfo.getIchiguCount() == 0) {
+			toast.show(Ichigu.getString(R.strings.noIchigu), 3f);
 		}
 		else {
-			int cardIndex = ichiguInfo.getIchiguCardIndex(hintIndex - 1, 1);
+			int cardIndex = ichiguInfo.getIchiguCardIndex(hintIndex, 1);
 			cards[cardIndex].blink(this, false);
 		}
 
 		isActive = true;
-
-		prevIchiguCount = ichiguInfo.getIchiguCount();
-	}
-
-	private void updateText() {
-		int count = ichiguInfo.getIchiguCount();
-		if (count < 1)
-			text = Ichigu.getString(R.strings.noIchigu);
-		else if (count == 1)
-			text = Ichigu.getString(R.strings.oneIchigu);
-		else
-			text = count + " " + Ichigu.getString(R.strings.someIchigu);
 	}
 
 	private void hintEnd() {
-		hintIndex = (hintIndex + 1) % (1 + ichiguInfo.getIchiguCount());
+		if (ichiguInfo.getIchiguCount() > 0)
+			hintIndex = (hintIndex + 1) % ichiguInfo.getIchiguCount();
 		isActive = false;
 	}
 

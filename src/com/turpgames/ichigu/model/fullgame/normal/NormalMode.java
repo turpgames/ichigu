@@ -1,14 +1,24 @@
 package com.turpgames.ichigu.model.fullgame.normal;
 
+import com.turpgames.framework.v0.component.info.GameInfo;
 import com.turpgames.framework.v0.impl.Settings;
+import com.turpgames.framework.v0.impl.Text;
 import com.turpgames.framework.v0.util.Timer;
 import com.turpgames.ichigu.model.fullgame.FullGameMode;
+import com.turpgames.ichigu.model.game.Card;
 import com.turpgames.ichigu.utils.Ichigu;
 import com.turpgames.ichigu.utils.R;
 
 public class NormalMode extends FullGameMode {
 	private Timer timer;
+	private GameInfo remaingCardInfo;
 
+	public NormalMode() {
+		remaingCardInfo = new GameInfo();
+		remaingCardInfo.setAlignment(Text.HAlignCenter, Text.VAlignBottom);
+		remaingCardInfo.setPadding(0, 55);
+	}	
+	
 	@Override
 	protected Timer getTimer() {
 		if (timer == null) {
@@ -34,5 +44,16 @@ public class NormalMode extends FullGameMode {
 				(isNewRecord ? Ichigu.getString(R.strings.newHiscore) : "")));
 
 		super.onEndMode();
+	}
+	
+	@Override
+	protected void onDraw() {
+		drawRemainingCards();
+		super.onDraw();
+	}
+
+	private void drawRemainingCards() {
+		remaingCardInfo.setText(getDealer().getIndex() + "/" + Card.CardsInDeck);
+		remaingCardInfo.draw();
 	}
 }

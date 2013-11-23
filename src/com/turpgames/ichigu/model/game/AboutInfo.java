@@ -30,7 +30,7 @@ public class AboutInfo implements IDrawable, ILanguageListener {
 		version.setColor(R.colors.ichiguCyan);
 		version.setAlignment(Text.HAlignCenter, Text.VAlignTop);
 		version.setPadding(0, 200);
-		version.setText("Ichigu v1.1");
+		version.setText("Ichigu v" + Game.getVersion().toString());
 
 		info1 = new GameInfo();
 		info1.setAlignment(Text.HAlignCenter, Text.VAlignTop);

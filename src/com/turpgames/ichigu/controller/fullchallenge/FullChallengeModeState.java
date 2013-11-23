@@ -32,7 +32,7 @@ public abstract class FullChallengeModeState extends IchiguState implements IFul
 	
 	@Override
 	public void onDealEnd() {
-		
+		model.activateCards();
 	}
 	
 	@Override

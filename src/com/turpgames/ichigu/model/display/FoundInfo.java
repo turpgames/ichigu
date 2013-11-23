@@ -1,7 +1,6 @@
 package com.turpgames.ichigu.model.display;
 
 import com.turpgames.framework.v0.component.info.FlashingGameInfo;
-import com.turpgames.ichigu.utils.Ichigu;
 import com.turpgames.ichigu.utils.R;
 
 public class FoundInfo extends FlashingGameInfo {
@@ -27,6 +26,6 @@ public class FoundInfo extends FlashingGameInfo {
 	}
 
 	private void updateText() {
-		setText(Ichigu.getString(R.strings.found) + ": " + this.ichigusFound);
+		setText("" + this.ichigusFound);
 	}
 }

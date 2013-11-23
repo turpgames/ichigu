@@ -27,9 +27,9 @@ public abstract class NormalModeState extends IchiguState implements INormalMode
 
 	@Override
 	public void onDealEnd() {
-				
+		model.activateCards();
 	}
-	
+
 	@Override
 	public void onExitConfirmed() {
 		view.onExitConfirmed();

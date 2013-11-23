@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.turpgames.framework.v0.effects.IEffectEndListener;
 import com.turpgames.framework.v0.util.Game;
+import com.turpgames.framework.v0.util.Utils;
 import com.turpgames.framework.v0.util.Vector;
 import com.turpgames.ichigu.model.game.Card;
 import com.turpgames.ichigu.model.game.CardDealer;
@@ -39,6 +40,9 @@ public class FullGameCardDealer extends CardDealer {
 	private int cardsToFadeOut;
 	private int cardsToMove;
 
+	private boolean isInfiniteDeal;
+	private final Card[] cardsToPutBack = new Card[3];
+
 	FullGameCardDealer(FullGameCards cards) {
 		this.cards = cards;
 	}
@@ -63,6 +67,10 @@ public class FullGameCardDealer extends CardDealer {
 		index = 0;
 	}
 
+	public void setAsInfiniteDeal() {
+		isInfiniteDeal = true;
+	}
+
 	private void initCards() {
 		for (int i = 0; i < FullGameCards.TotalCardsOnTable; i++) {
 			cards.setCard(i, deck[i]);
@@ -78,8 +86,11 @@ public class FullGameCardDealer extends CardDealer {
 
 	private void removeIchiguCards() {
 		cardsToFadeOut = FullGameCards.IchiguCardCount;
-		for (int i = 0; i < FullGameCards.IchiguCardCount; i++)
+		for (int i = 0; i < FullGameCards.IchiguCardCount; i++) {
+			if (isInfiniteDeal)
+				cardsToPutBack[i] = cards.getSelectedCard(i);
 			cards.getSelectedCard(i).fadeOut(fadeOutListener);
+		}
 	}
 
 	private void onFadeOutComplete() {
@@ -105,16 +116,16 @@ public class FullGameCardDealer extends CardDealer {
 			cardsToMove++;
 		}
 	}
-	
+
 	@Override
 	public void abortDeal() {
-			
+
 	}
-	
+
 	private void startMovingExtraCard(int extraCardIndex, int targetActiveCardIndex) {
 		Card extraCard = cards.getExtraCard(extraCardIndex);
 		extraCard.open();
-		extraCard.moveTo(moveEndListener, cards.getActiveCard(targetActiveCardIndex).getLocation(), moveDuration);		
+		extraCard.moveTo(moveEndListener, cards.getActiveCard(targetActiveCardIndex).getLocation(), moveDuration);
 	}
 
 	private void onCardsMoveEnd() {
@@ -132,12 +143,41 @@ public class FullGameCardDealer extends CardDealer {
 	}
 
 	void dealExtraCards() {
+		int x = 0;
 		for (int i = 0; i < FullGameCards.IchiguCardCount && index < deck.length; i++) {
 			Card card = deck[index++];
+			card.getColor().a = 1;
+			card.deselect();
 			card.getLocation().set(cardLocations.get(i + FullGameCards.ActiveCardCount));
 			card.close();
+
+			// extra cardlar açýlmasýna raðmen hala no icihgu olmasý durumunda desteye geri koyulacak kartlar eski extra cardlardýr
+			if (isInfiniteDeal && cardsToPutBack[x] == null)
+				cardsToPutBack[x] = cards.getExtraCard(i);
+			
 			cards.setExtraCard(i, card);
 		}
+
+		if (isInfiniteDeal)
+			putFoundIchiguBackIntoDeck();
+	}
+
+	private void putFoundIchiguBackIntoDeck() {
+		for (int i = 0; i < FullGameCards.TotalCardsOnTable; i++)
+			deck[i] = cards.getCard(i);
+
+		for (int i = FullGameCards.TotalCardsOnTable; i < deck.length - 3; i++)
+			deck[i] = deck[i + 3];
+
+		for (int i = 0; i < cardsToPutBack.length; i++)
+			deck[deck.length - i - 1] = cardsToPutBack[i];
+
+		index = FullGameCards.TotalCardsOnTable;
+
+		Utils.shuffle(deck, index, deck.length, 3);
+		
+		for (int i = 0; i < cardsToPutBack.length; i++)
+			cardsToPutBack[i] = null;
 	}
 
 	private void onCardFadeOutComplete() {

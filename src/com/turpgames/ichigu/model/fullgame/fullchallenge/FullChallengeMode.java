@@ -17,8 +17,10 @@ public class FullChallengeMode extends FullGameMode {
 
 	public FullChallengeMode() {
 		foundInfo = new FoundInfo();
-		foundInfo.setAlignment(Text.HAlignLeft, Text.VAlignTop);
-		foundInfo.setPadding(7, 110);
+		foundInfo.setAlignment(Text.HAlignCenter, Text.VAlignBottom);
+		foundInfo.setPadding(0, 55);
+		
+		getDealer().setAsInfiniteDeal();
 	}
 
 	@Override
@@ -34,12 +36,6 @@ public class FullChallengeMode extends FullGameMode {
 			});
 		}
 		return timer;
-	}
-
-	@Override
-	protected void openExtraCards() {
-		if (timer.getRemaining() > secondsPerHint || getAvailableIchiguCount() == 0)
-			super.openExtraCards();
 	}
 
 	@Override
