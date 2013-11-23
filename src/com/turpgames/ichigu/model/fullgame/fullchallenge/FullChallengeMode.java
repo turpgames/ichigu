@@ -10,7 +10,7 @@ import com.turpgames.ichigu.utils.Ichigu;
 import com.turpgames.ichigu.utils.R;
 
 public class FullChallengeMode extends FullGameMode {
-	private static int challengeTime = 5 * 60;
+	private static int challengeTime = 5 * 4;
 
 	private FoundInfo foundInfo;
 	private CountDownTimer timer;
@@ -48,6 +48,14 @@ public class FullChallengeMode extends FullGameMode {
 		foundInfo.reset();
 	}
 
+	@Override
+	protected void onOpenExtraCards() {
+		if (timer.getRemaining() > 10)
+			super.onOpenExtraCards();
+		else
+			flashTimerText();
+	}
+	
 	@Override
 	protected void onEndMode() {
 		int hiScore = Settings.getInteger(R.settings.hiscores.fullchallenge, 0);

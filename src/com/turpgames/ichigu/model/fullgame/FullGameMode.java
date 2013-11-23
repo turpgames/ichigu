@@ -133,7 +133,7 @@ public abstract class FullGameMode extends IchiguMode implements IResultScreenBu
 			cards.getExtraCard(i).open();
 	}
 
-	private void flashTimerText() {
+	protected void flashTimerText() {
 		timerText.flash();
 	}
 
@@ -182,7 +182,7 @@ public abstract class FullGameMode extends IchiguMode implements IResultScreenBu
 		}
 	}
 
-	private void onOpenExtraCards() {
+	protected void onOpenExtraCards() {
 		openExtraCards();
 		applyTimePenalty();
 		updateHints();
