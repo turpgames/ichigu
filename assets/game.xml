@@ -116,6 +116,10 @@
         <screen
             id="about"
             class="com.turpgames.ichigu.view.AboutScreen" />
+
+        <screen
+            id="market"
+            class="com.turpgames.ichigu.view.MarketScreen" />
     </screens>
 
     <forms>
@@ -129,32 +133,38 @@
                 rows="2"
                 text="Ichigu"
                 x="0"
-                y="26"
+                y="27"
                 color="#56bd89ff" />
 
             <button
                 id="btnPlay"
                 action="form=playMenu"
                 resource-text="play"
-                y="20" />
+                y="21" />
 
             <button
                 id="btnLearning"
                 action="screen=tutorial"
                 resource-text="howToPlay"
-                y="15" />
+                y="16" />
 
             <button
                 id="btnScoreBoard"
                 action="screen=scoreBoard"
                 resource-text="hiScores"
-                y="12" />
+                y="13" />
 
             <button
                 id="btnAbout"
                 action="screen=about"
                 resource-text="about"
-                y="9" />
+                y="10" />
+
+            <button
+                id="btnMarket"
+                action="screen=market"
+                resource-text="market"
+                y="7" />
 
             <button
                 id="btnExitGame"
@@ -162,7 +172,7 @@
                 focus-color="#d0583bff"
                 hidden-ios="true"
                 resource-text="exitGame"
-                y="4" />
+                y="3" />
         </form>
 
         <form id="playMenu" >
