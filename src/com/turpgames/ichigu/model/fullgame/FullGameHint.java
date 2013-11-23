@@ -8,7 +8,6 @@ import com.turpgames.framework.v0.forms.xml.Toast;
 import com.turpgames.framework.v0.impl.Text;
 import com.turpgames.framework.v0.util.Game;
 import com.turpgames.framework.v0.util.Timer;
-import com.turpgames.framework.v0.util.Vector;
 import com.turpgames.ichigu.model.game.Card;
 import com.turpgames.ichigu.model.game.IchiguBank;
 import com.turpgames.ichigu.utils.Ichigu;
@@ -31,7 +30,7 @@ public class FullGameHint implements IDrawable, IEffectEndListener, Toast.IToast
 	private IHintListener hintListener;
 
 	FullGameHint() {
-		button = new BlinkingImageButton(buttonSize, buttonSize, R.colors.ichiguWhite, R.colors.ichiguCyan, 1f, 10);
+		button = new BlinkingImageButton(buttonSize, buttonSize, R.colors.ichiguWhite, R.colors.ichiguYellow, 1f, 10);
 		button.setTexture(R.game.textures.hint);
 		button.setListener(new IButtonListener() {
 			@Override
@@ -39,8 +38,11 @@ public class FullGameHint implements IDrawable, IEffectEndListener, Toast.IToast
 				onHintButtonTapped();
 			}
 		});
-		
-		hintCountText = new Text();
+
+		hintCountText = new Text(true, false);
+		hintCountText.setFontScale(0.75f);
+		hintCountText.getColor().set(R.colors.ichiguYellow);
+		hintCountText.setAlignment(Text.HAlignLeft, Text.VAlignBottom);
 		hintCountText.setText("(" + IchiguBank.getHintCount() + ")");
 
 		ichiguInfo = new FullGameIchiguInfo();
@@ -61,8 +63,6 @@ public class FullGameHint implements IDrawable, IEffectEndListener, Toast.IToast
 
 	private void onHintButtonTapped() {
 		if (IchiguBank.hasHint()) {
-			IchiguBank.decreaseHintCount();
-
 			showNextHint();
 			restartNotificationTimer();
 		}
@@ -71,8 +71,9 @@ public class FullGameHint implements IDrawable, IEffectEndListener, Toast.IToast
 		}
 	}
 
-	public Vector getLocation() {
-		return button.getLocation();
+	public void setLocation(float x, float y) {
+		button.getLocation().set(x, y);
+		hintCountText.setLocation(x - getWidth() * 0.66f, y + getHeight() * 0.33f);
 	}
 
 	public float getWidth() {
@@ -115,6 +116,10 @@ public class FullGameHint implements IDrawable, IEffectEndListener, Toast.IToast
 		else {
 			int cardIndex = ichiguInfo.getIchiguCardIndex(hintIndex, 1);
 			cards[cardIndex].blink(this, false);
+
+			IchiguBank.decreaseHintCount();
+			IchiguBank.saveData();
+			updateText();
 		}
 
 		isActive = true;
@@ -140,10 +145,15 @@ public class FullGameHint implements IDrawable, IEffectEndListener, Toast.IToast
 	@Override
 	public void draw() {
 		drawButton();
+		drawHintCount();
 	}
 
 	private void drawButton() {
 		button.draw();
+	}
+
+	private void drawHintCount() {
+		hintCountText.draw();
 	}
 
 	public void activate() {
@@ -159,5 +169,9 @@ public class FullGameHint implements IDrawable, IEffectEndListener, Toast.IToast
 
 	public boolean isActive() {
 		return isActive;
+	}
+
+	public void updateText() {
+		hintCountText.setText("(" + IchiguBank.getHintCount() + ")");
 	}
 }

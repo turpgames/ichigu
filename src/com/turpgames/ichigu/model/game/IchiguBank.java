@@ -1,6 +1,6 @@
 package com.turpgames.ichigu.model.game;
 
-import com.turpgames.framework.v0.impl.Settings;
+import com.turpgames.ichigu.utils.IchiguSettings;
 
 public final class IchiguBank {
 	private static final int hintPrice = 20; // 20 ichigus = 1 hint
@@ -9,8 +9,8 @@ public final class IchiguBank {
 	private static volatile int hintCount;
 
 	static {
-		ichiguBalance = Settings.getInteger("ichigu-points", 0);
-		ichiguBalance = Settings.getInteger("hint-count", 0);
+		ichiguBalance = IchiguSettings.getIchiguBalance();
+		hintCount = IchiguSettings.getHintCount();
 	}
 
 	private IchiguBank() {
@@ -33,10 +33,8 @@ public final class IchiguBank {
 		return ichiguBalance >= hintPrice;
 	}
 
-	public static boolean hasHint() {
-		return true;
-		// TODO: Hint satýn alma implement edilince açýlacak 
-		// return hintCount > 0;
+	public static boolean hasHint() { 		
+		return hintCount > 0;
 	}
 	
 	public static synchronized boolean buyHintWithBalance() {
@@ -51,6 +49,10 @@ public final class IchiguBank {
 
 	public static synchronized void increaseBalance() {
 		ichiguBalance++;
+		if (ichiguBalance >= hintPrice) {
+			ichiguBalance -= hintPrice;
+			hintCount++;
+		}
 	}
 	
 	public static synchronized void decreaseHintCount() {
@@ -59,7 +61,7 @@ public final class IchiguBank {
 	}
 
 	public static synchronized void saveData() {
-		Settings.putInteger("ichigu-balance", ichiguBalance);
-		Settings.putInteger("hint-count", hintCount);
+		IchiguSettings.setIchiguBalance(ichiguBalance);
+		IchiguSettings.setHintCount(hintCount);
 	}
 }

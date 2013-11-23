@@ -3,6 +3,7 @@ package com.turpgames.ichigu.model.fullgame;
 import com.turpgames.framework.v0.impl.Text;
 import com.turpgames.framework.v0.util.Game;
 import com.turpgames.framework.v0.util.Timer;
+import com.turpgames.ichigu.model.display.NoTipToast;
 import com.turpgames.ichigu.model.display.TimerText;
 import com.turpgames.ichigu.model.display.TryAgainToast;
 import com.turpgames.ichigu.model.game.Card;
@@ -25,6 +26,7 @@ public abstract class FullGameMode extends IchiguMode implements IResultScreenBu
 	private boolean areExtraCardsOpened;
 
 	private TryAgainToast tryAgain;
+	private NoTipToast noTip;
 
 	private ResultScreenButtons resultScreenButtons;
 
@@ -34,11 +36,12 @@ public abstract class FullGameMode extends IchiguMode implements IResultScreenBu
 		resultScreenButtons = new ResultScreenButtons(this);
 
 		hint = new FullGameHint();
-		hint.getLocation().set(Game.getScreenWidth() - hint.getWidth() - 10, Game.viewportToScreenY(30));
+		hint.setLocation(Game.getScreenWidth() - hint.getWidth() - 10, Game.viewportToScreenY(30));
 		hint.activate();
 		hint.setHintListener(this);
 
 		tryAgain = new TryAgainToast();
+		noTip = new NoTipToast();
 
 		timerText = new TimerText(getTimer());
 		timerText.setAlignment(Text.HAlignLeft, Text.VAlignTop);
@@ -145,6 +148,8 @@ public abstract class FullGameMode extends IchiguMode implements IResultScreenBu
 			notifyIchiguFound();
 			areExtraCardsOpened = false;
 			IchiguBank.increaseBalance();
+			IchiguBank.saveData();
+			hint.updateText();
 		}
 		else {
 			tryAgain.show();
@@ -224,7 +229,8 @@ public abstract class FullGameMode extends IchiguMode implements IResultScreenBu
 
 	@Override
 	public void onInsufficientHint() {
-		// TODO: Hint alma menusu aç
+		Ichigu.playSoundError();
+		noTip.show();
 	}
 
 	@Override

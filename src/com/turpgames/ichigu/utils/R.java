@@ -98,10 +98,12 @@ public final class R {
 			public static final String normaltime = "hiscore_normal_time";
 			public static final String fullchallenge = "hiscore_challenge";
 		}
-		
 
 		public static final String language = "language";
 		public static final String country = "country";
+		
+		public static final String ichiguBalance = "ichigu-points";
+		public static final String hintCount = "hint-count";
 	}
 
 	public static final class learningModeScreen {
@@ -206,6 +208,7 @@ public final class R {
 		public final static String oneIchigu = "oneIchigu";
 		public final static String someIchigu = "someIchigu";
 		
+		public final static String noTip = "noTip";
 		public final static String tryAgain = "tryAgain";
 		public final static String wait = "wait";
 		public final static String points = "points";
@@ -287,7 +290,7 @@ public final class R {
 		public final static String libgdxAddress = "libgdx-address";
 		public final static String playStoreAddress = "play-store-address";
 		public final static String appStoreAddressIOS7 = "app-store-address-ios7";
-		public final static String appStoreAddressOld = "app-store-address-old";
+		public final static String appStoreAddressOld = "app-store-address-old";		
 	}
 	
 	private R() {
