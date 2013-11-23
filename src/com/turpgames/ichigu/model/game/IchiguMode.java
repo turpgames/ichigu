@@ -66,6 +66,10 @@ public abstract class IchiguMode implements IDrawable {
 		resetButton.getLocation().set((Game.getScreenWidth() - resetButton.getWidth()) / 2, Game.viewportToScreenY(50));
 	}
 
+	protected void deactivateResetButton() {
+		resetButton.deactivate();
+	}
+	
 	private void onResetConfirmed(boolean reset) {
 		if (reset) {
 			resetMode();

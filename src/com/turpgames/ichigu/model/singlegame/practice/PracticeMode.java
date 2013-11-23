@@ -12,6 +12,7 @@ public class PracticeMode extends SingleGameMode {
 	public PracticeMode() {
 		hint = new PracticeModeHint();
 		tryAgain = new TryAgainToast();
+		deactivateResetButton();
 	}
 	
 	@Override
