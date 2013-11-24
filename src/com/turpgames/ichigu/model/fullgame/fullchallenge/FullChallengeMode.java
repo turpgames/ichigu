@@ -10,7 +10,7 @@ import com.turpgames.ichigu.utils.Ichigu;
 import com.turpgames.ichigu.utils.R;
 
 public class FullChallengeMode extends FullGameMode {
-	private static int challengeTime = 5 * 4;
+	private static int challengeTime = 5 * 60;
 
 	private FoundInfo foundInfo;
 	private CountDownTimer timer;

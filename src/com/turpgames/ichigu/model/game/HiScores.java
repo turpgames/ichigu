@@ -27,6 +27,7 @@ public class HiScores implements IDrawable, ILanguageListener {
 		pageTitle.setPadding(0, 85);
 
 		info = new Text();
+		info.setFontScale(R.fontSize.medium);
 		info.setAlignment(Text.HAlignCenter, Text.VAlignCenter);
 
 		resetScores = new TextButton(R.colors.ichiguYellow, R.colors.ichiguRed);

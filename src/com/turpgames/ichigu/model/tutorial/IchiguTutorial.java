@@ -164,7 +164,6 @@ class IchiguTutorial extends Tutorial {
 		page.addInfo("- " + Ichigu.getString(R.strings.tutPracticeModeTitle), Text.HAlignLeft, 30).setPadX(100);
 		page.addInfo("- " + Ichigu.getString(R.strings.tutMiniChallengeModeTitle), Text.HAlignLeft, 30).setPadX(100);
 		page.addInfo("- " + Ichigu.getString(R.strings.tutFullGameModes), Text.HAlignLeft, 50).setPadX(50);
-		page.addInfo("- " + Ichigu.getString(R.strings.tutRelaxModeTitle), Text.HAlignLeft, 30).setPadX(100);
 		page.addInfo("- " + Ichigu.getString(R.strings.tutNormalModeTitle), Text.HAlignLeft, 30).setPadX(100);
 		page.addInfo("- " + Ichigu.getString(R.strings.tutFullChallengeModeTitle), Text.HAlignLeft, 30).setPadX(100);
 		pages.add(page);
@@ -178,10 +177,10 @@ class IchiguTutorial extends Tutorial {
 		page.addInfo(Ichigu.getString(R.strings.tutMiniChallengeModeTitle), Text.HAlignCenter, marginTop).getColor().set(R.colors.ichiguYellow);
 		page.addInfo(Ichigu.getString(R.strings.tutMiniChallengeMode), Text.HAlignLeft, 50).setPadX(10);
 		pages.add(page);
-
+		
 		page = new TutorialPage("13", R.fontSize.medium);
-		page.addInfo(Ichigu.getString(R.strings.tutRelaxModeTitle), Text.HAlignCenter, marginTop).getColor().set(R.colors.ichiguYellow);
-		page.addInfo(Ichigu.getString(R.strings.tutRelaxMode), Text.HAlignLeft, 30).setPadX(10);
+		page.addInfo(Ichigu.getString(R.strings.tutFullModesTitle), Text.HAlignCenter, marginTop).getColor().set(R.colors.ichiguYellow);
+		page.addInfo(Ichigu.getString(R.strings.tutFullModes), Text.HAlignLeft, 50).setPadX(10);
 		pages.add(page);
 		
 		page = new TutorialPage("14", R.fontSize.medium);

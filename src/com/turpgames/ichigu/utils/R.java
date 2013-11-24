@@ -261,10 +261,10 @@ public final class R {
 
 		public final static String tutMiniChallengeModeTitle = "tutMiniChallengeModeTitle";
 		public final static String tutMiniChallengeMode = "tutMiniChallengeMode";
-
-		public final static String tutRelaxModeTitle = "tutRelaxModeTitle";
-		public final static String tutRelaxMode = "tutRelaxMode";
-
+				
+		public final static String tutFullModesTitle = "tutFullModesTitle";
+		public final static String tutFullModes = "tutFullModes";
+		
 		public final static String tutNormalModeTitle = "tutNormalModeTitle";
 		public final static String tutNormalMode = "tutNormalMode";
 
