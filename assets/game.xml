@@ -155,15 +155,15 @@
                 y="13" />
 
             <button
-                id="btnAbout"
-                action="screen=about"
-                resource-text="about"
-                y="10" />
-
-            <button
                 id="btnMarket"
                 action="screen=market"
                 resource-text="market"
+                y="10" />
+
+            <button
+                id="btnAbout"
+                action="screen=about"
+                resource-text="about"
                 y="7" />
 
             <button
@@ -172,7 +172,7 @@
                 focus-color="#d0583bff"
                 hidden-ios="true"
                 resource-text="exitGame"
-                y="3" />
+                y="2" />
         </form>
 
         <form id="playMenu" >
