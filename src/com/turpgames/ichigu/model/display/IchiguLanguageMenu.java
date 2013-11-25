@@ -13,7 +13,7 @@ public class IchiguLanguageMenu extends LanguageMenu {
 	private static final float buttonSpacing = Game.scale(30);
 
 	public IchiguLanguageMenu() {
-		super(buttonSpacing, flagButtonSize, flagButtonSize, 3);
+		super(buttonSpacing, flagButtonSize, flagButtonSize, 2);
 	}
 
 	@Override

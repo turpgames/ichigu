@@ -57,11 +57,13 @@ public abstract class FullGameMode extends IchiguMode implements IResultScreenBu
 	@Override
 	protected void pauseTimer() {
 		getTimer().pause();
+		hint.deactivate();
 	}
 
 	@Override
 	protected void startTimer() {
 		getTimer().start();
+		hint.activate();
 	}
 
 	@Override
@@ -149,7 +151,6 @@ public abstract class FullGameMode extends IchiguMode implements IResultScreenBu
 			areExtraCardsOpened = false;
 			IchiguBank.increaseBalance();
 			IchiguBank.saveData();
-			hint.updateText();
 		}
 		else {
 			tryAgain.show();

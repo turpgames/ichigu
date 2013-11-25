@@ -192,7 +192,6 @@ public final class R {
 		public final static String differentPatterns = "differentPatterns";
 		public final static String differentCounts = "differentCounts";
 
-		public final static String score = "score";
 		public final static String found = "found";
 
 		public final static String exitConfirm = "exitConfirm";
@@ -210,20 +209,11 @@ public final class R {
 		public final static String noTip = "noTip";
 		public final static String tryAgain = "tryAgain";
 		public final static String wait = "wait";
-		public final static String points = "points";
 
+		public final static String miniChallengeResult = "miniChallengeResult";
 		public final static String fullChallengeResult = "fullChallengeResult";
 		public final static String normalResult = "normalResult";
-		public final static String relaxResult = "relaxResult";
-
-		public final static String fullChallengeResultSingle = "fullChallengeResultSingle";
-		public final static String miniChallengeResultSingle = "miniChallengeResultSingle";
-		public final static String normalResultSingle = "normalResultSingle";
-		public final static String relaxResultSingle = "relaxResultSingle";
-		public final static String fullChallengeResultMultiple = "fullChallengeResultMultiple";
-		public final static String miniChallengeResultMultiple = "miniChallengeResultMultiple";
-		public final static String normalResultMultiple = "normalResultMultiple";
-		public final static String relaxResultMultiple = "relaxResultMultiple";
+		
 		public final static String newHiscore = "newHiscore";
 
 		public final static String resetHiscore = "resetHiscore";
@@ -270,16 +260,6 @@ public final class R {
 
 		public final static String tutFullChallengeModeTitle = "tutFullChallengeModeTitle";
 		public final static String tutFullChallengeMode = "tutFullChallengeMode";
-
-		public final static String tutScoreTitle = "tutScoreTitle";
-		public final static String tutScore = "tutScore";
-
-		public final static String tutSampleIchiguScoreTitle = "tutSampleIchiguScoreTitle";
-		public final static String tutScoreSameShape = "tutScoreSameShape";
-		public final static String tutScoreDifferentColors = "tutScoreDifferentColors";
-		public final static String tutScoreSamePattern = "tutScoreSamePattern";
-		public final static String tutScoreDifferentCounts = "tutScoreDifferentCounts";
-		public final static String tutScoreTotal = "tutScoreTotal";
 
 		public final static String aboutInfo1 = "aboutInfo1";
 		public final static String aboutInfo2 = "aboutInfo2";

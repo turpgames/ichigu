@@ -66,6 +66,13 @@ class FullGameCards {
 		return extraCards[i] == null;
 	}
 
+	public boolean isCardOnTable(Card card) {
+		for (int i = 0; i < TotalCardsOnTable; i++)
+			if (allCards[i] == card)
+				return true;
+		return false;
+	}
+	
 	public void empty() {
 		emptySelectedCards();
 		for (int i = 0; i < allCards.length; i++)

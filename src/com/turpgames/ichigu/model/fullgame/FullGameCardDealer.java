@@ -1,5 +1,6 @@
 package com.turpgames.ichigu.model.fullgame;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -35,13 +36,12 @@ public class FullGameCardDealer extends CardDealer {
 	// endregion
 
 	private final FullGameCards cards;
-	private int index;
+	private int dealIndex;
 
 	private int cardsToFadeOut;
 	private int cardsToMove;
 
 	private boolean isInfiniteDeal;
-	private final Card[] cardsToPutBack = new Card[3];
 
 	FullGameCardDealer(FullGameCards cards) {
 		this.cards = cards;
@@ -49,7 +49,7 @@ public class FullGameCardDealer extends CardDealer {
 
 	@Override
 	public void deal() {
-		if (index == 0) {
+		if (dealIndex == 0) {
 			initCards();
 			notifyDealEnd();
 		}
@@ -59,12 +59,12 @@ public class FullGameCardDealer extends CardDealer {
 	}
 
 	public int getIndex() {
-		return index;
+		return dealIndex;
 	}
 
 	public void reset() {
 		super.reset();
-		index = 0;
+		dealIndex = 0;
 	}
 
 	public void setAsInfiniteDeal() {
@@ -81,14 +81,12 @@ public class FullGameCardDealer extends CardDealer {
 				deck[i].close();
 		}
 
-		index = FullGameCards.TotalCardsOnTable;
+		dealIndex = FullGameCards.TotalCardsOnTable;
 	}
 
 	private void removeIchiguCards() {
 		cardsToFadeOut = FullGameCards.IchiguCardCount;
 		for (int i = 0; i < FullGameCards.IchiguCardCount; i++) {
-			if (isInfiniteDeal)
-				cardsToPutBack[i] = cards.getSelectedCard(i);
 			cards.getSelectedCard(i).fadeOut(fadeOutListener);
 		}
 	}
@@ -143,41 +141,40 @@ public class FullGameCardDealer extends CardDealer {
 	}
 
 	void dealExtraCards() {
-		int x = 0;
-		for (int i = 0; i < FullGameCards.IchiguCardCount && index < deck.length; i++) {
-			Card card = deck[index++];
+		for (int i = 0; i < FullGameCards.IchiguCardCount && dealIndex < deck.length; i++) {
+			Card card = deck[dealIndex++];
 			card.getColor().a = 1;
 			card.deselect();
 			card.getLocation().set(cardLocations.get(i + FullGameCards.ActiveCardCount));
 			card.close();
 
-			// extra cardlar açýlmasýna raðmen hala no icihgu olmasý durumunda desteye geri koyulacak kartlar eski extra cardlardýr
-			if (isInfiniteDeal && cardsToPutBack[x] == null)
-				cardsToPutBack[x] = cards.getExtraCard(i);
-			
 			cards.setExtraCard(i, card);
 		}
 
-		if (isInfiniteDeal)
-			putFoundIchiguBackIntoDeck();
+		if (isInfiniteDeal && dealIndex == deck.length)
+			reshuffleDeck();
 	}
 
-	private void putFoundIchiguBackIntoDeck() {
+	private void reshuffleDeck() {
+		Card[] tmp = Arrays.copyOf(deck, deck.length);
+		
+		// Set cards on table as first 15 cards of deck
 		for (int i = 0; i < FullGameCards.TotalCardsOnTable; i++)
 			deck[i] = cards.getCard(i);
 
-		for (int i = FullGameCards.TotalCardsOnTable; i < deck.length - 3; i++)
-			deck[i] = deck[i + 3];
+		// Then set cards that are not on table as 15th to 80th cards of deck
+		int x = FullGameCards.TotalCardsOnTable;
+		for (int i = 0; i < tmp.length; i++) {
+			if (!cards.isCardOnTable(tmp[i]))
+				deck[x++] = tmp[i];
 
-		for (int i = 0; i < cardsToPutBack.length; i++)
-			deck[deck.length - i - 1] = cardsToPutBack[i];
-
-		index = FullGameCards.TotalCardsOnTable;
-
-		Utils.shuffle(deck, index, deck.length, 3);
+		}
 		
-		for (int i = 0; i < cardsToPutBack.length; i++)
-			cardsToPutBack[i] = null;
+		// Set current deal index to 15
+		dealIndex = FullGameCards.TotalCardsOnTable;
+		
+		// Shuffle cards between 15 - 80 in the deck
+		Utils.shuffle(deck, dealIndex, deck.length);
 	}
 
 	private void onCardFadeOutComplete() {

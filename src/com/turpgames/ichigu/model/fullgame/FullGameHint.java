@@ -43,7 +43,7 @@ public class FullGameHint implements IDrawable, IEffectEndListener, Toast.IToast
 		hintCountText.setFontScale(0.75f);
 		hintCountText.getColor().set(R.colors.ichiguYellow);
 		hintCountText.setAlignment(Text.HAlignLeft, Text.VAlignBottom);
-		hintCountText.setText("(" + IchiguBank.getHintCount() + ")");
+		setHintCountText();
 
 		ichiguInfo = new FullGameIchiguInfo();
 
@@ -59,6 +59,17 @@ public class FullGameHint implements IDrawable, IEffectEndListener, Toast.IToast
 		toast = new Toast();
 		toast.setListener(this);
 		toast.setToastColor(R.colors.ichiguYellow);
+		
+		IchiguBank.registerListener(new IchiguBank.IIchiguBankListener() {			
+			@Override
+			public void update() {
+				setHintCountText();			
+			}
+		});
+	}
+
+	private void setHintCountText() {
+		hintCountText.setText(IchiguBank.getHintCount() + "");
 	}
 
 	private void onHintButtonTapped() {
@@ -119,7 +130,6 @@ public class FullGameHint implements IDrawable, IEffectEndListener, Toast.IToast
 
 			IchiguBank.decreaseHintCount();
 			IchiguBank.saveData();
-			updateText();
 		}
 
 		isActive = true;
@@ -169,9 +179,5 @@ public class FullGameHint implements IDrawable, IEffectEndListener, Toast.IToast
 
 	public boolean isActive() {
 		return isActive;
-	}
-
-	public void updateText() {
-		hintCountText.setText("(" + IchiguBank.getHintCount() + ")");
 	}
 }

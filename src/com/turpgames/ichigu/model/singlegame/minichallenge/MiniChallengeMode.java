@@ -132,12 +132,8 @@ public class MiniChallengeMode extends SingleGameMode implements IResultScreenBu
 		if (ichigusFound > hiScore)
 			Settings.putInteger(R.settings.hiscores.minichallenge, ichigusFound);
 
-		if (ichigusFound != 1)
-			resultInfo.setText(String.format(Ichigu.getString(R.strings.miniChallengeResultMultiple),
-					ichigusFound, (ichigusFound > hiScore ? Ichigu.getString(R.strings.newHiscore) : "")));
-		else
-			resultInfo.setText(String.format(Ichigu.getString(R.strings.miniChallengeResultSingle),
-					ichigusFound, (ichigusFound > hiScore ? Ichigu.getString(R.strings.newHiscore) : "")));
+		resultInfo.setText(String.format(Ichigu.getString(R.strings.miniChallengeResult),
+				ichigusFound, (ichigusFound > hiScore ? Ichigu.getString(R.strings.newHiscore) : "")));
 
 		super.onEndMode();
 	}
@@ -146,7 +142,7 @@ public class MiniChallengeMode extends SingleGameMode implements IResultScreenBu
 	protected boolean onExitMode() {
 		if (!super.onExitMode())
 			return false;
-		
+
 		blockTimer.stop();
 		challengeTimer.stop();
 		timeInfo.syncText();
