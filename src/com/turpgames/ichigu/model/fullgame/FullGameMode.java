@@ -94,29 +94,9 @@ public abstract class FullGameMode extends IchiguMode implements IResultScreenBu
 		return (FullGameCardDealer) dealer;
 	}
 
-<<<<<<< HEAD
 	private IFullGameModeListener getModeListener() {
 		return (IFullGameModeListener) super.modeListener;
 	}
-=======
-		remaingCardInfo = new GameInfo();
-		remaingCardInfo.locate(Text.HAlignCenter, Text.VAlignBottom);
-		remaingCardInfo.setPadding(0, 55);
-		
-		timeInfo = new DisplayTimer(R.colors.ichiguRed, 5, 30);
-		timeInfo.locate(Text.HAlignRight, Text.VAlignTop);
-		timeInfo.setPadding(10, 110);
-		
-		timer = new Timer();
-		timer.setInterval(1);
-		timer.setTickListener(new Timer.ITimerTickListener() {
-			@Override
-			public void timerTick(Timer timer) {
-				int elapsed = (int) timer.getTotalElapsedTime();
-				timeInfo.setTimeText(elapsed);
-			}
-		});
->>>>>>> kadir
 
 	private void notifyNewGame() {
 		if (getModeListener() != null)

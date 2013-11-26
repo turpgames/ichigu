@@ -18,7 +18,7 @@ public class AboutInfo implements IDrawable, ILanguageListener {
 	private Text info2;
 	private ImageButton libgdxLink;
 	private TextButton rateLink;
-	private GameInfo thanksInfo;
+	private Text thanksInfo;
 
 	public AboutInfo() {
 		pageTitle = new Text();
@@ -80,8 +80,8 @@ public class AboutInfo implements IDrawable, ILanguageListener {
 			}
 		});
 
-		thanksInfo = new GameInfo();
-		thanksInfo.locate(Text.HAlignCenter, Text.VAlignTop);
+		thanksInfo = new Text();
+		thanksInfo.setAlignment(Text.HAlignCenter, Text.VAlignTop);
 		thanksInfo.setFontScale(R.fontSize.medium);
 		thanksInfo.setPadding(35, 700);
 		
