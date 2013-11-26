@@ -1,11 +1,11 @@
 package com.turpgames.ichigu;
 
-import com.turpgames.framework.impl.android.AndroidProvider;
 import android.os.Bundle;
 import android.view.WindowManager;
 
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
+import com.turpgames.framework.v0.impl.android.AndroidProvider;
 import com.turpgames.framework.v0.impl.libgdx.GdxGame;
 import com.turpgames.framework.v0.util.Game;
 
@@ -18,7 +18,7 @@ public class MainActivity extends AndroidApplication {
 		cfg.useGL20 = false;
 		cfg.useAccelerometer = false;
 		cfg.useCompass = false;
-
+				
 		Game.environmentProvider = new AndroidProvider(getApplicationContext());
 
 		initialize(new GdxGame(), cfg);

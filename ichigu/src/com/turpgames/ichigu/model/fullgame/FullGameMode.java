@@ -49,7 +49,7 @@ public abstract class FullGameMode extends IchiguMode implements IResultScreenBu
 
 		resultInfo = new Text();
 		resultInfo.setAlignment(Text.HAlignCenter, Text.VAlignTop);
-		resultInfo.setPadding(0, 250);
+		resultInfo.setPadding(0, 150);
 	}
 
 	protected abstract Timer getTimer();

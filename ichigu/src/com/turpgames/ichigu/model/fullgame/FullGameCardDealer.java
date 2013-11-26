@@ -42,6 +42,7 @@ public class FullGameCardDealer extends CardDealer {
 	private int cardsToMove;
 
 	private boolean isInfiniteDeal;
+	private boolean dealAborted;
 
 	FullGameCardDealer(FullGameCards cards) {
 		this.cards = cards;
@@ -49,6 +50,7 @@ public class FullGameCardDealer extends CardDealer {
 
 	@Override
 	public void deal() {
+		dealAborted = false;
 		if (dealIndex == 0) {
 			initCards();
 			notifyDealEnd();
@@ -65,6 +67,7 @@ public class FullGameCardDealer extends CardDealer {
 	public void reset() {
 		super.reset();
 		dealIndex = 0;
+		dealAborted = false;
 	}
 
 	public void setAsInfiniteDeal() {
@@ -93,7 +96,7 @@ public class FullGameCardDealer extends CardDealer {
 
 	private void onFadeOutComplete() {
 		startMovingExtraCards();
-		if (cardsToMove == 0)
+		if (cardsToMove == 0 && !dealAborted)
 			onCardsMoveEnd();
 	}
 
@@ -115,9 +118,11 @@ public class FullGameCardDealer extends CardDealer {
 		}
 	}
 
+	
+	
 	@Override
 	public void abortDeal() {
-
+		dealAborted = true;
 	}
 
 	private void startMovingExtraCard(int extraCardIndex, int targetActiveCardIndex) {
@@ -179,7 +184,7 @@ public class FullGameCardDealer extends CardDealer {
 
 	private void onCardFadeOutComplete() {
 		cardsToFadeOut--;
-		if (cardsToFadeOut == 0)
+		if (cardsToFadeOut == 0 && !dealAborted)
 			onFadeOutComplete();
 	}
 
@@ -198,7 +203,7 @@ public class FullGameCardDealer extends CardDealer {
 			}
 		}
 
-		if (--cardsToMove == 0)
+		if (--cardsToMove == 0 && !dealAborted)
 			onCardsMoveEnd();
 	}
 

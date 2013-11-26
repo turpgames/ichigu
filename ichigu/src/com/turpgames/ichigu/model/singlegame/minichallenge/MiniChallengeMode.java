@@ -48,7 +48,8 @@ public class MiniChallengeMode extends SingleGameMode implements IResultScreenBu
 		ichigusFoundInfo.setPadding(20, 125);
 
 		resultInfo = new Text();
-		resultInfo.setAlignment(Text.HAlignCenter, Text.VAlignCenter);
+		resultInfo.setAlignment(Text.HAlignCenter, Text.VAlignTop);
+		resultInfo.setPadding(0, 150);
 
 		blockTimer = new CountDownTimer(challengeTime);
 		blockTimer.setInterval(blockDuration);

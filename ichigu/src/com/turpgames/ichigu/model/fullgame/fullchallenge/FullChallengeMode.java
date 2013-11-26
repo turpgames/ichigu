@@ -64,7 +64,7 @@ public class FullChallengeMode extends FullGameMode {
 			Settings.putInteger(R.settings.hiscores.fullchallenge, score);
 
 		setResultText(String.format(Ichigu.getString(R.strings.fullChallengeResult),
-				foundInfo.getText(), (score > hiScore ? Ichigu.getString(R.strings.newHiscore) : "")));
+				score, (score > hiScore ? Ichigu.getString(R.strings.newHiscore) : "")));
 
 		super.onEndMode();
 	}

@@ -36,6 +36,8 @@ public abstract class MiniChallengeModeState extends IchiguState implements IMin
 
 	@Override
 	public void onModeEnd() {
+		Ichigu.playSoundTimeUp();
+		Game.vibrate(100);
 		controller.setModeEndState();
 	}
 
