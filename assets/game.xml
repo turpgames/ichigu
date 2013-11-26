@@ -1,0 +1,486 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<game
+    id="Ichigu"
+    class="com.turpgames.ichigu.view.IchiguGame"
+    version="1.1.0" >
+
+    <params>
+
+        <param
+            key="provider"
+            value="com.turpgames.framework.v0.impl.libgdx.GdxGameProvider" />
+
+        <param
+            key="settings-key"
+            value="com.turpgames.ichigu" />
+
+        <param
+            key="virtual-width"
+            value="550" />
+
+        <param
+            key="virtual-height"
+            value="800" />
+
+        <param
+            key="default-font"
+            value="Akachen_chinese,1" />
+
+        <param
+            key="default-skin"
+            value="ppt" />
+
+        <param
+            key="default-screen"
+            value="splash" />
+
+        <param
+            key="screen-switcher"
+            value="sliding,0.30" />
+
+        <param
+            key="form-switcher"
+            value="sliding,0.30" />
+
+        <param
+            key="tutorial-page-switcher"
+            value="sliding,0.25" />
+
+        <param
+            key="allow-exit-on-back"
+            value="true" />
+
+        <param
+            key="turp-address"
+            value="http://www.turpgames.com" />
+
+        <param
+            key="libgdx-address"
+            value="http://libgdx.badlogicgames.com" />
+
+        <param
+            key="play-store-address"
+            value="https://play.google.com/store/apps/details?id=com.turpgames.ichigu" />
+
+        <param
+            key="app-store-address-ios7"
+            value="itms-apps://itunes.apple.com/app/id737312134" />
+
+        <param
+            key="app-store-address-old"
+            value="itms-apps://itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&amp;id=737312134" />
+    </params>
+
+    <screens>
+
+        <screen
+            id="tutorial"
+            class="com.turpgames.ichigu.view.TutorialModeScreen" />
+
+        <screen
+            id="practice"
+            class="com.turpgames.ichigu.view.PracticeModeScreen" />
+
+        <screen
+            id="minichallenge"
+            class="com.turpgames.ichigu.view.MiniChallengeModeScreen" />
+
+        <screen
+            id="relax"
+            class="com.turpgames.ichigu.view.RelaxModeScreen" />
+
+        <screen
+            id="normal"
+            class="com.turpgames.ichigu.view.NormalModeScreen" />
+
+        <screen
+            id="fullchallenge"
+            class="com.turpgames.ichigu.view.FullChallengeModeScreen" />
+
+        <screen
+            id="multiplayer"
+            class="com.turpgames.ichigu.view.MultiplayerModeScreen" />
+
+        <screen
+            id="menu"
+            class="com.turpgames.ichigu.view.MenuScreen" />
+
+        <screen
+            id="splash"
+            class="com.turpgames.ichigu.view.SplashScreen" />
+
+        <screen
+            id="scoreBoard"
+            class="com.turpgames.ichigu.view.ScoreBoardScreen" />
+
+        <screen
+            id="about"
+            class="com.turpgames.ichigu.view.AboutScreen" />
+
+        <screen
+            id="market"
+            class="com.turpgames.ichigu.view.MarketScreen" />
+    </screens>
+
+    <forms>
+
+        <form id="mainMenu" >
+
+            <label
+                id="lblGameName"
+                cols="16"
+                font-scale="1.5"
+                rows="2"
+                text="Ichigu"
+                x="0"
+                y="27"
+                color="#56bd89ff" />
+
+            <button
+                id="btnPlay"
+                action="form=playMenu"
+                resource-text="play"
+                y="21" />
+
+            <button
+                id="btnLearning"
+                action="screen=tutorial"
+                resource-text="howToPlay"
+                y="16" />
+
+            <button
+                id="btnScoreBoard"
+                action="screen=scoreBoard"
+                resource-text="hiScores"
+                y="13" />
+
+            <button
+                id="btnMarket"
+                action="screen=market"
+                resource-text="market"
+                y="10" />
+
+            <button
+                id="btnAbout"
+                action="screen=about"
+                resource-text="about"
+                y="7" />
+
+            <button
+                id="btnExitGame"
+                action="exit"
+                focus-color="#d0583bff"
+                hidden-ios="true"
+                resource-text="exitGame"
+                y="2" />
+        </form>
+
+        <form id="playMenu" >
+
+            <button
+                id="btnPractice"
+                action="screen=practice"
+                resource-text="practice"
+                y="24" />
+
+            <button
+                id="btnMiniChallenge"
+                action="screen=minichallenge"
+                resource-text="miniChallenge"
+                y="20" />
+
+            <button
+                id="btnNormal"
+                action="screen=normal"
+                resource-text="normalMode"
+                y="12" />
+
+            <button
+                id="btnChallenge"
+                action="screen=fullchallenge"
+                resource-text="fullChallenge"
+                y="8" />
+        </form>
+    </forms>
+
+    <animations>
+    </animations>
+
+    <resources>
+
+        <fonts>
+
+            <font
+                id="Akachen_chinese"
+                path="fonts/chinese/akachen_chinese.fnt" />
+        </fonts>
+
+        <textures>
+
+            <texture
+                id="logo"
+                path="img/logo.png"
+                resource-load="primary" />
+
+            <texture
+                id="hint"
+                path="img/hint.png" />
+
+            <texture
+                id="fw_close"
+                path="img/framework/close.png" />
+
+            <texture
+                id="next"
+                path="img/next.png" />
+
+            <texture
+                id="prev"
+                path="img/prev.png" />
+
+            <texture
+                id="play"
+                path="img/play.png" />
+
+            <texture
+                id="refresh"
+                path="img/refresh.png" />
+
+            <texture
+                id="card-11"
+                path="img/cards/11.png" />
+
+            <texture
+                id="card-12"
+                path="img/cards/12.png" />
+
+            <texture
+                id="card-14"
+                path="img/cards/14.png" />
+
+            <texture
+                id="card-21"
+                path="img/cards/21.png" />
+
+            <texture
+                id="card-22"
+                path="img/cards/22.png" />
+
+            <texture
+                id="card-24"
+                path="img/cards/24.png" />
+
+            <texture
+                id="card-41"
+                path="img/cards/41.png" />
+
+            <texture
+                id="card-42"
+                path="img/cards/42.png" />
+
+            <texture
+                id="card-44"
+                path="img/cards/44.png" />
+
+            <texture
+                id="card-border"
+                path="img/cards/border.png" />
+
+            <texture
+                id="card-closed"
+                path="img/cards/closedcard.png" />
+
+            <texture
+                id="card-empty"
+                path="img/cards/emptycard.png" />
+
+            <texture
+                id="tb_back"
+                path="img/toolbar/back.png" />
+
+            <texture
+                id="tb_settings"
+                path="img/toolbar/settings.png" />
+
+            <texture
+                id="tb_sound_off"
+                path="img/toolbar/sound-off.png" />
+
+            <texture
+                id="tb_sound_on"
+                path="img/toolbar/sound-on.png" />
+
+            <texture
+                id="tb_vibration_off"
+                path="img/toolbar/vibration-off.png" />
+
+            <texture
+                id="tb_vibration_on"
+                path="img/toolbar/vibration-on.png" />
+
+            <texture
+                id="bg"
+                path="img/bg.png" />
+
+            <texture
+                id="shapecircle"
+                path="img/points/shapecircle.png" />
+
+            <texture
+                id="shaperectangle"
+                path="img/points/shaperectangle.png" />
+
+            <texture
+                id="shapetriangle"
+                path="img/points/shapetriangle.png" />
+
+            <texture
+                id="shapeall"
+                path="img/points/shapeall.png" />
+
+            <texture
+                id="countone"
+                path="img/points/countone.png" />
+
+            <texture
+                id="counttwo"
+                path="img/points/counttwo.png" />
+
+            <texture
+                id="countthree"
+                path="img/points/countthree.png" />
+
+            <texture
+                id="countall"
+                path="img/points/countall.png" />
+
+            <texture
+                id="fillempty"
+                path="img/points/fillempty.png" />
+
+            <texture
+                id="fillstriped"
+                path="img/points/fillstriped.png" />
+
+            <texture
+                id="fillfull"
+                path="img/points/fillfull.png" />
+
+            <texture
+                id="fillall"
+                path="img/points/fillall.png" />
+
+            <texture
+                id="colorone"
+                path="img/points/colorone.png" />
+
+            <texture
+                id="colorall"
+                path="img/points/colorall.png" />
+
+            <texture
+                id="flag_en_us"
+                path="img/flags/EN_US.png" />
+
+            <texture
+                id="flag_tr"
+                path="img/flags/TR.png" />
+
+            <texture
+                id="flag_it"
+                path="img/flags/IT.png" />
+
+            <texture
+                id="flag_se"
+                path="img/flags/SE.png" />
+
+            <texture
+                id="flag_cn"
+                path="img/flags/CN.png" />
+
+            <texture
+                id="flag_fr"
+                path="img/flags/FR.png" />
+
+            <texture
+                id="libgdx"
+                path="img/about/libgdx.png" />
+        </textures>
+
+        <sounds>
+
+            <sound
+                id="success"
+                path="sound/success.mp3" />
+
+            <sound
+                id="error"
+                path="sound/error.mp3" />
+
+            <sound
+                id="flip"
+                path="sound/flip.mp3" />
+
+            <sound
+                id="wait"
+                path="sound/wait.mp3" />
+
+            <sound
+                id="time-up"
+                path="sound/time-up.mp3" />
+        </sounds>
+    </resources>
+
+    <languages>
+
+        <language
+            id="en-US"
+            encoding="UTF8"
+            flag-texture-id="flag_en_us"
+            path="lang/Strings_en_US.properties" />
+
+        <languageX
+            id="it-IT"
+            encoding="UTF8"
+            flag-texture-id="flag_it"
+            path="lang/Strings_it_IT.properties" />
+
+        <language
+            id="tr-TR"
+            encoding="UTF8"
+            flag-texture-id="flag_tr"
+            path="lang/Strings_tr_TR.properties" />
+
+        <languageX
+            id="cn-CN"
+            encoding="UTF8"
+            flag-texture-id="flag_cn"
+            path="lang/Strings_cn_CN.properties" />
+    </languages>
+
+    <skins>
+
+        <skin id="ppt" >
+
+            <form
+                cols="16"
+                rows="32" />
+
+            <button
+                cols="8"
+                focus-color="#3974b1ff"
+                font-scale="1.2"
+                halign="center"
+                rows="2"
+                sound-click="flip"
+                vibrate="50"
+                x="4" />
+
+            <label
+                halign="center"
+                rows="2"
+                color="#fff" />
+        </skin>
+    </skins>
+
+</game>

@@ -1,0 +1,17 @@
+<i>Ichigu</i> 81 kartla oynanan bir bulmaca oyunudur. Her kartın üstünde değişik semboller bulunur. Oyunun amacı 3 karttan oluşan 'ichigu'lar bulmaktır. 
+
+Kartların üzerindeki sembollerin 4 özelliği vardır:
+	
+&nbsp;&nbsp;&nbsp;- Şekil:   Üçgen, Yuvarlak, Kare
+&nbsp;&nbsp;&nbsp;- Renk:   Kırmızı, Yeşil, Mavi
+&nbsp;&nbsp;&nbsp;- Dolgu: Boş, Taralı, Dolu
+&nbsp;&nbsp;&nbsp;- Adet:   Bir, İki, Üç
+	
+Ichigu oluşturan 3 kartın hepsi
+
+&nbsp;&nbsp;&nbsp;- Aynı veya farklı şekillere
+&nbsp;&nbsp;&nbsp;- Aynı veya farklı renklere
+&nbsp;&nbsp;&nbsp;- Aynı veya farklı dolgulara
+&nbsp;&nbsp;&nbsp;- Aynı veya farklı adetlere
+
+sahip olmalıdır.

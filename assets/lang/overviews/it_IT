@@ -1,0 +1,16 @@
+<i>Ichigu</i> ¨¨ un gioco di carte giocato con un mazzo da 81 carte. Ogni carta nel mazzo ¨¨ unica. Obiettivo del gioco ¨¨ trovare gruppi di tre carte, gli ichigu.
+I simboli sulle carte hanno quattro propriet¨¤, ognuna delle quali ha 3 valori differenti
+
+&nbsp;&nbsp;&nbsp;- Forma: triangolo, cerchio, quadrato
+&nbsp;&nbsp;&nbsp;- Colore: rosso, verde, blue
+&nbsp;&nbsp;&nbsp;- Trama: vuoto, striato, pieno
+&nbsp;&nbsp;&nbsp;- Numero di simboli: uno, due, tre.
+
+Per fare un ichigu, tutte le 3 carte devono avere simboli;
+
+&nbsp;&nbsp;&nbsp;- della stessa o diversa forma
+&nbsp;&nbsp;&nbsp;- dello stesso o diverso colore
+&nbsp;&nbsp;&nbsp;- della stessa o diversa trama
+&nbsp;&nbsp;&nbsp;- dello stesso o diverso numero
+
+NON ¨¨ un ichigu se tu puoi suddividere le tre carte in due A e un B.
