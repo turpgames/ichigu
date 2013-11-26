@@ -1,6 +1,6 @@
 package com.turpgames.ichigu;
 
-import tr.com.turpgames.framework.impl.android.AndroidProvider;
+import com.turpgames.framework.impl.android.AndroidProvider;
 import android.os.Bundle;
 import android.view.WindowManager;
 
