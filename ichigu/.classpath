@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<classpath>
-	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/framework"/>
-	<classpathentry exported="true" kind="lib" path="/framework/libs/gdx.jar" sourcepath="/framework/libs/gdx-sources.jar"/>
-	<classpathentry kind="output" path="bin"/>
-</classpath>
