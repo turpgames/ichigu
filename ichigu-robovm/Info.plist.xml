@@ -69,6 +69,7 @@
 			<key>CFBundleIconFiles</key>
 			<array>
 				<string>Icon</string>
+				<string>Icon-72</string>
 			</array>
 		</dict>
 	</dict>
