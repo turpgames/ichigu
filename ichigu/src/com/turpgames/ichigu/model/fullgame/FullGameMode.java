@@ -140,6 +140,7 @@ public abstract class FullGameMode extends IchiguMode implements IResultScreenBu
 	}
 
 	protected void notifyModeEnd() {
+		prepareResultInfoAndSaveHiscore();
 		if (getModeListener() != null)
 			getModeListener().onModeEnd();
 	}
@@ -256,6 +257,8 @@ public abstract class FullGameMode extends IchiguMode implements IResultScreenBu
 		resultScreenButtons.listenInput(true);
 		super.onEndMode();
 	}
+	
+	protected abstract void prepareResultInfoAndSaveHiscore();
 
 	@Override
 	protected boolean onExitMode() {

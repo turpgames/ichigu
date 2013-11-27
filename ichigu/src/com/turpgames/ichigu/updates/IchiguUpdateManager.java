@@ -11,6 +11,7 @@ public final class IchiguUpdateManager {
 		UpdateProcessor p = UpdateProcessor.instance;		
 		
 		p.addProcess(new V11_IchiguBank());
+		p.addProcess(new V112_HiScoreFix());
 		
 		p.execute();
 	}

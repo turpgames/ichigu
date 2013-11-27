@@ -57,7 +57,7 @@ public class FullChallengeMode extends FullGameMode {
 	}
 	
 	@Override
-	protected void onEndMode() {
+	protected void prepareResultInfoAndSaveHiscore() {
 		int hiScore = Settings.getInteger(R.settings.hiscores.fullchallenge, 0);
 		int score = foundInfo.getFound();
 		if (score > hiScore)
@@ -65,8 +65,6 @@ public class FullChallengeMode extends FullGameMode {
 
 		setResultText(String.format(Ichigu.getString(R.strings.fullChallengeResult),
 				score, (score > hiScore ? Ichigu.getString(R.strings.newHiscore) : "")));
-
-		super.onEndMode();
 	}
 	
 	@Override

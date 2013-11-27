@@ -32,7 +32,7 @@ public class NormalMode extends FullGameMode {
 	}
 
 	@Override
-	protected void onEndMode() {
+	protected void prepareResultInfoAndSaveHiscore() {
 		int hiTime = Settings.getInteger(R.settings.hiscores.normaltime, 0);
 		int completeTime = (int) timer.getTotalElapsedTime();
 
@@ -45,8 +45,6 @@ public class NormalMode extends FullGameMode {
 				Ichigu.getString(R.strings.normalResult),
 				timer.getText(),
 				(isNewRecord ? Ichigu.getString(R.strings.newHiscore) : "")));
-
-		super.onEndMode();
 	}
 	
 	@Override
