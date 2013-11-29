@@ -16,7 +16,7 @@ public class RobovmLauncher extends IOSApplication.Delegate {
 		config.orientationLandscape = false;
 		config.orientationPortrait = true;
 		
-		Game.environmentProvider = new IOSProvider();
+		Game.setEnvironmentProvider(new IOSProvider());
 		
 		return new IOSApplication(new GdxGame(), config);
 	}
