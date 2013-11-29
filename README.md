@@ -19,3 +19,7 @@ To make an ichigu all 3 cards must have
    - Same or different counts
 
 In other words, it is NOT an ichigu if you can seperate three cards into: Two ...s and one ...
+
+[Info](http://www.turpgames.com/ichigu.html)
+
+[Google Play Store](https://play.google.com/store/apps/details?id=com.turpgames.ichigu)
