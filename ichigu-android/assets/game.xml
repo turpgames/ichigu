@@ -120,6 +120,10 @@
         <screen
             id="market"
             class="com.turpgames.ichigu.view.MarketScreen" />
+
+        <screen
+            id="chat"
+            class="com.turpgames.ichigu.view.ChatScreen" />
     </screens>
 
     <forms>
@@ -165,6 +169,13 @@
                 action="screen=about"
                 resource-text="about"
                 y="7" />
+
+            <button
+                id="btnChat"
+                action="screen=chat"
+                font-scale="1.2"
+                resource-text="chat"
+                y="4" />
 
             <button
                 id="btnExitGame"
