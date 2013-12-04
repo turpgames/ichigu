@@ -24,4 +24,4 @@ In other words, it is NOT an ichigu if you can seperate three cards into: Two ..
 
 [Google Play Store](https://play.google.com/store/apps/details?id=com.turpgames.ichigu)
 
-Soon on App Store...
+[App Store](https://itunes.apple.com/us/app/ichigu/id737312134)
