@@ -15,6 +15,8 @@ public class AboutInfo implements IDrawable, ILanguageListener {
 	private Text version;
 	private Text info1;
 	private TextButton turpLink;
+	private TextButton facebookLink;
+	private TextButton twitterLink;
 	private Text info2;
 	private ImageButton libgdxLink;
 	private TextButton rateLink;
@@ -44,21 +46,43 @@ public class AboutInfo implements IDrawable, ILanguageListener {
 		turpLink.setListener(new IButtonListener() {
 			@Override
 			public void onButtonTapped() {
-				Game.openUrl(Game.getParam(R.strings.turpAddress));
+				Game.openUrl(Game.getParam(R.links.turpAddress));
+			}
+		});
+		
+		facebookLink = new TextButton(R.colors.ichiguYellow, R.colors.ichiguRed);
+		facebookLink.setFontScale(R.fontSize.medium);
+		facebookLink.setText("turpgames@facebook");
+		facebookLink.getLocation().set((Game.getVirtualWidth() - facebookLink.getWidth()) / 2, Game.getVirtualHeight() - 420);
+		facebookLink.setListener(new IButtonListener() {
+			@Override
+			public void onButtonTapped() {
+				Game.openUrl(Game.getParam(R.links.facebookAddress));
 			}
 		});
 
+		twitterLink = new TextButton(R.colors.ichiguYellow, R.colors.ichiguRed);
+		twitterLink.setFontScale(R.fontSize.medium);
+		twitterLink.setText("turpgames@twitter");
+		twitterLink.getLocation().set((Game.getVirtualWidth() - twitterLink.getWidth()) / 2, Game.getVirtualHeight() - 480);
+		twitterLink.setListener(new IButtonListener() {
+			@Override
+			public void onButtonTapped() {
+				Game.openUrl(Game.getParam(R.links.twitterAddress));
+			}
+		});
+		
 		info2 = new Text();
 		info2.setAlignment(Text.HAlignCenter, Text.VAlignTop);
 		info2.setFontScale(R.fontSize.medium);
-		info2.setPadding(35, 450);
+		info2.setPadding(35, 610);
 
 		libgdxLink = new ImageButton(Game.scale(R.ui.libgdxLogoWidth), Game.scale(R.ui.libgdxLogoHeight), R.game.textures.libgdx);
-		libgdxLink.getLocation().set((Game.getScreenWidth() - libgdxLink.getWidth()) / 2, Game.viewportToScreenY(Game.getVirtualHeight() - 520));
+		libgdxLink.getLocation().set((Game.getScreenWidth() - libgdxLink.getWidth()) / 2, Game.viewportToScreenY(Game.getVirtualHeight() - 670));
 		libgdxLink.setListener(new IButtonListener() {
 			@Override
 			public void onButtonTapped() {
-				Game.openUrl(Game.getParam(R.strings.libgdxAddress));
+				Game.openUrl(Game.getParam(R.links.libgdxAddress));
 			}
 		});
 		libgdxLink.deactivate();
@@ -70,12 +94,12 @@ public class AboutInfo implements IDrawable, ILanguageListener {
 			public void onButtonTapped() {
 				if (Game.isIOS()) {
 					if (Game.getOSVersion().getMajor() < 7)
-						Game.openUrl(Game.getParam(R.strings.appStoreAddressOld));
+						Game.openUrl(Game.getParam(R.links.appStoreAddressOld));
 					else
-						Game.openUrl(Game.getParam(R.strings.appStoreAddressIOS7));
+						Game.openUrl(Game.getParam(R.links.appStoreAddressIOS7));
 				}
 				else {
-					Game.openUrl(Game.getParam(R.strings.playStoreAddress));
+					Game.openUrl(Game.getParam(R.links.playStoreAddress));
 				}
 			}
 		});
@@ -83,7 +107,7 @@ public class AboutInfo implements IDrawable, ILanguageListener {
 		thanksInfo = new Text();
 		thanksInfo.setAlignment(Text.HAlignCenter, Text.VAlignTop);
 		thanksInfo.setFontScale(R.fontSize.medium);
-		thanksInfo.setPadding(35, 700);
+		thanksInfo.setPadding(35, 680);
 		
 		setLanguageSensitiveInfo();
 		Game.getLanguageManager().register(this);
@@ -95,6 +119,8 @@ public class AboutInfo implements IDrawable, ILanguageListener {
 		version.draw();
 		info1.draw();
 		turpLink.draw();
+		facebookLink.draw();
+		twitterLink.draw();
 		info2.draw();
 		libgdxLink.draw();
 		rateLink.draw();
@@ -103,12 +129,16 @@ public class AboutInfo implements IDrawable, ILanguageListener {
 
 	public void activate() {
 		turpLink.activate();
+		facebookLink.activate();
+		twitterLink.activate();
 		libgdxLink.activate();
 		rateLink.activate();
 	}
 
 	public void deactivate() {
 		turpLink.deactivate();
+		facebookLink.deactivate();
+		twitterLink.deactivate();
 		libgdxLink.deactivate();
 		rateLink.deactivate();
 	}
@@ -121,7 +151,7 @@ public class AboutInfo implements IDrawable, ILanguageListener {
 		pageTitle.setAlignment(Text.HAlignCenter, Text.VAlignTop);
 
 		rateLink.setText(Ichigu.getString(R.strings.aboutInfo3));
-		rateLink.getLocation().set((Game.getVirtualWidth() - rateLink.getWidth()) / 2, Game.getVirtualHeight() - 620);
+		rateLink.getLocation().set((Game.getVirtualWidth() - rateLink.getWidth()) / 2, Game.getVirtualHeight() - 550);
 		
 		thanksInfo.setText(Game.getLanguageManager().getString(R.strings.aboutThanks));
 	}

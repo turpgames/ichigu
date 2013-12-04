@@ -266,12 +266,6 @@ public final class R {
 		public final static String aboutInfo3 = "aboutInfo3";
 		public final static String aboutThanks = "aboutThanks";
 
-		public final static String turpAddress = "turp-address";
-		public final static String libgdxAddress = "libgdx-address";
-		public final static String playStoreAddress = "play-store-address";
-		public final static String appStoreAddressIOS7 = "app-store-address-ios7";
-		public final static String appStoreAddressOld = "app-store-address-old";
-
 		public final static String insufficientIchiguBalance = "insufficientIchiguBalance";
 		public final static String market = "market";
 		public final static String marketInfo = "marketInfo";
@@ -280,6 +274,16 @@ public final class R {
 		public final static String buy = "buy";
 	}
 
+	public static final class links {
+		public final static String turpAddress = "turp-address";
+		public final static String libgdxAddress = "libgdx-address";
+		public final static String playStoreAddress = "play-store-address";
+		public final static String appStoreAddressIOS7 = "app-store-address-ios7";
+		public final static String appStoreAddressOld = "app-store-address-old";
+		public final static String twitterAddress = "twitter-address";
+		public final static String facebookAddress = "facebook-address";
+	}
+	
 	private R() {
 	}
 }

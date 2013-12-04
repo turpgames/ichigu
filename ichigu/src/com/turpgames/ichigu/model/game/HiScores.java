@@ -75,7 +75,7 @@ public class HiScores implements IDrawable, ILanguageListener {
 		int fullchallengeScore = Settings.getInteger(R.settings.hiscores.fullchallenge, 0);
 
 		info.setText(String.format(Ichigu.getString(R.strings.hiscoreInfo),
-				minichallengeScore, Utils.getTimeString(normalTime), fullchallengeScore));
+				minichallengeScore, normalTime == 0 ? "-" : Utils.getTimeString(normalTime), fullchallengeScore));
 	}
 
 	public void deactivate() {
