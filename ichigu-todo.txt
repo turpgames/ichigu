@@ -37,13 +37,13 @@
 	+Resource text düzeltmeleri
 	+ios launch image
 v1.2
-	login with facebook
+	ichigu server
 	Online hi-scores
 v1.3
-	ads
-v1.4 
-	pause menu
-	Puzzle mode
-v1.5
-	ichigu server
+	login with facebook
+v1.4
 	Multiplayer Mode
+v1.5
+	ads
+v1.6
+	Puzzle mode
