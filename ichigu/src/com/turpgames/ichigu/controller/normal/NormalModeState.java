@@ -31,6 +31,16 @@ public abstract class NormalModeState extends IchiguState implements INormalMode
 	}
 
 	@Override
+	public void onCardsActivated() {
+		
+	}
+
+	@Override
+	public void onCardsDeactivated() {
+		
+	}
+	
+	@Override
 	public void onExitConfirmed() {
 		view.onExitConfirmed();
 	}

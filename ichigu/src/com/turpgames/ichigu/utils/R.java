@@ -57,6 +57,8 @@ public final class R {
 			
 			public final static String backgroundPixel = "backgroundPixel";
 
+			public static String questionCard = "question-card"; 
+					
 			public static final class toolbar {
 				public static final String back = "tb_back";
 				public static final String settings = "tb_settings";
@@ -87,6 +89,12 @@ public final class R {
 				public static final String colorone = "colorone";
 				public static final String colorall = "colorall";
 			}
+			
+			public static final class singlegame {
+				public static final String questionmark = "question-mark";
+				public static final String correctmark = "correct-mark";
+				public static final String incorrectmark = "incorrect-mark";
+			}
 		}
 	}
 
@@ -111,9 +119,12 @@ public final class R {
 
 	public static final class learningModeScreen {
 		public static final class layout {
-			public static final Vector cardOnTable1Pos = new Vector(Game.getVirtualWidth() / 2 - Card.Width - 20, 4 * Game.getVirtualHeight() / 7 - 50);
-			public static final Vector cardOnTable2Pos = new Vector(Game.getVirtualWidth() / 2 + 20, 4 * Game.getVirtualHeight() / 7 - 50);
-
+			public static final Vector cardOnTable1Pos = new Vector(Game.getVirtualWidth() / 2 - Card.Width * 1.5f - 40, 4 * Game.getVirtualHeight() / 7 - 50);
+			public static final Vector cardOnTable2Pos = new Vector(Game.getVirtualWidth() / 2 - Card.Width * 0.5f, 4 * Game.getVirtualHeight() / 7 - 50);
+			public static final Vector cardOnTable3Pos = new Vector(Game.getVirtualWidth() / 2 + Card.Width * 0.5f + 40, 4 * Game.getVirtualHeight() / 7 - 50);
+			public static final Vector markPos = new Vector(Game.getVirtualWidth() / 2 + Card.Width * 0.5f + 40 + (Card.Width - R.ui.questionMarkSize) / 2, 
+					4 * Game.getVirtualHeight() / 7 - 50 + (Card.Height - R.ui.questionMarkSize) / 2);
+			
 			public static final Vector cardToSelect1Pos = new Vector(Game.getVirtualWidth() / 2 - Card.Width * 1.5f - 40, 2 * Game.getVirtualHeight() / 7 - 50);
 			public static final Vector cardToSelect2Pos = new Vector(Game.getVirtualWidth() / 2 - Card.Width * 0.5f, 2 * Game.getVirtualHeight() / 7 - 50);
 			public static final Vector cardToSelect3Pos = new Vector(Game.getVirtualWidth() / 2 + Card.Width * 0.5f + 40, 2 * Game.getVirtualHeight() / 7 - 50);
@@ -156,6 +167,7 @@ public final class R {
 	}
 
 	public static final class ui {
+		public final static float questionMarkSize = 128;
 		public final static float imageButtonWidth = 64;
 		public final static float imageButtonHeight = 64;
 		public final static float flagButtonWidth = 128;

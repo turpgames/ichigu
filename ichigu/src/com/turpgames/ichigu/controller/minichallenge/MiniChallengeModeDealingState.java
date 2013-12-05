@@ -22,4 +22,14 @@ public class MiniChallengeModeDealingState extends MiniChallengeModeState implem
 	public boolean onScreenDeactivated() {
 		return false;
 	}
+
+	@Override
+	public void onCardsActivated() {
+
+	}
+
+	@Override
+	public void onCardsDeactivated() {
+		
+	}
 }

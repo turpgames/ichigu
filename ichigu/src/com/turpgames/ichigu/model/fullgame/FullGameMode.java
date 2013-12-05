@@ -17,13 +17,10 @@ public abstract class FullGameMode extends IchiguMode implements IResultScreenBu
 	protected final static float secondPerPenalty = 10f;
 
 	private FullGameHint hint;
-	private FullGameCards cards;
 	private int selectedCardCount;
 
 	private Text resultInfo;
 	private TimerText timerText;
-
-	private boolean areExtraCardsOpened;
 
 	private TryAgainToast tryAgain;
 	private NoTipToast noTip;
@@ -31,8 +28,6 @@ public abstract class FullGameMode extends IchiguMode implements IResultScreenBu
 	private ResultScreenButtons resultScreenButtons;
 
 	public FullGameMode() {
-		cards = new FullGameCards();
-		dealer = new FullGameCardDealer(cards);
 		resultScreenButtons = new ResultScreenButtons(this);
 
 		hint = new FullGameHint();
@@ -52,6 +47,11 @@ public abstract class FullGameMode extends IchiguMode implements IResultScreenBu
 		resultInfo.setPadding(0, 150);
 	}
 
+	@Override
+	protected void setDealer() {
+		dealer = new FullGameCardDealer(this);
+	}
+	
 	protected abstract Timer getTimer();
 
 	@Override
@@ -68,33 +68,15 @@ public abstract class FullGameMode extends IchiguMode implements IResultScreenBu
 
 	@Override
 	protected void openCloseCards(boolean open) {
-		for (int i = 0; i < FullGameCards.ActiveCardCount; i++) {
-			if (!cards.isActiveCardEmpty(i)) {
-				if (open)
-					cards.getActiveCard(i).open();
-				else
-					cards.getActiveCard(i).close();
-			}
-		}
-
-		if (areExtraCardsOpened) {
-			for (int i = 0; i < FullGameCards.ExtraCardCount; i++) {
-				if (!cards.isExtraCardEmpty(i)) {
-					if (open)
-						cards.getExtraCard(i).open();
-					else
-						cards.getExtraCard(i).close();
-
-				}
-			}
-		}
+		dealer.openCloseCards(open);
 	}
 
 	protected FullGameCardDealer getDealer() {
 		return (FullGameCardDealer) dealer;
 	}
 
-	private IFullGameModeListener getModeListener() {
+	@Override
+	public IFullGameModeListener getModeListener() {
 		return (IFullGameModeListener) super.modeListener;
 	}
 
@@ -103,36 +85,24 @@ public abstract class FullGameMode extends IchiguMode implements IResultScreenBu
 			getModeListener().onNewGame();
 	}
 
-	private void closeExtraCards() {
-		areExtraCardsOpened = false;
-		for (int i = 0; i < FullGameCards.ExtraCardCount; i++)
-			cards.getExtraCard(i).close();
-	}
-
 	private void updateHints() {
-		cards.updateHint(hint);
+		getDealer().updateHint(hint);
 
 		boolean thereIsNoIchigu = hint.getIchiguCount() == 0;
-		boolean extraCardsAreOpened = cards.isExtraCardEmpty(0) || cards.getExtraCard(0).isOpened();
+		boolean extraCardsAreOpened = getDealer().isExtraCardsOpened();
 		boolean hasMoreCardsInDeck = getDealer().getIndex() < Card.CardsInDeck;
 
 		if (thereIsNoIchigu && extraCardsAreOpened) {
 			if (hasMoreCardsInDeck) {
 				deactivateCards();
 				getDealer().dealExtraCards();
-				openExtraCards();
+				getDealer().openExtraCards();
 				activateCards();
 			}
 			else {
 				onDeckFinished();
 			}
 		}
-	}
-
-	protected void openExtraCards() {
-		areExtraCardsOpened = true;
-		for (int i = 0; i < FullGameCards.ExtraCardCount; i++)
-			cards.getExtraCard(i).open();
 	}
 
 	protected void flashTimerText() {
@@ -146,24 +116,20 @@ public abstract class FullGameMode extends IchiguMode implements IResultScreenBu
 	}
 
 	protected int checkIchigu() {
-		int score = cards.getScore();
+		int score = dealer.getScore();
 		if (score > 0) {
 			notifyIchiguFound();
-			areExtraCardsOpened = false;
 			IchiguBank.increaseBalance();
 			IchiguBank.saveData();
 		}
 		else {
 			tryAgain.show();
+			dealer.deselectCards();
 			notifyInvalidIchiguSelected();
 		}
 		return score;
 	}
-
-	public FullGameCards getCards() {
-		return cards;
-	}
-
+	
 	public void cardTapped(Card card) {
 		hint.restartNotificationTimer();
 
@@ -185,7 +151,7 @@ public abstract class FullGameMode extends IchiguMode implements IResultScreenBu
 	}
 
 	protected void onOpenExtraCards() {
-		openExtraCards();
+		((FullGameCardDealer)dealer).openExtraCards();
 		applyTimePenalty();
 		updateHints();
 	}
@@ -198,27 +164,6 @@ public abstract class FullGameMode extends IchiguMode implements IResultScreenBu
 		flashTimerText();
 	}
 
-	public void activateCards() {
-		for (int i = 0; i < FullGameCards.TotalCardsOnTable; i++) {
-			if (!cards.isEmpty(i)) {
-				cards.getCard(i).activate(modeListener);
-			}
-		}
-		updateHints();
-	}
-
-	public void deactivateCards() {
-		for (int i = 0; i < FullGameCards.TotalCardsOnTable; i++) {
-			if (!cards.isEmpty(i)) {
-				cards.getCard(i).deactivate();
-			}
-		}
-	}
-
-	public void deselectCards() {
-		cards.deselectCards();
-	}
-
 	protected void onDeckFinished() {
 		notifyModeEnd();
 	}
@@ -226,7 +171,7 @@ public abstract class FullGameMode extends IchiguMode implements IResultScreenBu
 	@Override
 	protected void resetMode() {
 		super.resetMode();
-		closeExtraCards();
+		((FullGameCardDealer)dealer).closeExtraCards();
 	}
 
 	@Override
@@ -239,7 +184,7 @@ public abstract class FullGameMode extends IchiguMode implements IResultScreenBu
 	protected void onStartMode() {
 		getTimer().restart();
 		timerText.syncText();
-		cards.empty();
+		dealer.emptyCards();
 		dealer.reset();
 		resultScreenButtons.listenInput(false);
 		selectedCardCount = 0;
@@ -251,7 +196,7 @@ public abstract class FullGameMode extends IchiguMode implements IResultScreenBu
 	protected void onEndMode() {
 		getTimer().stop();
 		Ichigu.playSoundTimeUp();
-		cards.empty();
+		dealer.emptyCards();
 		deactivateCards();
 		hint.deactivate();
 		resultScreenButtons.listenInput(true);
@@ -267,14 +212,14 @@ public abstract class FullGameMode extends IchiguMode implements IResultScreenBu
 		getTimer().stop();
 		resultScreenButtons.listenInput(false);
 		deactivateCards();
-		cards.empty();
+		dealer.exit();
 		hint.deactivate();
 		return true;
 	}
 
 	@Override
 	protected void onDraw() {
-		drawCards();
+		dealer.drawCards();
 		drawTime();
 		drawHint();
 		super.onDraw();
@@ -287,10 +232,6 @@ public abstract class FullGameMode extends IchiguMode implements IResultScreenBu
 	public void drawResult() {
 		resultInfo.draw();
 		resultScreenButtons.draw();
-	}
-
-	private void drawCards() {
-		cards.draw();
 	}
 
 	private void drawHint() {
@@ -309,5 +250,21 @@ public abstract class FullGameMode extends IchiguMode implements IResultScreenBu
 	@Override
 	public void onNewGameTapped() {
 		notifyNewGame();
+	}
+	
+	@Override
+	public void onCardsActivated() {
+		updateHints();
+	}
+
+
+	@Override
+	public void activateCards() {
+		getDealer().activateCards();	
+	}
+
+	@Override
+	public void deactivateCards() {
+		getDealer().deactivateCards();
 	}
 }

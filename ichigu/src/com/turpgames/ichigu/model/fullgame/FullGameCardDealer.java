@@ -44,8 +44,13 @@ public class FullGameCardDealer extends CardDealer {
 	private boolean isInfiniteDeal;
 	private boolean dealAborted;
 
-	FullGameCardDealer(FullGameCards cards) {
-		this.cards = cards;
+	private boolean areExtraCardsOpened;
+	
+	private FullGameMode parent;
+	
+	FullGameCardDealer(FullGameMode parent) {
+		this.parent = parent;
+		this.cards = new FullGameCards();
 	}
 
 	@Override
@@ -118,7 +123,11 @@ public class FullGameCardDealer extends CardDealer {
 		}
 	}
 
-	
+	protected void openExtraCards() {
+		areExtraCardsOpened = true;
+		for (int i = 0; i < FullGameCards.ExtraCardCount; i++)
+			cards.getExtraCard(i).open();
+	}
 	
 	@Override
 	public void abortDeal() {
@@ -222,4 +231,86 @@ public class FullGameCardDealer extends CardDealer {
 			return true;
 		}
 	};
+
+	public void deselectCards() {
+		cards.deselectCards();
+	}
+	
+	@Override
+	public void exit() {
+		cards.empty();
+	}
+
+	@Override
+	public int getScore() {
+		return cards.getScore();
+	}
+
+	@Override
+	public void openCloseCards(boolean open) {
+		for (int i = 0; i < FullGameCards.ActiveCardCount; i++) {
+			if (!cards.isActiveCardEmpty(i)) {
+				if (open)
+					cards.getActiveCard(i).open();
+				else
+					cards.getActiveCard(i).close();
+			}
+		}
+
+		if (areExtraCardsOpened) {
+			for (int i = 0; i < FullGameCards.ExtraCardCount; i++) {
+				if (!cards.isExtraCardEmpty(i)) {
+					if (open)
+						cards.getExtraCard(i).open();
+					else
+						cards.getExtraCard(i).close();
+
+				}
+			}
+		}
+	}
+	
+	public void closeExtraCards() {
+		areExtraCardsOpened = false;
+		for (int i = 0; i < FullGameCards.ExtraCardCount; i++)
+			cards.getExtraCard(i).close();
+	}
+
+	@Override
+	public void emptyCards() {
+		cards.empty();
+	}
+	
+	@Override
+	public void activateCards() {
+		for (int i = 0; i < FullGameCards.TotalCardsOnTable; i++) {
+			if (!cards.isEmpty(i)) {
+				cards.getCard(i).activate(parent.getModeListener());
+			}
+		}
+		parent.onCardsActivated();
+	}
+
+	@Override
+	public void deactivateCards() {
+		for (int i = 0; i < FullGameCards.TotalCardsOnTable; i++) {
+			if (!cards.isEmpty(i)) {
+				cards.getCard(i).deactivate();
+			}
+		}
+		parent.onCardsDeactivated();
+	}
+
+	@Override
+	public void drawCards() {
+		cards.draw();
+	}
+
+	public void updateHint(FullGameHint hint) {
+		cards.updateHint(hint);
+	}
+
+	public boolean isExtraCardsOpened() {
+		return cards.isExtraCardEmpty(0) || cards.getExtraCard(0).isOpened();
+	}
 }

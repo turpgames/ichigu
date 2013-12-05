@@ -61,4 +61,14 @@ public class FullChallengeModeController extends IchiguController<FullChallengeM
 	void setEndState() {
 		setState(endState);
 	}
+
+	@Override
+	public void onCardsActivated() {
+
+	}
+
+	@Override
+	public void onCardsDeactivated() {
+		
+	}
 }

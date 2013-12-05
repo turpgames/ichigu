@@ -10,10 +10,26 @@ public abstract class CardDealer {
 		deck = Card.newDeck();
 	}
 
-	public abstract void deal();
+	abstract public void deal();
 
-	public abstract void abortDeal();
+	abstract public void abortDeal();
 
+	abstract public void exit();
+
+	abstract public int getScore();
+
+	abstract public void openCloseCards(boolean open);
+
+	abstract public void emptyCards();
+
+	abstract public void drawCards();
+	
+	abstract public void activateCards();
+
+	abstract public void deactivateCards();
+
+	abstract public void deselectCards();
+	
 	public void reset() {
 		boolean hasNullCard = false;
 		

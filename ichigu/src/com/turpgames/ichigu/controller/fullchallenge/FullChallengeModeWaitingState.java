@@ -37,6 +37,5 @@ public class FullChallengeModeWaitingState extends FullChallengeModeState {
 	public void onInvalidIchiguSelected() {
 		Ichigu.playSoundError();
 		Game.vibrate(0, 50, 50, 100);
-		model.deselectCards();
 	}
 }

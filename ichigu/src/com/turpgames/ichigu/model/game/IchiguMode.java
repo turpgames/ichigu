@@ -9,13 +9,13 @@ import com.turpgames.ichigu.model.display.IchiguDialog;
 import com.turpgames.ichigu.utils.Ichigu;
 import com.turpgames.ichigu.utils.R;
 
-public abstract class IchiguMode implements IDrawable {
+public abstract class IchiguMode implements IDrawable, ICardDealerListener {
 	protected final static float buttonSize = Game.scale(R.ui.imageButtonWidth);
 
 	protected CardDealer dealer;
 	protected IIchiguModeListener modeListener;
 
-	private ImageButton resetButton;
+	protected ImageButton resetButton;
 	private Dialog resetConfirmDialog;
 
 	private Dialog confirmExitDialog;
@@ -56,19 +56,21 @@ public abstract class IchiguMode implements IDrawable {
 				onExitConfirmed(false);			
 			}
 		});
+		
+		setDealer();
 	}
 
+	protected abstract void setDealer();
+	
 	protected abstract void pauseTimer();
 
 	protected abstract void startTimer();
+	
+	public abstract void activateCards();
 
-	protected void centerResetButton() {
-		resetButton.getLocation().set((Game.getScreenWidth() - resetButton.getWidth()) / 2, Game.viewportToScreenY(50));
-	}
+	public abstract void deactivateCards();
 
-	protected void deactivateResetButton() {
-		resetButton.deactivate();
-	}
+	protected abstract void openCloseCards(boolean open);
 	
 	private void onResetConfirmed(boolean reset) {
 		if (reset) {
@@ -119,7 +121,6 @@ public abstract class IchiguMode implements IDrawable {
 		openCloseCards(true);
 	}
 
-	protected abstract void openCloseCards(boolean open);
 
 	protected void notifyIchiguFound() {
 		if (modeListener != null)
@@ -190,5 +191,25 @@ public abstract class IchiguMode implements IDrawable {
 
 	private void drawResetButton() {
 		resetButton.draw();
+	}
+
+	public IIchiguModeListener getModeListener() {
+		return modeListener;
+	}
+	
+
+	@Override
+	public void onDealEnd() {
+		
+	}
+
+	@Override
+	public void onCardsActivated() {
+		
+	}
+
+	@Override
+	public void onCardsDeactivated() {
+		
 	}
 }

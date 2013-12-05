@@ -2,8 +2,9 @@ package com.turpgames.ichigu.model.singlegame.practice;
 
 import com.turpgames.ichigu.model.display.TryAgainToast;
 import com.turpgames.ichigu.model.game.Card;
-import com.turpgames.ichigu.model.singlegame.SingleGameCards;
+import com.turpgames.ichigu.model.singlegame.SingleGameCardDealer;
 import com.turpgames.ichigu.model.singlegame.SingleGameMode;
+import com.turpgames.ichigu.model.singlegame.SingleGameQuestion;
 
 public class PracticeMode extends SingleGameMode {
 	private PracticeModeHint hint;
@@ -12,41 +13,32 @@ public class PracticeMode extends SingleGameMode {
 	public PracticeMode() {
 		hint = new PracticeModeHint();
 		tryAgain = new TryAgainToast();
-		deactivateResetButton();
+		question = new SingleGameQuestion(0.3f, 1.2f);
+		
+		resetButton.deactivate();
 	}
 	
 	@Override
 	public void onCardSelected(Card selectedCard) {
-		int score = cards.checkScore(selectedCard);
+		int score = dealer.getScore();
 		if (score == 0)
 			tryAgain.show();
 		super.onCardSelected(selectedCard);
 	}
 	
 	@Override
-	public void activateCards() {
-		super.activateCards();
-
-		Card[] allCards = cards.getAllCards();
-
-		Card card3 = null;
-		for (int i = 0; i < SingleGameCards.CardToSelectCount; i++) {
-			if (Card.isIchigu(allCards[0], allCards[1], cards.getCardsToSelect(i))) {
-				card3 = cards.getCardsToSelect(i);
-				break;
-			}
-		}
-
-		hint.update(allCards[0], allCards[1], card3);
+	public void onCardsActivated() {
+		Card[] ichigu = ((SingleGameCardDealer)dealer).getIchiguCards();
+		
+		hint.update(ichigu[0], ichigu[1], ichigu[2]);
 		hint.activate();
 	}
-
+	
 	@Override
-	public void deactivateCards() {
+	public void onCardsDeactivated() {
 		hint.deactivate();
-		super.deactivateCards();
 	}
-
+	
 	@Override
 	protected void onStartMode() {
 		
@@ -72,14 +64,8 @@ public class PracticeMode extends SingleGameMode {
 
 	@Override
 	protected void onDraw() {
-		drawCards();
 		hint.draw();
-	}
-
-	private void drawCards() {
-		Card[] allCards = cards.getAllCards();
-		for (int i = 0; i < allCards.length; i++)
-			allCards[i].draw();
+		super.onDraw();
 	}
 
 	@Override

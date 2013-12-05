@@ -7,21 +7,23 @@ import com.turpgames.framework.v0.util.Vector;
 import com.turpgames.ichigu.model.game.Card;
 import com.turpgames.ichigu.model.game.CardAttributes;
 import com.turpgames.ichigu.model.game.CardDealer;
+import com.turpgames.ichigu.model.game.IchiguMode;
 import com.turpgames.ichigu.utils.R;
 
-class SingleGameCardDealer extends CardDealer {
+public class SingleGameCardDealer extends CardDealer {
 	// region
 
 	private final static float moveDuration = 0.25f;
 
-	private final static Vector origin = new Vector((Game.getVirtualWidth() - Card.Width) / 2, (Game.getVirtualHeight() - Card.Height) / 2);
+	private final static Vector tableDestination = new Vector((Game.getVirtualWidth() - Card.Width) / 2, (Game.getVirtualHeight() - Card.Height) / 2);
+	private final static Vector selectedDestination = new Vector((Game.getVirtualWidth() - Card.Width) / 2, (Game.getVirtualHeight() - Card.Height) / 2);
 
 	private final static Vector[][] routes = new Vector[][] {
-			new Vector[] { R.learningModeScreen.layout.cardOnTable1Pos, origin },
-			new Vector[] { R.learningModeScreen.layout.cardOnTable2Pos, origin },
-			new Vector[] { R.learningModeScreen.layout.cardToSelect1Pos, origin },
-			new Vector[] { R.learningModeScreen.layout.cardToSelect2Pos, origin },
-			new Vector[] { R.learningModeScreen.layout.cardToSelect3Pos, origin }
+			new Vector[] { R.learningModeScreen.layout.cardOnTable1Pos, tableDestination },
+			new Vector[] { R.learningModeScreen.layout.cardOnTable2Pos, tableDestination },
+			new Vector[] { R.learningModeScreen.layout.cardToSelect1Pos, selectedDestination },
+			new Vector[] { R.learningModeScreen.layout.cardToSelect2Pos, selectedDestination },
+			new Vector[] { R.learningModeScreen.layout.cardToSelect3Pos, selectedDestination }
 	};
 
 	// endregion
@@ -31,12 +33,18 @@ class SingleGameCardDealer extends CardDealer {
 
 	private final Integer[] cardsToSelectIndices = new Integer[SingleGameCards.CardToSelectCount];
 
-	SingleGameCardDealer(SingleGameCards cards) {
-		this.cards = cards;
+	private IchiguMode parent;
+	public SingleGameCardDealer(IchiguMode parent) {
+		this.parent = parent;
+		this.cards = new SingleGameCards();
 	}
 
 	@Override
 	public void deal() {
+		for(int i = 0; i < deck.length; i++) {
+			deck[i].close();
+			deck[i].deselect();
+		}
 		if (cards.isEmpty())
 			dealAndMoveNewCards();
 		else
@@ -52,6 +60,7 @@ class SingleGameCardDealer extends CardDealer {
 	}
 	
 	private void dealAndMoveNewCards() {
+		
 		dealNewCards();
 		beginMoveNewCards();
 	}
@@ -99,14 +108,14 @@ class SingleGameCardDealer extends CardDealer {
 		while (c5 == c1 || c5 == c2 || c5 == c3 || c5 == c4)
 			c5 = Utils.randInt(deck.length);
 
-		// [BugFix] Yeni katlarýn içinde bir önceki daðýtýlan kartlardan
-		// biri tekrar gelirse move effect sýçýyor.
+		// [BugFix] Yeni katlarin icinde onceki dagitilan kartlardan
+		// biri tekrar gelirse move effect siciyor.
 		// onEffectEnd'de card.moveTo diyip moveEffect'e start diyoruz
-		// Ama onEffectEnd'den sonra moveEffect.stop çaðrýldýðý için kart
-		// hareket etmiyordu. Þimdilik böyle bir çözüm uyduruldu
-		// TODO: Daha akýllý birþeyler yapýlabilir
+		// Ama onEffectEnd'den sonra moveEffect.stop cagrildigi icin kart
+		// hareket etmiyordu. simdilik boyle bir cozum uyduruldu
+		// TODO: Daha akilli bir seyler yapilabilir
 		if (!cards.isEmpty()) {
-			// Yeni daðýtýlan kartlardan en az biri, bir önceki kartlarla çakýþýyorsa bir daha daðýt.
+			// Yeni dagitilan kartlardan en az biri, bir onceki kartlarla çakýþýyorsa bir daha dagit.
 			for (int i = 0; i < cards.getLength(); i++) {
 				Card card = cards.get(i);
 				if (card.equals(deck[c1]) || card.equals(deck[c2]) ||
@@ -132,12 +141,12 @@ class SingleGameCardDealer extends CardDealer {
 		cards.setCardsOnTable(deck[c1], deck[c2]);
 		cards.setCardsToSelect(deck[c3], deck[c4], deck[c5]);
 
-		// open all cards
-		deck[c1].open();
-		deck[c2].open();
-		deck[c3].open();
-		deck[c4].open();
-		deck[c5].open();
+//		// open all cards
+//		deck[c1].open();
+//		deck[c2].open();
+//		deck[c3].open();
+//		deck[c4].open();
+//		deck[c5].open();
 
 		// put cards onto origin
 		deck[c1].getLocation().set(routes[0][1]);
@@ -169,8 +178,13 @@ class SingleGameCardDealer extends CardDealer {
 	}
 
 	private void onNewCardMoveEnd(Card card) {
-		if (--cardsToMove == 0)
+		if (--cardsToMove == 0) {
+			for(int i = 0; i < deck.length; i++) {
+				deck[i].open();
+			}
 			notifyDealEnd();
+		}
+			
 	}
 
 	private final IEffectEndListener oldCardsMoveEndListener = new IEffectEndListener() {
@@ -188,4 +202,77 @@ class SingleGameCardDealer extends CardDealer {
 			return true;
 		}
 	};
+
+	@Override
+	public void exit() {
+		abortDeal();
+		deactivateCards();
+		cards.empty();
+	}
+	
+	@Override
+	public void activateCards() {
+		for (int i = 0; i < SingleGameCards.CardToSelectCount; i++)
+			cards.getCardsToSelect(i).activate(parent.getModeListener());
+		parent.onCardsActivated();
+	}
+
+	@Override
+	public void deactivateCards() {
+		for (int i = 0; i < SingleGameCards.CardToSelectCount; i++) {
+			if (cards.getCardsToSelect(i) != null)
+				cards.getCardsToSelect(i).deactivate();
+		}
+		parent.onCardsDeactivated();
+	}
+
+	public void updateCardLocations() {
+		for (int i = 0; i < cards.getLength(); i++)
+			cards.get(i).getLocation().set(R.learningModeScreen.layout.positions[i]);
+	}
+
+	@Override
+	public void drawCards() {
+		Card[] allCards = cards.getAllCards();
+		for (int i = 0; i < allCards.length; i++)
+			if (allCards[i] != null)
+				allCards[i].draw();
+	}
+
+	public Card[] getIchiguCards() {
+		Card[] ichigu = new Card[3];
+		ichigu[0] = cards.get(0);
+		ichigu[1] = cards.get(1);
+		
+		for (int i = 0; i < SingleGameCards.CardToSelectCount; i++) {
+			if (Card.isIchigu(ichigu[0], ichigu[1], cards.getCardsToSelect(i))) {
+				ichigu[2] = cards.getCardsToSelect(i);
+				break;
+			}
+		}
+		return ichigu;
+	}
+
+	public void openCloseCards(boolean open) {
+		for (int i = 0; i < SingleGameCards.TotalCardCount; i++) {
+			if (open)
+				cards.get(i).open();
+			else
+				cards.get(i).close();
+		}
+	}
+
+	public void emptyCards() {
+		cards.empty();
+	}
+
+	@Override
+	public int getScore() {
+		return cards.checkScore(cards.getSelected());
+	}
+
+	@Override
+	public void deselectCards() {
+		
+	}
 }

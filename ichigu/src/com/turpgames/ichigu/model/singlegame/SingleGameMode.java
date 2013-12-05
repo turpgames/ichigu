@@ -1,54 +1,62 @@
 package com.turpgames.ichigu.model.singlegame;
 
+import com.turpgames.framework.v0.util.Game;
+import com.turpgames.framework.v0.util.ShapeDrawer;
 import com.turpgames.ichigu.model.game.Card;
 import com.turpgames.ichigu.model.game.IchiguMode;
 import com.turpgames.ichigu.utils.R;
 
 public abstract class SingleGameMode extends IchiguMode {
-	protected SingleGameCards cards;
+	private static final int dividerHeight = 10;
+	private static final int dividerWidth = 420;
+	
+	protected SingleGameQuestion question;
 
-	protected SingleGameMode() {
-		cards = new SingleGameCards();
-		dealer = new SingleGameCardDealer(cards);
+	@Override
+	protected void setDealer() {
+		dealer = new SingleGameCardDealer(this);
 	}
-
-	public SingleGameCards getCards() {
-		return cards;
-	}
-
+	
 	public void onCardSelected(Card selectedCard) {
-		selectedCard.deselect();
-		int score = cards.checkScore(selectedCard);
-		if (score > 0)
+		int score = dealer.getScore();
+		if (score > 0) {
+			question.startCorrectEffect();
 			notifyIchiguFound();
-		else
+		}
+		else {
+			selectedCard.deselect();
+			question.startIncorrectEffect();
+			dealer.deselectCards();
 			notifyInvalidIchiguSelected();
-	}
-
-	public void activateCards() {
-		for (int i = 0; i < SingleGameCards.CardToSelectCount; i++)
-			cards.getCardsToSelect(i).activate(modeListener);
-	}
-
-	public void deactivateCards() {
-		for (int i = 0; i < SingleGameCards.CardToSelectCount; i++) {
-			if (cards.getCardsToSelect(i) != null)
-				cards.getCardsToSelect(i).deactivate();
 		}
 	}
 
-	public void updateCardLocations() {
-		for (int i = 0; i < cards.getLength(); i++)
-			cards.get(i).getLocation().set(R.learningModeScreen.layout.positions[i]);
+	@Override
+	protected void onDraw() {
+		((SingleGameCardDealer)dealer).drawCards();
+		question.draw();
+		
+		ShapeDrawer.drawRect(Game.getVirtualWidth() / 2 - Card.Width * 1.5f - 60, (Game.getVirtualHeight() - dividerHeight) / 2 - 17,
+				dividerWidth, dividerHeight, R.colors.ichiguYellow, true, false);
+		
+		super.onDraw();
 	}
-
+	
 	@Override
 	protected boolean onExitMode() {
 		if (!super.onExitMode())
 			return false;
-		dealer.abortDeal();
-		deactivateCards();
-		cards.empty();
+		dealer.exit();
 		return true;
+	}
+
+	@Override
+	public void activateCards() {
+		((SingleGameCardDealer)dealer).activateCards();
+	}
+
+	@Override
+	public void deactivateCards() {
+		((SingleGameCardDealer)dealer).deactivateCards();
 	}
 }

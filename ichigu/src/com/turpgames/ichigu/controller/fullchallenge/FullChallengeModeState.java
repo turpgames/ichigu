@@ -34,6 +34,16 @@ public abstract class FullChallengeModeState extends IchiguState implements IFul
 	public void onDealEnd() {
 		model.activateCards();
 	}
+
+	@Override
+	public void onCardsActivated() {
+		
+	}
+
+	@Override
+	public void onCardsDeactivated() {
+		
+	}
 	
 	@Override
 	public void draw() {

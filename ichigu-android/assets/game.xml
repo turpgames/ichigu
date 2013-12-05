@@ -313,6 +313,19 @@
                 path="img/cards/emptycard.png" />
 
             <texture
+                id="incorrect-mark"
+                path="img/singlegame/incorrect.png" />
+            <texture
+                id="correct-mark"
+                path="img/singlegame/correct.png" />
+            <texture
+                id="question-mark"
+                path="img/singlegame/question.png" />
+            <texture
+                id="question-card"
+                path="img/singlegame/card.png" />
+            
+            <texture
                 id="tb_back"
                 path="img/toolbar/back.png" />
 

@@ -22,4 +22,13 @@ public class PracticeModeDealingState extends PracticeModeState implements ICard
 	public boolean onScreenDeactivated() {
 		return false;
 	}
+	
+	@Override
+	public void onCardsActivated() {
+	}
+
+	@Override
+	public void onCardsDeactivated() {
+		
+	}
 }

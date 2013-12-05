@@ -61,4 +61,14 @@ public class NormalModeController extends IchiguController<NormalModeState> impl
 	void setEndState() {
 		setState(endState);
 	}
+
+	@Override
+	public void onCardsActivated() {
+
+	}
+
+	@Override
+	public void onCardsDeactivated() {
+
+	}
 }

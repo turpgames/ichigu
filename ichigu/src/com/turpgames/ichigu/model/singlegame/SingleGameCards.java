@@ -3,13 +3,13 @@ package com.turpgames.ichigu.model.singlegame;
 import com.turpgames.ichigu.model.game.Card;
 import com.turpgames.ichigu.model.game.CardAttributes;
 
-public class SingleGameCards {
+class SingleGameCards {
 	public static final int ReadyCardCount = 2;
 	public static final int CardToSelectCount = 3;
 	public static final int TotalCardCount = ReadyCardCount + CardToSelectCount;
 
 	private Card[] cards;
-
+	
 	SingleGameCards() {
 		cards = new Card[ReadyCardCount + CardToSelectCount];
 	}
@@ -59,5 +59,12 @@ public class SingleGameCards {
 		ready[1] = cards[1].getAttributes();
 		ready[2] = selectedCard.getAttributes();
 		return ready;
+	}
+
+	public Card getSelected() {
+		for(int i = 0; i < cards.length; i++)
+			if(cards[i].isSelected())
+				return cards[i];
+		return null;
 	}
 }

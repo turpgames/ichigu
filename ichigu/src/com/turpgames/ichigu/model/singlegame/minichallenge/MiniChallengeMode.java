@@ -11,8 +11,9 @@ import com.turpgames.ichigu.model.display.WaitToast;
 import com.turpgames.ichigu.model.game.Card;
 import com.turpgames.ichigu.model.game.IResultScreenButtonsListener;
 import com.turpgames.ichigu.model.game.ResultScreenButtons;
-import com.turpgames.ichigu.model.singlegame.SingleGameCards;
+import com.turpgames.ichigu.model.singlegame.SingleGameCardDealer;
 import com.turpgames.ichigu.model.singlegame.SingleGameMode;
+import com.turpgames.ichigu.model.singlegame.SingleGameQuestion;
 import com.turpgames.ichigu.utils.Ichigu;
 import com.turpgames.ichigu.utils.R;
 
@@ -33,6 +34,8 @@ public class MiniChallengeMode extends SingleGameMode implements IResultScreenBu
 	private ResultScreenButtons resultScreenButtons;
 
 	public MiniChallengeMode() {
+		question = new SingleGameQuestion(0.3f, 2.2f);
+		
 		resultScreenButtons = new ResultScreenButtons(this);
 
 		waitInfo = new WaitToast();
@@ -73,21 +76,18 @@ public class MiniChallengeMode extends SingleGameMode implements IResultScreenBu
 		timeInfo.setAlignment(Text.HAlignLeft, Text.VAlignTop);
 		timeInfo.setPadding(Game.getVirtualWidth() - 120, 125);
 
-		centerResetButton();
+		// Center reset button
+		resetButton.getLocation().set((Game.getScreenWidth() - resetButton.getWidth()) / 2, Game.viewportToScreenY(50));
 	}
 
-	private IMiniChallengeModeListener getModeListener() {
+	@Override
+	public IMiniChallengeModeListener getModeListener() {
 		return (IMiniChallengeModeListener) super.modeListener;
 	}
 
 	@Override
 	protected void openCloseCards(boolean open) {
-		for (int i = 0; i < SingleGameCards.TotalCardCount; i++) {
-			if (open)
-				cards.get(i).open();
-			else
-				cards.get(i).close();
-		}
+		dealer.openCloseCards(open);
 	}
 
 	private void notifyUnblocked() {
@@ -124,11 +124,11 @@ public class MiniChallengeMode extends SingleGameMode implements IResultScreenBu
 
 	@Override
 	protected void onEndMode() {
-		deactivateCards();
+		((SingleGameCardDealer)dealer).deactivateCards();
 		blockTimer.stop();
 		challengeTimer.stop();
 		timeInfo.syncText();
-		cards.empty();
+		((SingleGameCardDealer)dealer).emptyCards();
 		int hiScore = Settings.getInteger(R.settings.hiscores.minichallenge, 0);
 		if (ichigusFound > hiScore)
 			Settings.putInteger(R.settings.hiscores.minichallenge, ichigusFound);
@@ -153,7 +153,7 @@ public class MiniChallengeMode extends SingleGameMode implements IResultScreenBu
 
 	@Override
 	public void onCardSelected(Card selectedCard) {
-		int ichiguScore = cards.checkScore(selectedCard);
+		int ichiguScore = dealer.getScore();
 		if (ichiguScore > 0) {
 			ichigusFound++;
 			ichigusFoundInfo.setText(Ichigu.getString(R.strings.found) + ": " + ichigusFound);
@@ -172,7 +172,6 @@ public class MiniChallengeMode extends SingleGameMode implements IResultScreenBu
 
 	@Override
 	protected void onDraw() {
-		drawCards();
 		drawRemainingTime();
 		drawIchigusFound();
 		if (!blockTimer.isStopped())
@@ -183,13 +182,6 @@ public class MiniChallengeMode extends SingleGameMode implements IResultScreenBu
 	public void drawResultScreen() {
 		resultInfo.draw();
 		resultScreenButtons.draw();
-	}
-
-	private void drawCards() {
-		Card[] allCards = cards.getAllCards();
-		for (int i = 0; i < allCards.length; i++)
-			if (allCards[i] != null)
-				allCards[i].draw();
 	}
 
 	private void drawRemainingTime() {
