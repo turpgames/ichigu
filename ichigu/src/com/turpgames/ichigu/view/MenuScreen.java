@@ -1,11 +1,14 @@
 package com.turpgames.ichigu.view;
 
 import com.turpgames.framework.v0.IGameExitListener;
+import com.turpgames.framework.v0.ITexture;
 import com.turpgames.framework.v0.component.LanguageMenu;
 import com.turpgames.framework.v0.forms.xml.Dialog;
 import com.turpgames.framework.v0.forms.xml.Form;
 import com.turpgames.framework.v0.impl.FormScreen;
+import com.turpgames.framework.v0.impl.GameObject;
 import com.turpgames.framework.v0.util.Game;
+import com.turpgames.framework.v0.util.TextureDrawer;
 import com.turpgames.framework.v0.util.Utils;
 import com.turpgames.ichigu.model.display.IchiguDialog;
 import com.turpgames.ichigu.model.display.IchiguLanguageMenu;
@@ -37,13 +40,31 @@ public class MenuScreen extends FormScreen implements IGameExitListener {
 				IchiguToolbar.getInstance().disable();		
 			}
 		});
+		registerDrawable(languageBar, Utils.LAYER_SCREEN);
+		languageBar.listenInput(true);
 		
 		Dialog.clickSound = Game.getResourceManager().getSound(R.game.sounds.flip);
 		
 		Game.exitListener = this;
 		
 		Logo logo = new Logo();
-		logo.getColor().a = 0.25f;
+		logo.getColor().a = 0.35f;
+		GameObject bg = new GameObject() {
+			ITexture texture = Game.getResourceManager().getTexture(R.game.textures.backgroundPixel);
+			@Override
+			public void draw() {
+				TextureDrawer.draw(texture, this);
+			}
+			
+			@Override
+			public void registerSelf() {
+				
+			}
+		};
+		bg.setWidth(Game.getVirtualWidth());
+		bg.setHeight(Game.getVirtualHeight());
+		bg.getColor().set(R.colors.ichiguYellow);
+		registerDrawable(bg, Utils.LAYER_BACKGROUND);
 		registerDrawable(logo, Utils.LAYER_BACKGROUND);
 		registerDrawable(IchiguGame.getToolbar(), Utils.LAYER_SCREEN);
 		
@@ -69,15 +90,17 @@ public class MenuScreen extends FormScreen implements IGameExitListener {
 	@Override
 	protected void onAfterActivate() {
 		super.onAfterActivate();
+		registerDrawable(languageBar, Utils.LAYER_SCREEN);
+		languageBar.listenInput(true);
 		if (getCurrentForm().getId().equals(R.game.forms.playMenu)) {
 			IchiguToolbar.getInstance().activateBackButton();
-			unregisterDrawable(languageBar);
-			languageBar.listenInput(false);
+//			unregisterDrawable(languageBar);
+//			languageBar.listenInput(false);
 		}
 		else if (getCurrentForm().getId().equals(R.game.forms.mainMenu)) {
 			IchiguToolbar.getInstance().deactivateBackButton();
-			registerDrawable(languageBar, 1);
-			languageBar.listenInput(true);
+//			registerDrawable(languageBar, 1);
+//			languageBar.listenInput(true);
 		}
 	}
 	
@@ -104,13 +127,13 @@ public class MenuScreen extends FormScreen implements IGameExitListener {
 	protected void onFormActivated(Form activatedForm) {
 		if (activatedForm.getId().equals(R.game.forms.playMenu)) {
 			IchiguToolbar.getInstance().activateBackButton();
-			unregisterDrawable(languageBar);
-			languageBar.listenInput(false);
+//			unregisterDrawable(languageBar);
+//			languageBar.listenInput(false);
 		}
 		else if (activatedForm.getId().equals(R.game.forms.mainMenu)) {
 			IchiguToolbar.getInstance().deactivateBackButton();
-			registerDrawable(languageBar, 1);
-			languageBar.listenInput(true);
+//			registerDrawable(languageBar, 1);
+//			languageBar.listenInput(true);
 		}
 		super.onFormActivated(activatedForm);
 	}

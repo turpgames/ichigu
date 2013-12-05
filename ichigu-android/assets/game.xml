@@ -142,7 +142,7 @@
                 text="Ichigu"
                 x="0"
                 y="27"
-                color="#56bd89ff" />
+                color="#d0583bff" />
 
             <button
                 id="btnPlay"
@@ -189,25 +189,25 @@
                 id="btnPractice"
                 action="screen=practice"
                 resource-text="practice"
-                y="24" />
+                y="21" />
 
             <button
                 id="btnMiniChallenge"
                 action="screen=minichallenge"
                 resource-text="miniChallenge"
-                y="20" />
+                y="17" />
 
             <button
                 id="btnNormal"
                 action="screen=normal"
                 resource-text="normalMode"
-                y="12" />
+                y="9" />
 
             <button
                 id="btnChallenge"
                 action="screen=fullchallenge"
                 resource-text="fullChallenge"
-                y="8" />
+                y="5" />
         </form>
     </forms>
 
@@ -225,6 +225,16 @@
 
         <textures>
 
+            <texture
+                id="backgroundPixel"
+                path="img/backgroundPixel.png"
+                resource-load="primary" />
+            
+            <texture
+                id="splash_logo"
+                path="img/logo_gold_on_black-320.png"
+                resource-load="primary" />
+            
             <texture
                 id="logo"
                 path="img/logo.png"

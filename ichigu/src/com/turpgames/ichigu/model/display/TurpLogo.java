@@ -7,19 +7,25 @@ import com.turpgames.framework.v0.util.TextureDrawer;
 import com.turpgames.framework.v0.util.Utils;
 import com.turpgames.ichigu.utils.R;
 
-public class Logo extends GameObject {
-	private static final float logoSize = 100f;
+public class TurpLogo extends GameObject {
+	private static float logoSize;
 
 	private ITexture logo;
 
-	public Logo() {
-		logo = Game.getResourceManager().getTexture(R.game.textures.logo);
+	public TurpLogo() {
+		logo = Game.getResourceManager().getTexture(R.game.textures.splashLogo);
 
-		setWidth(logoSize);
-		setHeight(logoSize);
-		getLocation().set((Game.getVirtualWidth() - logoSize) / 2, Game.getVirtualHeight() - logoSize - 50f);
+		setLogoSize(500f);
+		getLocation().set(25f, 50f + (Game.getVirtualHeight() - logoSize) / 2f); // Splash position
 	}
 
+	public void setLogoSize(float f) {
+		logoSize = f;
+		
+		setWidth(logoSize);
+		setHeight(logoSize);
+	}
+	
 	@Override
 	public void draw() {
 		TextureDrawer.draw(logo, this);

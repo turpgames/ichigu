@@ -37,6 +37,7 @@ public final class R {
 
 		public static final class textures {
 			public static final String logo = "logo";
+			public static final String splashLogo = "splash_logo";
 
 			public static final String cardBorder = "card-border";
 			public static final String cardClosed = "card-closed";
@@ -53,6 +54,8 @@ public final class R {
 			public static final String emptyTriangle = "card-41";
 
 			public static final String libgdx = "libgdx";
+			
+			public final static String backgroundPixel = "backgroundPixel";
 
 			public static final class toolbar {
 				public static final String back = "tb_back";
