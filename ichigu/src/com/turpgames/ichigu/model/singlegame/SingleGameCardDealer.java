@@ -60,7 +60,6 @@ public class SingleGameCardDealer extends CardDealer {
 	}
 	
 	private void dealAndMoveNewCards() {
-		
 		dealNewCards();
 		beginMoveNewCards();
 	}
@@ -202,13 +201,6 @@ public class SingleGameCardDealer extends CardDealer {
 			return true;
 		}
 	};
-
-	@Override
-	public void exit() {
-		abortDeal();
-		deactivateCards();
-		cards.empty();
-	}
 	
 	@Override
 	public void activateCards() {
@@ -273,6 +265,31 @@ public class SingleGameCardDealer extends CardDealer {
 
 	@Override
 	public void deselectCards() {
+		cards.deselectCards();
+	}
+
+	@Override
+	public void start() {
 		
+	}
+
+	@Override
+	public void end() {
+		abortDeal();
+		deactivateCards();
+		cards.empty();
+	}
+
+	@Override
+	public void reset() {
+		resetDeck();
+	}
+	
+	@Override
+	public void onCardTapped(Card card) {
+		int score = getScore();
+		if (score == 0) {
+			card.deselect();
+		}
 	}
 }

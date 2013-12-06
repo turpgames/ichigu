@@ -49,11 +49,11 @@ public class FullChallengeMode extends FullGameMode {
 	}
 
 	@Override
-	protected void onOpenExtraCards() {
+	protected void openExtraCards() {
 		if (timer.getRemaining() > 10)
-			super.onOpenExtraCards();
+			super.openExtraCards();
 		else
-			flashTimerText();
+			timerText.flash();
 	}
 	
 	@Override
@@ -63,13 +63,13 @@ public class FullChallengeMode extends FullGameMode {
 		if (score > hiScore)
 			Settings.putInteger(R.settings.hiscores.fullchallenge, score);
 
-		setResultText(String.format(Ichigu.getString(R.strings.fullChallengeResult),
+		resultInfo.setText(String.format(Ichigu.getString(R.strings.fullChallengeResult),
 				score, (score > hiScore ? Ichigu.getString(R.strings.newHiscore) : "")));
 	}
 	
 	@Override
 	protected void onDraw() {
-		drawScore();
+		foundInfo.draw();
 		super.onDraw();
 	}
 
@@ -79,9 +79,5 @@ public class FullChallengeMode extends FullGameMode {
 		if (score > 0)
 			foundInfo.increaseFound();
 		return score;
-	}
-
-	protected void drawScore() {
-		foundInfo.draw();
 	}
 }

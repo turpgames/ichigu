@@ -8,7 +8,6 @@ import com.turpgames.ichigu.model.display.TimerText;
 import com.turpgames.ichigu.model.display.TryAgainToast;
 import com.turpgames.ichigu.model.game.Card;
 import com.turpgames.ichigu.model.game.IResultScreenButtonsListener;
-import com.turpgames.ichigu.model.game.IchiguBank;
 import com.turpgames.ichigu.model.game.IchiguMode;
 import com.turpgames.ichigu.model.game.ResultScreenButtons;
 import com.turpgames.ichigu.utils.Ichigu;
@@ -19,8 +18,8 @@ public abstract class FullGameMode extends IchiguMode implements IResultScreenBu
 	private FullGameHint hint;
 	private int selectedCardCount;
 
-	private Text resultInfo;
-	private TimerText timerText;
+	protected Text resultInfo;
+	protected TimerText timerText;
 
 	private TryAgainToast tryAgain;
 	private NoTipToast noTip;
@@ -30,7 +29,7 @@ public abstract class FullGameMode extends IchiguMode implements IResultScreenBu
 	public FullGameMode() {
 		resultScreenButtons = new ResultScreenButtons(this);
 
-		hint = new FullGameHint();
+		hint = new FullGameHint(getDealer());
 		hint.setLocation(10, Game.viewportToScreenY(30));
 		hint.activate();
 		hint.setHintListener(this);
@@ -48,7 +47,7 @@ public abstract class FullGameMode extends IchiguMode implements IResultScreenBu
 	}
 
 	@Override
-	protected void setDealer() {
+	protected void initDealer() {
 		dealer = new FullGameCardDealer(this);
 	}
 	
@@ -66,11 +65,6 @@ public abstract class FullGameMode extends IchiguMode implements IResultScreenBu
 		hint.activate();
 	}
 
-	@Override
-	protected void openCloseCards(boolean open) {
-		dealer.openCloseCards(open);
-	}
-
 	protected FullGameCardDealer getDealer() {
 		return (FullGameCardDealer) dealer;
 	}
@@ -85,30 +79,6 @@ public abstract class FullGameMode extends IchiguMode implements IResultScreenBu
 			getModeListener().onNewGame();
 	}
 
-	private void updateHints() {
-		getDealer().updateHint(hint);
-
-		boolean thereIsNoIchigu = hint.getIchiguCount() == 0;
-		boolean extraCardsAreOpened = getDealer().isExtraCardsOpened();
-		boolean hasMoreCardsInDeck = getDealer().getIndex() < Card.CardsInDeck;
-
-		if (thereIsNoIchigu && extraCardsAreOpened) {
-			if (hasMoreCardsInDeck) {
-				deactivateCards();
-				getDealer().dealExtraCards();
-				getDealer().openExtraCards();
-				activateCards();
-			}
-			else {
-				onDeckFinished();
-			}
-		}
-	}
-
-	protected void flashTimerText() {
-		timerText.flash();
-	}
-
 	protected void notifyModeEnd() {
 		prepareResultInfoAndSaveHiscore();
 		if (getModeListener() != null)
@@ -119,8 +89,6 @@ public abstract class FullGameMode extends IchiguMode implements IResultScreenBu
 		int score = dealer.getScore();
 		if (score > 0) {
 			notifyIchiguFound();
-			IchiguBank.increaseBalance();
-			IchiguBank.saveData();
 		}
 		else {
 			tryAgain.show();
@@ -130,14 +98,10 @@ public abstract class FullGameMode extends IchiguMode implements IResultScreenBu
 		return score;
 	}
 	
-	public void cardTapped(Card card) {
+	@Override
+	public void onCardTapped(Card card) {
+		super.onCardTapped(card);
 		hint.restartNotificationTimer();
-
-		if (!card.isOpened()) {
-			card.deselect();
-			onOpenExtraCards();
-			return;
-		}
 
 		if (card.isSelected())
 			selectedCardCount++;
@@ -150,10 +114,10 @@ public abstract class FullGameMode extends IchiguMode implements IResultScreenBu
 		}
 	}
 
-	protected void onOpenExtraCards() {
+	protected void openExtraCards() {
 		((FullGameCardDealer)dealer).openExtraCards();
 		applyTimePenalty();
-		updateHints();
+		hint.update();
 	}
 
 	private void applyTimePenalty() {
@@ -161,17 +125,12 @@ public abstract class FullGameMode extends IchiguMode implements IResultScreenBu
 			return;
 		
 		getTimer().addSeconds(secondPerPenalty);
-		flashTimerText();
+		timerText.flash();
 	}
 
 	protected void onDeckFinished() {
+		prepareResultInfoAndSaveHiscore();
 		notifyModeEnd();
-	}
-
-	@Override
-	protected void resetMode() {
-		super.resetMode();
-		((FullGameCardDealer)dealer).closeExtraCards();
 	}
 
 	@Override
@@ -184,8 +143,6 @@ public abstract class FullGameMode extends IchiguMode implements IResultScreenBu
 	protected void onStartMode() {
 		getTimer().restart();
 		timerText.syncText();
-		dealer.emptyCards();
-		dealer.reset();
 		resultScreenButtons.listenInput(false);
 		selectedCardCount = 0;
 		hint.activate();
@@ -193,17 +150,20 @@ public abstract class FullGameMode extends IchiguMode implements IResultScreenBu
 	}
 
 	@Override
+	protected void onResetMode() {
+		getTimer().restart();
+		timerText.syncText();
+		selectedCardCount = 0;
+		super.onResetMode();
+	}
+	
+	@Override
 	protected void onEndMode() {
 		getTimer().stop();
-		Ichigu.playSoundTimeUp();
-		dealer.emptyCards();
-		deactivateCards();
 		hint.deactivate();
 		resultScreenButtons.listenInput(true);
 		super.onEndMode();
 	}
-	
-	protected abstract void prepareResultInfoAndSaveHiscore();
 
 	@Override
 	protected boolean onExitMode() {
@@ -211,8 +171,6 @@ public abstract class FullGameMode extends IchiguMode implements IResultScreenBu
 			return false;
 		getTimer().stop();
 		resultScreenButtons.listenInput(false);
-		deactivateCards();
-		dealer.exit();
 		hint.deactivate();
 		return true;
 	}
@@ -220,28 +178,16 @@ public abstract class FullGameMode extends IchiguMode implements IResultScreenBu
 	@Override
 	protected void onDraw() {
 		dealer.drawCards();
-		drawTime();
-		drawHint();
-		super.onDraw();
-	}
-
-	private void drawTime() {
 		timerText.draw();
+		hint.draw();
+		super.onDraw();
 	}
 
 	public void drawResult() {
 		resultInfo.draw();
 		resultScreenButtons.draw();
 	}
-
-	private void drawHint() {
-		hint.draw();
-	}
-
-	protected void setResultText(String resultText) {
-		resultInfo.setText(resultText);
-	}
-
+	
 	@Override
 	public void onBackToMenuTapped() {
 		getModeListener().onExitConfirmed();
@@ -254,17 +200,6 @@ public abstract class FullGameMode extends IchiguMode implements IResultScreenBu
 	
 	@Override
 	public void onCardsActivated() {
-		updateHints();
-	}
-
-
-	@Override
-	public void activateCards() {
-		getDealer().activateCards();	
-	}
-
-	@Override
-	public void deactivateCards() {
-		getDealer().deactivateCards();
+		hint.update();
 	}
 }

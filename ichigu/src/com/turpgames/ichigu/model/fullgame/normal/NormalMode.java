@@ -41,7 +41,7 @@ public class NormalMode extends FullGameMode {
 		if (isNewRecord)
 			Settings.putInteger(R.settings.hiscores.normaltime, completeTime);
 
-		setResultText(String.format(
+		resultInfo.setText(String.format(
 				Ichigu.getString(R.strings.normalResult),
 				timer.getText(),
 				(isNewRecord ? Ichigu.getString(R.strings.newHiscore) : "")));
@@ -49,12 +49,8 @@ public class NormalMode extends FullGameMode {
 	
 	@Override
 	protected void onDraw() {
-		drawRemainingCards();
-		super.onDraw();
-	}
-
-	private void drawRemainingCards() {
 		remaingCardInfo.setText(getDealer().getIndex() + "/" + Card.CardsInDeck);
 		remaingCardInfo.draw();
+		super.onDraw();
 	}
 }

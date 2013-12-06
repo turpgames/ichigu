@@ -19,11 +19,11 @@ public class PracticeMode extends SingleGameMode {
 	}
 	
 	@Override
-	public void onCardSelected(Card selectedCard) {
+	public void onCardTapped(Card selectedCard) {
 		int score = dealer.getScore();
 		if (score == 0)
 			tryAgain.show();
-		super.onCardSelected(selectedCard);
+		super.onCardTapped(selectedCard);
 	}
 	
 	@Override
@@ -37,16 +37,6 @@ public class PracticeMode extends SingleGameMode {
 	@Override
 	public void onCardsDeactivated() {
 		hint.deactivate();
-	}
-	
-	@Override
-	protected void onStartMode() {
-		
-	}
-
-	@Override
-	protected void onEndMode() {
-		
 	}
 
 	@Override
@@ -79,7 +69,7 @@ public class PracticeMode extends SingleGameMode {
 	}
 
 	@Override
-	protected void openCloseCards(boolean open) {
+	protected void prepareResultInfoAndSaveHiscore() {
 		
 	}
 }

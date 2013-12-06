@@ -32,6 +32,10 @@ public class SingleGameQuestion extends GameObject implements IEffectEndListener
 		public void start() {
 			effect.start();
 		}
+
+		public void stop() {
+			effect.stop();
+		}
 		
 		@Override
 		public void draw() {
@@ -79,6 +83,8 @@ public class SingleGameQuestion extends GameObject implements IEffectEndListener
 		questionMark.setAlpha(0);
 		correctMark.setAlpha(0);
 		incorrectMark.setAlpha(1);
+		correctEffectStartTimer.stop();
+		correctMark.stop();
 		incorrectEffectStartTimer.setCountDownListener(new CountDownTimer.ICountDownListener() {
 			@Override
 			public void onCountDownEnd(CountDownTimer timer) {
@@ -92,6 +98,8 @@ public class SingleGameQuestion extends GameObject implements IEffectEndListener
 		questionMark.setAlpha(0);
 		correctMark.setAlpha(1);
 		incorrectMark.setAlpha(0);
+		incorrectEffectStartTimer.stop();
+		incorrectMark.stop();
 		correctEffectStartTimer.setCountDownListener(new CountDownTimer.ICountDownListener() {
 			@Override
 			public void onCountDownEnd(CountDownTimer timer) {

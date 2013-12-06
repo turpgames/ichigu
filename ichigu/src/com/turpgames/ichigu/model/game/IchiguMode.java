@@ -57,20 +57,32 @@ public abstract class IchiguMode implements IDrawable, ICardDealerListener {
 			}
 		});
 		
-		setDealer();
+		initDealer();
 	}
 
-	protected abstract void setDealer();
+	protected abstract void initDealer();
 	
 	protected abstract void pauseTimer();
 
 	protected abstract void startTimer();
+
+	public void onCardTapped(Card card) {
+		dealer.onCardTapped(card);
+	}
 	
-	public abstract void activateCards();
+	public void activateCards() {
+		dealer.activateCards();
+	}
 
-	public abstract void deactivateCards();
-
-	protected abstract void openCloseCards(boolean open);
+	public void deactivateCards() {
+		dealer.deactivateCards();
+	}
+	
+	protected abstract void prepareResultInfoAndSaveHiscore();
+	
+	public void openCloseCards(boolean open) {
+		dealer.openCloseCards(open);
+	}
 	
 	private void onResetConfirmed(boolean reset) {
 		if (reset) {
@@ -79,12 +91,6 @@ public abstract class IchiguMode implements IDrawable, ICardDealerListener {
 		else {
 			resume();
 		}
-	}
-
-	protected void resetMode() {
-		endMode();
-		startMode();
-		deal();
 	}
 
 	private void onConfirmResetMode() {
@@ -121,7 +127,6 @@ public abstract class IchiguMode implements IDrawable, ICardDealerListener {
 		openCloseCards(true);
 	}
 
-
 	protected void notifyIchiguFound() {
 		if (modeListener != null)
 			modeListener.onIchiguFound();
@@ -149,24 +154,35 @@ public abstract class IchiguMode implements IDrawable, ICardDealerListener {
 		onStartMode();
 	}
 
+	protected void resetMode() {
+		onResetMode();
+	}
+	
 	public final void endMode() {
-		dealer.abortDeal();
+		dealer.end();
 		onEndMode();
 	}
 
 	public final boolean exitMode() {
-		dealer.abortDeal();
 		return onExitMode();
 	}
 
 	protected void onStartMode() {
 		isExitConfirmed = false;
 		resetButton.listenInput(true);
+		dealer.start();
 	}
 
+	protected void onResetMode() {
+		resetButton.listenInput(true);
+		dealer.reset();
+		dealer.deal();
+	}
+	
 	protected void onEndMode() {
 		isExitConfirmed = true;
 		resetConfirmDialog.close();
+		dealer.end();
 	}
 
 	protected boolean onExitMode() {
@@ -178,6 +194,7 @@ public abstract class IchiguMode implements IDrawable, ICardDealerListener {
 		isExitConfirmed = false;
 		resetConfirmDialog.close();
 		resetButton.listenInput(false);
+		dealer.end();
 		return true;
 	}
 

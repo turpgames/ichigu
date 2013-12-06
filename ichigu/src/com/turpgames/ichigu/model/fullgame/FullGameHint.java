@@ -29,7 +29,11 @@ public class FullGameHint implements IDrawable, IEffectEndListener, Toast.IToast
 
 	private IHintListener hintListener;
 
-	FullGameHint() {
+	private FullGameCardDealer dealer;
+	
+	FullGameHint(FullGameCardDealer dealer) {
+		this.dealer = dealer;
+		
 		button = new BlinkingImageButton(buttonSize, buttonSize, R.colors.ichiguWhite, R.colors.ichiguYellow, 1f, 10);
 		button.setTexture(R.game.textures.hint);
 		button.setListener(new IButtonListener() {
@@ -99,12 +103,11 @@ public class FullGameHint implements IDrawable, IEffectEndListener, Toast.IToast
 		notificationTimer.restart();
 	}
 
-	public void update(Card[] cards) {
-		ichiguInfo.update(cards);
+	public void update() {
+		ichiguInfo.update(dealer.getCardsForHints());
 		toast.hide();
 		hintIndex = 0;
 		isActive = false;
-		this.cards = cards;
 	}
 
 	public int getIchiguCount() {

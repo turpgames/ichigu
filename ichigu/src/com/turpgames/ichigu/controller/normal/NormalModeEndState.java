@@ -1,5 +1,7 @@
 package com.turpgames.ichigu.controller.normal;
 
+import com.turpgames.ichigu.utils.Ichigu;
+
 public class NormalModeEndState extends NormalModeState {
 	public NormalModeEndState(NormalModeController controller) {
 		super(controller);
@@ -7,6 +9,7 @@ public class NormalModeEndState extends NormalModeState {
 
 	@Override
 	protected void activated() {
+		Ichigu.playSoundTimeUp();
 		model.endMode();
 	}
 

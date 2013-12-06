@@ -1,5 +1,7 @@
 package com.turpgames.ichigu.controller.fullchallenge;
 
+import com.turpgames.ichigu.utils.Ichigu;
+
 public class FullChallengeModeEndState extends FullChallengeModeState {
 	public FullChallengeModeEndState(FullChallengeModeController controller) {
 		super(controller);
@@ -7,6 +9,7 @@ public class FullChallengeModeEndState extends FullChallengeModeState {
 
 	@Override
 	protected void activated() {
+		Ichigu.playSoundTimeUp();
 		model.endMode();
 	}
 	

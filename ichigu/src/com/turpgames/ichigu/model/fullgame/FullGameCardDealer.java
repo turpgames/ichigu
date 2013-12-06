@@ -69,12 +69,6 @@ public class FullGameCardDealer extends CardDealer {
 		return dealIndex;
 	}
 
-	public void reset() {
-		super.reset();
-		dealIndex = 0;
-		dealAborted = false;
-	}
-
 	public void setAsInfiniteDeal() {
 		isInfiniteDeal = true;
 	}
@@ -167,6 +161,20 @@ public class FullGameCardDealer extends CardDealer {
 
 		if (isInfiniteDeal && dealIndex == deck.length)
 			reshuffleDeck();
+		
+		boolean thereIsNoIchigu = FullGameIchiguInfo.getIchiguCount(cards.getCardsForHints()) == 0;
+		boolean hasMoreCardsInDeck = dealIndex < Card.CardsInDeck;
+
+		if (thereIsNoIchigu) {
+			if (hasMoreCardsInDeck) {
+				deactivateCards();
+				dealExtraCards();
+				activateCards();
+			}
+			else {
+				parent.onDeckFinished();
+			}
+		}
 	}
 
 	private void reshuffleDeck() {
@@ -181,7 +189,6 @@ public class FullGameCardDealer extends CardDealer {
 		for (int i = 0; i < tmp.length; i++) {
 			if (!cards.isCardOnTable(tmp[i]))
 				deck[x++] = tmp[i];
-
 		}
 		
 		// Set current deal index to 15
@@ -237,11 +244,6 @@ public class FullGameCardDealer extends CardDealer {
 	}
 	
 	@Override
-	public void exit() {
-		cards.empty();
-	}
-
-	@Override
 	public int getScore() {
 		return cards.getScore();
 	}
@@ -275,11 +277,6 @@ public class FullGameCardDealer extends CardDealer {
 		for (int i = 0; i < FullGameCards.ExtraCardCount; i++)
 			cards.getExtraCard(i).close();
 	}
-
-	@Override
-	public void emptyCards() {
-		cards.empty();
-	}
 	
 	@Override
 	public void activateCards() {
@@ -301,16 +298,44 @@ public class FullGameCardDealer extends CardDealer {
 		parent.onCardsDeactivated();
 	}
 
+	public Card[] getCardsForHints() {
+		return cards.getCardsForHints();
+	}
+	
 	@Override
 	public void drawCards() {
 		cards.draw();
 	}
 
-	public void updateHint(FullGameHint hint) {
-		cards.updateHint(hint);
-	}
-
 	public boolean isExtraCardsOpened() {
 		return cards.isExtraCardEmpty(0) || cards.getExtraCard(0).isOpened();
+	}
+
+	@Override
+	public void start() {
+		dealIndex = 0;
+		dealAborted = false;
+		resetDeck();
+	}
+
+	@Override
+	public void reset() {
+		start();
+		deselectCards();
+	}
+
+	@Override
+	public void end() {
+		deactivateCards();
+		cards.empty();
+	}
+
+	@Override
+	public void onCardTapped(Card card) {
+		if (!card.isOpened()) {
+			card.deselect();
+			openExtraCards();
+			return;
+		}
 	}
 }

@@ -67,4 +67,9 @@ class SingleGameCards {
 				return cards[i];
 		return null;
 	}
+
+	public void deselectCards() {
+		for(int i = 0; i < cards.length; i++)
+			cards[i].deselect();
+	}
 }

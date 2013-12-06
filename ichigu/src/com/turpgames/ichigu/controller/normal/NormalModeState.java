@@ -2,6 +2,7 @@ package com.turpgames.ichigu.controller.normal;
 
 import com.turpgames.ichigu.controller.IchiguState;
 import com.turpgames.ichigu.model.fullgame.normal.NormalMode;
+import com.turpgames.ichigu.model.game.IchiguBank;
 import com.turpgames.ichigu.view.NormalModeScreen;
 
 public abstract class NormalModeState extends IchiguState implements INormalModeActionListener {
@@ -53,5 +54,12 @@ public abstract class NormalModeState extends IchiguState implements INormalMode
 	@Override
 	public boolean onScreenDeactivated() {
 		return model.exitMode();
+	}
+	
+	@Override
+	public void onIchiguFound() {
+		IchiguBank.increaseBalance();
+		IchiguBank.saveData();
+		super.onIchiguFound();
 	}
 }

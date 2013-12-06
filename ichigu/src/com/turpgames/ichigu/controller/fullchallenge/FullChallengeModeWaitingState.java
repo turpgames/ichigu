@@ -23,7 +23,7 @@ public class FullChallengeModeWaitingState extends FullChallengeModeState {
 	public void onCardTapped(Card card) {
 		Game.vibrate(50);
 		Ichigu.playSoundFlip();
-		model.cardTapped(card);
+		model.onCardTapped(card);
 	}
 
 	@Override

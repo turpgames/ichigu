@@ -9,6 +9,7 @@ public class NormalModeScreen extends IchiguScreen {
 	public void init() {
 		super.init();
 		setScreenListener(new NormalModeController(this));
+		
 	}
 
 	public void onExitConfirmed() {

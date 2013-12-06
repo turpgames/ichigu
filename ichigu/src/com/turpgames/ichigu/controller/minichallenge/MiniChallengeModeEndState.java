@@ -1,6 +1,7 @@
 package com.turpgames.ichigu.controller.minichallenge;
 
 import com.turpgames.framework.v0.util.Game;
+import com.turpgames.ichigu.utils.Ichigu;
 
 public class MiniChallengeModeEndState extends MiniChallengeModeState {
 	public MiniChallengeModeEndState(MiniChallengeModeController controller) {
@@ -9,6 +10,7 @@ public class MiniChallengeModeEndState extends MiniChallengeModeState {
 
 	@Override
 	protected void activated() {
+		Ichigu.playSoundTimeUp();
 		model.endMode();
 		Game.vibrate(100);
 	}

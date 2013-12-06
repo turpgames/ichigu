@@ -22,6 +22,7 @@ public class PracticeModeController extends IchiguController<PracticeModeState> 
 	@Override
 	public void onScreenActivated() {
 		super.onScreenActivated();
+		model.startMode();
 		setDealingState();
 	}
 

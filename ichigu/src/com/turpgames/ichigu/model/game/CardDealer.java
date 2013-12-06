@@ -14,13 +14,9 @@ public abstract class CardDealer {
 
 	abstract public void abortDeal();
 
-	abstract public void exit();
-
 	abstract public int getScore();
 
 	abstract public void openCloseCards(boolean open);
-
-	abstract public void emptyCards();
 
 	abstract public void drawCards();
 	
@@ -29,8 +25,16 @@ public abstract class CardDealer {
 	abstract public void deactivateCards();
 
 	abstract public void deselectCards();
+
+	abstract public void start();
+
+	abstract public void end();
 	
-	public void reset() {
+	abstract public void reset();
+
+	abstract public void onCardTapped(Card card);
+	
+	public void resetDeck() {
 		boolean hasNullCard = false;
 		
 		for (int i = 0; i < deck.length; i++) {

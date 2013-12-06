@@ -113,8 +113,8 @@ class FullGameCards {
 		}
 	}
 
-	void updateHint(FullGameHint hint) {
-		hint.update(allCards);
+	public Card[] getCardsForHints() {
+		return allCards;
 	}
 
 	public void draw() {

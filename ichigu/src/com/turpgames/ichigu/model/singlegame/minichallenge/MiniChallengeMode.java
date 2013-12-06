@@ -85,11 +85,6 @@ public class MiniChallengeMode extends SingleGameMode implements IResultScreenBu
 		return (IMiniChallengeModeListener) super.modeListener;
 	}
 
-	@Override
-	protected void openCloseCards(boolean open) {
-		dealer.openCloseCards(open);
-	}
-
 	private void notifyUnblocked() {
 		if (getModeListener() != null)
 			getModeListener().onUnblock();
@@ -129,16 +124,20 @@ public class MiniChallengeMode extends SingleGameMode implements IResultScreenBu
 		challengeTimer.stop();
 		timeInfo.syncText();
 		((SingleGameCardDealer)dealer).emptyCards();
+		
+		super.onEndMode();
+	}
+
+	@Override
+	protected void prepareResultInfoAndSaveHiscore() {
 		int hiScore = Settings.getInteger(R.settings.hiscores.minichallenge, 0);
 		if (ichigusFound > hiScore)
 			Settings.putInteger(R.settings.hiscores.minichallenge, ichigusFound);
 
 		resultInfo.setText(String.format(Ichigu.getString(R.strings.miniChallengeResult),
 				ichigusFound, (ichigusFound > hiScore ? Ichigu.getString(R.strings.newHiscore) : "")));
-
-		super.onEndMode();
 	}
-
+	
 	@Override
 	protected boolean onExitMode() {
 		if (!super.onExitMode())
@@ -152,7 +151,7 @@ public class MiniChallengeMode extends SingleGameMode implements IResultScreenBu
 	}
 
 	@Override
-	public void onCardSelected(Card selectedCard) {
+	public void onCardTapped(Card selectedCard) {
 		int ichiguScore = dealer.getScore();
 		if (ichiguScore > 0) {
 			ichigusFound++;
@@ -161,7 +160,7 @@ public class MiniChallengeMode extends SingleGameMode implements IResultScreenBu
 		else {
 			block();
 		}
-		super.onCardSelected(selectedCard);
+		super.onCardTapped(selectedCard);
 	}
 
 	@Override
