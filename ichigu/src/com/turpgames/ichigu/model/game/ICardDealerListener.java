@@ -1,9 +1,12 @@
 package com.turpgames.ichigu.model.game;
 
-public interface ICardDealerListener {
-	void onDealEnd();
+public interface ICardDealerListener extends ICardListener {
+	void onDealEnded();
+
+	void onDeckFinished();
 	
-	void onCardsActivated();
-	
-	void onCardsDeactivated();
+	void onIchiguFound();
+
+	void onInvalidIchiguSelected();
+
 }

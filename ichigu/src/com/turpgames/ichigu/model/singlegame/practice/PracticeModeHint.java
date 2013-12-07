@@ -11,6 +11,7 @@ import com.turpgames.framework.v0.forms.xml.Toast;
 import com.turpgames.framework.v0.util.Game;
 import com.turpgames.ichigu.model.game.Card;
 import com.turpgames.ichigu.model.game.CardAttributes;
+import com.turpgames.ichigu.model.game.CardDealer;
 import com.turpgames.ichigu.utils.Ichigu;
 import com.turpgames.ichigu.utils.R;
 
@@ -24,8 +25,12 @@ class PracticeModeHint implements IDrawable, Toast.IToastListener, IEffectEndLis
 	private boolean isDisplayingHint;
 	private ImageButton hintButton;
 	private int colorIndex;
+	
+	private CardDealer dealer;
 
-	PracticeModeHint() {
+	PracticeModeHint(CardDealer dealer) {
+		this.dealer = dealer;
+		
 		hints = new ArrayList<String>();
 
 		hintButton = new ImageButton(buttonSize, buttonSize, R.game.textures.hint, R.colors.buttonDefault, R.colors.buttonTouched);
@@ -103,11 +108,13 @@ class PracticeModeHint implements IDrawable, Toast.IToastListener, IEffectEndLis
 			toast.setToastColor(R.colors.ichiguBlue);
 	}
 
-	public void update(Card card1, Card card2, Card card3) {
-		CardAttributes ca1 = card1.getAttributes();
-		CardAttributes ca2 = card2.getAttributes();
+	public void update() {
+		Card[] hintCards = dealer.getCardsForHints();
+		
+		CardAttributes ca1 = hintCards[0].getAttributes();
+		CardAttributes ca2 = hintCards[1].getAttributes();
 
-		this.thirdCard = card3;
+		this.thirdCard = hintCards[2];
 
 		isDisplayingHint = false;
 		index = 0;

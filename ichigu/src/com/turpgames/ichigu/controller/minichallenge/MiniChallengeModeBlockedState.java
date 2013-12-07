@@ -21,6 +21,15 @@ public class MiniChallengeModeBlockedState extends MiniChallengeModeState {
 	@Override
 	public void onCardTapped(Card card) {
 		card.deselect();
+	}
+	
+	@Override
+	public void onIchiguFound() {
+		Ichigu.playSoundWait();
+	}
+	
+	@Override
+	public void onInvalidIchiguSelected() {
 		Ichigu.playSoundWait();
 	}
 }

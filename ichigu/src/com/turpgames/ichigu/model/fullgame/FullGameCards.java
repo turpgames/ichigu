@@ -1,7 +1,9 @@
 package com.turpgames.ichigu.model.fullgame;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.turpgames.ichigu.model.game.Card;
-import com.turpgames.ichigu.model.game.CardAttributes;
 
 class FullGameCards {
 	public static final int ActiveCardCount = 12;
@@ -12,17 +14,17 @@ class FullGameCards {
 	private final Card[] allCards;
 	private final Card[] extraCards;
 	private final Card[] activeCards;
-	private final Card[] selectedCards;
+	private final List<Card> selectedCards;
 
 	public FullGameCards() {
 		allCards = new Card[ActiveCardCount + ExtraCardCount];
 		extraCards = new Card[ExtraCardCount];
 		activeCards = new Card[ActiveCardCount];
-		selectedCards = new Card[IchiguCardCount];
+		selectedCards = new ArrayList<Card>();
 	}
 
 	Card getSelectedCard(int i) {
-		return selectedCards[i];
+		return selectedCards.get(i);
 	}
 
 	public Card getCard(int i) {
@@ -80,37 +82,18 @@ class FullGameCards {
 	}
 
 	public void emptySelectedCards() {
-		updateSelectedCards();
-		int x = 0;
-		for (int i = 0; i < allCards.length; i++) {
-			if (allCards[i] == null || !allCards[i].isSelected())
-				continue;
-
-			selectedCards[x++] = null;
-			setCard(i, null);
-		}
+		selectedCards.clear();
 	}
 
 	public int getScore() {
-		updateSelectedCards();
-		return Card.getIchiguScore(selectedCards[0], selectedCards[1], selectedCards[2]);
+		return Card.getIchiguScore(selectedCards.get(0), selectedCards.get(1), selectedCards.get(2));
 	}
 
 	public void deselectCards() {
-		updateSelectedCards();
-		for (int i = 0; i < selectedCards.length; i++)
-			selectedCards[i].deselect();
-	}
-
-	private void updateSelectedCards() {
-		int x = 0;
-		for (int i = 0; i < allCards.length; i++) {
-			selectedCards[x] = null;
-			if (allCards[i] != null && allCards[i].isSelected())
-				selectedCards[x++] = allCards[i];
-			if (x == IchiguCardCount)
-				break;
+		for (Card card : selectedCards) {
+			card.deselect();
 		}
+		emptySelectedCards();
 	}
 
 	public Card[] getCardsForHints() {
@@ -123,12 +106,15 @@ class FullGameCards {
 				allCards[i].draw();
 		}
 	}
-	
-	public CardAttributes[] getIchiguCards() {
-		CardAttributes[] ready = new CardAttributes[3];
-		ready[0] = selectedCards[0].getAttributes();
-		ready[1] = selectedCards[1].getAttributes();
-		ready[2] = selectedCards[2].getAttributes();
-		return ready;
+
+	public int getNumberOfSelected() {
+		return selectedCards.size();
+	}
+
+	public void switchSelect(Card card) {
+		if (selectedCards.contains(card))
+			selectedCards.remove(card);
+		else
+			selectedCards.add(card);
 	}
 }

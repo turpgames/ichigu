@@ -1,11 +1,8 @@
 package com.turpgames.ichigu.controller.minichallenge;
 
-import com.turpgames.ichigu.model.game.ICardDealerListener;
-
-public class MiniChallengeModeDealingState extends MiniChallengeModeState implements ICardDealerListener {
+public class MiniChallengeModeDealingState extends MiniChallengeModeState {
 	public MiniChallengeModeDealingState(MiniChallengeModeController controller) {
 		super(controller);
-		model.setDealerListener(this);
 	}
 
 	@Override
@@ -14,22 +11,12 @@ public class MiniChallengeModeDealingState extends MiniChallengeModeState implem
 	}
 
 	@Override
-	public void onDealEnd() {
+	public void onDealEnded() {
 		controller.setWaitingState();
 	}
 
 	@Override
 	public boolean onScreenDeactivated() {
 		return false;
-	}
-
-	@Override
-	public void onCardsActivated() {
-
-	}
-
-	@Override
-	public void onCardsDeactivated() {
-		
 	}
 }

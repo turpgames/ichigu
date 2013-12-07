@@ -74,10 +74,8 @@ public class FullChallengeMode extends FullGameMode {
 	}
 
 	@Override
-	protected int checkIchigu() {
-		int score = super.checkIchigu();
-		if (score > 0)
-			foundInfo.increaseFound();
-		return score;
+	public void ichiguFound() {
+		foundInfo.increaseFound();
+		super.ichiguFound();
 	}
 }

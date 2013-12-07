@@ -1,10 +1,11 @@
 package com.turpgames.ichigu.controller.practice;
 
 import com.turpgames.ichigu.controller.IchiguState;
+import com.turpgames.ichigu.model.game.ICardDealerListener;
 import com.turpgames.ichigu.model.singlegame.practice.PracticeMode;
 import com.turpgames.ichigu.view.PracticeModeScreen;
 
-public abstract class PracticeModeState extends IchiguState {
+public abstract class PracticeModeState extends IchiguState implements ICardDealerListener {
 	final PracticeMode model;
 	final PracticeModeScreen view;
 	final PracticeModeController controller;
@@ -19,7 +20,7 @@ public abstract class PracticeModeState extends IchiguState {
 	public void onExitConfirmed() {
 				
 	}
-	
+
 	@Override
 	public void draw() {
 		model.draw();

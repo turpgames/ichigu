@@ -9,7 +9,7 @@ import com.turpgames.ichigu.model.display.IchiguDialog;
 import com.turpgames.ichigu.utils.Ichigu;
 import com.turpgames.ichigu.utils.R;
 
-public abstract class IchiguMode implements IDrawable, ICardDealerListener {
+public abstract class IchiguMode implements IDrawable {
 	protected final static float buttonSize = Game.scale(R.ui.imageButtonWidth);
 
 	protected CardDealer dealer;
@@ -65,10 +65,10 @@ public abstract class IchiguMode implements IDrawable, ICardDealerListener {
 	protected abstract void pauseTimer();
 
 	protected abstract void startTimer();
-
-	public void onCardTapped(Card card) {
-		dealer.onCardTapped(card);
-	}
+	
+	abstract public void ichiguFound();
+	
+	abstract public void invalidIchiguSelected();
 	
 	public void activateCards() {
 		dealer.activateCards();
@@ -139,9 +139,10 @@ public abstract class IchiguMode implements IDrawable, ICardDealerListener {
 
 	public void setModeListener(IIchiguModeListener modeListener) {
 		this.modeListener = modeListener;
+		setDealerListener(modeListener);
 	}
 
-	public void setDealerListener(ICardDealerListener dealerListener) {
+	private void setDealerListener(ICardDealerListener dealerListener) {
 		if (dealer != null)
 			dealer.setListener(dealerListener);
 	}
@@ -212,21 +213,5 @@ public abstract class IchiguMode implements IDrawable, ICardDealerListener {
 
 	public IIchiguModeListener getModeListener() {
 		return modeListener;
-	}
-	
-
-	@Override
-	public void onDealEnd() {
-		
-	}
-
-	@Override
-	public void onCardsActivated() {
-		
-	}
-
-	@Override
-	public void onCardsDeactivated() {
-		
 	}
 }

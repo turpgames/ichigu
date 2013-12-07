@@ -27,18 +27,13 @@ public abstract class NormalModeState extends IchiguState implements INormalMode
 	}
 
 	@Override
-	public void onDealEnd() {
-		model.activateCards();
+	public void onDealEnded() {
+		model.dealEnded();
 	}
-
+	
 	@Override
-	public void onCardsActivated() {
-		
-	}
-
-	@Override
-	public void onCardsDeactivated() {
-		
+	public void onDeckFinished() {
+		model.deckFinished();	
 	}
 	
 	@Override
@@ -60,6 +55,7 @@ public abstract class NormalModeState extends IchiguState implements INormalMode
 	public void onIchiguFound() {
 		IchiguBank.increaseBalance();
 		IchiguBank.saveData();
+		model.ichiguFound();
 		super.onIchiguFound();
 	}
 }

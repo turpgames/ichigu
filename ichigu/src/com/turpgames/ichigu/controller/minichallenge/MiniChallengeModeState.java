@@ -55,4 +55,14 @@ public abstract class MiniChallengeModeState extends IchiguState implements IMin
 	public void draw() {
 		model.draw();
 	}
+
+	@Override
+	public void onDealEnded() {
+		
+	}
+	
+	@Override
+	public void onDeckFinished() {
+		
+	}
 }

@@ -17,7 +17,6 @@ public class NormalModeController extends IchiguController<NormalModeState> impl
 
 		this.model = new NormalMode();
 		this.model.setModeListener(this);
-		this.model.setDealerListener(this);
 
 		waitingState = new NormalModeWaitingState(this);
 		dealingState = new NormalModeDealingState(this);
@@ -39,15 +38,20 @@ public class NormalModeController extends IchiguController<NormalModeState> impl
 	public void onNewGame() {
 		currentState.onNewGame();
 	}
+
+	@Override
+	public void onDealEnded() {
+		currentState.onDealEnded();		
+	}
+	
+	@Override
+	public void onDeckFinished() {
+		currentState.onDeckFinished();	
+	}
 	
 	@Override
 	public void onExitConfirmed() {
 		currentState.onExitConfirmed();
-	}
-
-	@Override
-	public void onDealEnd() {
-		currentState.onDealEnd();		
 	}
 
 	void setDealingState() {
@@ -60,15 +64,5 @@ public class NormalModeController extends IchiguController<NormalModeState> impl
 
 	void setEndState() {
 		setState(endState);
-	}
-
-	@Override
-	public void onCardsActivated() {
-
-	}
-
-	@Override
-	public void onCardsDeactivated() {
-
 	}
 }

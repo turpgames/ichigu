@@ -75,4 +75,14 @@ public class MiniChallengeModeController extends IchiguController<MiniChallengeM
 	void setModeEndState() {
 		setState(modeEndState);
 	}
+
+	@Override
+	public void onDealEnded() {
+		currentState.onDealEnded();
+	}
+
+	@Override
+	public void onDeckFinished() {
+		currentState.onDeckFinished();
+	}
 }

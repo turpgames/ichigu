@@ -49,8 +49,8 @@ class SingleGameCards {
 			this.cards[i + ReadyCardCount] = cards[i];
 	}
 
-	public int checkScore(Card selectedCard) {
-		return Card.getIchiguScore(cards[0], cards[1], selectedCard);
+	public int checkScore() {
+		return Card.getIchiguScore(cards[0], cards[1], getSelected());
 	}
 	
 	public CardAttributes[] getIchiguCards(Card selectedCard) {

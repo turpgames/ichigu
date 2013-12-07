@@ -12,7 +12,7 @@ public class NormalModeDealingState extends NormalModeState {
 	}
 
 	@Override
-	public void onDealEnd() {
+	public void onDealEnded() {
 		controller.setWaitingState();
 	}
 

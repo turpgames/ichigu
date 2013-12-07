@@ -22,7 +22,7 @@ public class Card extends IchiguObject {
 
 	public static final int CardsInDeck = 81;
 
-	private static void createDeck(Card[] deck) {
+	private static void createDeck(Card[] deck, ICardListener eventListener) {
 		int[] colors = new int[] { CardAttributes.Color_Red, CardAttributes.Color_Green, CardAttributes.Color_Blue };
 		int[] shapes = new int[] { CardAttributes.Shape_Circle, CardAttributes.Shape_Square, CardAttributes.Shape_Triangle };
 		int[] counts = new int[] { CardAttributes.Count_1, CardAttributes.Count_2, CardAttributes.Count_3 };
@@ -32,7 +32,7 @@ public class Card extends IchiguObject {
 			for (int j = 0; j < shapes.length; j++) {
 				for (int k = 0; k < counts.length; k++) {
 					for (int n = 0; n < patterns.length; n++) {
-						Card card = new Card(new CardAttributes(colors[i], shapes[j], counts[k], patterns[n]));
+						Card card = new Card(new CardAttributes(colors[i], shapes[j], counts[k], patterns[n]), eventListener);
 						deck[i + j * 3 + k * 9 + n * 27] = card;
 					}
 				}
@@ -40,9 +40,9 @@ public class Card extends IchiguObject {
 		}
 	}
 
-	public static Card[] newDeck() {
+	public static Card[] newDeck(ICardListener eventListener) {
 		Card[] deck = new Card[81];
-		createDeck(deck);
+		createDeck(deck, eventListener);
 		Utils.shuffle(deck);
 		return deck;
 	}
@@ -64,8 +64,10 @@ public class Card extends IchiguObject {
 	private CardAttributes attributes;
 	private ICardListener eventListener;
 
-	Card(CardAttributes cardAttributes) {
+	Card(CardAttributes cardAttributes, ICardListener eventListener) {
 		this.attributes = cardAttributes;
+		this.eventListener = eventListener;
+		
 		setWidth(Card.Width);
 		setHeight(Card.Height);
 
@@ -96,14 +98,12 @@ public class Card extends IchiguObject {
 		isSelected = !isSelected;
 	}
 
-	public void activate(ICardListener listener) {
+	public void activate() {
 		listenInput(true);
-		eventListener = listener;
 	}
 
 	public void deactivate() {
 		listenInput(false);
-		eventListener = null;
 	}
 
 	public boolean isOpened() {
@@ -166,7 +166,7 @@ public class Card extends IchiguObject {
 	}
 
 	public static Card createTutorialCard(int color, int shape, int count, int pattern, float x, float y) {
-		Card card = new Card(new CardAttributes(color, shape, count, pattern));
+		Card card = new Card(new CardAttributes(color, shape, count, pattern), null);
 		card.open();
 		card.getLocation().set(x, y);
 		return card;

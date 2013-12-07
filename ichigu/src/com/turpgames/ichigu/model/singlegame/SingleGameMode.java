@@ -14,23 +14,7 @@ public abstract class SingleGameMode extends IchiguMode {
 
 	@Override
 	protected void initDealer() {
-		dealer = new SingleGameCardDealer(this);
-	}
-	
-	@Override
-	public void onCardTapped(Card card) {
-		super.onCardTapped(card);
-		int score = dealer.getScore();
-		if (score > 0) {
-			question.startCorrectEffect();
-			notifyIchiguFound();
-		}
-		else {
-			card.deselect();
-			dealer.deselectCards();
-			question.startIncorrectEffect();
-			notifyInvalidIchiguSelected();
-		}
+		dealer = new SingleGameCardDealer();
 	}
 
 	@Override
@@ -42,5 +26,15 @@ public abstract class SingleGameMode extends IchiguMode {
 				dividerWidth, dividerHeight, R.colors.ichiguYellow, true, false);
 		
 		super.onDraw();
+	}
+
+	@Override
+	public void ichiguFound() {
+		question.startCorrectEffect();
+	}
+
+	@Override
+	public void invalidIchiguSelected() {
+		question.startIncorrectEffect();
 	}
 }

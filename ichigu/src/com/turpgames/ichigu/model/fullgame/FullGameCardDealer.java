@@ -45,11 +45,9 @@ public class FullGameCardDealer extends CardDealer {
 	private boolean dealAborted;
 
 	private boolean areExtraCardsOpened;
-	
-	private FullGameMode parent;
-	
-	FullGameCardDealer(FullGameMode parent) {
-		this.parent = parent;
+
+	FullGameCardDealer() {
+		super();
 		this.cards = new FullGameCards();
 	}
 
@@ -135,7 +133,6 @@ public class FullGameCardDealer extends CardDealer {
 	}
 
 	private void onCardsMoveEnd() {
-		cards.emptySelectedCards();
 		dealExtraCards();
 		notifyDealEnd();
 	}
@@ -172,9 +169,14 @@ public class FullGameCardDealer extends CardDealer {
 				activateCards();
 			}
 			else {
-				parent.onDeckFinished();
+				notifyDeckFinished();
 			}
 		}
+	}
+
+	private void notifyDeckFinished() {
+		if (listener != null)
+			listener.onDeckFinished();
 	}
 
 	private void reshuffleDeck() {
@@ -282,10 +284,9 @@ public class FullGameCardDealer extends CardDealer {
 	public void activateCards() {
 		for (int i = 0; i < FullGameCards.TotalCardsOnTable; i++) {
 			if (!cards.isEmpty(i)) {
-				cards.getCard(i).activate(parent.getModeListener());
+				cards.getCard(i).activate();
 			}
 		}
-		parent.onCardsActivated();
 	}
 
 	@Override
@@ -295,9 +296,9 @@ public class FullGameCardDealer extends CardDealer {
 				cards.getCard(i).deactivate();
 			}
 		}
-		parent.onCardsDeactivated();
 	}
 
+	@Override
 	public Card[] getCardsForHints() {
 		return cards.getCardsForHints();
 	}
@@ -337,5 +338,21 @@ public class FullGameCardDealer extends CardDealer {
 			openExtraCards();
 			return;
 		}
+		cards.switchSelect(card);
+//		if (card.isSelected())
+//			selectedCardCount++;
+//		else
+//			selectedCardCount--;
+//
+//		if (selectedCardCount == FullGameCards.IchiguCardCount) {
+//			checkIchigu();
+//			selectedCardCount = 0;
+//		}
+		super.onCardTapped(card);
+	}
+
+	@Override
+	public boolean isIchiguAttempted() {
+		return cards.getNumberOfSelected() == 3;
 	}
 }

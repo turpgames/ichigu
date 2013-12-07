@@ -7,7 +7,6 @@ import com.turpgames.framework.v0.util.Vector;
 import com.turpgames.ichigu.model.game.Card;
 import com.turpgames.ichigu.model.game.CardAttributes;
 import com.turpgames.ichigu.model.game.CardDealer;
-import com.turpgames.ichigu.model.game.IchiguMode;
 import com.turpgames.ichigu.utils.R;
 
 public class SingleGameCardDealer extends CardDealer {
@@ -15,8 +14,8 @@ public class SingleGameCardDealer extends CardDealer {
 
 	private final static float moveDuration = 0.25f;
 
-	private final static Vector tableDestination = new Vector((Game.getVirtualWidth() - Card.Width) / 2, (Game.getVirtualHeight() - Card.Height) / 2);
-	private final static Vector selectedDestination = new Vector((Game.getVirtualWidth() - Card.Width) / 2, (Game.getVirtualHeight() - Card.Height) / 2);
+	private final static Vector tableDestination = new Vector(- Card.Width, (Game.getVirtualHeight() - Card.Height) / 2);
+	private final static Vector selectedDestination = new Vector(Game.getVirtualWidth(), (Game.getVirtualHeight() - Card.Height) / 2);
 
 	private final static Vector[][] routes = new Vector[][] {
 			new Vector[] { R.learningModeScreen.layout.cardOnTable1Pos, tableDestination },
@@ -33,9 +32,8 @@ public class SingleGameCardDealer extends CardDealer {
 
 	private final Integer[] cardsToSelectIndices = new Integer[SingleGameCards.CardToSelectCount];
 
-	private IchiguMode parent;
-	public SingleGameCardDealer(IchiguMode parent) {
-		this.parent = parent;
+	public SingleGameCardDealer() {
+		super();
 		this.cards = new SingleGameCards();
 	}
 
@@ -205,8 +203,7 @@ public class SingleGameCardDealer extends CardDealer {
 	@Override
 	public void activateCards() {
 		for (int i = 0; i < SingleGameCards.CardToSelectCount; i++)
-			cards.getCardsToSelect(i).activate(parent.getModeListener());
-		parent.onCardsActivated();
+			cards.getCardsToSelect(i).activate();
 	}
 
 	@Override
@@ -215,7 +212,6 @@ public class SingleGameCardDealer extends CardDealer {
 			if (cards.getCardsToSelect(i) != null)
 				cards.getCardsToSelect(i).deactivate();
 		}
-		parent.onCardsDeactivated();
 	}
 
 	public void updateCardLocations() {
@@ -229,20 +225,6 @@ public class SingleGameCardDealer extends CardDealer {
 		for (int i = 0; i < allCards.length; i++)
 			if (allCards[i] != null)
 				allCards[i].draw();
-	}
-
-	public Card[] getIchiguCards() {
-		Card[] ichigu = new Card[3];
-		ichigu[0] = cards.get(0);
-		ichigu[1] = cards.get(1);
-		
-		for (int i = 0; i < SingleGameCards.CardToSelectCount; i++) {
-			if (Card.isIchigu(ichigu[0], ichigu[1], cards.getCardsToSelect(i))) {
-				ichigu[2] = cards.getCardsToSelect(i);
-				break;
-			}
-		}
-		return ichigu;
 	}
 
 	public void openCloseCards(boolean open) {
@@ -260,7 +242,7 @@ public class SingleGameCardDealer extends CardDealer {
 
 	@Override
 	public int getScore() {
-		return cards.checkScore(cards.getSelected());
+		return cards.checkScore();
 	}
 
 	@Override
@@ -284,12 +266,24 @@ public class SingleGameCardDealer extends CardDealer {
 	public void reset() {
 		resetDeck();
 	}
-	
+
 	@Override
-	public void onCardTapped(Card card) {
-		int score = getScore();
-		if (score == 0) {
-			card.deselect();
+	public Card[] getCardsForHints() {
+		Card[] hintCards = new Card[3];
+		hintCards[0] = cards.get(0);
+		hintCards[1] = cards.get(1);
+		
+		for (int i = 0; i < SingleGameCards.CardToSelectCount; i++) {
+			if (Card.isIchigu(hintCards[0], hintCards[1], cards.getCardsToSelect(i))) {
+				hintCards[2] = cards.getCardsToSelect(i);
+				break;
+			}
 		}
+		return hintCards;
+	}
+
+	@Override
+	public boolean isIchiguAttempted() {
+		return cards.getSelected() != null;
 	}
 }

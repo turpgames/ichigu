@@ -13,7 +13,7 @@ public class FullChallengeModeDealingState extends FullChallengeModeState implem
 	}
 
 	@Override
-	public void onDealEnd() {
+	public void onDealEnded() {
 		controller.setWaitingState();
 	}
 

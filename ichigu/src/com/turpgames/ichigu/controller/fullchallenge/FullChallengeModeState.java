@@ -27,23 +27,18 @@ public abstract class FullChallengeModeState extends IchiguState implements IFul
 	}
 
 	@Override
+	public void onDealEnded() {
+		model.dealEnded();
+	}
+
+	@Override
+	public void onDeckFinished() {
+		model.deckFinished();	
+	}
+		
+	@Override
 	public void onExitConfirmed() {
 		view.onExitConfirmed();
-	}
-	
-	@Override
-	public void onDealEnd() {
-		model.activateCards();
-	}
-
-	@Override
-	public void onCardsActivated() {
-		
-	}
-
-	@Override
-	public void onCardsDeactivated() {
-		
 	}
 	
 	@Override
@@ -60,6 +55,7 @@ public abstract class FullChallengeModeState extends IchiguState implements IFul
 	public void onIchiguFound() {
 		IchiguBank.increaseBalance();
 		IchiguBank.saveData();
+		model.ichiguFound();
 		super.onIchiguFound();
 	}
 }

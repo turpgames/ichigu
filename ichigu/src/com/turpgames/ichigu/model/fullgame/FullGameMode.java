@@ -16,7 +16,6 @@ public abstract class FullGameMode extends IchiguMode implements IResultScreenBu
 	protected final static float secondPerPenalty = 10f;
 
 	private FullGameHint hint;
-	private int selectedCardCount;
 
 	protected Text resultInfo;
 	protected TimerText timerText;
@@ -48,7 +47,7 @@ public abstract class FullGameMode extends IchiguMode implements IResultScreenBu
 
 	@Override
 	protected void initDealer() {
-		dealer = new FullGameCardDealer(this);
+		dealer = new FullGameCardDealer();
 	}
 	
 	protected abstract Timer getTimer();
@@ -91,27 +90,12 @@ public abstract class FullGameMode extends IchiguMode implements IResultScreenBu
 			notifyIchiguFound();
 		}
 		else {
-			tryAgain.show();
-			dealer.deselectCards();
-			notifyInvalidIchiguSelected();
 		}
 		return score;
 	}
 	
-	@Override
-	public void onCardTapped(Card card) {
-		super.onCardTapped(card);
+	public void cardTapped(Card card) {
 		hint.restartNotificationTimer();
-
-		if (card.isSelected())
-			selectedCardCount++;
-		else
-			selectedCardCount--;
-
-		if (selectedCardCount == FullGameCards.IchiguCardCount) {
-			checkIchigu();
-			selectedCardCount = 0;
-		}
 	}
 
 	protected void openExtraCards() {
@@ -128,11 +112,6 @@ public abstract class FullGameMode extends IchiguMode implements IResultScreenBu
 		timerText.flash();
 	}
 
-	protected void onDeckFinished() {
-		prepareResultInfoAndSaveHiscore();
-		notifyModeEnd();
-	}
-
 	@Override
 	public void onInsufficientHint() {
 		Ichigu.playSoundError();
@@ -144,7 +123,6 @@ public abstract class FullGameMode extends IchiguMode implements IResultScreenBu
 		getTimer().restart();
 		timerText.syncText();
 		resultScreenButtons.listenInput(false);
-		selectedCardCount = 0;
 		hint.activate();
 		super.onStartMode();
 	}
@@ -153,7 +131,6 @@ public abstract class FullGameMode extends IchiguMode implements IResultScreenBu
 	protected void onResetMode() {
 		getTimer().restart();
 		timerText.syncText();
-		selectedCardCount = 0;
 		super.onResetMode();
 	}
 	
@@ -199,7 +176,27 @@ public abstract class FullGameMode extends IchiguMode implements IResultScreenBu
 	}
 	
 	@Override
-	public void onCardsActivated() {
+	public void deal() {
+		super.deal();
 		hint.update();
+	}
+	
+	public void dealEnded() {
+		activateCards();
+	}
+	
+	public void deckFinished() {
+		prepareResultInfoAndSaveHiscore();
+		notifyModeEnd();
+	}
+	
+	@Override
+	public void ichiguFound() {
+		
+	}
+
+	@Override
+	public void invalidIchiguSelected() {
+		tryAgain.show();
 	}
 }

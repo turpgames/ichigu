@@ -8,7 +8,6 @@ import com.turpgames.framework.v0.util.Game;
 import com.turpgames.framework.v0.util.Timer;
 import com.turpgames.ichigu.model.display.TimerText;
 import com.turpgames.ichigu.model.display.WaitToast;
-import com.turpgames.ichigu.model.game.Card;
 import com.turpgames.ichigu.model.game.IResultScreenButtonsListener;
 import com.turpgames.ichigu.model.game.ResultScreenButtons;
 import com.turpgames.ichigu.model.singlegame.SingleGameCardDealer;
@@ -149,20 +148,7 @@ public class MiniChallengeMode extends SingleGameMode implements IResultScreenBu
 		resultScreenButtons.listenInput(false);
 		return true;
 	}
-
-	@Override
-	public void onCardTapped(Card selectedCard) {
-		int ichiguScore = dealer.getScore();
-		if (ichiguScore > 0) {
-			ichigusFound++;
-			ichigusFoundInfo.setText(Ichigu.getString(R.strings.found) + ": " + ichigusFound);
-		}
-		else {
-			block();
-		}
-		super.onCardTapped(selectedCard);
-	}
-
+	
 	@Override
 	public void deal() {
 		blockTimer.stop();
@@ -213,5 +199,18 @@ public class MiniChallengeMode extends SingleGameMode implements IResultScreenBu
 	@Override
 	protected void startTimer() {
 		challengeTimer.start();
+	}
+
+	@Override
+	public void ichiguFound() {
+		ichigusFound++;
+		ichigusFoundInfo.setText(Ichigu.getString(R.strings.found) + ": " + ichigusFound);
+		super.ichiguFound();
+	}
+
+	@Override
+	public void invalidIchiguSelected() {
+		block();
+		super.invalidIchiguSelected();
 	}
 }

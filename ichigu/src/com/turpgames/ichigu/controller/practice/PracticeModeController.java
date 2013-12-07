@@ -26,6 +26,17 @@ public class PracticeModeController extends IchiguController<PracticeModeState> 
 		setDealingState();
 	}
 
+
+	@Override
+	public void onDealEnded() {
+		currentState.onDealEnded();
+	}
+
+	@Override
+	public void onDeckFinished() {
+		currentState.onDeckFinished();
+	}
+	
 	public void setDealingState() {
 		setState(dealingState);
 	}

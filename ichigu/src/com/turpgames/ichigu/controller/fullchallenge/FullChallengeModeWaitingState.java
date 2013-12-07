@@ -23,19 +23,13 @@ public class FullChallengeModeWaitingState extends FullChallengeModeState {
 	public void onCardTapped(Card card) {
 		Game.vibrate(50);
 		Ichigu.playSoundFlip();
-		model.onCardTapped(card);
+		model.cardTapped(card);
 	}
 
 	@Override
 	public void onIchiguFound() {
-		Ichigu.playSoundSuccess();
-		Game.vibrate(100);
+		super.onIchiguFound();
+		model.ichiguFound();
 		controller.setDealingState();
-	}
-
-	@Override
-	public void onInvalidIchiguSelected() {
-		Ichigu.playSoundError();
-		Game.vibrate(0, 50, 50, 100);
 	}
 }
