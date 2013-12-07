@@ -1,4 +1,4 @@
-package com.turpgames.ichigu.model.fullgame.fullchallenge;
+package com.turpgames.ichigu.model.fullgame.modes;
 
 import com.turpgames.framework.v0.impl.Settings;
 import com.turpgames.framework.v0.impl.Text;

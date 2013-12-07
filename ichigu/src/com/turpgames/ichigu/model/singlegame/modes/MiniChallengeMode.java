@@ -1,4 +1,4 @@
-package com.turpgames.ichigu.model.singlegame.minichallenge;
+package com.turpgames.ichigu.model.singlegame.modes;
 
 import com.turpgames.framework.v0.forms.xml.Toast;
 import com.turpgames.framework.v0.impl.Settings;
@@ -10,6 +10,7 @@ import com.turpgames.ichigu.model.display.TimerText;
 import com.turpgames.ichigu.model.display.WaitToast;
 import com.turpgames.ichigu.model.game.IResultScreenButtonsListener;
 import com.turpgames.ichigu.model.game.ResultScreenButtons;
+import com.turpgames.ichigu.model.singlegame.ISingleGameModeListener;
 import com.turpgames.ichigu.model.singlegame.SingleGameCardDealer;
 import com.turpgames.ichigu.model.singlegame.SingleGameMode;
 import com.turpgames.ichigu.model.singlegame.SingleGameQuestion;
@@ -80,8 +81,8 @@ public class MiniChallengeMode extends SingleGameMode implements IResultScreenBu
 	}
 
 	@Override
-	public IMiniChallengeModeListener getModeListener() {
-		return (IMiniChallengeModeListener) super.modeListener;
+	public ISingleGameModeListener getModeListener() {
+		return (ISingleGameModeListener) super.modeListener;
 	}
 
 	private void notifyUnblocked() {

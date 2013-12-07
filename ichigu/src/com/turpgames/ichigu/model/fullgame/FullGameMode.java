@@ -7,6 +7,7 @@ import com.turpgames.ichigu.model.display.NoTipToast;
 import com.turpgames.ichigu.model.display.TimerText;
 import com.turpgames.ichigu.model.display.TryAgainToast;
 import com.turpgames.ichigu.model.game.Card;
+import com.turpgames.ichigu.model.game.IIchiguModeListener;
 import com.turpgames.ichigu.model.game.IResultScreenButtonsListener;
 import com.turpgames.ichigu.model.game.IchiguMode;
 import com.turpgames.ichigu.model.game.ResultScreenButtons;
@@ -69,8 +70,8 @@ public abstract class FullGameMode extends IchiguMode implements IResultScreenBu
 	}
 
 	@Override
-	public IFullGameModeListener getModeListener() {
-		return (IFullGameModeListener) super.modeListener;
+	public IIchiguModeListener getModeListener() {
+		return (IIchiguModeListener) super.modeListener;
 	}
 
 	private void notifyNewGame() {

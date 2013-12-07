@@ -1,11 +1,11 @@
-package com.turpgames.ichigu.controller.fullchallenge;
+package com.turpgames.ichigu.controller.fullgame;
 
 import com.turpgames.framework.v0.util.Game;
 import com.turpgames.ichigu.model.game.Card;
 import com.turpgames.ichigu.utils.Ichigu;
 
-public class FullChallengeModeWaitingState extends FullChallengeModeState {
-	public FullChallengeModeWaitingState(FullChallengeModeController controller) {
+public class FullGameWaitingState extends FullGameState {
+	public FullGameWaitingState(FullGameController controller) {
 		super(controller);
 	}
 

@@ -50,4 +50,14 @@ public abstract class IchiguController<T extends IchiguState> implements IIchigu
 		currentState = newState;
 		currentState.activated();
 	}
+	
+	@Override
+	public void onNewGame() {
+		
+	}
+	
+	@Override
+	public void onModeEnd() {
+		
+	}
 }

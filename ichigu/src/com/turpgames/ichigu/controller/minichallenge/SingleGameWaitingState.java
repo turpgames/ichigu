@@ -1,7 +1,7 @@
 package com.turpgames.ichigu.controller.minichallenge;
 
-public class MiniChallengeModeWaitingState extends MiniChallengeModeState {
-	public MiniChallengeModeWaitingState(MiniChallengeModeController controller) {
+public class SingleGameWaitingState extends SingleGameState {
+	public SingleGameWaitingState(SingleGameController controller) {
 		super(controller);
 	}
 

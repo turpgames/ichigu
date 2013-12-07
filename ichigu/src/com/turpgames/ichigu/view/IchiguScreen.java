@@ -57,4 +57,9 @@ public abstract class IchiguScreen extends Screen {
 		ScreenManager.instance.switchTo(R.game.screens.menu, true);
 		return true;
 	}
+
+	public void onExitConfirmed() {
+		unregisterDrawable(screenListener);
+		ScreenManager.instance.switchTo(R.game.screens.menu, true);
+	}
 }

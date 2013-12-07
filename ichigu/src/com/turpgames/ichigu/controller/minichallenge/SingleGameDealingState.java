@@ -1,7 +1,7 @@
-package com.turpgames.ichigu.controller.practice;
+package com.turpgames.ichigu.controller.minichallenge;
 
-public class PracticeModeDealingState extends PracticeModeState {
-	public PracticeModeDealingState(PracticeModeController controller) {
+public class SingleGameDealingState extends SingleGameState {
+	public SingleGameDealingState(SingleGameController controller) {
 		super(controller);
 	}
 
@@ -9,12 +9,12 @@ public class PracticeModeDealingState extends PracticeModeState {
 	protected void activated() {
 		model.deal();
 	}
-	
+
 	@Override
 	public void onDealEnded() {
 		controller.setWaitingState();
 	}
-	
+
 	@Override
 	public boolean onScreenDeactivated() {
 		return false;

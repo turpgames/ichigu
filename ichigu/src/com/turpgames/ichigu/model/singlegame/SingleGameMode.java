@@ -37,4 +37,8 @@ public abstract class SingleGameMode extends IchiguMode {
 	public void invalidIchiguSelected() {
 		question.startIncorrectEffect();
 	}
+
+	public void drawResultScreen() {
+		
+	}
 }

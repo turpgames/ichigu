@@ -1,26 +1,27 @@
-package com.turpgames.ichigu.controller.normal;
+package com.turpgames.ichigu.controller.fullgame;
 
 import com.turpgames.ichigu.controller.IchiguController;
-import com.turpgames.ichigu.model.fullgame.normal.NormalMode;
-import com.turpgames.ichigu.view.NormalModeScreen;
+import com.turpgames.ichigu.model.fullgame.FullGameMode;
+import com.turpgames.ichigu.model.game.IIchiguModeListener;
+import com.turpgames.ichigu.view.IchiguScreen;
 
-public class NormalModeController extends IchiguController<NormalModeState> implements INormalModeActionListener {
-	final NormalMode model;
-	final NormalModeScreen view;
+public class FullGameController extends IchiguController<FullGameState> implements IIchiguModeListener {
+	final FullGameMode model;
+	final IchiguScreen view;
 
-	private NormalModeState waitingState;
-	private NormalModeState dealingState;
-	private NormalModeState endState;
+	private FullGameState waitingState;
+	private FullGameState dealingState;
+	private FullGameState endState;
 
-	public NormalModeController(NormalModeScreen screen) {
+	public FullGameController(IchiguScreen screen, FullGameMode model) {
 		this.view = screen;
 
-		this.model = new NormalMode();
+		this.model = model;
 		this.model.setModeListener(this);
 
-		waitingState = new NormalModeWaitingState(this);
-		dealingState = new NormalModeDealingState(this);
-		endState = new NormalModeEndState(this);
+		waitingState = new FullGameWaitingState(this);
+		dealingState = new FullGameDealingState(this);
+		endState = new FullGameEndState(this);
 	}
 
 	@Override

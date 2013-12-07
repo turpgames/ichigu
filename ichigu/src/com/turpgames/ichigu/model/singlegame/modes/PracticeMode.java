@@ -1,15 +1,16 @@
-package com.turpgames.ichigu.model.singlegame.practice;
+package com.turpgames.ichigu.model.singlegame.modes;
 
 import com.turpgames.ichigu.model.display.TryAgainToast;
+import com.turpgames.ichigu.model.singlegame.SingleGameHint;
 import com.turpgames.ichigu.model.singlegame.SingleGameMode;
 import com.turpgames.ichigu.model.singlegame.SingleGameQuestion;
 
 public class PracticeMode extends SingleGameMode {
-	private PracticeModeHint hint;
+	private SingleGameHint hint;
 	private TryAgainToast tryAgain;
 	
 	public PracticeMode() {
-		hint = new PracticeModeHint(dealer);
+		hint = new SingleGameHint(dealer);
 		tryAgain = new TryAgainToast();
 		question = new SingleGameQuestion(0.3f, 1.2f);
 		

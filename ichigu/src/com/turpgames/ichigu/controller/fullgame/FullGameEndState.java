@@ -1,9 +1,9 @@
-package com.turpgames.ichigu.controller.fullchallenge;
+package com.turpgames.ichigu.controller.fullgame;
 
 import com.turpgames.ichigu.utils.Ichigu;
 
-public class FullChallengeModeEndState extends FullChallengeModeState {
-	public FullChallengeModeEndState(FullChallengeModeController controller) {
+public class FullGameEndState extends FullGameState {
+	public FullGameEndState(FullGameController controller) {
 		super(controller);
 	}
 
@@ -12,13 +12,13 @@ public class FullChallengeModeEndState extends FullChallengeModeState {
 		Ichigu.playSoundTimeUp();
 		model.endMode();
 	}
-	
+
 	@Override
 	public void onNewGame() {
 		model.startMode();
 		controller.setDealingState();
 	}
-
+	
 	@Override
 	public void draw() {
 		model.drawResult();

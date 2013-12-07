@@ -1,4 +1,4 @@
-package com.turpgames.ichigu.model.singlegame.practice;
+package com.turpgames.ichigu.model.singlegame;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +15,7 @@ import com.turpgames.ichigu.model.game.CardDealer;
 import com.turpgames.ichigu.utils.Ichigu;
 import com.turpgames.ichigu.utils.R;
 
-class PracticeModeHint implements IDrawable, Toast.IToastListener, IEffectEndListener {
+public class SingleGameHint implements IDrawable, Toast.IToastListener, IEffectEndListener {
 	private static final float buttonSize = Game.scale(R.ui.imageButtonWidth);
 	
 	private List<String> hints;
@@ -28,7 +28,7 @@ class PracticeModeHint implements IDrawable, Toast.IToastListener, IEffectEndLis
 	
 	private CardDealer dealer;
 
-	PracticeModeHint(CardDealer dealer) {
+	public SingleGameHint(CardDealer dealer) {
 		this.dealer = dealer;
 		
 		hints = new ArrayList<String>();

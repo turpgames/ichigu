@@ -2,26 +2,27 @@ package com.turpgames.ichigu.controller.minichallenge;
 
 import com.turpgames.ichigu.controller.IchiguController;
 import com.turpgames.ichigu.model.game.Card;
-import com.turpgames.ichigu.model.singlegame.minichallenge.MiniChallengeMode;
-import com.turpgames.ichigu.view.MiniChallengeModeScreen;
+import com.turpgames.ichigu.model.singlegame.ISingleGameModeListener;
+import com.turpgames.ichigu.model.singlegame.SingleGameMode;
+import com.turpgames.ichigu.view.IchiguScreen;
 
-public class MiniChallengeModeController extends IchiguController<MiniChallengeModeState> implements IMiniChallengeModeActionListener {
-	final MiniChallengeMode model;
-	final MiniChallengeModeScreen view;
+public class SingleGameController extends IchiguController<SingleGameState> implements ISingleGameModeListener {
+	final SingleGameMode model;
+	final IchiguScreen view;
 
-	private MiniChallengeModeState waitingState;
-	private MiniChallengeModeState dealingState;
-	private MiniChallengeModeState blockedState;
-	private MiniChallengeModeState modeEndState;
+	private SingleGameState waitingState;
+	private SingleGameState dealingState;
+	private SingleGameState blockedState;
+	private SingleGameState modeEndState;
 
-	public MiniChallengeModeController(MiniChallengeModeScreen screen) {
-		view = screen;
-		model = new MiniChallengeMode();
-		model.setModeListener(this);
-		waitingState = new MiniChallengeModeWaitingState(this);
-		dealingState = new MiniChallengeModeDealingState(this);
-		blockedState = new MiniChallengeModeBlockedState(this);
-		modeEndState = new MiniChallengeModeEndState(this);
+	public SingleGameController(IchiguScreen screen, SingleGameMode model) {
+		this.view = screen;
+		this.model = model;
+		this.model.setModeListener(this);
+		waitingState = new SingleGameWaitingState(this);
+		dealingState = new SingleGameDealingState(this);
+		blockedState = new SingleGameBlockedState(this);
+		modeEndState = new SingleGameEndState(this);
 	}
 
 	@Override
@@ -43,11 +44,6 @@ public class MiniChallengeModeController extends IchiguController<MiniChallengeM
 	@Override
 	public void onUnblock() {
 		currentState.onUnblock();
-	}
-
-	@Override
-	public void onDealTimeUp() {
-		currentState.onDealTimeUp();
 	}
 
 	@Override

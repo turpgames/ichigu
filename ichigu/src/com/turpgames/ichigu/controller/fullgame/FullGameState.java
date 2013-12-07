@@ -1,16 +1,17 @@
-package com.turpgames.ichigu.controller.fullchallenge;
+package com.turpgames.ichigu.controller.fullgame;
 
 import com.turpgames.ichigu.controller.IchiguState;
-import com.turpgames.ichigu.model.fullgame.fullchallenge.FullChallengeMode;
+import com.turpgames.ichigu.model.fullgame.FullGameMode;
+import com.turpgames.ichigu.model.game.IIchiguModeListener;
 import com.turpgames.ichigu.model.game.IchiguBank;
-import com.turpgames.ichigu.view.FullChallengeModeScreen;
+import com.turpgames.ichigu.view.IchiguScreen;
 
-public abstract class FullChallengeModeState extends IchiguState implements IFullChallengeModeActionListener {
-	final FullChallengeMode model;
-	final FullChallengeModeScreen view;
-	final FullChallengeModeController controller;
+public abstract class FullGameState extends IchiguState implements IIchiguModeListener {
+	final FullGameMode model;
+	final IchiguScreen view;
+	final FullGameController controller;
 
-	public FullChallengeModeState(FullChallengeModeController controller) {
+	public FullGameState(FullGameController controller) {
 		this.controller = controller;
 		this.model = controller.model;
 		this.view = controller.view;
@@ -30,17 +31,17 @@ public abstract class FullChallengeModeState extends IchiguState implements IFul
 	public void onDealEnded() {
 		model.dealEnded();
 	}
-
+	
 	@Override
 	public void onDeckFinished() {
 		model.deckFinished();	
 	}
-		
+	
 	@Override
 	public void onExitConfirmed() {
 		view.onExitConfirmed();
 	}
-	
+
 	@Override
 	public void draw() {
 		model.draw();

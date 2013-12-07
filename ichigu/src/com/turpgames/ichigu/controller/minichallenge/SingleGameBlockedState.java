@@ -3,8 +3,8 @@ package com.turpgames.ichigu.controller.minichallenge;
 import com.turpgames.ichigu.model.game.Card;
 import com.turpgames.ichigu.utils.Ichigu;
 
-public class MiniChallengeModeBlockedState extends MiniChallengeModeState {
-	public MiniChallengeModeBlockedState(MiniChallengeModeController controller) {
+public class SingleGameBlockedState extends SingleGameState {
+	public SingleGameBlockedState(SingleGameController controller) {
 		super(controller);
 	}
 
