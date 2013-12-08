@@ -11,7 +11,7 @@ import com.turpgames.framework.v0.forms.xml.Toast;
 import com.turpgames.framework.v0.util.Game;
 import com.turpgames.ichigu.model.game.Card;
 import com.turpgames.ichigu.model.game.CardAttributes;
-import com.turpgames.ichigu.model.game.CardDealer;
+import com.turpgames.ichigu.model.game.newmodels.Table;
 import com.turpgames.ichigu.utils.Ichigu;
 import com.turpgames.ichigu.utils.R;
 
@@ -26,10 +26,10 @@ public class SingleGameHint implements IDrawable, Toast.IToastListener, IEffectE
 	private ImageButton hintButton;
 	private int colorIndex;
 	
-	private CardDealer dealer;
+	private Table table;
 
-	public SingleGameHint(CardDealer dealer) {
-		this.dealer = dealer;
+	public SingleGameHint(Table table) {
+		this.table = table;
 		
 		hints = new ArrayList<String>();
 
@@ -109,12 +109,12 @@ public class SingleGameHint implements IDrawable, Toast.IToastListener, IEffectE
 	}
 
 	public void update() {
-		Card[] hintCards = dealer.getCardsForHints();
+		List<Card> hintCards = table.getCardsForHints();
 		
-		CardAttributes ca1 = hintCards[0].getAttributes();
-		CardAttributes ca2 = hintCards[1].getAttributes();
+		CardAttributes ca1 = hintCards.get(0).getAttributes();
+		CardAttributes ca2 = hintCards.get(1).getAttributes();
 
-		this.thirdCard = hintCards[2];
+		this.thirdCard = hintCards.get(2);
 
 		isDisplayingHint = false;
 		index = 0;

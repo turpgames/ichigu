@@ -80,7 +80,15 @@ public final class CardAttributes {
 	public static int getThird(int a1, int a2) {
 		return AllDiff ^ a1 ^ a2;
 	}
-
+	
+	public static CardAttributes getThirdCardAttributes(CardAttributes a1, CardAttributes a2) {
+		int color = CardAttributes.getCompleting(a1.getColor(), a2.getColor());
+		int shape = CardAttributes.getCompleting(a1.getShape(), a2.getShape());
+		int count = CardAttributes.getCompleting(a1.getCount(), a2.getCount());
+		int pattern = CardAttributes.getCompleting(a1.getPattern(), a2.getPattern());
+		return new CardAttributes(color, shape, count, pattern);
+	}
+	
 	public static String getColorName(int color) {
 		if (color == Color_Blue)
 			return "Blue";

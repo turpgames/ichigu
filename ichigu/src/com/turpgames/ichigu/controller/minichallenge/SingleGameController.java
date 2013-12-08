@@ -1,7 +1,6 @@
 package com.turpgames.ichigu.controller.minichallenge;
 
 import com.turpgames.ichigu.controller.IchiguController;
-import com.turpgames.ichigu.model.game.Card;
 import com.turpgames.ichigu.model.singlegame.ISingleGameModeListener;
 import com.turpgames.ichigu.model.singlegame.SingleGameMode;
 import com.turpgames.ichigu.view.IchiguScreen;
@@ -34,11 +33,6 @@ public class SingleGameController extends IchiguController<SingleGameState> impl
 	@Override
 	public void onNewGame() {
 		currentState.onNewGame();
-	}
-
-	@Override
-	public void onCardTapped(Card card) {
-		currentState.onCardTapped(card);
 	}
 
 	@Override
@@ -79,6 +73,6 @@ public class SingleGameController extends IchiguController<SingleGameState> impl
 
 	@Override
 	public void onDeckFinished() {
-		currentState.onDeckFinished();
+		
 	}
 }

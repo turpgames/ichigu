@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.turpgames.framework.v0.ITexture;
+import com.turpgames.framework.v0.effects.Effect;
+import com.turpgames.framework.v0.effects.IEffectEndListener;
 import com.turpgames.framework.v0.util.Game;
 import com.turpgames.framework.v0.util.Rotation;
 import com.turpgames.framework.v0.util.Utils;
@@ -22,31 +24,6 @@ public class Card extends IchiguObject {
 
 	public static final int CardsInDeck = 81;
 
-	private static void createDeck(Card[] deck, ICardListener eventListener) {
-		int[] colors = new int[] { CardAttributes.Color_Red, CardAttributes.Color_Green, CardAttributes.Color_Blue };
-		int[] shapes = new int[] { CardAttributes.Shape_Circle, CardAttributes.Shape_Square, CardAttributes.Shape_Triangle };
-		int[] counts = new int[] { CardAttributes.Count_1, CardAttributes.Count_2, CardAttributes.Count_3 };
-		int[] patterns = new int[] { CardAttributes.Pattern_Empty, CardAttributes.Pattern_Filled, CardAttributes.Pattern_Striped };
-
-		for (int i = 0; i < colors.length; i++) {
-			for (int j = 0; j < shapes.length; j++) {
-				for (int k = 0; k < counts.length; k++) {
-					for (int n = 0; n < patterns.length; n++) {
-						Card card = new Card(new CardAttributes(colors[i], shapes[j], counts[k], patterns[n]), eventListener);
-						deck[i + j * 3 + k * 9 + n * 27] = card;
-					}
-				}
-			}
-		}
-	}
-
-	public static Card[] newDeck(ICardListener eventListener) {
-		Card[] deck = new Card[81];
-		createDeck(deck, eventListener);
-		Utils.shuffle(deck);
-		return deck;
-	}
-
 	public static int getIchiguScore(Card card1, Card card2, Card card3) {
 		return CardAttributes.getIchiguScore(card1.attributes, card2.attributes, card3.attributes);
 	}
@@ -55,6 +32,20 @@ public class Card extends IchiguObject {
 		return CardAttributes.isIchigu(card1.attributes, card2.attributes, card3.attributes);
 	}
 
+	public static int getIchiguCount(List<Card>cards) {
+		int count = 0;
+		for (int i = 0; i < cards.size(); i++) {
+			for (int j = i + 1; j < cards.size(); j++) {
+				for (int k = j + 1; k < cards.size(); k++) {
+					if (isIchigu(cards.get(i), cards.get(j), cards.get(k))) {
+						count++;
+					}
+				}
+			}
+		}
+		return count;
+	}
+	
 	// endregion
 
 	private boolean isOpened;
@@ -64,7 +55,9 @@ public class Card extends IchiguObject {
 	private CardAttributes attributes;
 	private ICardListener eventListener;
 
-	Card(CardAttributes cardAttributes, ICardListener eventListener) {
+	private Effect dealerEffect;
+	
+	public Card(CardAttributes cardAttributes, ICardListener eventListener) {
 		this.attributes = cardAttributes;
 		this.eventListener = eventListener;
 		
@@ -94,10 +87,6 @@ public class Card extends IchiguObject {
 		}
 	}
 
-	private void switchSelected() {
-		isSelected = !isSelected;
-	}
-
 	public void activate() {
 		listenInput(true);
 	}
@@ -110,18 +99,18 @@ public class Card extends IchiguObject {
 		return isOpened;
 	}
 
-	public void open() {
-		isOpened = true;
-	}
-
-	public void close() {
-		isOpened = false;
+	public void open(boolean open) {
+		isOpened = open;
 	}
 
 	public boolean isSelected() {
 		return isSelected;
 	}
-
+	
+	public void select() {
+		isSelected = true;
+	}
+	
 	public void deselect() {
 		isSelected = false;
 	}
@@ -155,7 +144,6 @@ public class Card extends IchiguObject {
 
 	@Override
 	protected boolean onTap() {
-		switchSelected();
 		notifyTapped();
 		return true;
 	}
@@ -167,7 +155,7 @@ public class Card extends IchiguObject {
 
 	public static Card createTutorialCard(int color, int shape, int count, int pattern, float x, float y) {
 		Card card = new Card(new CardAttributes(color, shape, count, pattern), null);
-		card.open();
+		card.open(true);
 		card.getLocation().set(x, y);
 		return card;
 	}
@@ -175,5 +163,26 @@ public class Card extends IchiguObject {
 	@Override
 	public void registerSelf() {
 		Game.getInputManager().register(this, Utils.LAYER_GAME);
+	}
+
+	public void startDealerEffect(IEffectEndListener listener) {
+		if (!hasDealerEffect()) {
+			listener.onEffectEnd(null);
+			return;
+		}
+		dealerEffect.setListener(listener);
+		dealerEffect.start(listener);
+	}
+	
+	public void setDealerEffect(Effect effect) {
+		dealerEffect = effect;
+	}
+
+	public boolean hasDealerEffect() {
+		return dealerEffect != null;
+	}
+	
+	public void resetDealerEffect() {
+		dealerEffect = null;
 	}
 }

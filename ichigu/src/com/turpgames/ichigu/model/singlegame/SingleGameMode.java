@@ -4,6 +4,7 @@ import com.turpgames.framework.v0.util.Game;
 import com.turpgames.framework.v0.util.ShapeDrawer;
 import com.turpgames.ichigu.model.game.Card;
 import com.turpgames.ichigu.model.game.IchiguMode;
+import com.turpgames.ichigu.model.game.newmodels.SingleGameTable;
 import com.turpgames.ichigu.utils.R;
 
 public abstract class SingleGameMode extends IchiguMode {
@@ -13,13 +14,13 @@ public abstract class SingleGameMode extends IchiguMode {
 	protected SingleGameQuestion question;
 
 	@Override
-	protected void initDealer() {
-		dealer = new SingleGameCardDealer();
+	protected void initTable() {
+		table = new SingleGameTable();
 	}
 
 	@Override
 	protected void onDraw() {
-		dealer.drawCards();
+		table.drawCards();
 		question.draw();
 		
 		ShapeDrawer.drawRect(Game.getVirtualWidth() / 2 - Card.Width * 1.5f - 60, (Game.getVirtualHeight() - dividerHeight) / 2 - 17,
@@ -29,12 +30,12 @@ public abstract class SingleGameMode extends IchiguMode {
 	}
 
 	@Override
-	public void ichiguFound() {
+	public void concreteIchiguFound() {
 		question.startCorrectEffect();
 	}
 
 	@Override
-	public void invalidIchiguSelected() {
+	public void concreteInvalidIchiguSelected() {
 		question.startIncorrectEffect();
 	}
 

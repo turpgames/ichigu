@@ -6,16 +6,6 @@ public class SingleGameWaitingState extends SingleGameState {
 	}
 
 	@Override
-	protected void activated() {
-		model.activateCards();
-	}
-
-	@Override
-	protected void deactivated() {
-		model.deactivateCards();
-	}
-
-	@Override
 	public void onIchiguFound() {
 		super.onIchiguFound();
 		model.ichiguFound();

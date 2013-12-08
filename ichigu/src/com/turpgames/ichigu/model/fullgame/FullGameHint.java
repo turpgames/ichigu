@@ -10,6 +10,7 @@ import com.turpgames.framework.v0.util.Game;
 import com.turpgames.framework.v0.util.Timer;
 import com.turpgames.ichigu.model.game.Card;
 import com.turpgames.ichigu.model.game.IchiguBank;
+import com.turpgames.ichigu.model.game.newmodels.Table;
 import com.turpgames.ichigu.utils.Ichigu;
 import com.turpgames.ichigu.utils.R;
 
@@ -29,10 +30,10 @@ public class FullGameHint implements IDrawable, IEffectEndListener, Toast.IToast
 
 	private IHintListener hintListener;
 
-	private FullGameCardDealer dealer;
+	private Table table;
 	
-	FullGameHint(FullGameCardDealer dealer) {
-		this.dealer = dealer;
+	FullGameHint(Table table) {
+		this.table = table;
 		
 		button = new BlinkingImageButton(buttonSize, buttonSize, R.colors.ichiguWhite, R.colors.ichiguYellow, 1f, 10);
 		button.setTexture(R.game.textures.hint);
@@ -104,7 +105,7 @@ public class FullGameHint implements IDrawable, IEffectEndListener, Toast.IToast
 	}
 
 	public void update() {
-		ichiguInfo.update(dealer.getCardsForHints());
+		ichiguInfo.update(table.getCardsForHints());
 		toast.hide();
 		hintIndex = 0;
 		isActive = false;

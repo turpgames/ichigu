@@ -14,11 +14,6 @@ public abstract class IchiguState implements IIchiguController {
 	}
 
 	@Override
-	public void onCardTapped(Card card) {
-
-	}
-
-	@Override
 	public void onIchiguFound() {
 		Ichigu.playSoundSuccess();
 		Game.vibrate(50);
@@ -42,12 +37,7 @@ public abstract class IchiguState implements IIchiguController {
 	}
 	
 	@Override
-	public void onDealEnded() {
-	
-	}
-	
-	@Override
-	public void onDeckFinished() {
+	public void onCardTapped(Card card) {
 		
 	}
 }

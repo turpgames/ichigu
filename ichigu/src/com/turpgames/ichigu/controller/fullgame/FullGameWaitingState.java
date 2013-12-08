@@ -10,16 +10,6 @@ public class FullGameWaitingState extends FullGameState {
 	}
 
 	@Override
-	protected void activated() {
-		model.activateCards();
-	}
-
-	@Override
-	protected void deactivated() {
-		model.deactivateCards();
-	}
-
-	@Override
 	public void onCardTapped(Card card) {
 		Game.vibrate(50);
 		Ichigu.playSoundFlip();
@@ -31,5 +21,11 @@ public class FullGameWaitingState extends FullGameState {
 		super.onIchiguFound();
 		model.ichiguFound();
 		controller.setDealingState();
+	}
+	
+	@Override
+	public void onInvalidIchiguSelected() {
+		super.onInvalidIchiguSelected();
+		model.invalidIchiguSelected();
 	}
 }

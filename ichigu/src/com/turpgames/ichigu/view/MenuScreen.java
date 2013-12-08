@@ -57,12 +57,16 @@ public class MenuScreen extends FormScreen implements IGameExitListener {
 			}
 			
 			@Override
+			public boolean ignoreViewport() {
+				return true;
+			}
+			@Override
 			public void registerSelf() {
 				
 			}
 		};
-		bg.setWidth(Game.getVirtualWidth());
-		bg.setHeight(Game.getVirtualHeight());
+		bg.setWidth(Game.getScreenWidth());
+		bg.setHeight(Game.getScreenHeight());
 		bg.getColor().set(R.colors.ichiguYellow);
 		registerDrawable(bg, Utils.LAYER_BACKGROUND);
 		registerDrawable(logo, Utils.LAYER_BACKGROUND);

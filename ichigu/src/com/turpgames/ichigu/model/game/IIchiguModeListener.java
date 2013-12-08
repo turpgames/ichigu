@@ -1,6 +1,8 @@
 package com.turpgames.ichigu.model.game;
 
-public interface IIchiguModeListener extends ICardDealerListener {
+import com.turpgames.ichigu.model.game.newmodels.ITableListener;
+
+public interface IIchiguModeListener extends ITableListener {
 	void onExitConfirmed();
 
 	void onModeEnd();

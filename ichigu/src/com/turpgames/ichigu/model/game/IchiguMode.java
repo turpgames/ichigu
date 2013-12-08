@@ -6,13 +6,15 @@ import com.turpgames.framework.v0.component.ImageButton;
 import com.turpgames.framework.v0.forms.xml.Dialog;
 import com.turpgames.framework.v0.util.Game;
 import com.turpgames.ichigu.model.display.IchiguDialog;
+import com.turpgames.ichigu.model.game.newmodels.ITableListener;
+import com.turpgames.ichigu.model.game.newmodels.Table;
 import com.turpgames.ichigu.utils.Ichigu;
 import com.turpgames.ichigu.utils.R;
 
 public abstract class IchiguMode implements IDrawable {
 	protected final static float buttonSize = Game.scale(R.ui.imageButtonWidth);
 
-	protected CardDealer dealer;
+	protected Table table;
 	protected IIchiguModeListener modeListener;
 
 	protected ImageButton resetButton;
@@ -57,31 +59,33 @@ public abstract class IchiguMode implements IDrawable {
 			}
 		});
 		
-		initDealer();
+		initTable();
 	}
 
-	protected abstract void initDealer();
+	protected abstract void initTable();
 	
 	protected abstract void pauseTimer();
 
 	protected abstract void startTimer();
 	
-	abstract public void ichiguFound();
+	public final void ichiguFound() {
+		table.afterIchiguFound();
+		concreteIchiguFound();
+	}
 	
-	abstract public void invalidIchiguSelected();
-	
-	public void activateCards() {
-		dealer.activateCards();
+	public final void invalidIchiguSelected() {
+		table.afterInvalidIchiguSelected();
+		concreteInvalidIchiguSelected();
 	}
 
-	public void deactivateCards() {
-		dealer.deactivateCards();
-	}
+	abstract public void concreteInvalidIchiguSelected();
+	
+	abstract public void concreteIchiguFound(); 
 	
 	protected abstract void prepareResultInfoAndSaveHiscore();
 	
 	public void openCloseCards(boolean open) {
-		dealer.openCloseCards(open);
+		table.openCloseCards(open);
 	}
 	
 	private void onResetConfirmed(boolean reset) {
@@ -137,18 +141,17 @@ public abstract class IchiguMode implements IDrawable {
 			modeListener.onInvalidIchiguSelected();
 	}
 
-	public void setModeListener(IIchiguModeListener modeListener) {
-		this.modeListener = modeListener;
-		setDealerListener(modeListener);
+	public void setModeListener(IIchiguModeListener controller) {
+		this.modeListener = controller;
+		setTableListener(controller);
 	}
 
-	private void setDealerListener(ICardDealerListener dealerListener) {
-		if (dealer != null)
-			dealer.setListener(dealerListener);
+	private void setTableListener(ITableListener controller) {
+		table.setListener(controller);
 	}
 
 	public void deal() {
-		dealer.deal();
+		table.deal();
 	}
 
 	public final void startMode() {
@@ -160,7 +163,7 @@ public abstract class IchiguMode implements IDrawable {
 	}
 	
 	public final void endMode() {
-		dealer.end();
+		table.end();
 		onEndMode();
 	}
 
@@ -171,19 +174,19 @@ public abstract class IchiguMode implements IDrawable {
 	protected void onStartMode() {
 		isExitConfirmed = false;
 		resetButton.listenInput(true);
-		dealer.start();
+		table.start();
 	}
 
 	protected void onResetMode() {
 		resetButton.listenInput(true);
-		dealer.reset();
-		dealer.deal();
+		table.reset();
+		table.deal();
 	}
 	
 	protected void onEndMode() {
 		isExitConfirmed = true;
 		resetConfirmDialog.close();
-		dealer.end();
+		table.end();
 	}
 
 	protected boolean onExitMode() {
@@ -195,11 +198,12 @@ public abstract class IchiguMode implements IDrawable {
 		isExitConfirmed = false;
 		resetConfirmDialog.close();
 		resetButton.listenInput(false);
-		dealer.end();
+		table.end();
 		return true;
 	}
 
 	public final void draw() {
+		table.drawCards();
 		onDraw();
 	}
 

@@ -6,11 +6,11 @@ import com.turpgames.ichigu.model.singlegame.SingleGameMode;
 import com.turpgames.ichigu.model.singlegame.SingleGameQuestion;
 
 public class PracticeMode extends SingleGameMode {
-	private SingleGameHint hint;
+//	private SingleGameHint hint;
 	private TryAgainToast tryAgain;
 	
 	public PracticeMode() {
-		hint = new SingleGameHint(dealer);
+//		hint = new SingleGameHint(table);
 		tryAgain = new TryAgainToast();
 		question = new SingleGameQuestion(0.3f, 1.2f);
 		
@@ -19,7 +19,7 @@ public class PracticeMode extends SingleGameMode {
 
 	@Override
 	protected boolean onExitMode() {
-		hint.deactivate();
+//		hint.deactivate();
 		isExitConfirmed = true;
 		return super.onExitMode();
 	}
@@ -28,12 +28,12 @@ public class PracticeMode extends SingleGameMode {
 	public void deal() {
 		super.deal();
 		tryAgain.hide();
-		hint.update();
+//		hint.update();
 	}
 
 	@Override
 	protected void onDraw() {
-		hint.draw();
+//		hint.draw();
 		super.onDraw();
 	}
 
@@ -53,8 +53,8 @@ public class PracticeMode extends SingleGameMode {
 	}
 
 	@Override
-	public void invalidIchiguSelected() {
+	public void concreteInvalidIchiguSelected() {
 		tryAgain.show();
-		super.invalidIchiguSelected();
+		super.concreteInvalidIchiguSelected();
 	}
 }

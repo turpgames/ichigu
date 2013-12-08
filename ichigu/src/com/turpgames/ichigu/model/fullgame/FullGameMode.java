@@ -11,12 +11,13 @@ import com.turpgames.ichigu.model.game.IIchiguModeListener;
 import com.turpgames.ichigu.model.game.IResultScreenButtonsListener;
 import com.turpgames.ichigu.model.game.IchiguMode;
 import com.turpgames.ichigu.model.game.ResultScreenButtons;
+import com.turpgames.ichigu.model.game.newmodels.FullGameTable;
 import com.turpgames.ichigu.utils.Ichigu;
 
 public abstract class FullGameMode extends IchiguMode implements IResultScreenButtonsListener, IHintListener {
 	protected final static float secondPerPenalty = 10f;
 
-	private FullGameHint hint;
+//	private FullGameHint hint;
 
 	protected Text resultInfo;
 	protected TimerText timerText;
@@ -29,10 +30,10 @@ public abstract class FullGameMode extends IchiguMode implements IResultScreenBu
 	public FullGameMode() {
 		resultScreenButtons = new ResultScreenButtons(this);
 
-		hint = new FullGameHint(getDealer());
-		hint.setLocation(10, Game.viewportToScreenY(30));
-		hint.activate();
-		hint.setHintListener(this);
+//		hint = new FullGameHint(table);
+//		hint.setLocation(10, Game.viewportToScreenY(30));
+//		hint.activate();
+//		hint.setHintListener(this);
 
 		tryAgain = new TryAgainToast();
 		noTip = new NoTipToast();
@@ -47,8 +48,8 @@ public abstract class FullGameMode extends IchiguMode implements IResultScreenBu
 	}
 
 	@Override
-	protected void initDealer() {
-		dealer = new FullGameCardDealer();
+	protected void initTable() {
+		table = new FullGameTable();
 	}
 	
 	protected abstract Timer getTimer();
@@ -56,17 +57,13 @@ public abstract class FullGameMode extends IchiguMode implements IResultScreenBu
 	@Override
 	protected void pauseTimer() {
 		getTimer().pause();
-		hint.deactivate();
+//		hint.deactivate();
 	}
 
 	@Override
 	protected void startTimer() {
 		getTimer().start();
-		hint.activate();
-	}
-
-	protected FullGameCardDealer getDealer() {
-		return (FullGameCardDealer) dealer;
+//		hint.activate();
 	}
 
 	@Override
@@ -85,29 +82,18 @@ public abstract class FullGameMode extends IchiguMode implements IResultScreenBu
 			getModeListener().onModeEnd();
 	}
 
-	protected int checkIchigu() {
-		int score = dealer.getScore();
-		if (score > 0) {
-			notifyIchiguFound();
-		}
-		else {
-		}
-		return score;
-	}
-	
 	public void cardTapped(Card card) {
-		hint.restartNotificationTimer();
+//		hint.restartNotificationTimer();
 	}
 
-	protected void openExtraCards() {
-		((FullGameCardDealer)dealer).openExtraCards();
+	protected void onOpenExtraCards() {
 		applyTimePenalty();
-		hint.update();
+//		hint.update();
 	}
 
 	private void applyTimePenalty() {
-		if (hint.getIchiguCount() == 0)
-			return;
+//		if (hint.getIchiguCount() == 0)
+//			return;
 		
 		getTimer().addSeconds(secondPerPenalty);
 		timerText.flash();
@@ -124,7 +110,7 @@ public abstract class FullGameMode extends IchiguMode implements IResultScreenBu
 		getTimer().restart();
 		timerText.syncText();
 		resultScreenButtons.listenInput(false);
-		hint.activate();
+//		hint.activate();
 		super.onStartMode();
 	}
 
@@ -138,7 +124,7 @@ public abstract class FullGameMode extends IchiguMode implements IResultScreenBu
 	@Override
 	protected void onEndMode() {
 		getTimer().stop();
-		hint.deactivate();
+//		hint.deactivate();
 		resultScreenButtons.listenInput(true);
 		super.onEndMode();
 	}
@@ -149,15 +135,15 @@ public abstract class FullGameMode extends IchiguMode implements IResultScreenBu
 			return false;
 		getTimer().stop();
 		resultScreenButtons.listenInput(false);
-		hint.deactivate();
+//		hint.deactivate();
 		return true;
 	}
 
 	@Override
 	protected void onDraw() {
-		dealer.drawCards();
+		table.drawCards();
 		timerText.draw();
-		hint.draw();
+//		hint.draw();
 		super.onDraw();
 	}
 
@@ -179,25 +165,25 @@ public abstract class FullGameMode extends IchiguMode implements IResultScreenBu
 	@Override
 	public void deal() {
 		super.deal();
-		hint.update();
+//		hint.update();
 	}
 	
 	public void dealEnded() {
-		activateCards();
+		
 	}
 	
 	public void deckFinished() {
 		prepareResultInfoAndSaveHiscore();
 		notifyModeEnd();
 	}
-	
-	@Override
-	public void ichiguFound() {
-		
-	}
 
 	@Override
-	public void invalidIchiguSelected() {
+	public void concreteIchiguFound() {
+		
+	}
+	
+	@Override
+	public void concreteInvalidIchiguSelected() {
 		tryAgain.show();
 	}
 }

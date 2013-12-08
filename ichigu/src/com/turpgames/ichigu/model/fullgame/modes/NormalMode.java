@@ -49,7 +49,7 @@ public class NormalMode extends FullGameMode {
 	
 	@Override
 	protected void onDraw() {
-		remaingCardInfo.setText(getDealer().getIndex() + "/" + Card.CardsInDeck);
+		remaingCardInfo.setText(table.getDealtCardCount() + "/" + Card.CardsInDeck);
 		remaingCardInfo.draw();
 		super.onDraw();
 	}

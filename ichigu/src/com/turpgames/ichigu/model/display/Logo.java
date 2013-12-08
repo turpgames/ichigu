@@ -17,7 +17,7 @@ public class Logo extends GameObject {
 
 		setWidth(logoSize);
 		setHeight(logoSize);
-		getLocation().set((Game.getVirtualWidth() - logoSize) / 2, Game.getVirtualHeight() - logoSize - 50f);
+		getLocation().set((Game.getScreenWidth() - logoSize) / 2, 26*Game.getScreenHeight()/32);
 	}
 
 	@Override
@@ -25,6 +25,11 @@ public class Logo extends GameObject {
 		TextureDrawer.draw(logo, this);
 	}
 
+	@Override
+	public boolean ignoreViewport() {
+		return true;
+	}
+	
 	@Override
 	public void registerSelf() {
 		Game.getInputManager().register(this, Utils.LAYER_SCREEN);

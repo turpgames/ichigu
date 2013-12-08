@@ -9,16 +9,6 @@ public class SingleGameBlockedState extends SingleGameState {
 	}
 
 	@Override
-	protected void activated() {
-		model.activateCards();
-	}
-
-	@Override
-	protected void deactivated() {
-		model.deactivateCards();
-	}
-	
-	@Override
 	public void onCardTapped(Card card) {
 		card.deselect();
 	}
