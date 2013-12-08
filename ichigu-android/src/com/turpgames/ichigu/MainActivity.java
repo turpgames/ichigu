@@ -19,7 +19,7 @@ public class MainActivity extends AndroidApplication {
 		cfg.useAccelerometer = false;
 		cfg.useCompass = false;
 				
-		Game.environmentProvider = new AndroidProvider(getApplicationContext());
+		Game.setEnvironmentProvider(new AndroidProvider(getApplicationContext()));
 
 		initialize(new GdxGame(), cfg);
 	}

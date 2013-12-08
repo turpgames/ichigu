@@ -4,6 +4,7 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.turpgames.framework.v0.IEnvironmentProvider;
 import com.turpgames.framework.v0.impl.libgdx.GdxGame;
+import com.turpgames.framework.v0.social.ISocializer;
 import com.turpgames.framework.v0.util.Game;
 import com.turpgames.framework.v0.util.Version;
 
@@ -24,12 +25,17 @@ public class Main {
 		cfg.width = (int) (x * w);
 		cfg.height = (int) (x * h);
 		
-		Game.environmentProvider = new IEnvironmentProvider() {			
+		Game.setEnvironmentProvider(new IEnvironmentProvider() {			
 			@Override
 			public Version getVersion() {
 				return new Version("1.1");
 			}
-		};
+			
+			@Override
+			public ISocializer getSocializer() {
+				return null;
+			}			
+		});
 
 		new LwjglApplication(new GdxGame(), cfg);
 	}
