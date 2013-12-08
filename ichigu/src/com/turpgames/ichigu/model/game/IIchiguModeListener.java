@@ -1,9 +1,11 @@
 package com.turpgames.ichigu.model.game;
 
-public interface IIchiguModeListener extends ICardListener {
-	void onIchiguFound();
+import com.turpgames.ichigu.model.game.newmodels.ITableListener;
 
-	void onInvalidIchiguSelected();
-
+public interface IIchiguModeListener extends ITableListener {
 	void onExitConfirmed();
+
+	void onModeEnd();
+
+	void onNewGame();
 }

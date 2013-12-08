@@ -6,13 +6,15 @@ import com.turpgames.framework.v0.component.ImageButton;
 import com.turpgames.framework.v0.forms.xml.Dialog;
 import com.turpgames.framework.v0.util.Game;
 import com.turpgames.ichigu.model.display.IchiguDialog;
+import com.turpgames.ichigu.model.game.newmodels.ITableListener;
+import com.turpgames.ichigu.model.game.newmodels.Table;
 import com.turpgames.ichigu.utils.Ichigu;
 import com.turpgames.ichigu.utils.R;
 
-public abstract class IchiguMode implements IDrawable, ICardDealerListener {
+public abstract class IchiguMode implements IDrawable {
 	protected final static float buttonSize = Game.scale(R.ui.imageButtonWidth);
 
-	protected CardDealer dealer;
+	protected Table table;
 	protected IIchiguModeListener modeListener;
 
 	protected ImageButton resetButton;
@@ -57,20 +59,34 @@ public abstract class IchiguMode implements IDrawable, ICardDealerListener {
 			}
 		});
 		
-		setDealer();
+		initTable();
 	}
 
-	protected abstract void setDealer();
+	protected abstract void initTable();
 	
 	protected abstract void pauseTimer();
 
 	protected abstract void startTimer();
 	
-	public abstract void activateCards();
+	public final void ichiguFound() {
+		table.afterIchiguFound();
+		concreteIchiguFound();
+	}
+	
+	public final void invalidIchiguSelected() {
+		table.afterInvalidIchiguSelected();
+		concreteInvalidIchiguSelected();
+	}
 
-	public abstract void deactivateCards();
-
-	protected abstract void openCloseCards(boolean open);
+	abstract public void concreteInvalidIchiguSelected();
+	
+	abstract public void concreteIchiguFound(); 
+	
+	protected abstract void prepareResultInfoAndSaveHiscore();
+	
+	public void openCloseCards(boolean open) {
+		table.openCloseCards(open);
+	}
 	
 	private void onResetConfirmed(boolean reset) {
 		if (reset) {
@@ -79,12 +95,6 @@ public abstract class IchiguMode implements IDrawable, ICardDealerListener {
 		else {
 			resume();
 		}
-	}
-
-	protected void resetMode() {
-		endMode();
-		startMode();
-		deal();
 	}
 
 	private void onConfirmResetMode() {
@@ -121,7 +131,6 @@ public abstract class IchiguMode implements IDrawable, ICardDealerListener {
 		openCloseCards(true);
 	}
 
-
 	protected void notifyIchiguFound() {
 		if (modeListener != null)
 			modeListener.onIchiguFound();
@@ -132,41 +141,52 @@ public abstract class IchiguMode implements IDrawable, ICardDealerListener {
 			modeListener.onInvalidIchiguSelected();
 	}
 
-	public void setModeListener(IIchiguModeListener modeListener) {
-		this.modeListener = modeListener;
+	public void setModeListener(IIchiguModeListener controller) {
+		this.modeListener = controller;
+		setTableListener(controller);
 	}
 
-	public void setDealerListener(ICardDealerListener dealerListener) {
-		if (dealer != null)
-			dealer.setListener(dealerListener);
+	private void setTableListener(ITableListener controller) {
+		table.setListener(controller);
 	}
 
 	public void deal() {
-		dealer.deal();
+		table.deal();
 	}
 
 	public final void startMode() {
 		onStartMode();
 	}
 
+	protected void resetMode() {
+		onResetMode();
+	}
+	
 	public final void endMode() {
-		dealer.abortDeal();
+		table.end();
 		onEndMode();
 	}
 
 	public final boolean exitMode() {
-		dealer.abortDeal();
 		return onExitMode();
 	}
 
 	protected void onStartMode() {
 		isExitConfirmed = false;
 		resetButton.listenInput(true);
+		table.start();
 	}
 
+	protected void onResetMode() {
+		resetButton.listenInput(true);
+		table.reset();
+		table.deal();
+	}
+	
 	protected void onEndMode() {
 		isExitConfirmed = true;
 		resetConfirmDialog.close();
+		table.end();
 	}
 
 	protected boolean onExitMode() {
@@ -178,10 +198,12 @@ public abstract class IchiguMode implements IDrawable, ICardDealerListener {
 		isExitConfirmed = false;
 		resetConfirmDialog.close();
 		resetButton.listenInput(false);
+		table.end();
 		return true;
 	}
 
 	public final void draw() {
+		table.drawCards();
 		onDraw();
 	}
 
@@ -195,21 +217,5 @@ public abstract class IchiguMode implements IDrawable, ICardDealerListener {
 
 	public IIchiguModeListener getModeListener() {
 		return modeListener;
-	}
-	
-
-	@Override
-	public void onDealEnd() {
-		
-	}
-
-	@Override
-	public void onCardsActivated() {
-		
-	}
-
-	@Override
-	public void onCardsDeactivated() {
-		
 	}
 }

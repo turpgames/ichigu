@@ -1,14 +1,15 @@
 package com.turpgames.ichigu.view;
 
 import com.turpgames.framework.v0.impl.ScreenManager;
-import com.turpgames.ichigu.controller.minichallenge.MiniChallengeModeController;
+import com.turpgames.ichigu.controller.minichallenge.SingleGameController;
+import com.turpgames.ichigu.model.singlegame.modes.MiniChallengeMode;
 import com.turpgames.ichigu.utils.R;
 
 public class MiniChallengeModeScreen extends IchiguScreen {
 	@Override
 	public void init() {
 		super.init();
-		setScreenListener(new MiniChallengeModeController(this));
+		setScreenListener(new SingleGameController(this, new MiniChallengeMode()));
 	}
 
 	public void onExitConfirmed() {

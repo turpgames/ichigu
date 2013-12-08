@@ -4,6 +4,7 @@ import com.turpgames.framework.v0.util.Game;
 import com.turpgames.framework.v0.util.ShapeDrawer;
 import com.turpgames.ichigu.model.game.Card;
 import com.turpgames.ichigu.model.game.IchiguMode;
+import com.turpgames.ichigu.model.game.newmodels.SingleGameTable;
 import com.turpgames.ichigu.utils.R;
 
 public abstract class SingleGameMode extends IchiguMode {
@@ -13,27 +14,13 @@ public abstract class SingleGameMode extends IchiguMode {
 	protected SingleGameQuestion question;
 
 	@Override
-	protected void setDealer() {
-		dealer = new SingleGameCardDealer(this);
-	}
-	
-	public void onCardSelected(Card selectedCard) {
-		int score = dealer.getScore();
-		if (score > 0) {
-			question.startCorrectEffect();
-			notifyIchiguFound();
-		}
-		else {
-			selectedCard.deselect();
-			question.startIncorrectEffect();
-			dealer.deselectCards();
-			notifyInvalidIchiguSelected();
-		}
+	protected void initTable() {
+		table = new SingleGameTable();
 	}
 
 	@Override
 	protected void onDraw() {
-		((SingleGameCardDealer)dealer).drawCards();
+		table.drawCards();
 		question.draw();
 		
 		ShapeDrawer.drawRect(Game.getVirtualWidth() / 2 - Card.Width * 1.5f - 60, (Game.getVirtualHeight() - dividerHeight) / 2 - 17,
@@ -41,22 +28,18 @@ public abstract class SingleGameMode extends IchiguMode {
 		
 		super.onDraw();
 	}
-	
+
 	@Override
-	protected boolean onExitMode() {
-		if (!super.onExitMode())
-			return false;
-		dealer.exit();
-		return true;
+	public void concreteIchiguFound() {
+		question.startCorrectEffect();
 	}
 
 	@Override
-	public void activateCards() {
-		((SingleGameCardDealer)dealer).activateCards();
+	public void concreteInvalidIchiguSelected() {
+		question.startIncorrectEffect();
 	}
 
-	@Override
-	public void deactivateCards() {
-		((SingleGameCardDealer)dealer).deactivateCards();
+	public void drawResultScreen() {
+		
 	}
 }

@@ -1,5 +1,6 @@
 package com.turpgames.ichigu.controller;
 
+import com.turpgames.ichigu.model.game.ICardListener;
 import com.turpgames.ichigu.model.game.IIchiguModeListener;
 import com.turpgames.ichigu.view.IIchiguViewListener;
 
