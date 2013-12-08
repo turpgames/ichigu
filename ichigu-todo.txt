@@ -37,10 +37,11 @@
 	+Resource text düzeltmeleri
 	+ios launch image
 v1.2
-	ichigu server
+	login with facebook
+		socialauth 
+	ichigu server		
 	Online hi-scores
 v1.3
-	login with facebook
 v1.4
 	Multiplayer Mode
 v1.5
