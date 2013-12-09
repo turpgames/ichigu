@@ -179,7 +179,36 @@ public final class CardAttributes {
 
 	@Override
 	public String toString() {
-		return "" + color + shape + count + pattern;
+		String s = "";
+		if (count == Value1)
+			s += "1 ";
+		else if (count == Value2)
+			s += "2 ";
+		else
+			s += "3 ";
+
+		if (color == Value1)
+			s += "red ";
+		else if (color == Value2)
+			s += "green ";
+		else
+			s += "blue ";
+		
+		if (pattern == Value1)
+			s += "empty ";
+		else if (pattern == Value2)
+			s += "filled ";
+		else
+			s += "striped ";
+		
+		if (shape == Value1)
+			s += "circle ";
+		else if (shape == Value2)
+			s += "square ";
+		else
+			s += "triangle ";
+		
+		return s;
 	}
 
 	public boolean equals(int color, int shape, int count, int pattern) {

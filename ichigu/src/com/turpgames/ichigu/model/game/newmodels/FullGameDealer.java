@@ -88,7 +88,7 @@ public class FullGameDealer extends Dealer {
 			
 			// the destinations for unused extra cards are added.
 			for (int i = 3; i < cardsDealingIn.size(); i++) {
-				inPositions.get(1).add(i, new Vector(cardsDealingOut.get(i-3).getLocation()));	
+				inPositions.get(1).add(i, cardsDealingOut.get(i-3).getLocation());	
 			}
 			
 			MoveEffect moveEffect;
