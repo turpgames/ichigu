@@ -1,4 +1,4 @@
-package com.turpgames.ichigu.model.game.newmodels;
+package com.turpgames.ichigu.model.game.dealer;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -10,8 +10,15 @@ import com.turpgames.framework.v0.effects.fading.FadeOutEffect;
 import com.turpgames.framework.v0.util.Game;
 import com.turpgames.framework.v0.util.Vector;
 import com.turpgames.ichigu.model.game.Card;
+import com.turpgames.ichigu.model.game.table.FullGameTable;
+import com.turpgames.ichigu.model.game.table.Table;
 
 public class FullGameDealer extends Dealer {
+
+	private static float fadeDuration = 2f;
+	private static float inDuration = 2f;
+	
+	
 	private final static Map<Integer, Vector> cardLocations = new HashMap<Integer, Vector>();
 	private final static List<Vector> extraCardLocations = new ArrayList<Vector>();
 	private final static List<List<Vector>> inPositions = new ArrayList<List<Vector>>();
@@ -50,9 +57,6 @@ public class FullGameDealer extends Dealer {
 		inPositions.add(inStart);
 		inPositions.add(inDestination);
 	}
-
-	private float fadeDuration = 0.25f;
-	private float inDuration = 0.25f;
 	
 	public FullGameDealer(Table table) {
 		super(table);
@@ -83,8 +87,11 @@ public class FullGameDealer extends Dealer {
 		}
 		else {
 			// first three of cardsToDealOut are new cards, remaining cards are unused extra cards repositioned
-			for (int i = 0; i < 3; i++)
+			for (int i = 0; i < 3; i++) {
+				if (cardsDealingIn.get(i) == null)
+					continue;
 				cardsDealingIn.get(i).getLocation().set(inPositions.get(0).get(i));
+			}
 			
 			// the destinations for unused extra cards are added.
 			for (int i = 3; i < cardsDealingIn.size(); i++) {
@@ -93,6 +100,8 @@ public class FullGameDealer extends Dealer {
 			
 			MoveEffect moveEffect;
 			for (int i = 0; i < cardsDealingIn.size(); i++) {
+				if (cardsDealingIn.get(i) == null)
+					continue;
 				moveEffect = new MoveEffect(cardsDealingIn.get(i));
 				moveEffect.setLooping(false);
 				moveEffect.setDestination(inPositions.get(1).get(i));

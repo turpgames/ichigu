@@ -1,6 +1,5 @@
 package com.turpgames.ichigu.controller.fullgame;
 
-
 public class FullGameDealingState extends FullGameState {
 	public FullGameDealingState(FullGameController controller) {
 		super(controller);
@@ -13,6 +12,7 @@ public class FullGameDealingState extends FullGameState {
 
 	@Override
 	public void onDealEnded() {
+		model.dealEnded();
 		controller.setWaitingState();
 	}
 

@@ -1,10 +1,10 @@
-package com.turpgames.ichigu.model.singlegame;
+package com.turpgames.ichigu.model.game.singlegame;
 
 import com.turpgames.framework.v0.util.Game;
 import com.turpgames.framework.v0.util.ShapeDrawer;
 import com.turpgames.ichigu.model.game.Card;
 import com.turpgames.ichigu.model.game.IchiguMode;
-import com.turpgames.ichigu.model.game.newmodels.SingleGameTable;
+import com.turpgames.ichigu.model.game.table.SingleGameTable;
 import com.turpgames.ichigu.utils.R;
 
 public abstract class SingleGameMode extends IchiguMode {

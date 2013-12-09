@@ -1,4 +1,4 @@
-package com.turpgames.ichigu.model.singlegame.modes;
+package com.turpgames.ichigu.model.game.singlegame.modes;
 
 import com.turpgames.framework.v0.forms.xml.Toast;
 import com.turpgames.framework.v0.impl.Settings;
@@ -6,25 +6,25 @@ import com.turpgames.framework.v0.impl.Text;
 import com.turpgames.framework.v0.util.CountDownTimer;
 import com.turpgames.framework.v0.util.Game;
 import com.turpgames.framework.v0.util.Timer;
+import com.turpgames.ichigu.model.display.FoundInfo;
 import com.turpgames.ichigu.model.display.TimerText;
 import com.turpgames.ichigu.model.display.WaitToast;
 import com.turpgames.ichigu.model.game.IResultScreenButtonsListener;
 import com.turpgames.ichigu.model.game.ResultScreenButtons;
-import com.turpgames.ichigu.model.singlegame.ISingleGameModeListener;
-import com.turpgames.ichigu.model.singlegame.SingleGameMode;
-import com.turpgames.ichigu.model.singlegame.SingleGameQuestion;
+import com.turpgames.ichigu.model.game.singlegame.ISingleGameModeListener;
+import com.turpgames.ichigu.model.game.singlegame.SingleGameMode;
+import com.turpgames.ichigu.model.game.singlegame.SingleGameQuestion;
 import com.turpgames.ichigu.utils.Ichigu;
 import com.turpgames.ichigu.utils.R;
 
 public class MiniChallengeMode extends SingleGameMode implements IResultScreenButtonsListener {
 	private final static float blockDuration = 2f;
-	private final static int challengeTime = 60;
+	private final static int challengeTime = 5;
 
 	private final CountDownTimer blockTimer;
 	private final CountDownTimer challengeTimer;
-
-	private int ichigusFound;
-	private Text ichigusFoundInfo;
+	
+	private FoundInfo foundInfo;
 
 	private TimerText timeInfo;
 	private WaitToast waitInfo;
@@ -45,9 +45,9 @@ public class MiniChallengeMode extends SingleGameMode implements IResultScreenBu
 			}
 		});
 
-		ichigusFoundInfo = new Text();
-		ichigusFoundInfo.setAlignment(Text.HAlignLeft, Text.VAlignTop);
-		ichigusFoundInfo.setPadding(20, 125);
+		foundInfo = new FoundInfo();
+		foundInfo.setAlignment(Text.HAlignLeft, Text.VAlignTop);
+		foundInfo.setPadding(20, 125);
 
 		resultInfo = new Text();
 		resultInfo.setAlignment(Text.HAlignCenter, Text.VAlignTop);
@@ -90,6 +90,7 @@ public class MiniChallengeMode extends SingleGameMode implements IResultScreenBu
 	}
 
 	private void notifyModeEnd() {
+		prepareResultInfoAndSaveHiscore();
 		resultScreenButtons.listenInput(true);
 		if (getModeListener() != null)
 			getModeListener().onModeEnd();
@@ -108,14 +109,21 @@ public class MiniChallengeMode extends SingleGameMode implements IResultScreenBu
 
 	@Override
 	protected void onStartMode() {
-		ichigusFound = 0;
-		ichigusFoundInfo.setText(Ichigu.getString(R.strings.found) + ": " + ichigusFound);
+		foundInfo.reset();
 		blockTimer.stop();
+		super.onStartMode();
 		challengeTimer.restart();
 		timeInfo.syncText();
-		super.onStartMode();
 	}
 
+	@Override
+	protected void onResetMode() {
+		challengeTimer.restart();
+		timeInfo.syncText();
+		foundInfo.reset();
+		super.onResetMode();
+	}
+	
 	@Override
 	protected void onEndMode() {
 		blockTimer.stop();
@@ -128,6 +136,7 @@ public class MiniChallengeMode extends SingleGameMode implements IResultScreenBu
 	@Override
 	protected void prepareResultInfoAndSaveHiscore() {
 		int hiScore = Settings.getInteger(R.settings.hiscores.minichallenge, 0);
+		int ichigusFound = foundInfo.getFound();
 		if (ichigusFound > hiScore)
 			Settings.putInteger(R.settings.hiscores.minichallenge, ichigusFound);
 
@@ -156,7 +165,7 @@ public class MiniChallengeMode extends SingleGameMode implements IResultScreenBu
 	@Override
 	protected void onDraw() {
 		drawRemainingTime();
-		drawIchigusFound();
+		foundInfo.draw();
 		if (!blockTimer.isStopped())
 			drawWaitMessage();
 		super.onDraw();
@@ -173,10 +182,6 @@ public class MiniChallengeMode extends SingleGameMode implements IResultScreenBu
 
 	private void drawWaitMessage() {
 		waitInfo.setText(String.format("%.1f", blockDuration - blockTimer.getElapsedTime()));
-	}
-
-	protected void drawIchigusFound() {
-		ichigusFoundInfo.draw();
 	}
 
 	@Override
@@ -201,8 +206,7 @@ public class MiniChallengeMode extends SingleGameMode implements IResultScreenBu
 
 	@Override
 	public void concreteIchiguFound() {
-		ichigusFound++;
-		ichigusFoundInfo.setText(Ichigu.getString(R.strings.found) + ": " + ichigusFound);
+		foundInfo.increaseFound();
 		super.concreteIchiguFound();
 	}
 

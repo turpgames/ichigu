@@ -2,7 +2,7 @@ package com.turpgames.ichigu.view;
 
 import com.turpgames.framework.v0.impl.ScreenManager;
 import com.turpgames.ichigu.controller.minichallenge.SingleGameController;
-import com.turpgames.ichigu.model.singlegame.modes.MiniChallengeMode;
+import com.turpgames.ichigu.model.game.singlegame.modes.MiniChallengeMode;
 import com.turpgames.ichigu.utils.R;
 
 public class MiniChallengeModeScreen extends IchiguScreen {

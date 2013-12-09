@@ -6,8 +6,8 @@ import com.turpgames.framework.v0.component.ImageButton;
 import com.turpgames.framework.v0.forms.xml.Dialog;
 import com.turpgames.framework.v0.util.Game;
 import com.turpgames.ichigu.model.display.IchiguDialog;
-import com.turpgames.ichigu.model.game.newmodels.ITableListener;
-import com.turpgames.ichigu.model.game.newmodels.Table;
+import com.turpgames.ichigu.model.game.dealer.ITableListener;
+import com.turpgames.ichigu.model.game.table.Table;
 import com.turpgames.ichigu.utils.Ichigu;
 import com.turpgames.ichigu.utils.R;
 
@@ -151,6 +151,7 @@ public abstract class IchiguMode implements IDrawable {
 	}
 
 	public void deal() {
+		modeListener.onDealStarted();
 		table.deal();
 	}
 
@@ -171,6 +172,14 @@ public abstract class IchiguMode implements IDrawable {
 		return onExitMode();
 	}
 
+	public void dealStarted() {
+		pauseTimer();
+	}
+	
+	public void dealEnded() {
+		startTimer();
+	}
+	
 	protected void onStartMode() {
 		isExitConfirmed = false;
 		resetButton.listenInput(true);
@@ -186,7 +195,6 @@ public abstract class IchiguMode implements IDrawable {
 	protected void onEndMode() {
 		isExitConfirmed = true;
 		resetConfirmDialog.close();
-		table.end();
 	}
 
 	protected boolean onExitMode() {

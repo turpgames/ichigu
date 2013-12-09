@@ -1,8 +1,8 @@
 package com.turpgames.ichigu.controller.minichallenge;
 
 import com.turpgames.ichigu.controller.IchiguController;
-import com.turpgames.ichigu.model.singlegame.ISingleGameModeListener;
-import com.turpgames.ichigu.model.singlegame.SingleGameMode;
+import com.turpgames.ichigu.model.game.singlegame.ISingleGameModeListener;
+import com.turpgames.ichigu.model.game.singlegame.SingleGameMode;
 import com.turpgames.ichigu.view.IchiguScreen;
 
 public class SingleGameController extends IchiguController<SingleGameState> implements ISingleGameModeListener {
@@ -67,12 +67,17 @@ public class SingleGameController extends IchiguController<SingleGameState> impl
 	}
 
 	@Override
+	public void onDealStarted() {
+		currentState.onDealStarted();
+	}
+	
+	@Override
 	public void onDealEnded() {
 		currentState.onDealEnded();
 	}
 
 	@Override
-	public void onDeckFinished() {
+	public void onTableFinished() {
 		
 	}
 }

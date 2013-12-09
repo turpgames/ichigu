@@ -1,6 +1,6 @@
 package com.turpgames.ichigu.model.game;
 
-import com.turpgames.ichigu.model.game.newmodels.ITableListener;
+import com.turpgames.ichigu.model.game.dealer.ITableListener;
 
 public interface IIchiguModeListener extends ITableListener {
 	void onExitConfirmed();

@@ -1,11 +1,11 @@
-package com.turpgames.ichigu.model.fullgame.modes;
+package com.turpgames.ichigu.model.game.fullgame.modes;
 
 import com.turpgames.framework.v0.impl.Settings;
 import com.turpgames.framework.v0.impl.Text;
 import com.turpgames.framework.v0.util.CountDownTimer;
 import com.turpgames.framework.v0.util.Timer;
 import com.turpgames.ichigu.model.display.FoundInfo;
-import com.turpgames.ichigu.model.fullgame.FullGameMode;
+import com.turpgames.ichigu.model.game.fullgame.FullGameMode;
 import com.turpgames.ichigu.utils.Ichigu;
 import com.turpgames.ichigu.utils.R;
 
@@ -44,6 +44,12 @@ public class FullChallengeMode extends FullGameMode {
 	protected void onStartMode() {
 		super.onStartMode();
 		foundInfo.reset();
+	}
+	
+	@Override
+	protected void onResetMode() {
+		foundInfo.reset();
+		super.onResetMode();
 	}
 	
 	@Override

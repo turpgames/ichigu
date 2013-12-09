@@ -12,6 +12,7 @@ public class SingleGameDealingState extends SingleGameState {
 
 	@Override
 	public void onDealEnded() {
+		model.dealEnded();
 		controller.setWaitingState();
 	}
 

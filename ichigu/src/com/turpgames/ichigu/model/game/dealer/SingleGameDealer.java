@@ -1,4 +1,4 @@
-package com.turpgames.ichigu.model.game.newmodels;
+package com.turpgames.ichigu.model.game.dealer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,12 +7,13 @@ import com.turpgames.framework.v0.effects.MoveEffect;
 import com.turpgames.framework.v0.util.Game;
 import com.turpgames.framework.v0.util.Vector;
 import com.turpgames.ichigu.model.game.Card;
+import com.turpgames.ichigu.model.game.table.Table;
 import com.turpgames.ichigu.utils.R;
 
 public class SingleGameDealer extends Dealer {
 
-	protected float inDuration = 0.25f;
-	protected float outDuration = 0.25f;
+	protected float inDuration = 2f;
+	protected float outDuration = 2f;
 	
 	private final static Vector selectedStart = new Vector(- Card.Width, (Game.getVirtualHeight() - Card.Height) / 2);
 	private final static Vector toSelectStart = new Vector(- Card.Width, (Game.getVirtualHeight() - Card.Height) / 2);

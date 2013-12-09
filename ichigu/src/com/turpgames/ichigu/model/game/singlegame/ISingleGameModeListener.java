@@ -1,4 +1,4 @@
-package com.turpgames.ichigu.model.singlegame;
+package com.turpgames.ichigu.model.game.singlegame;
 
 import com.turpgames.ichigu.model.game.IIchiguModeListener;
 

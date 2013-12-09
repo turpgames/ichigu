@@ -1,9 +1,10 @@
-package com.turpgames.ichigu.model.game.newmodels;
+package com.turpgames.ichigu.model.game.dealer;
 
 import java.util.List;
 
 import com.turpgames.framework.v0.effects.IEffectEndListener;
 import com.turpgames.ichigu.model.game.Card;
+import com.turpgames.ichigu.model.game.table.Table;
 
 public abstract class Dealer {	
 	protected Table table;
@@ -27,7 +28,7 @@ public abstract class Dealer {
 		setInEffects();
 		this.effectsToFinish = 0;
 		for(Card card : cardsToDealIn)
-			if(card.hasDealerEffect())
+			if(card != null && card.hasDealerEffect())
 				this.effectsToFinish++;
 		for(Card card : cardsToDealOut)
 			if(card.hasDealerEffect())
@@ -60,15 +61,16 @@ public abstract class Dealer {
 			}
 		};
 
-		dealOut(outListener);
-		dealIn(inListener);
+		dealOut();
+		dealIn();
 	}
 	
 	private synchronized void finishEffect() {
 		effectsToFinish--;
 		if (effectsToFinish == 0) {
 			for(Card card : cardsDealingIn)
-				card.resetDealerEffect();
+				if (card != null)
+					card.resetDealerEffect();
 			for(Card card : cardsDealingOut)
 				card.resetDealerEffect();
 			table.onDealEnded(cardsDealingIn, cardsDealingOut);
@@ -89,24 +91,24 @@ public abstract class Dealer {
 			
 			@Override
 			public boolean onEffectEnd(Object obj) {
-				effectsToFinish--;
-				if (effectsToFinish == cardsDealingOut.size())
-					dealIn(inListener);
+				finishEffect();
+				if (effectsToFinish == cardsDealingIn.size())
+					dealIn();
 				return false;
 			}
 		};
 
-		dealOut(outListener);
+		dealOut();
 		if (cardsDealingOut.size() == 0)
-			dealIn(inListener);
+			dealIn();
 	}
 
-	public final void dealOut(IEffectEndListener listener) {
-		dealCards(cardsDealingOut, listener);
+	private final void dealOut() {
+		dealCards(cardsDealingOut, outListener);
 	}
 
-	public final void dealIn(IEffectEndListener listener) {
-		dealCards(cardsDealingIn, listener);
+	private final void dealIn() {
+		dealCards(cardsDealingIn, inListener);
 	}
 	
 	abstract protected void setOutEffects();
@@ -115,6 +117,8 @@ public abstract class Dealer {
 	
 	private void dealCards(List<Card> cardsToDeal, IEffectEndListener listener) {
 		for (int i = 0; i < cardsToDeal.size(); i++) {
+			if (cardsToDeal.get(i) == null)
+				continue;
 			cardsToDeal.get(i).startDealerEffect(listener);
 		}
 	}
@@ -125,7 +129,8 @@ public abstract class Dealer {
 
 	public void drawCards() {
 		for(Card card : cardsDealingIn)
-			card.draw();
+			if (card != null)
+				card.draw();
 		for(Card card : cardsDealingOut)
 			card.draw();
 	}

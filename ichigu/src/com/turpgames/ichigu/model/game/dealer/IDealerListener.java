@@ -1,4 +1,4 @@
-package com.turpgames.ichigu.model.game.newmodels;
+package com.turpgames.ichigu.model.game.dealer;
 
 import java.util.List;
 

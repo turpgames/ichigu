@@ -1,4 +1,4 @@
-package com.turpgames.ichigu.model.singlegame;
+package com.turpgames.ichigu.model.game.singlegame;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +11,7 @@ import com.turpgames.framework.v0.forms.xml.Toast;
 import com.turpgames.framework.v0.util.Game;
 import com.turpgames.ichigu.model.game.Card;
 import com.turpgames.ichigu.model.game.CardAttributes;
-import com.turpgames.ichigu.model.game.newmodels.Table;
+import com.turpgames.ichigu.model.game.table.Table;
 import com.turpgames.ichigu.utils.Ichigu;
 import com.turpgames.ichigu.utils.R;
 

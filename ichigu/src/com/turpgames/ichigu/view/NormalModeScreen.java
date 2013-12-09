@@ -1,7 +1,7 @@
 package com.turpgames.ichigu.view;
 
 import com.turpgames.ichigu.controller.fullgame.FullGameController;
-import com.turpgames.ichigu.model.fullgame.modes.NormalMode;
+import com.turpgames.ichigu.model.game.fullgame.modes.NormalMode;
 
 public class NormalModeScreen extends IchiguScreen {
 	@Override

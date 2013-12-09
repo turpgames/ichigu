@@ -1,4 +1,4 @@
-package com.turpgames.ichigu.model.fullgame;
+package com.turpgames.ichigu.model.game.fullgame;
 
 import com.turpgames.framework.v0.impl.Text;
 import com.turpgames.framework.v0.util.Game;
@@ -11,13 +11,13 @@ import com.turpgames.ichigu.model.game.IIchiguModeListener;
 import com.turpgames.ichigu.model.game.IResultScreenButtonsListener;
 import com.turpgames.ichigu.model.game.IchiguMode;
 import com.turpgames.ichigu.model.game.ResultScreenButtons;
-import com.turpgames.ichigu.model.game.newmodels.FullGameTable;
+import com.turpgames.ichigu.model.game.table.FullGameTable;
 import com.turpgames.ichigu.utils.Ichigu;
 
 public abstract class FullGameMode extends IchiguMode implements IResultScreenButtonsListener, IHintListener {
 	protected final static float secondPerPenalty = 10f;
 
-//	private FullGameHint hint;
+	private FullGameHint hint;
 
 	protected Text resultInfo;
 	protected TimerText timerText;
@@ -30,10 +30,11 @@ public abstract class FullGameMode extends IchiguMode implements IResultScreenBu
 	public FullGameMode() {
 		resultScreenButtons = new ResultScreenButtons(this);
 
-//		hint = new FullGameHint(table);
-//		hint.setLocation(10, Game.viewportToScreenY(30));
-//		hint.activate();
-//		hint.setHintListener(this);
+		hint = new FullGameHint(table);
+		((FullGameTable) table).setHint(hint);
+		hint.setLocation(10, Game.viewportToScreenY(30));
+		hint.activate();
+		hint.setHintListener(this);
 
 		tryAgain = new TryAgainToast();
 		noTip = new NoTipToast();
@@ -57,13 +58,13 @@ public abstract class FullGameMode extends IchiguMode implements IResultScreenBu
 	@Override
 	protected void pauseTimer() {
 		getTimer().pause();
-//		hint.deactivate();
+		hint.deactivate();
 	}
 
 	@Override
 	protected void startTimer() {
 		getTimer().start();
-//		hint.activate();
+		hint.activate();
 	}
 
 	@Override
@@ -83,17 +84,16 @@ public abstract class FullGameMode extends IchiguMode implements IResultScreenBu
 	}
 
 	public void cardTapped(Card card) {
-//		hint.restartNotificationTimer();
+		hint.restartNotificationTimer();
 	}
 
 	protected void onOpenExtraCards() {
 		applyTimePenalty();
-//		hint.update();
 	}
 
 	private void applyTimePenalty() {
-//		if (hint.getIchiguCount() == 0)
-//			return;
+		if (hint.getIchiguCount() == 0)
+			return;
 		
 		getTimer().addSeconds(secondPerPenalty);
 		timerText.flash();
@@ -110,7 +110,7 @@ public abstract class FullGameMode extends IchiguMode implements IResultScreenBu
 		getTimer().restart();
 		timerText.syncText();
 		resultScreenButtons.listenInput(false);
-//		hint.activate();
+		hint.activate();
 		super.onStartMode();
 	}
 
@@ -124,7 +124,7 @@ public abstract class FullGameMode extends IchiguMode implements IResultScreenBu
 	@Override
 	protected void onEndMode() {
 		getTimer().stop();
-//		hint.deactivate();
+		hint.deactivate();
 		resultScreenButtons.listenInput(true);
 		super.onEndMode();
 	}
@@ -135,7 +135,7 @@ public abstract class FullGameMode extends IchiguMode implements IResultScreenBu
 			return false;
 		getTimer().stop();
 		resultScreenButtons.listenInput(false);
-//		hint.deactivate();
+		hint.deactivate();
 		return true;
 	}
 
@@ -143,7 +143,7 @@ public abstract class FullGameMode extends IchiguMode implements IResultScreenBu
 	protected void onDraw() {
 		table.drawCards();
 		timerText.draw();
-//		hint.draw();
+		hint.draw();
 		super.onDraw();
 	}
 
@@ -165,15 +165,9 @@ public abstract class FullGameMode extends IchiguMode implements IResultScreenBu
 	@Override
 	public void deal() {
 		super.deal();
-//		hint.update();
-	}
-	
-	public void dealEnded() {
-		
 	}
 	
 	public void deckFinished() {
-		prepareResultInfoAndSaveHiscore();
 		notifyModeEnd();
 	}
 

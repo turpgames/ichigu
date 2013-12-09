@@ -1,4 +1,4 @@
-package com.turpgames.ichigu.model.game.newmodels;
+package com.turpgames.ichigu.model.game.table;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,6 +6,8 @@ import java.util.List;
 import com.turpgames.framework.v0.util.Utils;
 import com.turpgames.ichigu.model.game.Card;
 import com.turpgames.ichigu.model.game.CardAttributes;
+import com.turpgames.ichigu.model.game.Deck;
+import com.turpgames.ichigu.model.game.dealer.SingleGameDealer;
 
 public class SingleGameTable extends Table {
 	private Deck deck;
@@ -17,12 +19,6 @@ public class SingleGameTable extends Table {
 	@Override
 	protected void setDealer() {
 		dealer = new SingleGameDealer(this);
-	}
-	
-	@Override
-	public void onDeckFinished() {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
@@ -47,7 +43,7 @@ public class SingleGameTable extends Table {
 			return false;
 		return Card.isIchigu(cardsOnTable.get(0), cardsOnTable.get(1), selectedCards.get(0));
 	}
-
+	
 	@Override
 	public List<Card> getCardsToDealIn() {
 		Card card1, card2, card3, card4, card5 = null;

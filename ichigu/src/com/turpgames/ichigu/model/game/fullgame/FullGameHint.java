@@ -1,4 +1,4 @@
-package com.turpgames.ichigu.model.fullgame;
+package com.turpgames.ichigu.model.game.fullgame;
 
 import com.turpgames.framework.v0.IDrawable;
 import com.turpgames.framework.v0.component.BlinkingImageButton;
@@ -8,9 +8,8 @@ import com.turpgames.framework.v0.forms.xml.Toast;
 import com.turpgames.framework.v0.impl.Text;
 import com.turpgames.framework.v0.util.Game;
 import com.turpgames.framework.v0.util.Timer;
-import com.turpgames.ichigu.model.game.Card;
 import com.turpgames.ichigu.model.game.IchiguBank;
-import com.turpgames.ichigu.model.game.newmodels.Table;
+import com.turpgames.ichigu.model.game.table.Table;
 import com.turpgames.ichigu.utils.Ichigu;
 import com.turpgames.ichigu.utils.R;
 
@@ -21,7 +20,6 @@ public class FullGameHint implements IDrawable, IEffectEndListener, Toast.IToast
 	private BlinkingImageButton button;
 	private Text hintCountText;
 	private FullGameIchiguInfo ichiguInfo;
-	private Card[] cards;
 	private int hintIndex;
 	private boolean isActive;
 	private Timer notificationTimer;
@@ -129,8 +127,7 @@ public class FullGameHint implements IDrawable, IEffectEndListener, Toast.IToast
 			toast.show(Ichigu.getString(R.strings.noIchigu), 3f);
 		}
 		else {
-			int cardIndex = ichiguInfo.getIchiguCardIndex(hintIndex, 1);
-			cards[cardIndex].blink(this, false);
+			ichiguInfo.getIchiguHintCard(hintIndex, 1).blink(this, false);
 
 			IchiguBank.decreaseHintCount();
 			IchiguBank.saveData();

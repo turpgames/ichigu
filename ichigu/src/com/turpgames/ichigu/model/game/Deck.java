@@ -1,12 +1,9 @@
-package com.turpgames.ichigu.model.game.newmodels;
+package com.turpgames.ichigu.model.game;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import com.turpgames.ichigu.model.game.Card;
-import com.turpgames.ichigu.model.game.CardAttributes;
-import com.turpgames.ichigu.model.game.ICardListener;
 
 public class Deck {
 	private static int[] colors = new int[] { CardAttributes.Color_Red, CardAttributes.Color_Green, CardAttributes.Color_Blue };
@@ -22,7 +19,7 @@ public class Deck {
 		unusedCards = new ArrayList<Card>();
 		usedCards = new ArrayList<Card>();
 		createDeck(table);
-		r = new Random(3);
+		r = new Random(3); // TODO FOR PRODUCTION: clear seed
 	}
 	
 	private void createDeck(ICardListener table) {
@@ -40,9 +37,18 @@ public class Deck {
 	
 	public void recycleDeck() {
 		unusedCards.addAll(usedCards);
+		for (Card card : unusedCards)
+			card.reset();
 		usedCards.clear();
 	}
-	
+
+	private void finishDeck() {
+		usedCards.addAll(unusedCards);
+		for (Card card : usedCards)
+			card.reset();
+		unusedCards.clear();
+	}
+
 	public Card getRandomCard() {
 		if (unusedCards.size() == 0)
 			return null;
@@ -80,15 +86,11 @@ public class Deck {
 	}
 	
 	public void end() {
-		usedCards.addAll(unusedCards);
-		for (Card card : usedCards)
-			card.deactivate();
+		finishDeck();
 	}
 
 	public void reset() {
-		usedCards.addAll(unusedCards);
-		for (Card card : usedCards)
-			card.deactivate();
+		end();
 		recycleDeck();
 	}
 }

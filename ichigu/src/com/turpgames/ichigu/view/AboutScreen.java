@@ -1,8 +1,8 @@
 package com.turpgames.ichigu.view;
 
 import com.turpgames.framework.v0.util.Utils;
+import com.turpgames.ichigu.model.AboutInfo;
 import com.turpgames.ichigu.model.display.IchiguToolbar;
-import com.turpgames.ichigu.model.game.AboutInfo;
 
 public class AboutScreen extends IchiguScreen {
 	private AboutInfo aboutInfo;

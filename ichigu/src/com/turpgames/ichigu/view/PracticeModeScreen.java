@@ -1,7 +1,7 @@
 package com.turpgames.ichigu.view;
 
 import com.turpgames.ichigu.controller.minichallenge.PracticeModeController;
-import com.turpgames.ichigu.model.singlegame.modes.PracticeMode;
+import com.turpgames.ichigu.model.game.singlegame.modes.PracticeMode;
 
 public class PracticeModeScreen extends IchiguScreen {
 	@Override

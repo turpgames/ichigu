@@ -6,6 +6,7 @@ import java.util.List;
 import com.turpgames.framework.v0.ITexture;
 import com.turpgames.framework.v0.effects.Effect;
 import com.turpgames.framework.v0.effects.IEffectEndListener;
+import com.turpgames.framework.v0.util.Color;
 import com.turpgames.framework.v0.util.Game;
 import com.turpgames.framework.v0.util.Rotation;
 import com.turpgames.framework.v0.util.Utils;
@@ -184,5 +185,11 @@ public class Card extends IchiguObject {
 	
 	public void resetDealerEffect() {
 		dealerEffect = null;
+	}
+
+	public void reset() {
+		deactivate();
+		deselect();
+		getColor().set(Color.white());
 	}
 }

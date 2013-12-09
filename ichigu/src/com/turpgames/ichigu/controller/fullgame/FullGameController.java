@@ -1,8 +1,8 @@
 package com.turpgames.ichigu.controller.fullgame;
 
 import com.turpgames.ichigu.controller.IchiguController;
-import com.turpgames.ichigu.model.fullgame.FullGameMode;
 import com.turpgames.ichigu.model.game.IIchiguModeListener;
+import com.turpgames.ichigu.model.game.fullgame.FullGameMode;
 import com.turpgames.ichigu.view.IchiguScreen;
 
 public class FullGameController extends IchiguController<FullGameState> implements IIchiguModeListener {
@@ -41,13 +41,18 @@ public class FullGameController extends IchiguController<FullGameState> implemen
 	}
 
 	@Override
+	public void onDealStarted() {
+		currentState.onDealStarted();
+	}
+	
+	@Override
 	public void onDealEnded() {
 		currentState.onDealEnded();		
 	}
 	
 	@Override
-	public void onDeckFinished() {
-		currentState.onDeckFinished();	
+	public void onTableFinished() {
+		currentState.onTableFinished();	
 	}
 	
 	@Override

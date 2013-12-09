@@ -1,9 +1,9 @@
 package com.turpgames.ichigu.controller.fullgame;
 
 import com.turpgames.ichigu.controller.IchiguState;
-import com.turpgames.ichigu.model.fullgame.FullGameMode;
 import com.turpgames.ichigu.model.game.IIchiguModeListener;
 import com.turpgames.ichigu.model.game.IchiguBank;
+import com.turpgames.ichigu.model.game.fullgame.FullGameMode;
 import com.turpgames.ichigu.view.IchiguScreen;
 
 public abstract class FullGameState extends IchiguState implements IIchiguModeListener {
@@ -26,14 +26,9 @@ public abstract class FullGameState extends IchiguState implements IIchiguModeLi
 	public void onNewGame() {
 
 	}
-
-	@Override
-	public void onDealEnded() {
-		model.dealEnded();
-	}
 	
 	@Override
-	public void onDeckFinished() {
+	public void onTableFinished() {
 		model.deckFinished();	
 	}
 	
@@ -50,6 +45,16 @@ public abstract class FullGameState extends IchiguState implements IIchiguModeLi
 	@Override
 	public boolean onScreenDeactivated() {
 		return model.exitMode();
+	}
+
+	@Override
+	public void onDealStarted() {
+		model.dealStarted();
+	}
+	
+	@Override
+	public void onDealEnded() {
+		model.dealEnded();
 	}
 	
 	@Override
