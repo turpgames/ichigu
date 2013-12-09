@@ -22,7 +22,7 @@ public class Deck {
 		unusedCards = new ArrayList<Card>();
 		usedCards = new ArrayList<Card>();
 		createDeck(table);
-		r = new Random();
+		r = new Random(3);
 	}
 	
 	private void createDeck(ICardListener table) {

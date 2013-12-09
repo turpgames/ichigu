@@ -37,11 +37,16 @@ public class FullGameTable extends Table {
 	@Override
 	public void concreteDealEnded(List<Card> dealtIn, List<Card> dealtOut) {
 		dealtCardCount += dealtIn.size();
+		
 		cardsOnTable.removeAll(dealtOut);
+		for(Card card : dealtOut)
+			card.deactivate();
+		
 		cardsOnTable.removeAll(dealtIn);
 		cardsOnTable.addAll(dealtIn);
 		for(Card card : cardsOnTable)
 			card.activate();
+		
 		for(Card card : dealtIn.subList(3, dealtIn.size())) {
 			card.open(true);
 		}
@@ -144,7 +149,7 @@ public class FullGameTable extends Table {
 		}
 		
 		// add card to selected
-		if (cardsOnTable.contains(card)){ 
+		if (cardsOnTable.contains(card)){
 			if (selectedCards.contains(card)) {
 				selectedCards.remove(card);
 				card.deselect();
