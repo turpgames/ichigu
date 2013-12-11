@@ -1,4 +1,4 @@
-package com.turpgames.ichigu.model.game;
+package com.turpgames.ichigu.model.game.mode;
 
 import com.turpgames.ichigu.model.game.dealer.ITableListener;
 

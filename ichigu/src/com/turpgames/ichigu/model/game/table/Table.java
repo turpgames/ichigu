@@ -108,13 +108,13 @@ public abstract class Table implements IDealerListener, ICardListener {
 		listener = controller;
 	}
 
-	public void drawCards() {
+	public void draw() {
 		for (Card card : cardsOnTable)
 			card.draw();
 		dealer.drawCards();
 	}
 
-	abstract public List<Card> getCardsForHints();
+	abstract protected List<Card> getCardsForHints();
 
 	public int getDealtCardCount() {
 		return dealtCardCount;
@@ -122,5 +122,9 @@ public abstract class Table implements IDealerListener, ICardListener {
 
 	public boolean isFirstDeal() {
 		return isFirstDeal;
+	}
+
+	public void showHint() {
+		
 	}
 }

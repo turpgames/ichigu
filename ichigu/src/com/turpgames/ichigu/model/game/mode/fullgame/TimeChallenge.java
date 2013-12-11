@@ -1,21 +1,20 @@
-package com.turpgames.ichigu.model.game.fullgame.modes;
+package com.turpgames.ichigu.model.game.mode.fullgame;
 
 import com.turpgames.framework.v0.impl.Settings;
 import com.turpgames.framework.v0.impl.Text;
 import com.turpgames.framework.v0.util.CountDownTimer;
 import com.turpgames.framework.v0.util.Timer;
 import com.turpgames.ichigu.model.display.FoundInfo;
-import com.turpgames.ichigu.model.game.fullgame.FullGameMode;
 import com.turpgames.ichigu.utils.Ichigu;
 import com.turpgames.ichigu.utils.R;
 
-public class FullChallengeMode extends FullGameMode {
+public class TimeChallenge extends FullGameMode {
 	private static int challengeTime = 5 * 60;
 
 	private FoundInfo foundInfo;
 	private CountDownTimer timer;
 
-	public FullChallengeMode() {
+	public TimeChallenge() {
 		foundInfo = new FoundInfo();
 		
 //		foundInfo.setAlignment(Text.HAlignCenter, Text.VAlignBottom);

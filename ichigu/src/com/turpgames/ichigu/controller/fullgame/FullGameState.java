@@ -1,9 +1,9 @@
 package com.turpgames.ichigu.controller.fullgame;
 
 import com.turpgames.ichigu.controller.IchiguState;
-import com.turpgames.ichigu.model.game.IIchiguModeListener;
 import com.turpgames.ichigu.model.game.IchiguBank;
-import com.turpgames.ichigu.model.game.fullgame.FullGameMode;
+import com.turpgames.ichigu.model.game.mode.IIchiguModeListener;
+import com.turpgames.ichigu.model.game.mode.fullgame.FullGameMode;
 import com.turpgames.ichigu.view.IchiguScreen;
 
 public abstract class FullGameState extends IchiguState implements IIchiguModeListener {

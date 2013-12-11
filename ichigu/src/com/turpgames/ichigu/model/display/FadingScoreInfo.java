@@ -74,7 +74,7 @@ public class FadingScoreInfo extends GameObject implements IFadingEffectSubject 
 
 		@Override
 		public void registerSelf() {
-			Game.getInputManager().register(this, Utils.LAYER_INFO);
+			
 		}
 	}
 
@@ -262,6 +262,6 @@ public class FadingScoreInfo extends GameObject implements IFadingEffectSubject 
 
 	@Override
 	public void registerSelf() {
-		Game.getInputManager().register(this, Utils.LAYER_INFO);
+		
 	}
 }

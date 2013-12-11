@@ -1,4 +1,4 @@
-package com.turpgames.ichigu.model.game.singlegame.modes;
+package com.turpgames.ichigu.model.game.mode.singlegame;
 
 import com.turpgames.framework.v0.forms.xml.Toast;
 import com.turpgames.framework.v0.impl.Settings;
@@ -7,17 +7,15 @@ import com.turpgames.framework.v0.util.CountDownTimer;
 import com.turpgames.framework.v0.util.Game;
 import com.turpgames.framework.v0.util.Timer;
 import com.turpgames.ichigu.model.display.FoundInfo;
+import com.turpgames.ichigu.model.display.IResultScreenButtonsListener;
+import com.turpgames.ichigu.model.display.ResultScreenButtons;
+import com.turpgames.ichigu.model.display.SingleGameQuestion;
 import com.turpgames.ichigu.model.display.TimerText;
 import com.turpgames.ichigu.model.display.WaitToast;
-import com.turpgames.ichigu.model.game.IResultScreenButtonsListener;
-import com.turpgames.ichigu.model.game.ResultScreenButtons;
-import com.turpgames.ichigu.model.game.singlegame.ISingleGameModeListener;
-import com.turpgames.ichigu.model.game.singlegame.SingleGameMode;
-import com.turpgames.ichigu.model.game.singlegame.SingleGameQuestion;
 import com.turpgames.ichigu.utils.Ichigu;
 import com.turpgames.ichigu.utils.R;
 
-public class MiniChallengeMode extends SingleGameMode implements IResultScreenButtonsListener {
+public class MiniGame extends SingleGameMode implements IResultScreenButtonsListener {
 	private final static float blockDuration = 2f;
 	private final static int challengeTime = 5;
 
@@ -32,7 +30,7 @@ public class MiniChallengeMode extends SingleGameMode implements IResultScreenBu
 
 	private ResultScreenButtons resultScreenButtons;
 
-	public MiniChallengeMode() {
+	public MiniGame() {
 		question = new SingleGameQuestion(0.3f, 2.2f);
 		
 		resultScreenButtons = new ResultScreenButtons(this);

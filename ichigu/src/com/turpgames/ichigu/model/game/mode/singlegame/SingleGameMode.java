@@ -1,9 +1,10 @@
-package com.turpgames.ichigu.model.game.singlegame;
+package com.turpgames.ichigu.model.game.mode.singlegame;
 
 import com.turpgames.framework.v0.util.Game;
 import com.turpgames.framework.v0.util.ShapeDrawer;
+import com.turpgames.ichigu.model.display.SingleGameQuestion;
 import com.turpgames.ichigu.model.game.Card;
-import com.turpgames.ichigu.model.game.IchiguMode;
+import com.turpgames.ichigu.model.game.mode.IchiguMode;
 import com.turpgames.ichigu.model.game.table.SingleGameTable;
 import com.turpgames.ichigu.utils.R;
 
@@ -20,7 +21,7 @@ public abstract class SingleGameMode extends IchiguMode {
 
 	@Override
 	protected void onDraw() {
-		table.drawCards();
+		table.draw();
 		question.draw();
 		
 		ShapeDrawer.drawRect(Game.getVirtualWidth() / 2 - Card.Width * 1.5f - 60, (Game.getVirtualHeight() - dividerHeight) / 2 - 17,

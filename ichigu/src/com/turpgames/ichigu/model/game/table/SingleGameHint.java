@@ -1,46 +1,25 @@
-package com.turpgames.ichigu.model.game.singlegame;
+package com.turpgames.ichigu.model.game.table;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import com.turpgames.framework.v0.IDrawable;
-import com.turpgames.framework.v0.component.IButtonListener;
-import com.turpgames.framework.v0.component.ImageButton;
 import com.turpgames.framework.v0.effects.IEffectEndListener;
 import com.turpgames.framework.v0.forms.xml.Toast;
-import com.turpgames.framework.v0.util.Game;
 import com.turpgames.ichigu.model.game.Card;
 import com.turpgames.ichigu.model.game.CardAttributes;
-import com.turpgames.ichigu.model.game.table.Table;
 import com.turpgames.ichigu.utils.Ichigu;
 import com.turpgames.ichigu.utils.R;
 
-public class SingleGameHint implements IDrawable, Toast.IToastListener, IEffectEndListener {
-	private static final float buttonSize = Game.scale(R.ui.imageButtonWidth);
-	
+class SingleGameHint implements Toast.IToastListener, IEffectEndListener {
 	private List<String> hints;
 	private int index;
 	private Toast toast;
 	private Card thirdCard;
 	private boolean isDisplayingHint;
-	private ImageButton hintButton;
 	private int colorIndex;
-	
-	private Table table;
 
-	public SingleGameHint(Table table) {
-		this.table = table;
-		
+	public SingleGameHint() {
 		hints = new ArrayList<String>();
-
-		hintButton = new ImageButton(buttonSize, buttonSize, R.game.textures.hint, R.colors.buttonDefault, R.colors.buttonTouched);
-		hintButton.getLocation().set((Game.getScreenWidth() - hintButton.getWidth()) / 2, Game.viewportToScreenY(50));
-		hintButton.setListener(new IButtonListener() {
-			@Override
-			public void onButtonTapped() {
-				showNextHint();
-			}
-		});
 
 		toast = new Toast();
 		toast.setListener(this);
@@ -60,25 +39,7 @@ public class SingleGameHint implements IDrawable, Toast.IToastListener, IEffectE
 		thirdCard.stopBlinking();
 	}
 
-	public void activate() {
-		hintButton.listenInput(true);
-	}
-
-	public void deactivate() {
-		hintButton.listenInput(false);
-		toast.dispose();
-	}
-
-	@Override
-	public void draw() {
-		drawButton();
-	}
-
-	private void drawButton() {
-		hintButton.draw();
-	}
-
-	private void showNextHint() {
+	public void showNextHint() {
 		if (isDisplayingHint) {
 			toast.hide();
 			return;
@@ -108,9 +69,7 @@ public class SingleGameHint implements IDrawable, Toast.IToastListener, IEffectE
 			toast.setToastColor(R.colors.ichiguBlue);
 	}
 
-	public void update() {
-		List<Card> hintCards = table.getCardsForHints();
-		
+	public void update(List<Card> hintCards) {		
 		CardAttributes ca1 = hintCards.get(0).getAttributes();
 		CardAttributes ca2 = hintCards.get(1).getAttributes();
 

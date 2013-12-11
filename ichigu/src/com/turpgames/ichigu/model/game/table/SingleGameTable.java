@@ -11,9 +11,12 @@ import com.turpgames.ichigu.model.game.dealer.SingleGameDealer;
 
 public class SingleGameTable extends Table {
 	private Deck deck;
+
+	private SingleGameHint hint;
 	
 	public SingleGameTable() {
 		deck = new Deck(this);
+		hint = new SingleGameHint();
 	}
 
 	@Override
@@ -30,6 +33,8 @@ public class SingleGameTable extends Table {
 		}
 		for(int i = 2; i < 5; i++)
 			dealtIn.get(i).activate();
+		
+		hint.update(getCardsForHints());
 	}
 
 	@Override
@@ -133,5 +138,10 @@ public class SingleGameTable extends Table {
 		deck.reset();
 		selectedCards.clear();
 		cardsOnTable.clear();
+	}
+	
+	@Override
+	public void showHint() {
+		hint.showNextHint();
 	}
 }

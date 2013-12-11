@@ -6,7 +6,7 @@ import java.util.List;
 import com.turpgames.ichigu.model.game.Card;
 import com.turpgames.ichigu.model.game.Deck;
 import com.turpgames.ichigu.model.game.dealer.FullGameDealer;
-import com.turpgames.ichigu.model.game.fullgame.FullGameHint;
+import com.turpgames.ichigu.model.game.mode.fullgame.FullGameMode;
 
 public class FullGameTable extends Table {
 
@@ -20,21 +20,18 @@ public class FullGameTable extends Table {
 	private Deck deck;
 	private List<Card> extraCards;
 	private boolean areExtraCardsOpened;
+	private FullGameHint hint;
 	
 	public FullGameTable() {
 		super();
 		deck = new Deck(this);
 		extraCards = new ArrayList<Card>();
+		hint = new FullGameHint(this);
 	}
 
 	@Override
 	protected void setDealer() {
 		dealer = new FullGameDealer(this);
-	}
-	
-	private FullGameHint hint;
-	public void setHint(FullGameHint hint) {
-		this.hint = hint;
 	}
 	
 	@Override
@@ -90,8 +87,7 @@ public class FullGameTable extends Table {
 		
 		areExtraCardsOpened = false;
 
-		if(hint != null) 
-			hint.update();
+		hint.update(getCardsForHints());
 	}
 
 	@Override
@@ -188,13 +184,12 @@ public class FullGameTable extends Table {
 			areExtraCardsOpened = true;
 			cardsOnTable.addAll(extraCards);
 
-			if(hint != null) 
-				hint.update();
-			return;
+			if (hint.getIchiguCount() > 0)
+				((FullGameMode)listener).applyTimePenalty();
+			hint.update(getCardsForHints());
 		}
-		
 		// add card to selected
-		if (cardsOnTable.contains(card)){
+		else if (cardsOnTable.contains(card)){
 			if (selectedCards.contains(card)) {
 				selectedCards.remove(card);
 				card.deselect();
@@ -241,5 +236,16 @@ public class FullGameTable extends Table {
 		dealer = new FullGameDealer(this);
 		isFirstDeal = true;
 		dealtCardCount = 0;
+	}
+	
+	@Override
+	public void showHint() {
+		hint.showHint();
+	}
+
+	@Override
+	public void draw() {
+		hint.draw();
+		super.draw();
 	}
 }

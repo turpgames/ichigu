@@ -1,8 +1,8 @@
-package com.turpgames.ichigu.controller.minichallenge;
+package com.turpgames.ichigu.controller.singlegame;
 
 import com.turpgames.ichigu.controller.IchiguController;
-import com.turpgames.ichigu.model.game.singlegame.ISingleGameModeListener;
-import com.turpgames.ichigu.model.game.singlegame.SingleGameMode;
+import com.turpgames.ichigu.model.game.mode.singlegame.ISingleGameModeListener;
+import com.turpgames.ichigu.model.game.mode.singlegame.SingleGameMode;
 import com.turpgames.ichigu.view.IchiguScreen;
 
 public class SingleGameController extends IchiguController<SingleGameState> implements ISingleGameModeListener {

@@ -1,4 +1,4 @@
-package com.turpgames.ichigu.controller.minichallenge;
+package com.turpgames.ichigu.controller.singlegame;
 
 public class SingleGameDealingState extends SingleGameState {
 	public SingleGameDealingState(SingleGameController controller) {

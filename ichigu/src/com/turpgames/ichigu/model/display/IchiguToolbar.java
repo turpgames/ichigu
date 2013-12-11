@@ -4,6 +4,7 @@ import com.turpgames.framework.v0.component.Button;
 import com.turpgames.framework.v0.component.ImageButton;
 import com.turpgames.framework.v0.component.ToggleButton;
 import com.turpgames.framework.v0.component.Toolbar;
+import com.turpgames.framework.v0.impl.GameObject;
 import com.turpgames.framework.v0.util.Game;
 import com.turpgames.ichigu.utils.R;
 
@@ -34,13 +35,13 @@ public class IchiguToolbar extends Toolbar {
 	
 	@Override
 	protected void concreteAddBackButton() {
-		backButton = new ImageButton(buttonSize, buttonSize, R.game.textures.toolbar.back, R.colors.buttonDefault, R.colors.buttonTouched);
+		backButton = new ImageButton(buttonSize, buttonSize, R.game.textures.toolbar.back, R.colors.buttonDefault, R.colors.ichiguRed);
 		backButton.setLocation(Button.AlignNW, toolbarMargin, toolbarMargin);
 	}
 
 	@Override
 	protected void concreteAddSettingsButton() {
-		settingsButton = new ImageButton(buttonSize, buttonSize, R.game.textures.toolbar.settings, R.colors.buttonDefault, R.colors.buttonTouched);
+		settingsButton = new ImageButton(buttonSize, buttonSize, R.game.textures.toolbar.settings, R.colors.buttonDefault, R.colors.ichiguRed);
 		settingsButton.setLocation(Button.AlignNE, toolbarMargin, toolbarMargin);
 	}
 
@@ -56,5 +57,9 @@ public class IchiguToolbar extends Toolbar {
 		vibrationButton = new ToggleButton(buttonSize, buttonSize, R.settings.vibration, R.game.textures.toolbar.vibrationOn, 
 				R.game.textures.toolbar.vibrationOff, R.colors.ichiguCyan, R.colors.ichiguWhite);
 		vibrationButton.setLocation(Button.AlignNE, 2 * buttonSize + 3 * buttonSpacing + toolbarMargin, toolbarMargin);	
+	}
+
+	public GameObject getBackButton() {
+		return backButton;
 	}
 }

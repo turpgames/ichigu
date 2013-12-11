@@ -1,4 +1,4 @@
-package com.turpgames.ichigu.controller.minichallenge;
+package com.turpgames.ichigu.controller.singlegame;
 
 public class SingleGameWaitingState extends SingleGameState {
 	public SingleGameWaitingState(SingleGameController controller) {

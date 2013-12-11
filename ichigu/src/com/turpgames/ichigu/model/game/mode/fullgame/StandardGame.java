@@ -1,18 +1,17 @@
-package com.turpgames.ichigu.model.game.fullgame.modes;
+package com.turpgames.ichigu.model.game.mode.fullgame;
 
 import com.turpgames.framework.v0.impl.Settings;
 import com.turpgames.framework.v0.impl.Text;
 import com.turpgames.framework.v0.util.Timer;
 import com.turpgames.ichigu.model.game.Card;
-import com.turpgames.ichigu.model.game.fullgame.FullGameMode;
 import com.turpgames.ichigu.utils.Ichigu;
 import com.turpgames.ichigu.utils.R;
 
-public class NormalMode extends FullGameMode {
+public class StandardGame extends FullGameMode {
 	private Timer timer;
 	private Text remaingCardInfo;
 
-	public NormalMode() {
+	public StandardGame() {
 		remaingCardInfo = new Text();
 		
 //		remaingCardInfo.setAlignment(Text.HAlignCenter, Text.VAlignBottom);

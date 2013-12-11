@@ -29,8 +29,8 @@ public abstract class IchiguScreen extends Screen {
 
 	@Override
 	protected void onAfterActivate() {
-		notifyScreenActivated();
 		IchiguToolbar.getInstance().activateBackButton();
+		notifyScreenActivated();
 	}
 	
 	@Override

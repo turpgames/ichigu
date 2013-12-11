@@ -1,4 +1,4 @@
-package com.turpgames.ichigu.controller.minichallenge;
+package com.turpgames.ichigu.controller.singlegame;
 
 import com.turpgames.framework.v0.util.Game;
 import com.turpgames.ichigu.utils.Ichigu;

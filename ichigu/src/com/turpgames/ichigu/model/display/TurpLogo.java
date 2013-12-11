@@ -33,6 +33,6 @@ public class TurpLogo extends GameObject {
 
 	@Override
 	public void registerSelf() {
-		Game.getInputManager().register(this, Utils.LAYER_SCREEN);
+		
 	}
 }

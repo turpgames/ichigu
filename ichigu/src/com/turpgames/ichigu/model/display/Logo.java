@@ -4,7 +4,6 @@ import com.turpgames.framework.v0.ITexture;
 import com.turpgames.framework.v0.impl.GameObject;
 import com.turpgames.framework.v0.util.Game;
 import com.turpgames.framework.v0.util.TextureDrawer;
-import com.turpgames.framework.v0.util.Utils;
 import com.turpgames.ichigu.utils.R;
 
 public class Logo extends GameObject {
@@ -32,6 +31,6 @@ public class Logo extends GameObject {
 	
 	@Override
 	public void registerSelf() {
-		Game.getInputManager().register(this, Utils.LAYER_SCREEN);
+		
 	}
 }

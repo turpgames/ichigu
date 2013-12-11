@@ -1,4 +1,4 @@
-package com.turpgames.ichigu.model.game;
+package com.turpgames.ichigu.model.game.mode;
 
 import com.turpgames.framework.v0.IDrawable;
 import com.turpgames.framework.v0.component.IButtonListener;
@@ -6,13 +6,14 @@ import com.turpgames.framework.v0.component.ImageButton;
 import com.turpgames.framework.v0.forms.xml.Dialog;
 import com.turpgames.framework.v0.util.Game;
 import com.turpgames.ichigu.model.display.IchiguDialog;
+import com.turpgames.ichigu.model.display.IchiguToolbar;
 import com.turpgames.ichigu.model.game.dealer.ITableListener;
 import com.turpgames.ichigu.model.game.table.Table;
 import com.turpgames.ichigu.utils.Ichigu;
 import com.turpgames.ichigu.utils.R;
 
 public abstract class IchiguMode implements IDrawable {
-	protected final static float buttonSize = Game.scale(R.ui.imageButtonWidth);
+	public final static float buttonSize = Game.scale(R.ui.imageButtonWidth);
 
 	protected Table table;
 	protected IIchiguModeListener modeListener;
@@ -174,10 +175,14 @@ public abstract class IchiguMode implements IDrawable {
 
 	public void dealStarted() {
 		pauseTimer();
+		resetButton.listenInput(false);
+		IchiguToolbar.getInstance().getBackButton().listenInput(false);
 	}
 	
 	public void dealEnded() {
 		startTimer();
+		resetButton.listenInput(true);
+		IchiguToolbar.getInstance().getBackButton().listenInput(true);
 	}
 	
 	protected void onStartMode() {
@@ -211,7 +216,7 @@ public abstract class IchiguMode implements IDrawable {
 	}
 
 	public final void draw() {
-		table.drawCards();
+		table.draw();
 		onDraw();
 	}
 

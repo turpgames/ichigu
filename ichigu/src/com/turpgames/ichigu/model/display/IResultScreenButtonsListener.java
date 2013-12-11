@@ -1,4 +1,4 @@
-package com.turpgames.ichigu.model.game;
+package com.turpgames.ichigu.model.display;
 
 public interface IResultScreenButtonsListener {
 	void onBackToMenuTapped();

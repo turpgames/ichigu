@@ -52,6 +52,6 @@ class Symbol extends GameObject {
 
 	@Override
 	public void registerSelf() {
-		Game.getInputManager().register(this, Utils.LAYER_GAME);
+		
 	}
 }
