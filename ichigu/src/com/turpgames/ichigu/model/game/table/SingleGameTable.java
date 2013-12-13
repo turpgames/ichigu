@@ -9,7 +9,7 @@ import com.turpgames.ichigu.model.game.CardAttributes;
 import com.turpgames.ichigu.model.game.Deck;
 import com.turpgames.ichigu.model.game.dealer.SingleGameDealer;
 
-public class SingleGameTable extends Table {
+public class SingleGameTable extends RegularGameTable {
 	private Deck deck;
 
 	private SingleGameHint hint;
@@ -22,6 +22,11 @@ public class SingleGameTable extends Table {
 	@Override
 	protected void setDealer() {
 		dealer = new SingleGameDealer(this);
+	}
+	
+	@Override
+	protected IRegularTableListener getListener() {
+		return (IRegularTableListener) listener;
 	}
 
 	@Override
@@ -104,6 +109,14 @@ public class SingleGameTable extends Table {
 		card.deselect();
 		selectedCards.clear();
 		selectedCards.add(card);
+		if (isIchiguAttempted()) {
+			if (isIchiguFound()) {
+				getListener().onIchiguFound();
+			}
+			else {
+				getListener().onInvalidIchiguSelected();
+			}
+		}
 	}
 
 	@Override

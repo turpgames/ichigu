@@ -72,9 +72,9 @@ public class Deck {
 		unusedCards.add(card);
 	}
 	
-	public Card getCardWithAttributes(CardAttributes third) {
+	public Card getCardWithAttributes(CardAttributes att) {
 		for (Card card : unusedCards)
-			if (card.getAttributes().equals(third)) {
+			if (card.getAttributes().equals(att)) {
 				useCard(card);
 				return card;
 			}

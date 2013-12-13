@@ -6,9 +6,8 @@ import java.util.List;
 import com.turpgames.ichigu.model.game.Card;
 import com.turpgames.ichigu.model.game.Deck;
 import com.turpgames.ichigu.model.game.dealer.FullGameDealer;
-import com.turpgames.ichigu.model.game.mode.fullgame.FullGameMode;
 
-public class FullGameTable extends Table {
+public class FullGameTable extends RegularGameTable {
 
 	public static final int ActiveCardCount = 12;
 	public static final int ExtraCardCount = 3;
@@ -32,6 +31,11 @@ public class FullGameTable extends Table {
 	@Override
 	protected void setDealer() {
 		dealer = new FullGameDealer(this);
+	}
+	
+	@Override
+	protected IFullGameTableListener getListener() {
+		return (IFullGameTableListener)listener; 
 	}
 	
 	@Override
@@ -109,10 +113,10 @@ public class FullGameTable extends Table {
 	@Override
 	public List<Card> getCardsToDealIn() {
 		List<Card> toDealIn = new ArrayList<Card>();
-		
+
+		int ichiguCount = 0;
 		if (isFirstDeal) {
 //			discardFirst66(); // TODO FOR TEST: uncomment to try full game end
-			int ichiguCount = 0;
 			do {
 				for(Card card : toDealIn)
 					deck.giveBackRandomCard(card);
@@ -123,9 +127,23 @@ public class FullGameTable extends Table {
 			while(ichiguCount == 0);
 		}
 		else {
-			toDealIn.add(deck.getRandomCard());
-			toDealIn.add(deck.getRandomCard());
-			toDealIn.add(deck.getRandomCard());
+			List<Card> tempAllCards = new ArrayList<Card>();
+			tempAllCards.addAll(cardsOnTable);
+			tempAllCards.removeAll(selectedCards);
+			do {
+				for (Card card : toDealIn) {
+					deck.giveBackRandomCard(card);
+					tempAllCards.remove(card);
+				}
+				for (int i = 0; i < 3; i++) {
+					Card card = deck.getRandomCard();
+					toDealIn.add(card);
+					tempAllCards.add(card);
+				}
+				ichiguCount = Card.getIchiguCount(tempAllCards);
+			}
+			while(ichiguCount == 0);
+			
 			List<Card> tempExtraCards = new ArrayList<Card>();
 			tempExtraCards.addAll(extraCards);
 			for (Card card : selectedCards)
@@ -185,7 +203,7 @@ public class FullGameTable extends Table {
 			cardsOnTable.addAll(extraCards);
 
 			if (hint.getIchiguCount() > 0)
-				((FullGameMode)listener).applyTimePenalty();
+				getListener().onOpenedExtraCardsWhileThereIsIchigu();
 			hint.update(getCardsForHints());
 		}
 		// add card to selected
@@ -197,6 +215,15 @@ public class FullGameTable extends Table {
 			else {
 				selectedCards.add(card);
 				card.select();
+			}
+		}
+		
+		if (isIchiguAttempted()) {
+			if (isIchiguFound()) {
+				getListener().onIchiguFound();
+			}
+			else {
+				getListener().onInvalidIchiguSelected();
 			}
 		}
 	}

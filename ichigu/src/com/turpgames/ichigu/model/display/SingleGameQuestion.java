@@ -22,7 +22,7 @@ public class SingleGameQuestion extends GameObject implements IEffectEndListener
 			getColor().set(color);
 			setWidth(R.ui.questionMarkSize);
 			setHeight(R.ui.questionMarkSize);
-			getLocation().set(R.learningModeScreen.layout.markPos);
+			getLocation().set(R.singleGameMode.markPos);
 			
 			effect = new FadeOutEffect(this);
 			effect.setDuration(0.2f);

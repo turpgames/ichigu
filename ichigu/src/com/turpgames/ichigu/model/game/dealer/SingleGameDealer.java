@@ -33,11 +33,11 @@ public class SingleGameDealer extends Dealer {
 		inStart.add(toSelectStart);
 
 		List<Vector> inDestination = new ArrayList<Vector>();
-		inDestination.add(R.learningModeScreen.layout.cardOnTable1Pos);
-		inDestination.add(R.learningModeScreen.layout.cardOnTable2Pos);
-		inDestination.add(R.learningModeScreen.layout.cardToSelect1Pos);
-		inDestination.add(R.learningModeScreen.layout.cardToSelect2Pos);
-		inDestination.add(R.learningModeScreen.layout.cardToSelect3Pos);
+		inDestination.add(R.singleGameMode.cardOnTable1Pos);
+		inDestination.add(R.singleGameMode.cardOnTable2Pos);
+		inDestination.add(R.singleGameMode.cardToSelect1Pos);
+		inDestination.add(R.singleGameMode.cardToSelect2Pos);
+		inDestination.add(R.singleGameMode.cardToSelect3Pos);
 		
 		inPositions.add(inStart);
 		inPositions.add(inDestination);

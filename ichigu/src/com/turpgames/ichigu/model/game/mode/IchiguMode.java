@@ -7,7 +7,7 @@ import com.turpgames.framework.v0.forms.xml.Dialog;
 import com.turpgames.framework.v0.util.Game;
 import com.turpgames.ichigu.model.display.IchiguDialog;
 import com.turpgames.ichigu.model.display.IchiguToolbar;
-import com.turpgames.ichigu.model.game.dealer.ITableListener;
+import com.turpgames.ichigu.model.game.table.ITableListener;
 import com.turpgames.ichigu.model.game.table.Table;
 import com.turpgames.ichigu.utils.Ichigu;
 import com.turpgames.ichigu.utils.R;
@@ -65,24 +65,14 @@ public abstract class IchiguMode implements IDrawable {
 
 	protected abstract void initTable();
 	
+	protected Table getTable() {
+		return table;
+	}
+	
 	protected abstract void pauseTimer();
 
 	protected abstract void startTimer();
-	
-	public final void ichiguFound() {
-		table.afterIchiguFound();
-		concreteIchiguFound();
-	}
-	
-	public final void invalidIchiguSelected() {
-		table.afterInvalidIchiguSelected();
-		concreteInvalidIchiguSelected();
-	}
 
-	abstract public void concreteInvalidIchiguSelected();
-	
-	abstract public void concreteIchiguFound(); 
-	
 	protected abstract void prepareResultInfoAndSaveHiscore();
 	
 	public void openCloseCards(boolean open) {
@@ -130,16 +120,6 @@ public abstract class IchiguMode implements IDrawable {
 		startTimer();
 		resetButton.listenInput(true);
 		openCloseCards(true);
-	}
-
-	protected void notifyIchiguFound() {
-		if (modeListener != null)
-			modeListener.onIchiguFound();
-	}
-
-	protected void notifyInvalidIchiguSelected() {
-		if (modeListener != null)
-			modeListener.onInvalidIchiguSelected();
 	}
 
 	public void setModeListener(IIchiguModeListener controller) {

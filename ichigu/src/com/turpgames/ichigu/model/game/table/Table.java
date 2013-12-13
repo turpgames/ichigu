@@ -7,7 +7,6 @@ import com.turpgames.ichigu.model.game.Card;
 import com.turpgames.ichigu.model.game.ICardListener;
 import com.turpgames.ichigu.model.game.dealer.Dealer;
 import com.turpgames.ichigu.model.game.dealer.IDealerListener;
-import com.turpgames.ichigu.model.game.dealer.ITableListener;
 
 public abstract class Table implements IDealerListener, ICardListener {
 	protected Dealer dealer;
@@ -29,36 +28,15 @@ public abstract class Table implements IDealerListener, ICardListener {
 	
 	abstract protected void setDealer();
 	
-	abstract public boolean isIchiguAttempted();
-	
-	abstract public boolean isIchiguFound();
-	
-	public void afterInvalidIchiguSelected() {
-		
-	}
-
-	public void afterIchiguFound() {
-		
+	protected ITableListener getListener() {
+		return listener;
 	}
 	
-	abstract protected List<Card> getCardsToDealIn();
-	
-	abstract protected List<Card> getCardsToDealOut();
-	
-
 	@Override
 	public final void onCardTapped(Card card) {
 		if (dealer.isWorking())
 			return;
 		concreteCardTapped(card);
-		if (isIchiguAttempted()) {
-			if (isIchiguFound()) {
-				listener.onIchiguFound();
-			}
-			else {
-				listener.onInvalidIchiguSelected();
-			}
-		}
 		listener.onCardTapped(card);
 	}
 
@@ -98,6 +76,10 @@ public abstract class Table implements IDealerListener, ICardListener {
 		dealer.deal(in, out);
 	}
 
+	abstract protected List<Card> getCardsToDealIn();
+	
+	abstract protected List<Card> getCardsToDealOut();
+	
 	abstract public void start();
 
 	abstract public void end();
@@ -114,7 +96,9 @@ public abstract class Table implements IDealerListener, ICardListener {
 		dealer.drawCards();
 	}
 
-	abstract protected List<Card> getCardsForHints();
+	protected List<Card> getCardsForHints() {
+		return null;
+	}
 
 	public int getDealtCardCount() {
 		return dealtCardCount;

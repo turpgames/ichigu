@@ -3,9 +3,10 @@ package com.turpgames.ichigu.controller.singlegame;
 import com.turpgames.ichigu.controller.IchiguController;
 import com.turpgames.ichigu.model.game.mode.singlegame.ISingleGameModeListener;
 import com.turpgames.ichigu.model.game.mode.singlegame.SingleGameMode;
+import com.turpgames.ichigu.model.game.table.IRegularTableListener;
 import com.turpgames.ichigu.view.IchiguScreen;
 
-public class SingleGameController extends IchiguController<SingleGameState> implements ISingleGameModeListener {
+public class SingleGameController extends IchiguController<SingleGameState> implements ISingleGameModeListener, IRegularTableListener {
 	final SingleGameMode model;
 	final IchiguScreen view;
 
@@ -49,7 +50,17 @@ public class SingleGameController extends IchiguController<SingleGameState> impl
 	public void onModeEnd() {
 		currentState.onModeEnd();
 	}
-
+	
+	@Override
+	public void onIchiguFound() {
+		currentState.onIchiguFound();
+	}
+	
+	@Override
+	public void onInvalidIchiguSelected() {
+		currentState.onInvalidIchiguSelected();
+	}
+	
 	void setDealingState() {
 		setState(dealingState);
 	}

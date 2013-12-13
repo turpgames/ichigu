@@ -11,10 +11,10 @@ import com.turpgames.ichigu.model.display.TimerText;
 import com.turpgames.ichigu.model.display.TryAgainToast;
 import com.turpgames.ichigu.model.game.Card;
 import com.turpgames.ichigu.model.game.mode.IIchiguModeListener;
-import com.turpgames.ichigu.model.game.mode.IchiguMode;
+import com.turpgames.ichigu.model.game.mode.RegularMode;
 import com.turpgames.ichigu.model.game.table.FullGameTable;
 
-public abstract class FullGameMode extends IchiguMode implements IResultScreenButtonsListener {
+public abstract class FullGameMode extends RegularMode implements IResultScreenButtonsListener {
 	protected final static float secondPerPenalty = 10f;
 
 	private HintButton hintButton;
@@ -53,8 +53,14 @@ public abstract class FullGameMode extends IchiguMode implements IResultScreenBu
 		table = new FullGameTable();
 	}
 	
+	@Override
+	protected FullGameTable getTable() {
+		// TODO Auto-generated method stub
+		return (FullGameTable) table;
+	}
+	
 	protected abstract Timer getTimer();
-
+	
 	@Override
 	protected void pauseTimer() {
 		getTimer().pause();
@@ -128,7 +134,6 @@ public abstract class FullGameMode extends IchiguMode implements IResultScreenBu
 
 	@Override
 	protected void onDraw() {
-		table.draw();
 		timerText.draw();
 		hintButton.draw();
 		super.onDraw();

@@ -23,20 +23,11 @@ public abstract class IchiguController<T extends IchiguState> implements IIchigu
 		currentState.onExitConfirmed();		
 	}
 	
-	@Override
-	public void onIchiguFound() {
-		currentState.onIchiguFound();
-	}
 
 	@Override
 	public void draw() {
 		if (currentState != null)
 			currentState.draw();
-	}
-	
-	@Override
-	public void onInvalidIchiguSelected() {
-		currentState.onInvalidIchiguSelected();
 	}
 
 	protected void setState(T newState) {

@@ -8,7 +8,7 @@ import com.turpgames.ichigu.model.game.Card;
 
 public final class R {
 	/**
-	 * game.xml yapýsýndaki id ve key'ler
+	 * game.xml yapisindaki id ve key'ler
 	 */
 	public static final class game {
 		public static final class controls {
@@ -54,11 +54,11 @@ public final class R {
 			public static final String emptyTriangle = "card-41";
 
 			public static final String libgdx = "libgdx";
-			
+
 			public final static String backgroundPixel = "backgroundPixel";
 
-			public static String questionCard = "question-card"; 
-					
+			public static String questionCard = "question-card";
+
 			public static final class toolbar {
 				public static final String back = "tb_back";
 				public static final String settings = "tb_settings";
@@ -89,7 +89,7 @@ public final class R {
 				public static final String colorone = "colorone";
 				public static final String colorall = "colorall";
 			}
-			
+
 			public static final class singlegame {
 				public static final String questionmark = "question-mark";
 				public static final String correctmark = "correct-mark";
@@ -117,31 +117,58 @@ public final class R {
 		public static final String hintCount = "hint-count";
 	}
 
-	public static final class learningModeScreen {
-		public static final class layout {
-			public static final Vector cardOnTable1Pos = new Vector(Game.getVirtualWidth() / 2 - Card.Width * 1.5f - 40, 4 * Game.getVirtualHeight() / 7 - 50);
-			public static final Vector cardOnTable2Pos = new Vector(Game.getVirtualWidth() / 2 - Card.Width * 0.5f, 4 * Game.getVirtualHeight() / 7 - 50);
-			public static final Vector cardOnTable3Pos = new Vector(Game.getVirtualWidth() / 2 + Card.Width * 0.5f + 40, 4 * Game.getVirtualHeight() / 7 - 50);
-			public static final Vector markPos = new Vector(Game.getVirtualWidth() / 2 + Card.Width * 0.5f + 40 + (Card.Width - R.ui.questionMarkSize) / 2, 
-					4 * Game.getVirtualHeight() / 7 - 50 + (Card.Height - R.ui.questionMarkSize) / 2);
-			
-			public static final Vector cardToSelect1Pos = new Vector(Game.getVirtualWidth() / 2 - Card.Width * 1.5f - 40, 2 * Game.getVirtualHeight() / 7 - 50);
-			public static final Vector cardToSelect2Pos = new Vector(Game.getVirtualWidth() / 2 - Card.Width * 0.5f, 2 * Game.getVirtualHeight() / 7 - 50);
-			public static final Vector cardToSelect3Pos = new Vector(Game.getVirtualWidth() / 2 + Card.Width * 0.5f + 40, 2 * Game.getVirtualHeight() / 7 - 50);
+	public static final class singleGameMode {
+		public static final Vector cardOnTable1Pos = new Vector(
+				Game.getVirtualWidth() / 2 - Card.Width * 1.5f - 40,
+				4 * Game.getVirtualHeight() / 7 - 50);
+		public static final Vector cardOnTable2Pos = new Vector(
+				Game.getVirtualWidth() / 2 - Card.Width * 0.5f,
+				4 * Game.getVirtualHeight() / 7 - 50);
+		public static final Vector cardOnTable3Pos = new Vector(
+				Game.getVirtualWidth() / 2 + Card.Width * 0.5f + 40,
+				4 * Game.getVirtualHeight() / 7 - 50);
+		public static final Vector markPos = new Vector(Game.getVirtualWidth()
+				/ 2 + Card.Width * 0.5f + 40
+				+ (Card.Width - R.ui.questionMarkSize) / 2, 4
+				* Game.getVirtualHeight() / 7 - 50
+				+ (Card.Height - R.ui.questionMarkSize) / 2);
 
-			public static final Vector[] positions = new Vector[] { cardOnTable1Pos, cardOnTable2Pos, cardToSelect1Pos, cardToSelect2Pos, cardToSelect3Pos };
-		}
+		public static final Vector cardToSelect1Pos = new Vector(
+				Game.getVirtualWidth() / 2 - Card.Width * 1.5f - 40,
+				2 * Game.getVirtualHeight() / 7 - 50);
+		public static final Vector cardToSelect2Pos = new Vector(
+				Game.getVirtualWidth() / 2 - Card.Width * 0.5f,
+				2 * Game.getVirtualHeight() / 7 - 50);
+		public static final Vector cardToSelect3Pos = new Vector(
+				Game.getVirtualWidth() / 2 + Card.Width * 0.5f + 40,
+				2 * Game.getVirtualHeight() / 7 - 50);
+
+		public static final Vector[] positions = new Vector[] {
+				cardOnTable1Pos, cardOnTable2Pos, cardToSelect1Pos,
+				cardToSelect2Pos, cardToSelect3Pos };
 	}
 
 	public static final class symbolpositions {
-		public static final Vector firstOfOne = new Vector((Card.Width - Card.SymbolWidth) / 2, (Card.Height - Card.SymbolHeight) / 2);
+		public static final Vector firstOfOne = new Vector(
+				(Card.Width - Card.SymbolWidth) / 2,
+				(Card.Height - Card.SymbolHeight) / 2);
 
-		public static final Vector firstOfTwo = new Vector((Card.Width - Card.SymbolWidth) / 2, Card.Height / 2 - Card.SymbolHeight * 1.1f);
-		public static final Vector secondOfTwo = new Vector((Card.Width - Card.SymbolWidth) / 2, Card.Height / 2 + Card.SymbolHeight * 0.1f);
+		public static final Vector firstOfTwo = new Vector(
+				(Card.Width - Card.SymbolWidth) / 2, Card.Height / 2
+						- Card.SymbolHeight * 1.1f);
+		public static final Vector secondOfTwo = new Vector(
+				(Card.Width - Card.SymbolWidth) / 2, Card.Height / 2
+						+ Card.SymbolHeight * 0.1f);
 
-		public static final Vector firstOfThree = new Vector((Card.Width - Card.SymbolWidth) / 2, 2 + Card.Height / 2 - Card.SymbolHeight * 1.65f);
-		public static final Vector secondOfThree = new Vector((Card.Width - Card.SymbolWidth) / 2, 2 + Card.Height / 2 - Card.SymbolHeight * 0.5f);
-		public static final Vector thirdOfThree = new Vector((Card.Width - Card.SymbolWidth) / 2, 2 + Card.Height / 2 + Card.SymbolHeight * 0.65f);
+		public static final Vector firstOfThree = new Vector(
+				(Card.Width - Card.SymbolWidth) / 2, 2 + Card.Height / 2
+						- Card.SymbolHeight * 1.65f);
+		public static final Vector secondOfThree = new Vector(
+				(Card.Width - Card.SymbolWidth) / 2, 2 + Card.Height / 2
+						- Card.SymbolHeight * 0.5f);
+		public static final Vector thirdOfThree = new Vector(
+				(Card.Width - Card.SymbolWidth) / 2, 2 + Card.Height / 2
+						+ Card.SymbolHeight * 0.65f);
 	}
 
 	public static final class colors {
@@ -228,7 +255,7 @@ public final class R {
 		public final static String miniChallengeResult = "miniChallengeResult";
 		public final static String fullChallengeResult = "fullChallengeResult";
 		public final static String normalResult = "normalResult";
-		
+
 		public final static String newHiscore = "newHiscore";
 
 		public final static String resetHiscore = "resetHiscore";
@@ -266,10 +293,10 @@ public final class R {
 
 		public final static String tutMiniChallengeModeTitle = "tutMiniChallengeModeTitle";
 		public final static String tutMiniChallengeMode = "tutMiniChallengeMode";
-				
+
 		public final static String tutFullModesTitle = "tutFullModesTitle";
 		public final static String tutFullModes = "tutFullModes";
-		
+
 		public final static String tutNormalModeTitle = "tutNormalModeTitle";
 		public final static String tutNormalMode = "tutNormalMode";
 
@@ -287,6 +314,8 @@ public final class R {
 		public final static String bankInfo = "bankInfo";
 		public final static String ok = "ok";
 		public final static String buy = "buy";
+		
+		public final static String sudoku = "sudoku";
 	}
 
 	public static final class links {
@@ -298,7 +327,7 @@ public final class R {
 		public final static String twitterAddress = "twitter-address";
 		public final static String facebookAddress = "facebook-address";
 	}
-	
+
 	private R() {
 	}
 }

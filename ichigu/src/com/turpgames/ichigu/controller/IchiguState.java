@@ -14,18 +14,6 @@ public abstract class IchiguState implements IIchiguController {
 	}
 
 	@Override
-	public void onIchiguFound() {
-		Ichigu.playSoundSuccess();
-		Game.vibrate(50);
-	}
-
-	@Override
-	public void onInvalidIchiguSelected() {
-		Ichigu.playSoundError();
-		Game.vibrate(0, 50, 50, 100);
-	}
-
-	@Override
 	public void onScreenActivated() {
 		
 	}

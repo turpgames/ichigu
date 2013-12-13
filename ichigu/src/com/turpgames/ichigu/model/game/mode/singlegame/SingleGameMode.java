@@ -4,11 +4,11 @@ import com.turpgames.framework.v0.util.Game;
 import com.turpgames.framework.v0.util.ShapeDrawer;
 import com.turpgames.ichigu.model.display.SingleGameQuestion;
 import com.turpgames.ichigu.model.game.Card;
-import com.turpgames.ichigu.model.game.mode.IchiguMode;
+import com.turpgames.ichigu.model.game.mode.RegularMode;
 import com.turpgames.ichigu.model.game.table.SingleGameTable;
 import com.turpgames.ichigu.utils.R;
 
-public abstract class SingleGameMode extends IchiguMode {
+public abstract class SingleGameMode extends RegularMode {
 	private static final int dividerHeight = 10;
 	private static final int dividerWidth = 420;
 	
@@ -18,7 +18,7 @@ public abstract class SingleGameMode extends IchiguMode {
 	protected void initTable() {
 		table = new SingleGameTable();
 	}
-
+	
 	@Override
 	protected void onDraw() {
 		table.draw();
@@ -39,7 +39,7 @@ public abstract class SingleGameMode extends IchiguMode {
 	public void concreteInvalidIchiguSelected() {
 		question.startIncorrectEffect();
 	}
-
+	
 	public void drawResultScreen() {
 		
 	}

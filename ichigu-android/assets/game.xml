@@ -108,6 +108,11 @@
         <screen
             id="multiplayer"
             class="com.turpgames.ichigu.view.MultiplayerModeScreen" />
+        
+       
+        <screen
+            id="sudoku"
+            class="com.turpgames.ichigu.view.SudokuModeScreen" />
 
         <screen
             id="menu"
@@ -173,6 +178,12 @@
                 action="screen=about"
                 resource-text="about"
                 y="7" />
+
+            <button
+                id="btnSudoku"
+                action="screen=sudoku"
+                resource-text="sudoku"
+                y="4" />
 
             <button
                 id="btnExitGame"
