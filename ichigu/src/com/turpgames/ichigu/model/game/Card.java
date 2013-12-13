@@ -192,4 +192,9 @@ public class Card extends IchiguObject {
 		deselect();
 		getColor().set(Color.white());
 	}
+	
+	@Override
+	public String toString() {
+		return getAttributes().toString();
+	}
 }

@@ -128,6 +128,8 @@ public abstract class Dealer {
 	}
 
 	public void drawCards() {
+		if (!isWorking())
+			return;
 		for(Card card : cardsDealingIn)
 			if (card != null)
 				card.draw();
