@@ -17,7 +17,7 @@ import com.turpgames.ichigu.utils.R;
 
 public class MiniGame extends SingleGameMode implements IResultScreenButtonsListener {
 	private final static float blockDuration = 2f;
-	private final static int challengeTime = 5;
+	private final static int challengeTime = 60;
 
 	private final CountDownTimer blockTimer;
 	private final CountDownTimer challengeTimer;

@@ -15,13 +15,13 @@ import com.turpgames.ichigu.model.game.table.Table;
 
 public class FullGameDealer extends Dealer {
 
-	private static float fadeDuration = 2f;
-	private static float inDuration = 2f;
-	
+	private static float fadeDuration = 0.2f;
+	private static float inDuration = 0.2f;
 	
 	private final static Map<Integer, Vector> cardLocations = new HashMap<Integer, Vector>();
 	private final static List<Vector> extraCardLocations = new ArrayList<Vector>();
 	private final static List<List<Vector>> inPositions = new ArrayList<List<Vector>>();
+	private final static Vector inPosition = new Vector(Card.Width/2, Card.Width/2);
 	static {
 		float dy = (Game.getVirtualHeight() - Game.getVirtualWidth()) / 2f - 20;
 		for (int i = 0; i < FullGameTable.ActiveCardCount; i++) {
@@ -47,9 +47,9 @@ public class FullGameDealer extends Dealer {
 		}
 		
 		List<Vector> inStart = new ArrayList<Vector>();
-		inStart.add(new Vector(0,0));
-		inStart.add(new Vector(0,0));
-		inStart.add(new Vector(0,0));
+		inStart.add(new Vector(extraCardLocations.get(0).tmp().add(Card.Width + 30, 0)));
+		inStart.add(new Vector(extraCardLocations.get(1).tmp().add(Card.Width + 30, 0)));
+		inStart.add(new Vector(extraCardLocations.get(2).tmp().add(Card.Width + 30, 0)));
 		
 		List<Vector> inDestination = new ArrayList<Vector>();
 		inDestination.addAll(extraCardLocations);
@@ -80,10 +80,24 @@ public class FullGameDealer extends Dealer {
 	@Override
 	protected void setInEffects() {
 		if(table.isFirstDeal()) {
-			for (int i = 0; i < FullGameTable.ExtraCardCount; i++)
-				cardsDealingIn.get(i).getLocation().set(extraCardLocations.get(i));
-			for (int i = 0; i < FullGameTable.ActiveCardCount; i++)
-				cardsDealingIn.get(i + FullGameTable.ExtraCardCount).getLocation().set(cardLocations.get(i));
+			MoveEffect moveEffect;
+			for (int i = 0; i < FullGameTable.ExtraCardCount; i++){
+				cardsDealingIn.get(i).getLocation().set(inPositions.get(0).get(i));
+				moveEffect = new MoveEffect(cardsDealingIn.get(i));
+				moveEffect.setLooping(false);
+				moveEffect.setDestination(extraCardLocations.get(i));
+				moveEffect.setDuration(inDuration);
+				cardsDealingIn.get(i).setDealerEffect(moveEffect);
+			}
+				
+			for (int i = 0; i < FullGameTable.ActiveCardCount; i++) {
+				cardsDealingIn.get(i + 3).getLocation().set(inPosition);
+				moveEffect = new MoveEffect(cardsDealingIn.get(i + 3));
+				moveEffect.setLooping(false);
+				moveEffect.setDestination(cardLocations.get(i));
+				moveEffect.setDuration(inDuration);
+				cardsDealingIn.get(i + 3).setDealerEffect(moveEffect);
+			}
 		}
 		else {
 			// first three of cardsToDealOut are new cards, remaining cards are unused extra cards repositioned

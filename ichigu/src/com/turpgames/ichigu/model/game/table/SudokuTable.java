@@ -25,8 +25,8 @@ public class SudokuTable extends Table {
 		for (int i = 0; i < 3; i++) {
 			int x = i % 3;
 			markPositions.add(new Vector(
-					x * Card.Width + Card.Space * (x + 1) + dx,
-					dy));
+					x * Card.Width + Card.Space * (x + 1) + dx + (Card.Width - R.ui.imageButtonWidth) / 2,
+					dy + (Card.Height - R.ui.imageButtonHeight) / 2 - 10));
 		}
 
 		dy -= 3 * Card.Height;
@@ -36,8 +36,8 @@ public class SudokuTable extends Table {
 			int y = i;
 
 			markPositions.add(new Vector(
-					dx,
-					y * Card.Height + Card.Space * (y + 1) + dy));
+					dx + (Card.Width - R.ui.imageButtonWidth) / 2,
+					y * Card.Height + Card.Space * (y + 1) + dy + (Card.Height - R.ui.imageButtonHeight) / 2));
 		}
 	}
 	
@@ -52,6 +52,7 @@ public class SudokuTable extends Table {
 			this.incorrect = Game.getResourceManager().getTexture(R.game.textures.singlegame.incorrectmark);
 			setWidth(R.ui.imageButtonWidth);
 			setHeight(R.ui.imageButtonHeight);
+			deactivate();
 		}
 		
 		public void activate() {

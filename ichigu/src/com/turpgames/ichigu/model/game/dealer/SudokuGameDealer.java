@@ -7,6 +7,7 @@ import java.util.Map;
 
 import com.turpgames.framework.v0.effects.CompositeEffect;
 import com.turpgames.framework.v0.effects.IEffectEndListener;
+import com.turpgames.framework.v0.effects.MoveEffect;
 import com.turpgames.framework.v0.effects.ProjectileMoveEffect;
 import com.turpgames.framework.v0.effects.ScaleEffect;
 import com.turpgames.framework.v0.util.Game;
@@ -16,9 +17,14 @@ import com.turpgames.ichigu.model.game.table.SudokuTable;
 import com.turpgames.ichigu.model.game.table.Table;
 
 public class SudokuGameDealer extends Dealer {
+	public static float inDuration = 0.15f;
+	public static float outDuration = 0.15f;
+	
 	private final static float swapDuration = 0.5f;
 	private final static float maxScale = 0.15f;
-	
+
+	private final static Vector inPosition = new Vector(Card.Width/2, Card.Width/2);
+	private final static Vector outPosition = new Vector(Game.getVirtualWidth() + Card.Width/2, Card.Width/2);
 	private final static Map<Integer, Vector> cardLocations = new HashMap<Integer, Vector>();
 	static {
 		float dy = (Game.getVirtualHeight() - Game.getVirtualWidth()) / 2f - 20;
@@ -41,7 +47,7 @@ public class SudokuGameDealer extends Dealer {
 
 	@Override
 	protected void selectDeal() {
-		dealConsecutive();
+		dealSimultaneous();
 	}
 	
 	@Override
@@ -106,18 +112,39 @@ public class SudokuGameDealer extends Dealer {
 
 	@Override
 	protected void setOutEffects() {
-		
+		MoveEffect moveEffect;
+		for (int i = 0; i < cardsDealingOut.size(); i++) {
+			moveEffect = new MoveEffect(cardsDealingOut.get(i));
+			moveEffect.setLooping(false);
+			moveEffect.setDestination(outPosition);
+			moveEffect.setDuration(outDuration);
+			cardsDealingOut.get(i).setDealerEffect(moveEffect);
+		}
 	}
 
 	@Override
 	protected void setInEffects() {
-		for (int i = 0; i < 9; i++)
-			cardsDealingIn.get(i).getLocation().set(cardLocations.get(i));
+		for (int i = 0; i < cardsDealingIn.size(); i++)
+			cardsDealingIn.get(i).getLocation().set(inPosition);
+		MoveEffect moveEffect;
+		for (int i = 0; i < cardsDealingIn.size(); i++) {
+			moveEffect = new MoveEffect(cardsDealingIn.get(i));
+			moveEffect.setLooping(false);
+			moveEffect.setDestination(cardLocations.get(i));
+			moveEffect.setDuration(inDuration);
+			cardsDealingIn.get(i).setDealerEffect(moveEffect);
+		}
 	}
 	
 	@Override
 	protected void concreteDrawCards() {
 		for(Card card : swappingCards)
+			if (card != null)
+				card.draw();
+		for(Card card : cardsDealingIn)
+			if (card != null)
+				card.draw();
+		for(Card card : cardsDealingOut)
 			if (card != null)
 				card.draw();
 	}

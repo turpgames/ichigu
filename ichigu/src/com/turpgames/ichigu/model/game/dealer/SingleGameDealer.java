@@ -12,8 +12,8 @@ import com.turpgames.ichigu.utils.R;
 
 public class SingleGameDealer extends Dealer {
 
-	protected float inDuration = 2f;
-	protected float outDuration = 2f;
+	public static float inDuration = 0.15f;
+	public static float outDuration = 0.15f;
 	
 	private final static Vector selectedStart = new Vector(- Card.Width, (Game.getVirtualHeight() - Card.Height) / 2);
 	private final static Vector toSelectStart = new Vector(- Card.Width, (Game.getVirtualHeight() - Card.Height) / 2);
