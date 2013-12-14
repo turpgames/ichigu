@@ -1,8 +1,6 @@
 package com.turpgames.ichigu.controller;
 
-import com.turpgames.framework.v0.util.Game;
 import com.turpgames.ichigu.model.game.Card;
-import com.turpgames.ichigu.utils.Ichigu;
 
 public abstract class IchiguState implements IIchiguController {
 	protected void activated() {

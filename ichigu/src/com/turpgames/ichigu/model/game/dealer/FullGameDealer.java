@@ -110,4 +110,13 @@ public class FullGameDealer extends Dealer {
 			}
 		}
 	}
+	
+	@Override
+	protected void concreteDrawCards() {
+		for(Card card : cardsDealingIn)
+			if (card != null)
+				card.draw();
+		for(Card card : cardsDealingOut)
+			card.draw();
+	}
 }

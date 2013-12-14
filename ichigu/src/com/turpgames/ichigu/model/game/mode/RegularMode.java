@@ -1,7 +1,6 @@
 package com.turpgames.ichigu.model.game.mode;
 
 import com.turpgames.ichigu.model.game.table.RegularGameTable;
-import com.turpgames.ichigu.model.game.table.SingleGameTable;
 
 public abstract class RegularMode extends IchiguMode {
 

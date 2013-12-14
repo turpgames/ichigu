@@ -21,11 +21,20 @@ public abstract class Dealer {
 	
 	private int effectsToFinish;
 	
-	public void deal(List<Card> cardsToDealIn, List<Card> cardsToDealOut) {
+	public final void deal(List<Card> cardsToDealIn, List<Card> cardsToDealOut) {
+		for(Card card : cardsToDealIn)
+			if(card != null)
+				card.resetDealerEffect();
+		for(Card card : cardsToDealOut)
+			if(card != null)
+				card.resetDealerEffect();
+
 		this.cardsDealingIn = cardsToDealIn;
 		this.cardsDealingOut = cardsToDealOut;
+		
 		setOutEffects();
 		setInEffects();
+		
 		this.effectsToFinish = 0;
 		for(Card card : cardsToDealIn)
 			if(card != null && card.hasDealerEffect())
@@ -130,10 +139,8 @@ public abstract class Dealer {
 	public void drawCards() {
 		if (!isWorking())
 			return;
-		for(Card card : cardsDealingIn)
-			if (card != null)
-				card.draw();
-		for(Card card : cardsDealingOut)
-			card.draw();
+		concreteDrawCards();
 	}
+	
+	abstract protected void concreteDrawCards();
 }

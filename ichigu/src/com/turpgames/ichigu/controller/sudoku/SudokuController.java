@@ -1,12 +1,11 @@
 package com.turpgames.ichigu.controller.sudoku;
 
 import com.turpgames.ichigu.controller.IchiguController;
-import com.turpgames.ichigu.model.game.mode.ISudokuModeListener;
 import com.turpgames.ichigu.model.game.mode.SudokuMode;
-import com.turpgames.ichigu.view.IIchiguViewListener;
+import com.turpgames.ichigu.model.game.table.ISudokuTableListener;
 import com.turpgames.ichigu.view.IchiguScreen;
 
-public class SudokuController extends IchiguController<SudokuState> implements IIchiguViewListener, ISudokuModeListener {
+public class SudokuController extends IchiguController<SudokuState> implements ISudokuTableListener {
 	final SudokuMode model;
 	final IchiguScreen view;
 
@@ -61,6 +60,16 @@ public class SudokuController extends IchiguController<SudokuState> implements I
 		currentState.onExitConfirmed();
 	}
 
+	@Override
+	public void onSwapStarted() {
+		currentState.onSwapStarted();
+	}
+
+	@Override
+	public void onSwapEnded() {
+		currentState.onSwapEnded();
+	}
+	
 	void setDealingState() {
 		setState(dealingState);
 	}
@@ -72,4 +81,5 @@ public class SudokuController extends IchiguController<SudokuState> implements I
 	void setEndState() {
 		setState(endState);
 	}
+
 }

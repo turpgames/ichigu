@@ -81,4 +81,13 @@ public class SingleGameDealer extends Dealer {
 			cardsDealingIn.get(i).setDealerEffect(moveEffect);
 		}
 	}
+	
+	@Override
+	protected void concreteDrawCards() {
+		for(Card card : cardsDealingIn)
+			if (card != null)
+				card.draw();
+		for(Card card : cardsDealingOut)
+			card.draw();
+	}
 }

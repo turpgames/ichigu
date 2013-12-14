@@ -88,4 +88,12 @@ public class SudokuMode extends IchiguMode {
 	public void tableFinished() {
 		table.deal();
 	}
+
+	public void swapStarted() {
+		dealStarted();
+	}
+
+	public void swapEnded() {
+		dealEnded();
+	}
 }
