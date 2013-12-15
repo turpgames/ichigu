@@ -18,20 +18,20 @@ public class TurpLogo extends GameObject {
 		getLocation().set(25f, 50f + (Game.getVirtualHeight() - logoSize) / 2f); // Splash position
 	}
 
+	@Override
+	public void draw() {
+		TextureDrawer.draw(logo, this);
+	}
+	
+	@Override
+	public void registerSelf() {
+		
+	}
+
 	public void setLogoSize(float f) {
 		logoSize = f;
 		
 		setWidth(logoSize);
 		setHeight(logoSize);
-	}
-	
-	@Override
-	public void draw() {
-		TextureDrawer.draw(logo, this);
-	}
-
-	@Override
-	public void registerSelf() {
-		
 	}
 }

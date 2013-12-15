@@ -10,6 +10,21 @@ import com.turpgames.ichigu.utils.R;
 public abstract class IchiguScreen extends Screen {
 	protected IIchiguViewListener screenListener = IIchiguViewListener.NULL;
 
+	@Override
+	public void init() {
+		super.init();
+
+		registerDrawable(new Background(), Utils.LAYER_BACKGROUND);
+		registerDrawable(IchiguGame.getToolbar(), Utils.LAYER_INFO);
+
+		registerInputListener(this);
+	}
+
+	public void onExitConfirmed() {
+		unregisterDrawable(screenListener);
+		ScreenManager.instance.switchTo(R.game.screens.menu, true);
+	}
+
 	protected void notifyScreenActivated() {
 		registerDrawable(screenListener, Utils.LAYER_SCREEN);
 		screenListener.onScreenActivated();
@@ -22,34 +37,11 @@ public abstract class IchiguScreen extends Screen {
 		}
 		return false;
 	}
-
-	protected void setScreenListener(IIchiguViewListener listener) {
-		this.screenListener = listener;
-	}
-
+	
 	@Override
 	protected void onAfterActivate() {
 		IchiguToolbar.getInstance().activateBackButton();
 		notifyScreenActivated();
-	}
-	
-	@Override
-	protected boolean onBeforeDeactivate() {
-		return notifyScreenDeactivated();
-	}
-
-	@Override
-	public void init() {
-		super.init();
-
-		registerDrawable(new Background(), Utils.LAYER_BACKGROUND);
-		registerDrawable(IchiguGame.getToolbar(), Utils.LAYER_INFO);
-
-		registerInputListener(this);
-	}
-
-	void back() {
-		onBack();
 	}
 
 	@Override
@@ -58,8 +50,16 @@ public abstract class IchiguScreen extends Screen {
 		return true;
 	}
 
-	public void onExitConfirmed() {
-		unregisterDrawable(screenListener);
-		ScreenManager.instance.switchTo(R.game.screens.menu, true);
+	@Override
+	protected boolean onBeforeDeactivate() {
+		return notifyScreenDeactivated();
+	}
+
+	protected void setScreenListener(IIchiguViewListener listener) {
+		this.screenListener = listener;
+	}
+
+	void back() {
+		onBack();
 	}
 }

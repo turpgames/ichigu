@@ -31,6 +31,13 @@ public class StandardGame extends FullGameMode {
 	}
 
 	@Override
+	protected void onDraw() {
+		remaingCardInfo.setText(table.getDealtCardCount() + "/" + Card.CardsInDeck);
+		remaingCardInfo.draw();
+		super.onDraw();
+	}
+	
+	@Override
 	protected void prepareResultInfoAndSaveHiscore() {
 		int hiTime = Settings.getInteger(R.settings.hiscores.normaltime, 0);
 		int completeTime = (int) timer.getTotalElapsedTime();
@@ -44,12 +51,5 @@ public class StandardGame extends FullGameMode {
 				Ichigu.getString(R.strings.normalResult),
 				timer.getText(),
 				(isNewRecord ? Ichigu.getString(R.strings.newHiscore) : "")));
-	}
-	
-	@Override
-	protected void onDraw() {
-		remaingCardInfo.setText(table.getDealtCardCount() + "/" + Card.CardsInDeck);
-		remaingCardInfo.draw();
-		super.onDraw();
 	}
 }

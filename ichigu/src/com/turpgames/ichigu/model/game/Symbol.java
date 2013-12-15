@@ -39,13 +39,13 @@ class Symbol extends GameObject {
 	}
 
 	@Override
-	public Vector getScale() {
-		return parent.getScale();
+	public Rotation getRotation() {
+		return parent.getRotation();
 	}
 
 	@Override
-	public Rotation getRotation() {
-		return parent.getRotation();
+	public Vector getScale() {
+		return parent.getScale();
 	}
 
 	@Override

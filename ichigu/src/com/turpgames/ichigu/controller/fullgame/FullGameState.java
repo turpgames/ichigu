@@ -21,18 +21,18 @@ public abstract class FullGameState extends IchiguState implements IIchiguModeLi
 	}
 
 	@Override
-	public void onModeEnd() {
-		controller.setEndState();
+	public void draw() {
+		model.draw();
 	}
 
 	@Override
-	public void onNewGame() {
-
+	public void onDealEnded() {
+		model.dealEnded();
 	}
 	
 	@Override
-	public void onTableFinished() {
-		model.deckFinished();	
+	public void onDealStarted() {
+		model.dealStarted();
 	}
 	
 	@Override
@@ -40,26 +40,6 @@ public abstract class FullGameState extends IchiguState implements IIchiguModeLi
 		view.onExitConfirmed();
 	}
 
-	@Override
-	public void draw() {
-		model.draw();
-	}
-
-	@Override
-	public boolean onScreenDeactivated() {
-		return model.exitMode();
-	}
-
-	@Override
-	public void onDealStarted() {
-		model.dealStarted();
-	}
-	
-	@Override
-	public void onDealEnded() {
-		model.dealEnded();
-	}
-	
 	@Override
 	public void onIchiguFound() {
 		IchiguBank.increaseBalance();
@@ -74,7 +54,27 @@ public abstract class FullGameState extends IchiguState implements IIchiguModeLi
 	}
 
 	@Override
+	public void onModeEnd() {
+		controller.setEndState();
+	}
+	
+	@Override
+	public void onNewGame() {
+
+	}
+	
+	@Override
 	public void onOpenedExtraCardsWhileThereIsIchigu() {
 		model.applyTimePenalty();
+	}
+
+	@Override
+	public boolean onScreenDeactivated() {
+		return model.exitMode();
+	}
+
+	@Override
+	public void onTableFinished() {
+		model.deckFinished();	
 	}
 }

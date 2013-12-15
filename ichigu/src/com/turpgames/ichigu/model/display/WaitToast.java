@@ -14,12 +14,12 @@ public class WaitToast extends ToastGameInfo {
 		setTextColor(R.colors.ichiguWhite);
 	}
 	
-	public void show(float duration) {
-		super.show(Ichigu.getString(R.strings.wait) + ": ", duration, 0.2f);
-	}
-	
 	@Override
 	public void setText(String message) {
 		toast.setText(Ichigu.getString(R.strings.wait) + ": " + message); 
+	}
+	
+	public void show(float duration) {
+		super.show(Ichigu.getString(R.strings.wait) + ": ", duration, 0.2f);
 	}
 }

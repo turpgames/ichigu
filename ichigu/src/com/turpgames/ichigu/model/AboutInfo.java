@@ -109,19 +109,6 @@ public class AboutInfo implements IDrawable, ILanguageListener {
 		Game.getLanguageManager().register(this);
 	}
 
-	@Override
-	public void draw() {
-		version.draw();
-		logo.draw();
-		turpLink.draw();
-		facebookLink.draw();
-		twitterLink.draw();
-		info2.draw();
-		libgdxLink.draw();
-		rateLink.draw();
-		thanksInfo.draw();
-	}
-
 	public void activate() {
 		turpLink.activate();
 		facebookLink.activate();
@@ -138,6 +125,24 @@ public class AboutInfo implements IDrawable, ILanguageListener {
 		rateLink.deactivate();
 	}
 
+	@Override
+	public void draw() {
+		version.draw();
+		logo.draw();
+		turpLink.draw();
+		facebookLink.draw();
+		twitterLink.draw();
+		info2.draw();
+		libgdxLink.draw();
+		rateLink.draw();
+		thanksInfo.draw();
+	}
+
+	@Override
+	public void onLanguageChanged() {
+		setLanguageSensitiveInfo();
+	}
+
 	private void setLanguageSensitiveInfo() {
 		info2.setText(Ichigu.getString(R.strings.aboutInfo2));
 
@@ -148,10 +153,5 @@ public class AboutInfo implements IDrawable, ILanguageListener {
 		rateLink.getLocation().set((Game.getVirtualWidth() - rateLink.getWidth()) / 2, Game.getVirtualHeight() - 570);
 		
 		thanksInfo.setText(Game.getLanguageManager().getString(R.strings.aboutThanks));
-	}
-
-	@Override
-	public void onLanguageChanged() {
-		setLanguageSensitiveInfo();
 	}
 }

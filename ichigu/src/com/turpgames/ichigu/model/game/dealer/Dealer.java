@@ -51,14 +51,6 @@ public abstract class Dealer {
 		this.dealOutTimer = new Timer();
 	}
 
-	protected float getDealOutInterval() {
-		return 0.12f;
-	}
-	
-	protected float getDealInInterval() {
-		return 0.12f;
-	}
-	
 	public final void deal(List<Card> cardsToDealIn, List<Card> cardsToDealOut) {
 		for(Card card : cardsToDealIn)
 			if(card != null)
@@ -76,34 +68,46 @@ public abstract class Dealer {
 		this.effectsToFinish = cardsToDealIn.size() + cardsDealingOut.size();
 		selectDeal();
 	}
-
-	abstract protected void setOutEffects();
 	
-	abstract protected void setInEffects();
-	
-	abstract protected void selectDeal();
-	
-	protected void dealSimultaneous() {
-		inListener = new IEffectEndListener() {
-			@Override
-			public boolean onEffectEnd(Object obj) {
-				finishEffect();
-				return false;
-			}
-		};
-		
-		outListener = new IEffectEndListener() {
-			
-			@Override
-			public boolean onEffectEnd(Object obj) {
-				finishEffect();
-				return false;
-			}
-		};
-
-		dealOut();
-		dealIn();
+	public void drawCards() {
+		if (!isWorking())
+			return;
+		concreteDrawCards();
 	}
+	
+	public boolean isWorking() {
+		return effectsToFinish != 0;
+	}
+
+	private final void dealIn() {
+		inTickListener = new DealListener(cardsDealingIn, inListener);
+		dealInTimer.setInterval(getDealInInterval());
+		dealInTimer.setTickListener(inTickListener);
+		dealInTimer.start();
+	}
+	
+	private final void dealOut() {
+		outTickListener = new DealListener(cardsDealingOut, outListener);
+		dealOutTimer.setInterval(getDealOutInterval());
+		dealOutTimer.setTickListener(outTickListener);
+		dealOutTimer.start();
+	}
+	
+	private synchronized void finishEffect() {
+		effectsToFinish--;
+		if (effectsToFinish == 0) {
+			for(Card card : cardsDealingIn)
+				if (card != null)
+					card.resetDealerEffect();
+			for(Card card : cardsDealingOut)
+				card.resetDealerEffect();
+			table.onDealEnded(cardsDealingIn, cardsDealingOut);
+			dealInTimer.stop();
+			dealOutTimer.stop();
+		}
+	}
+	
+	abstract protected void concreteDrawCards();
 	
 	protected void dealConsecutive() {
 		inListener = new IEffectEndListener() {
@@ -131,43 +135,39 @@ public abstract class Dealer {
 			dealIn();
 	}
 
-	private final void dealOut() {
-		outTickListener = new DealListener(cardsDealingOut, outListener);
-		dealOutTimer.setInterval(getDealOutInterval());
-		dealOutTimer.setTickListener(outTickListener);
-		dealOutTimer.start();
+	protected void dealSimultaneous() {
+		inListener = new IEffectEndListener() {
+			@Override
+			public boolean onEffectEnd(Object obj) {
+				finishEffect();
+				return false;
+			}
+		};
+		
+		outListener = new IEffectEndListener() {
+			
+			@Override
+			public boolean onEffectEnd(Object obj) {
+				finishEffect();
+				return false;
+			}
+		};
+
+		dealOut();
+		dealIn();
 	}
 
-	private final void dealIn() {
-		inTickListener = new DealListener(cardsDealingIn, inListener);
-		dealInTimer.setInterval(getDealInInterval());
-		dealInTimer.setTickListener(inTickListener);
-		dealInTimer.start();
+	protected float getDealInInterval() {
+		return 0.12f;
 	}
 
-	private synchronized void finishEffect() {
-		effectsToFinish--;
-		if (effectsToFinish == 0) {
-			for(Card card : cardsDealingIn)
-				if (card != null)
-					card.resetDealerEffect();
-			for(Card card : cardsDealingOut)
-				card.resetDealerEffect();
-			table.onDealEnded(cardsDealingIn, cardsDealingOut);
-			dealInTimer.stop();
-			dealOutTimer.stop();
-		}
+	protected float getDealOutInterval() {
+		return 0.12f;
 	}
 
-	public boolean isWorking() {
-		return effectsToFinish != 0;
-	}
+	abstract protected void selectDeal();
 
-	public void drawCards() {
-		if (!isWorking())
-			return;
-		concreteDrawCards();
-	}
+	abstract protected void setInEffects();
 	
-	abstract protected void concreteDrawCards();
+	abstract protected void setOutEffects();
 }

@@ -20,33 +20,6 @@ public class SudokuMode extends IchiguMode {
 		timerText.setPadding(Game.getVirtualWidth() - 115, 110);
 	}
 	
-	@Override
-	protected void initTable() {
-		table = new SudokuTable();
-	}
-
-	@Override
-	protected void pauseTimer() {
-		timer.pause();
-	}
-
-	@Override
-	protected void startTimer() {
-		timer.start();
-	}
-
-	@Override
-	protected void onDraw() {
-		timerText.draw();
-		super.onDraw();
-	}
-	
-	@Override
-	protected void prepareResultInfoAndSaveHiscore() {
-		// TODO Auto-generated method stub
-		
-	}
-
 	public void cardTapped(Card card) {
 		// TODO Auto-generated method stub
 		
@@ -56,19 +29,28 @@ public class SudokuMode extends IchiguMode {
 		// TODO Auto-generated method stub
 		
 	}
+
+	public void swapEnded() {
+		dealEnded();
+	}
+
+	public void swapStarted() {
+		dealStarted();
+	}
 	
-	@Override
-	protected void onStartMode() {
-		timer.restart();
-		timerText.syncText();
-		super.onStartMode();
+	public void tableFinished() {
+		table.deal();
 	}
 
 	@Override
-	protected void onResetMode() {
-		timer.restart();
-		timerText.syncText();
-		super.onResetMode();
+	protected void initTable() {
+		table = new SudokuTable();
+	}
+
+	@Override
+	protected void onDraw() {
+		timerText.draw();
+		super.onDraw();
 	}
 	
 	@Override
@@ -84,16 +66,34 @@ public class SudokuMode extends IchiguMode {
 		timer.stop();
 		return true;
 	}
-
-	public void tableFinished() {
-		table.deal();
+	
+	@Override
+	protected void onResetMode() {
+		timer.restart();
+		timerText.syncText();
+		super.onResetMode();
 	}
 
-	public void swapStarted() {
-		dealStarted();
+	@Override
+	protected void onStartMode() {
+		timer.restart();
+		timerText.syncText();
+		super.onStartMode();
 	}
 
-	public void swapEnded() {
-		dealEnded();
+	@Override
+	protected void pauseTimer() {
+		timer.pause();
+	}
+
+	@Override
+	protected void prepareResultInfoAndSaveHiscore() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	protected void startTimer() {
+		timer.start();
 	}
 }

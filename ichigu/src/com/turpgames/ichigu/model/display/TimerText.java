@@ -18,11 +18,11 @@ public class TimerText extends Text {
 		flasher = new TextFlasher(this);
 	}
 	
-	public void syncText() {
-		setText(timer.getText());		
-	}
-	
 	public void flash() {
 		flasher.flash();
+	}
+	
+	public void syncText() {
+		setText(timer.getText());		
 	}
 }

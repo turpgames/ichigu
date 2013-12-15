@@ -5,8 +5,8 @@ import com.turpgames.framework.v0.IDrawable;
 public interface IIchiguViewListener extends IDrawable {
 	public static final IIchiguViewListener NULL = new IIchiguViewListener() {
 		@Override
-		public boolean onScreenDeactivated() {
-			return true;
+		public void draw() {
+
 		}
 
 		@Override
@@ -15,8 +15,8 @@ public interface IIchiguViewListener extends IDrawable {
 		}
 
 		@Override
-		public void draw() {
-
+		public boolean onScreenDeactivated() {
+			return true;
 		}
 	};
 

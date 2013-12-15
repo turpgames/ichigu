@@ -25,12 +25,11 @@ public class Card extends IchiguObject {
 
 	public static final int CardsInDeck = 81;
 
-	public static int getIchiguScore(Card card1, Card card2, Card card3) {
-		return CardAttributes.getIchiguScore(card1.attributes, card2.attributes, card3.attributes);
-	}
-
-	public static boolean isIchigu(Card card1, Card card2, Card card3) {
-		return CardAttributes.isIchigu(card1.attributes, card2.attributes, card3.attributes);
+	public static Card createTutorialCard(int color, int shape, int count, int pattern, float x, float y) {
+		Card card = new Card(new CardAttributes(color, shape, count, pattern), null);
+		card.open(true);
+		card.getLocation().set(x, y);
+		return card;
 	}
 
 	public static int getIchiguCount(List<Card>cards) {
@@ -46,18 +45,26 @@ public class Card extends IchiguObject {
 		}
 		return count;
 	}
+
+	public static int getIchiguScore(Card card1, Card card2, Card card3) {
+		return CardAttributes.getIchiguScore(card1.attributes, card2.attributes, card3.attributes);
+	}
 	
 	// endregion
 
+	public static boolean isIchigu(Card card1, Card card2, Card card3) {
+		return CardAttributes.isIchigu(card1.attributes, card2.attributes, card3.attributes);
+	}
 	private boolean isOpened;
-	private boolean isSelected;
 
+	private boolean isSelected;
 	private List<Symbol> symbols;
 	private CardAttributes attributes;
-	private ICardListener eventListener;
 
-	private Effect dealerEffect;
+	private ICardListener eventListener;
 	
+	private Effect dealerEffect;
+
 	public Card(CardAttributes cardAttributes, ICardListener eventListener) {
 		this.attributes = cardAttributes;
 		this.eventListener = eventListener;
@@ -68,6 +75,98 @@ public class Card extends IchiguObject {
 		initSymbols();
 	}
 
+	public void activate() {
+		listenInput(true);
+	}
+
+	public void deactivate() {
+		listenInput(false);
+	}
+
+	public void deselect() {
+		isSelected = false;
+	}
+
+	@Override
+	public void draw() {
+		if (!isOpened) {
+			Ichigu.drawTextureCardClosed(this);
+			return;
+		}
+
+		Ichigu.drawTextureCardEmpty(this);
+		for (int i = 0; i < symbols.size(); i++) {
+			symbols.get(i).getColor().a = getColor().a;
+			symbols.get(i).draw();
+		}
+
+		if (isSelected)
+			Ichigu.drawTextureCardBorder(this);
+	}
+
+	public CardAttributes getAttributes() {
+		return attributes;
+	}
+	
+	@Override
+	public Rotation getRotation() {
+		super.getRotation().origin.set((getLocation().x + Card.Width) / 2, (getLocation().y + Card.Height) / 2);
+		return super.getRotation();
+	}
+	
+	public boolean hasDealerEffect() {
+		return dealerEffect != null;
+	}
+
+	public boolean isOpened() {
+		return isOpened;
+	}
+
+	public boolean isSelected() {
+		return isSelected;
+	}
+
+	public void open(boolean open) {
+		isOpened = open;
+	}
+
+	@Override
+	public void registerSelf() {
+		Game.getInputManager().register(this, Utils.LAYER_GAME);
+	}
+
+	public void reset() {
+		deactivate();
+		deselect();
+		getColor().set(Color.white());
+	}
+
+	public void resetDealerEffect() {
+		dealerEffect = null;
+	}
+
+	public void select() {
+		isSelected = true;
+	}
+
+	public void setDealerEffect(Effect effect) {
+		dealerEffect = effect;
+	}
+	
+	public void startDealerEffect(IEffectEndListener listener) {
+		if (!hasDealerEffect()) {
+			listener.onEffectEnd(null);
+			return;
+		}
+		dealerEffect.setListener(listener);
+		dealerEffect.start(listener);
+	}
+
+	@Override
+	public String toString() {
+		return getAttributes().toString();
+	}
+	
 	private void initSymbols() {
 		String symbolName = "card-" + attributes.getShape() + attributes.getPattern();
 
@@ -88,113 +187,14 @@ public class Card extends IchiguObject {
 		}
 	}
 
-	public void activate() {
-		listenInput(true);
-	}
-
-	public void deactivate() {
-		listenInput(false);
-	}
-
-	public boolean isOpened() {
-		return isOpened;
-	}
-
-	public void open(boolean open) {
-		isOpened = open;
-	}
-
-	public boolean isSelected() {
-		return isSelected;
-	}
-	
-	public void select() {
-		isSelected = true;
-	}
-	
-	public void deselect() {
-		isSelected = false;
-	}
-
-	public CardAttributes getAttributes() {
-		return attributes;
-	}
-
-	@Override
-	public void draw() {
-		if (!isOpened) {
-			Ichigu.drawTextureCardClosed(this);
-			return;
-		}
-
-		Ichigu.drawTextureCardEmpty(this);
-		for (int i = 0; i < symbols.size(); i++) {
-			symbols.get(i).getColor().a = getColor().a;
-			symbols.get(i).draw();
-		}
-
-		if (isSelected)
-			Ichigu.drawTextureCardBorder(this);
-	}
-
-	@Override
-	public Rotation getRotation() {
-		super.getRotation().origin.set((getLocation().x + Card.Width) / 2, (getLocation().y + Card.Height) / 2);
-		return super.getRotation();
-	}
-
-	@Override
-	protected boolean onTap() {
-		notifyTapped();
-		return true;
-	}
-
 	private void notifyTapped() {
 		if (eventListener != null)
 			eventListener.onCardTapped(this);
 	}
-
-	public static Card createTutorialCard(int color, int shape, int count, int pattern, float x, float y) {
-		Card card = new Card(new CardAttributes(color, shape, count, pattern), null);
-		card.open(true);
-		card.getLocation().set(x, y);
-		return card;
-	}
-
-	@Override
-	public void registerSelf() {
-		Game.getInputManager().register(this, Utils.LAYER_GAME);
-	}
-
-	public void startDealerEffect(IEffectEndListener listener) {
-		if (!hasDealerEffect()) {
-			listener.onEffectEnd(null);
-			return;
-		}
-		dealerEffect.setListener(listener);
-		dealerEffect.start(listener);
-	}
-	
-	public void setDealerEffect(Effect effect) {
-		dealerEffect = effect;
-	}
-
-	public boolean hasDealerEffect() {
-		return dealerEffect != null;
-	}
-	
-	public void resetDealerEffect() {
-		dealerEffect = null;
-	}
-
-	public void reset() {
-		deactivate();
-		deselect();
-		getColor().set(Color.white());
-	}
 	
 	@Override
-	public String toString() {
-		return getAttributes().toString();
+	protected boolean onTap() {
+		notifyTapped();
+		return true;
 	}
 }

@@ -16,14 +16,46 @@ import com.turpgames.ichigu.utils.Ichigu;
 import com.turpgames.ichigu.utils.R;
 
 class FullGameHint implements IDrawable, IEffectEndListener, Toast.IToastListener {
+	class FullGameIchiguInfo {
+		private final List<Card> ichiguCards;
+
+		FullGameIchiguInfo() {
+			ichiguCards = new ArrayList<Card>();
+		}
+
+		public int getIchiguCount() {
+			return ichiguCards.size() / 3;
+		}
+
+		public Card getIchiguHintCard(int ichiguIndex, int cardIndex) {
+			return ichiguCards.get(ichiguIndex * 3 + cardIndex);
+		}
+		
+		public void update(List<Card> cards) {
+			ichiguCards.clear();
+
+			for (int i = 0; i < cards.size(); i++) {
+				for (int j = i + 1; j < cards.size(); j++) {
+					for (int k = j + 1; k < cards.size(); k++) {
+						if (Card.isIchigu(cards.get(i), cards.get(j), cards.get(k))) {
+							ichiguCards.add(cards.get(i));
+							ichiguCards.add(cards.get(j));
+							ichiguCards.add(cards.get(k));
+						}
+					}
+				}
+			}
+		}
+	}
 	private Text hintCountText;
 	private FullGameIchiguInfo ichiguInfo;
 	private int hintIndex;
-	private boolean isActive;
 
+	private boolean isActive;
 	private Toast toast;
-	private NoTipToast noTip;
 	
+	private NoTipToast noTip;
+
 	FullGameHint(Table table) {
 		noTip = new NoTipToast();
 		
@@ -48,8 +80,28 @@ class FullGameHint implements IDrawable, IEffectEndListener, Toast.IToastListene
 		});
 	}
 
-	private void setHintCountText() {
-		hintCountText.setText(IchiguBank.getHintCount() + "");
+	@Override
+	public void draw() {
+		hintCountText.draw();
+	}
+
+	public int getIchiguCount() {
+		return ichiguInfo.getIchiguCount();
+	}
+
+	public boolean isActive() {
+		return isActive;
+	}
+	
+	@Override
+	public boolean onEffectEnd(Object card) {
+		hintEnd();
+		return true;
+	}
+
+	@Override
+	public void onToastHidden(Toast toast) {
+		hintEnd();
 	}
 
 	public void showHint() {
@@ -69,8 +121,14 @@ class FullGameHint implements IDrawable, IEffectEndListener, Toast.IToastListene
 		isActive = false;
 	}
 
-	public int getIchiguCount() {
-		return ichiguInfo.getIchiguCount();
+	private void hintEnd() {
+		if (ichiguInfo.getIchiguCount() > 0)
+			hintIndex = (hintIndex + 1) % ichiguInfo.getIchiguCount();
+		isActive = false;
+	}
+
+	private void setHintCountText() {
+		hintCountText.setText(IchiguBank.getHintCount() + "");
 	}
 	
 	private void showNextHint() {
@@ -90,63 +148,5 @@ class FullGameHint implements IDrawable, IEffectEndListener, Toast.IToastListene
 		}
 
 		isActive = true;
-	}
-
-	private void hintEnd() {
-		if (ichiguInfo.getIchiguCount() > 0)
-			hintIndex = (hintIndex + 1) % ichiguInfo.getIchiguCount();
-		isActive = false;
-	}
-
-	@Override
-	public boolean onEffectEnd(Object card) {
-		hintEnd();
-		return true;
-	}
-
-	@Override
-	public void onToastHidden(Toast toast) {
-		hintEnd();
-	}
-
-	@Override
-	public void draw() {
-		hintCountText.draw();
-	}
-
-	public boolean isActive() {
-		return isActive;
-	}
-	
-	class FullGameIchiguInfo {
-		private final List<Card> ichiguCards;
-
-		FullGameIchiguInfo() {
-			ichiguCards = new ArrayList<Card>();
-		}
-
-		public Card getIchiguHintCard(int ichiguIndex, int cardIndex) {
-			return ichiguCards.get(ichiguIndex * 3 + cardIndex);
-		}
-
-		public int getIchiguCount() {
-			return ichiguCards.size() / 3;
-		}
-		
-		public void update(List<Card> cards) {
-			ichiguCards.clear();
-
-			for (int i = 0; i < cards.size(); i++) {
-				for (int j = i + 1; j < cards.size(); j++) {
-					for (int k = j + 1; k < cards.size(); k++) {
-						if (Card.isIchigu(cards.get(i), cards.get(j), cards.get(k))) {
-							ichiguCards.add(cards.get(i));
-							ichiguCards.add(cards.get(j));
-							ichiguCards.add(cards.get(k));
-						}
-					}
-				}
-			}
-		}
 	}
 }

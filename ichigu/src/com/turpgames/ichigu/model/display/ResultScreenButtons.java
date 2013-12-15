@@ -40,25 +40,25 @@ public class ResultScreenButtons implements IDrawable, ILanguageListener {
 		Game.getLanguageManager().register(this);
 	}
 	
-	public void listenInput(boolean listen) {
-		backToMenu.listenInput(listen);
-		newGame.listenInput(listen);
-	}
-
 	@Override
 	public void draw() {
 		backToMenu.draw();
 		newGame.draw();
 	}
 
+	public void listenInput(boolean listen) {
+		backToMenu.listenInput(listen);
+		newGame.listenInput(listen);
+	}
+
+	@Override
+	public void onLanguageChanged() {
+		setLanguageSensitiveInfo();
+	}
 	private void setLanguageSensitiveInfo() {
 		backToMenu.setText(Ichigu.getString(R.strings.backToMenu));
 		backToMenu.getLocation().set((Game.getVirtualWidth() - backToMenu.getWidth()) / 2, 80);
 		newGame.setText(Ichigu.getString(R.strings.newGame));
 		newGame.getLocation().set((Game.getVirtualWidth() - newGame.getWidth()) / 2, 150);
-	}
-	@Override
-	public void onLanguageChanged() {
-		setLanguageSensitiveInfo();
 	}
 }

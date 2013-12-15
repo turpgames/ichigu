@@ -15,6 +15,20 @@ public abstract class SingleGameMode extends RegularMode {
 	protected SingleGameQuestion question;
 
 	@Override
+	public void concreteIchiguFound() {
+		question.startCorrectEffect();
+	}
+	
+	@Override
+	public void concreteInvalidIchiguSelected() {
+		question.startIncorrectEffect();
+	}
+
+	public void drawResultScreen() {
+		
+	}
+
+	@Override
 	protected void initTable() {
 		table = new SingleGameTable();
 	}
@@ -28,19 +42,5 @@ public abstract class SingleGameMode extends RegularMode {
 				dividerWidth, dividerHeight, R.colors.ichiguYellow, true, false);
 		
 		super.onDraw();
-	}
-
-	@Override
-	public void concreteIchiguFound() {
-		question.startCorrectEffect();
-	}
-
-	@Override
-	public void concreteInvalidIchiguSelected() {
-		question.startIncorrectEffect();
-	}
-	
-	public void drawResultScreen() {
-		
 	}
 }

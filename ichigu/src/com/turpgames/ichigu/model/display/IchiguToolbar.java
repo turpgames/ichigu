@@ -25,14 +25,18 @@ public class IchiguToolbar extends Toolbar {
 		
 	}
 
-	public void enable() {
-		settingsButton.activate();
-	}
-
 	public void disable() {
 		settingsButton.deactivate();
 	}
+
+	public void enable() {
+		settingsButton.activate();
+	}
 	
+	public GameObject getBackButton() {
+		return backButton;
+	}
+
 	@Override
 	protected void concreteAddBackButton() {
 		backButton = new ImageButton(buttonSize, buttonSize, R.game.textures.toolbar.back, R.colors.buttonDefault, R.colors.ichiguRed);
@@ -57,9 +61,5 @@ public class IchiguToolbar extends Toolbar {
 		vibrationButton = new ToggleButton(buttonSize, buttonSize, R.settings.vibration, R.game.textures.toolbar.vibrationOn, 
 				R.game.textures.toolbar.vibrationOff, R.colors.ichiguCyan, R.colors.ichiguWhite);
 		vibrationButton.setLocation(Button.AlignNE, 2 * buttonSize + 3 * buttonSpacing + toolbarMargin, toolbarMargin);	
-	}
-
-	public GameObject getBackButton() {
-		return backButton;
 	}
 }

@@ -20,15 +20,25 @@ public abstract class SingleGameState extends IchiguState implements ISingleGame
 	}
 
 	@Override
-	public boolean onScreenDeactivated() {
-		return model.exitMode();
+	public void draw() {
+		model.draw();
 	}
 	
 	@Override
-	public void onUnblock() {
-		controller.setWaitingState();
+	public void onDealEnded() {
+		model.dealEnded();
 	}
 
+	@Override
+	public void onDealStarted() {
+		model.dealStarted();
+	}
+
+	@Override
+	public void onExitConfirmed() {
+		view.onExitConfirmed();
+	}
+	
 	@Override
 	public void onIchiguFound() {
 		Ichigu.playSoundSuccess();
@@ -40,41 +50,31 @@ public abstract class SingleGameState extends IchiguState implements ISingleGame
 		Ichigu.playSoundError();
 		Game.vibrate(0, 50, 50, 100);
 	}
-	
+
 	@Override
 	public void onModeEnd() {
 		Ichigu.playSoundTimeUp();
 		Game.vibrate(100);
 		controller.setModeEndState();
-	}
-
+	}	
+	
 	@Override
 	public void onNewGame() {
 
 	}
 
 	@Override
-	public void onExitConfirmed() {
-		view.onExitConfirmed();
-	}	
-	
-	@Override
-	public void draw() {
-		model.draw();
-	}
-
-	@Override
-	public void onDealStarted() {
-		model.dealStarted();
-	}
-	
-	@Override
-	public void onDealEnded() {
-		model.dealEnded();
+	public boolean onScreenDeactivated() {
+		return model.exitMode();
 	}
 	
 	@Override
 	public void onTableFinished() {
 		
+	}
+	
+	@Override
+	public void onUnblock() {
+		controller.setWaitingState();
 	}
 }

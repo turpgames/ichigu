@@ -40,23 +40,19 @@ public class SudokuGameDealer extends Dealer {
 		}
 	}
 	
+	private boolean isSwapping;
+
+	private List<Card> swappingCards;
+	
 	public SudokuGameDealer(Table table) {
 		super(table);
 		this.swappingCards = new ArrayList<Card>();
-	}
-
-	@Override
-	protected void selectDeal() {
-		dealSimultaneous();
 	}
 	
 	@Override
 	public boolean isWorking() {
 		return isSwapping || super.isWorking();
 	}
-	
-	private boolean isSwapping;
-	private List<Card> swappingCards;
 	public void swap(List<Card> cards) {
 		this.swappingCards = cards;
 		isSwapping = true;
@@ -109,17 +105,22 @@ public class SudokuGameDealer extends Dealer {
 		swappingCards.get(0).startDealerEffect(listener);
 		swappingCards.get(1).startDealerEffect(listener);
 	}
+	@Override
+	protected void concreteDrawCards() {
+		for(Card card : swappingCards)
+			if (card != null)
+				card.draw();
+		for(Card card : cardsDealingIn)
+			if (card != null)
+				card.draw();
+		for(Card card : cardsDealingOut)
+			if (card != null)
+				card.draw();
+	}
 
 	@Override
-	protected void setOutEffects() {
-		MoveEffect moveEffect;
-		for (int i = 0; i < cardsDealingOut.size(); i++) {
-			moveEffect = new MoveEffect(cardsDealingOut.get(i));
-			moveEffect.setLooping(false);
-			moveEffect.setDestination(outPosition);
-			moveEffect.setDuration(outDuration);
-			cardsDealingOut.get(i).setDealerEffect(moveEffect);
-		}
+	protected void selectDeal() {
+		dealSimultaneous();
 	}
 
 	@Override
@@ -137,15 +138,14 @@ public class SudokuGameDealer extends Dealer {
 	}
 	
 	@Override
-	protected void concreteDrawCards() {
-		for(Card card : swappingCards)
-			if (card != null)
-				card.draw();
-		for(Card card : cardsDealingIn)
-			if (card != null)
-				card.draw();
-		for(Card card : cardsDealingOut)
-			if (card != null)
-				card.draw();
+	protected void setOutEffects() {
+		MoveEffect moveEffect;
+		for (int i = 0; i < cardsDealingOut.size(); i++) {
+			moveEffect = new MoveEffect(cardsDealingOut.get(i));
+			moveEffect.setLooping(false);
+			moveEffect.setDestination(outPosition);
+			moveEffect.setDuration(outDuration);
+			cardsDealingOut.get(i).setDealerEffect(moveEffect);
+		}
 	}
 }

@@ -20,16 +20,6 @@ public class SingleGameTable extends RegularGameTable {
 	}
 
 	@Override
-	protected void setDealer() {
-		dealer = new SingleGameDealer(this);
-	}
-	
-	@Override
-	protected IRegularTableListener getListener() {
-		return (IRegularTableListener) listener;
-	}
-
-	@Override
 	public void concreteDealEnded(List<Card> dealtIn, List<Card> dealtOut) {
 		cardsOnTable.clear();
 		cardsOnTable.addAll(dealtIn);
@@ -41,19 +31,29 @@ public class SingleGameTable extends RegularGameTable {
 		
 		hint.update(getCardsForHints());
 	}
-
-	@Override
-	public boolean isIchiguAttempted() {
-		return selectedCards.size() == 1;
-	}
-
-	@Override
-	public boolean isIchiguFound() {
-		if (cardsOnTable.size() != 5 || selectedCards.size() != 1)
-			return false;
-		return Card.isIchigu(cardsOnTable.get(0), cardsOnTable.get(1), selectedCards.get(0));
-	}
 	
+	@Override
+	public void end() {
+		deck.end();
+		selectedCards.clear();
+		cardsOnTable.clear();
+	}
+
+	@Override
+	public List<Card> getCardsForHints() {
+		List<Card> hintCards = new ArrayList<Card>();
+		hintCards.add(cardsOnTable.get(0));
+		hintCards.add(cardsOnTable.get(1));
+		
+		for (int i = 2; i < cardsOnTable.size(); i++) {
+			if (Card.isIchigu(hintCards.get(0), hintCards.get(1), cardsOnTable.get(i))) {
+				hintCards.add(cardsOnTable.get(i));
+				break;
+			}
+		}
+		return hintCards;
+	}
+
 	@Override
 	public List<Card> getCardsToDealIn() {
 		Card card1, card2, card3, card4, card5 = null;
@@ -98,10 +98,39 @@ public class SingleGameTable extends RegularGameTable {
 	}
 	
 	@Override
+	public boolean isIchiguAttempted() {
+		return selectedCards.size() == 1;
+	}
+
+	@Override
+	public boolean isIchiguFound() {
+		if (cardsOnTable.size() != 5 || selectedCards.size() != 1)
+			return false;
+		return Card.isIchigu(cardsOnTable.get(0), cardsOnTable.get(1), selectedCards.get(0));
+	}
+	
+	@Override
 	public void openCloseCards(boolean open) {
 		for (Card card : cardsOnTable) {
 			card.open(open);
 		}
+	}
+
+	@Override
+	public void reset() {
+		deck.reset();
+		selectedCards.clear();
+		cardsOnTable.clear();
+	}
+
+	@Override
+	public void showHint() {
+		hint.showNextHint();
+	}
+
+	@Override
+	public void start() {
+		deck.start();
 	}
 
 	@Override
@@ -120,41 +149,12 @@ public class SingleGameTable extends RegularGameTable {
 	}
 
 	@Override
-	public List<Card> getCardsForHints() {
-		List<Card> hintCards = new ArrayList<Card>();
-		hintCards.add(cardsOnTable.get(0));
-		hintCards.add(cardsOnTable.get(1));
-		
-		for (int i = 2; i < cardsOnTable.size(); i++) {
-			if (Card.isIchigu(hintCards.get(0), hintCards.get(1), cardsOnTable.get(i))) {
-				hintCards.add(cardsOnTable.get(i));
-				break;
-			}
-		}
-		return hintCards;
-	}
-
-	@Override
-	public void start() {
-		deck.start();
-	}
-
-	@Override
-	public void end() {
-		deck.end();
-		selectedCards.clear();
-		cardsOnTable.clear();
-	}
-
-	@Override
-	public void reset() {
-		deck.reset();
-		selectedCards.clear();
-		cardsOnTable.clear();
+	protected IRegularTableListener getListener() {
+		return (IRegularTableListener) listener;
 	}
 	
 	@Override
-	public void showHint() {
-		hint.showNextHint();
+	protected void setDealer() {
+		dealer = new SingleGameDealer(this);
 	}
 }

@@ -25,39 +25,39 @@ public class SudokuController extends IchiguController<SudokuState> implements I
 	}
 
 	@Override
-	public void onScreenActivated() {
-		model.startMode();
-		setDealingState();
-	}
-
-	@Override
-	public void onModeEnd() {
-		currentState.onModeEnd();
-	}
-
-	@Override
-	public void onNewGame() {
-		currentState.onNewGame();
+	public void onDealEnded() {
+		currentState.onDealEnded();		
 	}
 
 	@Override
 	public void onDealStarted() {
 		currentState.onDealStarted();
 	}
-	
-	@Override
-	public void onDealEnded() {
-		currentState.onDealEnded();		
-	}
-	
-	@Override
-	public void onTableFinished() {
-		currentState.onTableFinished();	
-	}
-	
+
 	@Override
 	public void onExitConfirmed() {
 		currentState.onExitConfirmed();
+	}
+
+	@Override
+	public void onModeEnd() {
+		currentState.onModeEnd();
+	}
+	
+	@Override
+	public void onNewGame() {
+		currentState.onNewGame();
+	}
+	
+	@Override
+	public void onScreenActivated() {
+		model.startMode();
+		setDealingState();
+	}
+	
+	@Override
+	public void onSwapEnded() {
+		currentState.onSwapEnded();
 	}
 
 	@Override
@@ -66,20 +66,20 @@ public class SudokuController extends IchiguController<SudokuState> implements I
 	}
 
 	@Override
-	public void onSwapEnded() {
-		currentState.onSwapEnded();
+	public void onTableFinished() {
+		currentState.onTableFinished();	
 	}
 	
 	void setDealingState() {
 		setState(dealingState);
 	}
 
-	void setWaitingState() {
-		setState(waitingState);
-	}
-
 	void setEndState() {
 		setState(endState);
+	}
+
+	void setWaitingState() {
+		setState(waitingState);
 	}
 
 }

@@ -16,11 +16,6 @@ import com.turpgames.ichigu.model.game.CardAttributes;
 import com.turpgames.ichigu.utils.R;
 
 public class FadingScoreInfo extends GameObject implements IFadingEffectSubject {
-	private Timer timer;
-	private FadeOutEffect fadeOutEffect;
-	private boolean isActive;
-	private float fadeDuration = 5f;
-
 	class ScoreInfo extends GameObject implements IFadingEffectSubject {
 		static final int scoreImageSize = 64;
 		ITexture texture;
@@ -41,28 +36,20 @@ public class FadingScoreInfo extends GameObject implements IFadingEffectSubject 
 			setHeight(scoreImageSize);
 		}
 
-		public void setText(String text) {
-			this.text.setText(text);
-			this.extraText.setPadX(60);			
-		}
-		
-		public void setExtraText(String text) {
-			this.extraText.setText(text);
-		}
-
-		public void setTexture(ITexture texture) {
-			this.texture = texture;
-		}
-
-		public float getTotalWidth() {
-			return 60 + this.extraText.getTextAreaWidth();
-		}
-		
 		@Override
 		public void draw() {
 			TextureDrawer.draw(texture, this);
 			this.text.draw();
 			this.extraText.draw();
+		}
+		
+		public float getTotalWidth() {
+			return 60 + this.extraText.getTextAreaWidth();
+		}
+
+		@Override
+		public void registerSelf() {
+			
 		}
 
 		@Override
@@ -71,18 +58,150 @@ public class FadingScoreInfo extends GameObject implements IFadingEffectSubject 
 			this.extraText.getColor().a = alpha;
 			getColor().a = alpha;
 		}
+		
+		public void setExtraText(String text) {
+			this.extraText.setText(text);
+		}
 
-		@Override
-		public void registerSelf() {
-			
+		public void setText(String text) {
+			this.text.setText(text);
+			this.extraText.setPadX(60);			
+		}
+
+		public void setTexture(ITexture texture) {
+			this.texture = texture;
 		}
 	}
+	private Timer timer;
+	private FadeOutEffect fadeOutEffect;
+	private boolean isActive;
+
+	private float fadeDuration = 5f;
 
 	private int score;
 	private ScoreInfo shapeScoreInfo;
 	private ScoreInfo colorScoreInfo;
 	private ScoreInfo patternScoreInfo;
 	private ScoreInfo countScoreInfo;
+
+	private Timer.ITimerTickListener timerListener = new Timer.ITimerTickListener() {
+		@Override
+		public void timerTick(Timer timer) {
+			hide();
+		}
+	};
+
+	private IEffectEndListener effectListener = new IEffectEndListener() {
+		@Override
+		public boolean onEffectEnd(Object obj) {
+			effectEnd();
+			return true;
+		}
+	};
+
+	public FadingScoreInfo() {
+		this.setWidth(Game.getVirtualWidth());
+		this.setHeight(ScoreInfo.scoreImageSize + 10);
+		this.getLocation().set(0, Game.getVirtualHeight() - this.getHeight());
+		this.getColor().set(R.colors.ichiguRed);
+
+		timer = new Timer();
+		timer.setTickListener(timerListener);
+
+		fadeOutEffect = new FadeOutEffect(this);
+		fadeOutEffect.setMinAlpha(0);
+		fadeOutEffect.setMaxAlpha(1);
+		fadeOutEffect.setListener(effectListener);
+
+		initScoreInfos();
+	}
+	
+	public void dispose() {
+		hide();
+		fadeOutEffect.stop();
+	}
+
+	@Override
+	public void draw() {
+		shapeScoreInfo.draw();
+		colorScoreInfo.draw();
+		countScoreInfo.draw();
+		patternScoreInfo.draw();
+	}
+
+	public void hide() {
+		if (!isActive)
+			return;
+
+		this.isActive = false;
+		timer.stop();
+
+		this.listenInput(false);
+	}
+
+	public void initScoreInfos() {
+		colorScoreInfo = new ScoreInfo();
+
+		shapeScoreInfo = new ScoreInfo();
+		shapeScoreInfo.getColor().set(R.colors.ichiguYellow);
+		
+		patternScoreInfo = new ScoreInfo();
+		patternScoreInfo.getColor().set(R.colors.ichiguYellow);
+
+		countScoreInfo = new ScoreInfo();
+		countScoreInfo.getColor().set(R.colors.ichiguYellow);
+	}
+
+	@Override
+	public void registerSelf() {
+		
+	}
+
+	@Override
+	public void setAlpha(float alpha) {
+		getColor().a = alpha;
+		shapeScoreInfo.setAlpha(alpha);
+		colorScoreInfo.setAlpha(alpha);
+		countScoreInfo.setAlpha(alpha);
+		patternScoreInfo.setAlpha(alpha);
+	}
+
+	public void setScoreInfosPositions() {
+		int totalWidth = (int) (3 * ScoreInfo.scoreImageSize + countScoreInfo.getTotalWidth());
+		int x = (int) (Game.getVirtualWidth() - totalWidth) / 2;
+		int y = (int) this.getLocation().y;
+		colorScoreInfo.getLocation().set(x, y);
+		shapeScoreInfo.getLocation().set(x + ScoreInfo.scoreImageSize, y);
+		patternScoreInfo.getLocation().set(x + 2 * ScoreInfo.scoreImageSize, y);
+		countScoreInfo.getLocation().set(x + 3 * ScoreInfo.scoreImageSize, y);
+	}
+
+	public void show(CardAttributes[] attr) {
+		if (isActive) {
+			timer.start();
+			fadeOutEffect.stop();
+			setAlpha(1);
+		}
+
+		this.isActive = true;
+
+		setPoints(attr);
+
+		timer.setInterval(fadeDuration);
+
+		fadeOutEffect.setDuration(fadeDuration);
+		fadeOutEffect.start();
+
+		this.listenInput(true);
+		Drawer.getCurrent().register(this, Utils.LAYER_INFO);
+	}
+
+	private void effectEnd() {
+		if (isActive)
+			timer.start();
+		else if (Drawer.getCurrent() != null)
+			Drawer.getCurrent().unregister(this);
+	}
 
 	private void setPoints(CardAttributes[] attr) {
 		score = 0;
@@ -140,128 +259,9 @@ public class FadingScoreInfo extends GameObject implements IFadingEffectSubject 
 		setScoreInfosPositions();
 	}
 
-	public FadingScoreInfo() {
-		this.setWidth(Game.getVirtualWidth());
-		this.setHeight(ScoreInfo.scoreImageSize + 10);
-		this.getLocation().set(0, Game.getVirtualHeight() - this.getHeight());
-		this.getColor().set(R.colors.ichiguRed);
-
-		timer = new Timer();
-		timer.setTickListener(timerListener);
-
-		fadeOutEffect = new FadeOutEffect(this);
-		fadeOutEffect.setMinAlpha(0);
-		fadeOutEffect.setMaxAlpha(1);
-		fadeOutEffect.setListener(effectListener);
-
-		initScoreInfos();
-	}
-
-	public void initScoreInfos() {
-		colorScoreInfo = new ScoreInfo();
-
-		shapeScoreInfo = new ScoreInfo();
-		shapeScoreInfo.getColor().set(R.colors.ichiguYellow);
-		
-		patternScoreInfo = new ScoreInfo();
-		patternScoreInfo.getColor().set(R.colors.ichiguYellow);
-
-		countScoreInfo = new ScoreInfo();
-		countScoreInfo.getColor().set(R.colors.ichiguYellow);
-	}
-	
-	public void setScoreInfosPositions() {
-		int totalWidth = (int) (3 * ScoreInfo.scoreImageSize + countScoreInfo.getTotalWidth());
-		int x = (int) (Game.getVirtualWidth() - totalWidth) / 2;
-		int y = (int) this.getLocation().y;
-		colorScoreInfo.getLocation().set(x, y);
-		shapeScoreInfo.getLocation().set(x + ScoreInfo.scoreImageSize, y);
-		patternScoreInfo.getLocation().set(x + 2 * ScoreInfo.scoreImageSize, y);
-		countScoreInfo.getLocation().set(x + 3 * ScoreInfo.scoreImageSize, y);
-	}
-
-	public void show(CardAttributes[] attr) {
-		if (isActive) {
-			timer.start();
-			fadeOutEffect.stop();
-			setAlpha(1);
-		}
-
-		this.isActive = true;
-
-		setPoints(attr);
-
-		timer.setInterval(fadeDuration);
-
-		fadeOutEffect.setDuration(fadeDuration);
-		fadeOutEffect.start();
-
-		this.listenInput(true);
-		Drawer.getCurrent().register(this, Utils.LAYER_INFO);
-	}
-
-	public void dispose() {
-		hide();
-		fadeOutEffect.stop();
-	}
-
-	public void hide() {
-		if (!isActive)
-			return;
-
-		this.isActive = false;
-		timer.stop();
-
-		this.listenInput(false);
-	}
-
-	private void effectEnd() {
-		if (isActive)
-			timer.start();
-		else if (Drawer.getCurrent() != null)
-			Drawer.getCurrent().unregister(this);
-	}
-
-	private Timer.ITimerTickListener timerListener = new Timer.ITimerTickListener() {
-		@Override
-		public void timerTick(Timer timer) {
-			hide();
-		}
-	};
-
-	private IEffectEndListener effectListener = new IEffectEndListener() {
-		@Override
-		public boolean onEffectEnd(Object obj) {
-			effectEnd();
-			return true;
-		}
-	};
-
-	@Override
-	public void draw() {
-		shapeScoreInfo.draw();
-		colorScoreInfo.draw();
-		countScoreInfo.draw();
-		patternScoreInfo.draw();
-	}
-
 	@Override
 	protected boolean onTap() {
 		hide();
 		return true;
-	}
-
-	@Override
-	public void setAlpha(float alpha) {
-		getColor().a = alpha;
-		shapeScoreInfo.setAlpha(alpha);
-		colorScoreInfo.setAlpha(alpha);
-		countScoreInfo.setAlpha(alpha);
-		patternScoreInfo.setAlpha(alpha);
-	}
-
-	@Override
-	public void registerSelf() {
-		
 	}
 }

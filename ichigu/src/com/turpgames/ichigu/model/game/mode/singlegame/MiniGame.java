@@ -78,15 +78,57 @@ public class MiniGame extends SingleGameMode implements IResultScreenButtonsList
 	}
 
 	@Override
+	public void concreteIchiguFound() {
+		foundInfo.increaseFound();
+		super.concreteIchiguFound();
+	}
+
+	@Override
+	public void concreteInvalidIchiguSelected() {
+		block();
+		super.concreteInvalidIchiguSelected();
+	}
+
+	@Override
+	public void deal() {
+		blockTimer.stop();
+		super.deal();
+	}
+
+	@Override
+	public void drawResultScreen() {
+		resultInfo.draw();
+		resultScreenButtons.draw();
+	}
+
+	@Override
 	public ISingleGameModeListener getModeListener() {
 		return (ISingleGameModeListener) super.modeListener;
 	}
 
-	private void notifyUnblocked() {
-		if (getModeListener() != null)
-			getModeListener().onUnblock();
+	@Override
+	public void onBackToMenuTapped() {
+		getModeListener().onExitConfirmed();
 	}
 
+	@Override
+	public void onNewGameTapped() {
+		notifyNewGame();
+	}
+	
+	private void block() {
+		blockTimer.start();
+		waitInfo.show(blockDuration);
+	}
+
+	private void drawRemainingTime() {
+		timeInfo.draw();
+	}
+	
+	private void drawWaitMessage() {
+		waitInfo.setText(String.format("%.1f", blockDuration - blockTimer.getElapsedTime()));
+	}
+	
 	private void notifyModeEnd() {
 		prepareResultInfoAndSaveHiscore();
 		resultScreenButtons.listenInput(true);
@@ -100,9 +142,47 @@ public class MiniGame extends SingleGameMode implements IResultScreenButtonsList
 			getModeListener().onNewGame();
 	}
 
-	private void block() {
-		blockTimer.start();
-		waitInfo.show(blockDuration);
+	private void notifyUnblocked() {
+		if (getModeListener() != null)
+			getModeListener().onUnblock();
+	}
+
+	@Override
+	protected void onDraw() {
+		drawRemainingTime();
+		foundInfo.draw();
+		if (!blockTimer.isStopped())
+			drawWaitMessage();
+		super.onDraw();
+	}
+
+	@Override
+	protected void onEndMode() {
+		blockTimer.stop();
+		challengeTimer.stop();
+		timeInfo.syncText();
+		
+		super.onEndMode();
+	}
+
+	@Override
+	protected boolean onExitMode() {
+		if (!super.onExitMode())
+			return false;
+
+		blockTimer.stop();
+		challengeTimer.stop();
+		timeInfo.syncText();
+		resultScreenButtons.listenInput(false);
+		return true;
+	}
+
+	@Override
+	protected void onResetMode() {
+		challengeTimer.restart();
+		timeInfo.syncText();
+		foundInfo.reset();
+		super.onResetMode();
 	}
 
 	@Override
@@ -115,20 +195,8 @@ public class MiniGame extends SingleGameMode implements IResultScreenButtonsList
 	}
 
 	@Override
-	protected void onResetMode() {
-		challengeTimer.restart();
-		timeInfo.syncText();
-		foundInfo.reset();
-		super.onResetMode();
-	}
-	
-	@Override
-	protected void onEndMode() {
-		blockTimer.stop();
-		challengeTimer.stop();
-		timeInfo.syncText();
-		
-		super.onEndMode();
+	protected void pauseTimer() {
+		challengeTimer.pause();
 	}
 
 	@Override
@@ -141,76 +209,9 @@ public class MiniGame extends SingleGameMode implements IResultScreenButtonsList
 		resultInfo.setText(String.format(Ichigu.getString(R.strings.miniChallengeResult),
 				ichigusFound, (ichigusFound > hiScore ? Ichigu.getString(R.strings.newHiscore) : "")));
 	}
-	
-	@Override
-	protected boolean onExitMode() {
-		if (!super.onExitMode())
-			return false;
-
-		blockTimer.stop();
-		challengeTimer.stop();
-		timeInfo.syncText();
-		resultScreenButtons.listenInput(false);
-		return true;
-	}
-	
-	@Override
-	public void deal() {
-		blockTimer.stop();
-		super.deal();
-	}
-
-	@Override
-	protected void onDraw() {
-		drawRemainingTime();
-		foundInfo.draw();
-		if (!blockTimer.isStopped())
-			drawWaitMessage();
-		super.onDraw();
-	}
-
-	public void drawResultScreen() {
-		resultInfo.draw();
-		resultScreenButtons.draw();
-	}
-
-	private void drawRemainingTime() {
-		timeInfo.draw();
-	}
-
-	private void drawWaitMessage() {
-		waitInfo.setText(String.format("%.1f", blockDuration - blockTimer.getElapsedTime()));
-	}
-
-	@Override
-	public void onBackToMenuTapped() {
-		getModeListener().onExitConfirmed();
-	}
-
-	@Override
-	public void onNewGameTapped() {
-		notifyNewGame();
-	}
-
-	@Override
-	protected void pauseTimer() {
-		challengeTimer.pause();
-	}
 
 	@Override
 	protected void startTimer() {
 		challengeTimer.start();
-	}
-
-	@Override
-	public void concreteIchiguFound() {
-		foundInfo.increaseFound();
-		super.concreteIchiguFound();
-	}
-
-	@Override
-	public void concreteInvalidIchiguSelected() {
-		block();
-		super.concreteInvalidIchiguSelected();
 	}
 }

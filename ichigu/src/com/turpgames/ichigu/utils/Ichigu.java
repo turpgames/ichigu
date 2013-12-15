@@ -8,20 +8,16 @@ import com.turpgames.framework.v0.util.Game;
 import com.turpgames.framework.v0.util.TextureDrawer;
 
 public final class Ichigu {
-	private Ichigu() {
-
-	}
-
 	private static final ISound soundError;
+
 	private static final ISound soundSuccess;
 	private static final ISound soundTimeUp;
 	private static final ISound soundWait;
 	private static final ISound soundFlip;
-
 	private static final ITexture textureCardBorder;
+
 	private static final ITexture textureCardClosed;
 	private static final ITexture textureCardEmpty;
-
 	static {
 		IResourceManager r = Game.getResourceManager();
 
@@ -48,8 +44,16 @@ public final class Ichigu {
 		TextureDrawer.draw(textureCardEmpty, info);
 	}
 
+	public static String getString(String resourceKey) {
+		return Game.getLanguageManager().getString(resourceKey);
+	}
+
 	public static void playSoundError() {
 		soundError.play();
+	}
+
+	public static void playSoundFlip() {
+		soundFlip.play();
 	}
 
 	public static void playSoundSuccess() {
@@ -64,11 +68,7 @@ public final class Ichigu {
 		soundWait.play();
 	}
 
-	public static void playSoundFlip() {
-		soundFlip.play();
-	}
+	private Ichigu() {
 
-	public static String getString(String resourceKey) {
-		return Game.getLanguageManager().getString(resourceKey);
 	}
 }

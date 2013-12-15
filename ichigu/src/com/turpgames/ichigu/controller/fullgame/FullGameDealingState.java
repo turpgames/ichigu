@@ -6,11 +6,6 @@ public class FullGameDealingState extends FullGameState {
 	}
 
 	@Override
-	protected void activated() {
-		model.deal();
-	}
-
-	@Override
 	public void onDealEnded() {
 		model.dealEnded();
 		controller.setWaitingState();
@@ -19,5 +14,10 @@ public class FullGameDealingState extends FullGameState {
 	@Override
 	public boolean onScreenDeactivated() {
 		return false;
+	}
+
+	@Override
+	protected void activated() {
+		model.deal();
 	}
 }

@@ -63,29 +63,63 @@ public abstract class IchiguMode implements IDrawable {
 		initTable();
 	}
 
-	protected abstract void initTable();
-	
-	protected Table getTable() {
-		return table;
+	public void deal() {
+		modeListener.onDealStarted();
+		table.deal();
 	}
 	
-	protected abstract void pauseTimer();
-
-	protected abstract void startTimer();
-
-	protected abstract void prepareResultInfoAndSaveHiscore();
+	public void dealEnded() {
+		startTimer();
+		resetButton.listenInput(true);
+		IchiguToolbar.getInstance().getBackButton().listenInput(true);
+	}
 	
+	public void dealStarted() {
+		pauseTimer();
+		resetButton.listenInput(false);
+		IchiguToolbar.getInstance().getBackButton().listenInput(false);
+	}
+
+	@Override
+	public final void draw() {
+		table.draw();
+		onDraw();
+	}
+
+	public final void endMode() {
+		table.end();
+		onEndMode();
+	}
+	
+	public final boolean exitMode() {
+		return onExitMode();
+	}
+	
+	public IIchiguModeListener getModeListener() {
+		return modeListener;
+	}
+
 	public void openCloseCards(boolean open) {
 		table.openCloseCards(open);
 	}
-	
-	private void onResetConfirmed(boolean reset) {
-		if (reset) {
-			resetMode();
-		}
-		else {
-			resume();
-		}
+
+	public void setModeListener(IIchiguModeListener controller) {
+		this.modeListener = controller;
+		setTableListener(controller);
+	}
+
+	public final void startMode() {
+		onStartMode();
+	}
+
+	private void confirmModeExit() {
+		pause();
+		openCloseCards(false);
+		confirmExitDialog.open(Ichigu.getString(R.strings.exitConfirm));
+	}
+
+	private void drawResetButton() {
+		resetButton.draw();
 	}
 
 	private void onConfirmResetMode() {
@@ -104,10 +138,13 @@ public abstract class IchiguMode implements IDrawable {
 		}
 	}
 
-	private void confirmModeExit() {
-		pause();
-		openCloseCards(false);
-		confirmExitDialog.open(Ichigu.getString(R.strings.exitConfirm));
+	private void onResetConfirmed(boolean reset) {
+		if (reset) {
+			resetMode();
+		}
+		else {
+			resume();
+		}
 	}
 
 	private void pause() {
@@ -121,60 +158,19 @@ public abstract class IchiguMode implements IDrawable {
 		resetButton.listenInput(true);
 		openCloseCards(true);
 	}
-
-	public void setModeListener(IIchiguModeListener controller) {
-		this.modeListener = controller;
-		setTableListener(controller);
-	}
-
+	
 	private void setTableListener(ITableListener controller) {
 		table.setListener(controller);
 	}
 
-	public void deal() {
-		modeListener.onDealStarted();
-		table.deal();
+	protected Table getTable() {
+		return table;
 	}
 
-	public final void startMode() {
-		onStartMode();
-	}
-
-	protected void resetMode() {
-		onResetMode();
-	}
+	protected abstract void initTable();
 	
-	public final void endMode() {
-		table.end();
-		onEndMode();
-	}
-
-	public final boolean exitMode() {
-		return onExitMode();
-	}
-
-	public void dealStarted() {
-		pauseTimer();
-		resetButton.listenInput(false);
-		IchiguToolbar.getInstance().getBackButton().listenInput(false);
-	}
-	
-	public void dealEnded() {
-		startTimer();
-		resetButton.listenInput(true);
-		IchiguToolbar.getInstance().getBackButton().listenInput(true);
-	}
-	
-	protected void onStartMode() {
-		isExitConfirmed = false;
-		resetButton.listenInput(true);
-		table.start();
-	}
-
-	protected void onResetMode() {
-		resetButton.listenInput(true);
-		table.reset();
-		table.deal();
+	protected void onDraw() {
+		drawResetButton();
 	}
 	
 	protected void onEndMode() {
@@ -194,21 +190,26 @@ public abstract class IchiguMode implements IDrawable {
 		table.end();
 		return true;
 	}
-
-	public final void draw() {
-		table.draw();
-		onDraw();
+	
+	protected void onResetMode() {
+		resetButton.listenInput(true);
+		table.reset();
+		table.deal();
 	}
 
-	protected void onDraw() {
-		drawResetButton();
+	protected void onStartMode() {
+		isExitConfirmed = false;
+		resetButton.listenInput(true);
+		table.start();
 	}
 
-	private void drawResetButton() {
-		resetButton.draw();
+	protected abstract void pauseTimer();
+
+	protected abstract void prepareResultInfoAndSaveHiscore();
+
+	protected void resetMode() {
+		onResetMode();
 	}
 
-	public IIchiguModeListener getModeListener() {
-		return modeListener;
-	}
+	protected abstract void startTimer();
 }

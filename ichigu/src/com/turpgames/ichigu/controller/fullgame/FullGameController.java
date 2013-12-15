@@ -26,19 +26,18 @@ public class FullGameController extends IchiguController<FullGameState> implemen
 	}
 
 	@Override
-	public void onScreenActivated() {
-		model.startMode();
-		setDealingState();
+	public void onDealEnded() {
+		currentState.onDealEnded();		
 	}
 
 	@Override
-	public void onModeEnd() {
-		currentState.onModeEnd();
+	public void onDealStarted() {
+		currentState.onDealStarted();
 	}
 
 	@Override
-	public void onNewGame() {
-		currentState.onNewGame();
+	public void onExitConfirmed() {
+		currentState.onExitConfirmed();
 	}
 	
 	@Override
@@ -52,39 +51,40 @@ public class FullGameController extends IchiguController<FullGameState> implemen
 	}
 	
 	@Override
-	public void onDealStarted() {
-		currentState.onDealStarted();
+	public void onModeEnd() {
+		currentState.onModeEnd();
 	}
 	
 	@Override
-	public void onDealEnded() {
-		currentState.onDealEnded();		
+	public void onNewGame() {
+		currentState.onNewGame();
 	}
 	
-	@Override
-	public void onTableFinished() {
-		currentState.onTableFinished();	
-	}
-	
-	@Override
-	public void onExitConfirmed() {
-		currentState.onExitConfirmed();
-	}
-
 	@Override
 	public void onOpenedExtraCardsWhileThereIsIchigu() {
 		currentState.onOpenedExtraCardsWhileThereIsIchigu();
+	}
+	
+	@Override
+	public void onScreenActivated() {
+		model.startMode();
+		setDealingState();
+	}
+
+	@Override
+	public void onTableFinished() {
+		currentState.onTableFinished();	
 	}
 	
 	void setDealingState() {
 		setState(dealingState);
 	}
 
-	void setWaitingState() {
-		setState(waitingState);
-	}
-
 	void setEndState() {
 		setState(endState);
+	}
+
+	void setWaitingState() {
+		setState(waitingState);
 	}
 }

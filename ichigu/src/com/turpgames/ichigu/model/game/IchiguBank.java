@@ -25,42 +25,6 @@ public final class IchiguBank {
 		}
 	};
 
-	private IchiguBank() {
-
-	}
-	
-	public static void registerListener(IIchiguBankListener listener) {
-		listeners.register(listener);
-	}
-	
-	public static void unregisterListener(IIchiguBankListener listener) {
-		listeners.unregister(listener);
-	}
-	
-	private static void notifyListeners() {
-		listeners.execute();
-	}
-
-	public static synchronized int getBalance() {
-		return ichiguBalance;
-	}
-
-	public static int getHintCount() {
-		return hintCount;
-	}
-	
-	public static int getPointsPerHint() {
-		return hintPrice;
-	}
-	
-	public static synchronized boolean canBuyHintWithBalance() {
-		return ichiguBalance >= hintPrice;
-	}
-
-	public static boolean hasHint() {
-		return hintCount > 0;
-	}
-	
 	public static synchronized boolean buyHintWithBalance() {
 		if (!canBuyHintWithBalance())
 			return false;
@@ -72,10 +36,9 @@ public final class IchiguBank {
 		
 		return true;
 	}
-
-	public static synchronized void increaseBalance() {
-		ichiguBalance++;
-		notifyListeners();
+	
+	public static synchronized boolean canBuyHintWithBalance() {
+		return ichiguBalance >= hintPrice;
 	}
 	
 	public static synchronized void decreaseHintCount() {
@@ -83,9 +46,46 @@ public final class IchiguBank {
 			hintCount--;
 		notifyListeners();
 	}
+	
+	public static synchronized int getBalance() {
+		return ichiguBalance;
+	}
 
+	public static int getHintCount() {
+		return hintCount;
+	}
+
+	public static int getPointsPerHint() {
+		return hintPrice;
+	}
+	
+	public static boolean hasHint() {
+		return hintCount > 0;
+	}
+	
+	public static synchronized void increaseBalance() {
+		ichiguBalance++;
+		notifyListeners();
+	}
+
+	public static void registerListener(IIchiguBankListener listener) {
+		listeners.register(listener);
+	}
+	
 	public static synchronized void saveData() {
 		IchiguSettings.setIchiguBalance(ichiguBalance);
 		IchiguSettings.setHintCount(hintCount);
+	}
+
+	public static void unregisterListener(IIchiguBankListener listener) {
+		listeners.unregister(listener);
+	}
+	
+	private static void notifyListeners() {
+		listeners.execute();
+	}
+
+	private IchiguBank() {
+
 	}
 }

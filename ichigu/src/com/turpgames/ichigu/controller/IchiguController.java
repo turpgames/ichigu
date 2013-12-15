@@ -6,16 +6,14 @@ public abstract class IchiguController<T extends IchiguState> implements IIchigu
 	protected T currentState;
 
 	@Override
-	public void onScreenActivated() {
+	public void draw() {
 		if (currentState != null)
-			currentState.onScreenActivated();
+			currentState.draw();
 	}
 
 	@Override
-	public boolean onScreenDeactivated() {
-		if (currentState != null)
-			return currentState.onScreenDeactivated();
-		return false;
+	public void onCardTapped(Card card) {
+		currentState.onCardTapped(card);
 	}
 
 	@Override
@@ -25,30 +23,32 @@ public abstract class IchiguController<T extends IchiguState> implements IIchigu
 	
 
 	@Override
-	public void draw() {
-		if (currentState != null)
-			currentState.draw();
+	public void onModeEnd() {
+		currentState.onModeEnd();
 	}
 
-	protected void setState(T newState) {
-		if (currentState != null)
-			currentState.deactivated();
-		currentState = newState;
-		currentState.activated();
-	}
-	
 	@Override
 	public void onNewGame() {
 		currentState.onNewGame();
 	}
 	
 	@Override
-	public void onModeEnd() {
-		currentState.onModeEnd();
+	public void onScreenActivated() {
+		if (currentState != null)
+			currentState.onScreenActivated();
 	}
 	
 	@Override
-	public void onCardTapped(Card card) {
-		currentState.onCardTapped(card);
+	public boolean onScreenDeactivated() {
+		if (currentState != null)
+			return currentState.onScreenDeactivated();
+		return false;
+	}
+	
+	protected void setState(T newState) {
+		if (currentState != null)
+			currentState.deactivated();
+		currentState = newState;
+		currentState.activated();
 	}
 }

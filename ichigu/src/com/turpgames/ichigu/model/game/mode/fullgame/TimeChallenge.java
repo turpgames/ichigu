@@ -25,6 +25,12 @@ public class TimeChallenge extends FullGameMode {
 	}
 
 	@Override
+	public void concreteIchiguFound() {
+		foundInfo.increaseFound();
+		super.concreteIchiguFound();
+	}
+
+	@Override
 	protected Timer getTimer() {
 		if (timer == null) {
 			timer = new CountDownTimer(challengeTime);
@@ -38,11 +44,11 @@ public class TimeChallenge extends FullGameMode {
 		}
 		return timer;
 	}
-
+	
 	@Override
-	protected void onStartMode() {
-		super.onStartMode();
-		foundInfo.reset();
+	protected void onDraw() {
+		foundInfo.draw();
+		super.onDraw();
 	}
 	
 	@Override
@@ -52,6 +58,12 @@ public class TimeChallenge extends FullGameMode {
 	}
 	
 	@Override
+	protected void onStartMode() {
+		super.onStartMode();
+		foundInfo.reset();
+	}
+
+	@Override
 	protected void prepareResultInfoAndSaveHiscore() {
 		int hiScore = Settings.getInteger(R.settings.hiscores.fullchallenge, 0);
 		int score = foundInfo.getFound();
@@ -60,17 +72,5 @@ public class TimeChallenge extends FullGameMode {
 
 		resultInfo.setText(String.format(Ichigu.getString(R.strings.fullChallengeResult),
 				score, (score > hiScore ? Ichigu.getString(R.strings.newHiscore) : "")));
-	}
-	
-	@Override
-	protected void onDraw() {
-		foundInfo.draw();
-		super.onDraw();
-	}
-
-	@Override
-	public void concreteIchiguFound() {
-		foundInfo.increaseFound();
-		super.concreteIchiguFound();
 	}
 }

@@ -48,11 +48,13 @@ public class IchiguMarket implements IDrawable, ILanguageListener {
 		Game.getLanguageManager().register(this);
 	}
 
-	private void onBuyButtonTapped() {
-		if (IchiguBank.buyHintWithBalance())
-			setBankInfoText();
-		else
-			dialog.open(Ichigu.getString(R.strings.insufficientIchiguBalance));
+	public void activate() {
+		setLanguageSensitiveInfo();
+		buyButton.activate();
+	}
+
+	public void deactivate() {
+		buyButton.deactivate();
 	}
 
 	@Override
@@ -63,13 +65,16 @@ public class IchiguMarket implements IDrawable, ILanguageListener {
 		buyButton.draw();
 	}
 
-	public void activate() {
+	@Override
+	public void onLanguageChanged() {
 		setLanguageSensitiveInfo();
-		buyButton.activate();
 	}
 
-	public void deactivate() {
-		buyButton.deactivate();
+	private void onBuyButtonTapped() {
+		if (IchiguBank.buyHintWithBalance())
+			setBankInfoText();
+		else
+			dialog.open(Ichigu.getString(R.strings.insufficientIchiguBalance));
 	}
 
 	private void setLanguageSensitiveInfo() {
@@ -89,10 +94,5 @@ public class IchiguMarket implements IDrawable, ILanguageListener {
 				IchiguBank.getHintCount());
 		
 		bankInfo.setText(bankInfoText);
-	}
-
-	@Override
-	public void onLanguageChanged() {
-		setLanguageSensitiveInfo();
 	}
 }

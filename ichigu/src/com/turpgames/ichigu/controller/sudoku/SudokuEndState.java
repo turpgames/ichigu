@@ -8,9 +8,8 @@ public class SudokuEndState extends SudokuState {
 	}
 
 	@Override
-	protected void activated() {
-		Ichigu.playSoundTimeUp();
-		model.endMode();
+	public void draw() {
+		model.drawResult();
 	}
 
 	@Override
@@ -20,7 +19,8 @@ public class SudokuEndState extends SudokuState {
 	}
 	
 	@Override
-	public void draw() {
-		model.drawResult();
+	protected void activated() {
+		Ichigu.playSoundTimeUp();
+		model.endMode();
 	}
 }

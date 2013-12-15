@@ -8,22 +8,22 @@ public class ScoreBoardScreen extends IchiguScreen {
 	private HiScores hiScores;
 
 	@Override
+	public void init() {
+		super.init();
+		hiScores = new HiScores();
+		registerDrawable(hiScores, Utils.LAYER_SCREEN);
+	}
+	
+	@Override
 	protected void onAfterActivate() {
 		hiScores.activate();
 		IchiguToolbar.getInstance().activateBackButton();
 	}
-	
+
 	@Override
 	protected boolean onBeforeDeactivate() {
 		hiScores.deactivate();
 		IchiguToolbar.getInstance().deactivateBackButton();
 		return true;
-	}
-
-	@Override
-	public void init() {
-		super.init();
-		hiScores = new HiScores();
-		registerDrawable(hiScores, Utils.LAYER_SCREEN);
 	}
 }

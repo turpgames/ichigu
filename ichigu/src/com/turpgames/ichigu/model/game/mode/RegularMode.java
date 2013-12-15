@@ -4,12 +4,11 @@ import com.turpgames.ichigu.model.game.table.RegularGameTable;
 
 public abstract class RegularMode extends IchiguMode {
 
-	@Override
-	protected RegularGameTable getTable() {
-		return (RegularGameTable) super.getTable();
-	}
+	abstract public void concreteIchiguFound();
 	
 
+	abstract public void concreteInvalidIchiguSelected();
+	
 	public final void ichiguFound() {
 		getTable().afterIchiguFound();
 		concreteIchiguFound();
@@ -20,8 +19,9 @@ public abstract class RegularMode extends IchiguMode {
 		concreteInvalidIchiguSelected();
 	}
 	
-	abstract public void concreteInvalidIchiguSelected();
-	
-	abstract public void concreteIchiguFound(); 
+	@Override
+	protected RegularGameTable getTable() {
+		return (RegularGameTable) super.getTable();
+	} 
 	
 }

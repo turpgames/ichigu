@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.turpgames.framework.v0.effects.MoveEffect;
 import com.turpgames.framework.v0.effects.MoveWithSpeedEffect;
 import com.turpgames.framework.v0.effects.fading.FadeOutEffect;
 import com.turpgames.framework.v0.util.Game;
@@ -17,14 +18,25 @@ import com.turpgames.ichigu.model.game.table.Table;
 
 public class FullGameDealer extends Dealer {
 
-	private static float fadeDuration = 0.3f;
-	private static float cardSpeed = 1000f;
+	class DealtOutComparator implements Comparator<Vector> {
 
+		@Override
+		public int compare(Vector arg0, Vector arg1) {
+			return arg0.y < arg1.y ? 1 
+					: arg0.y > arg1.y ? -1
+							: arg0.x < arg1.x ? 1 
+									: arg0.x > arg1.x ? -1 : 0;
+		}
+	}
+	private static float fadeDuration = 0.3f;
+	private static float inDuration = 0.2f;
+
+	private static float cardSpeed = 1000f;
 	private final static Map<Integer, Vector> cardLocations = new HashMap<Integer, Vector>();
 	private final static List<Vector> extraCardLocations = new ArrayList<Vector>();
 	private final static List<Vector> extraStart = new ArrayList<Vector>();
-	private final static Vector inPosition = new Vector(Card.Width / 2,
-			Card.Width / 2);
+	private final static Vector inPosition = new Vector(Card.Width / 2, Card.Width / 2);
+
 	static {
 		float dy = (Game.getVirtualHeight() - Game.getVirtualWidth()) / 2f - 20;
 		for (int i = 0; i < FullGameTable.ActiveCardCount; i++) {
@@ -62,13 +74,12 @@ public class FullGameDealer extends Dealer {
 	}
 
 	@Override
-	protected void selectDeal() {
-		dealSimultaneous();
-	}
-
-	@Override
-	protected float getDealOutInterval() {
-		return 0;
+	protected void concreteDrawCards() {
+		for (Card card : cardsDealingIn)
+			if (card != null)
+				card.draw();
+		for (Card card : cardsDealingOut)
+			card.draw();
 	}
 
 	@Override
@@ -77,13 +88,13 @@ public class FullGameDealer extends Dealer {
 	}
 
 	@Override
-	protected void setOutEffects() {
-		FadeOutEffect fadeEffect;
-		for (int i = 0; i < cardsDealingOut.size(); i++) {
-			fadeEffect = new FadeOutEffect(cardsDealingOut.get(i));
-			fadeEffect.setDuration(fadeDuration);
-			cardsDealingOut.get(i).setDealerEffect(fadeEffect);
-		}
+	protected float getDealOutInterval() {
+		return 0;
+	}
+
+	@Override
+	protected void selectDeal() {
+		dealSimultaneous();
 	}
 
 	@Override
@@ -131,35 +142,26 @@ public class FullGameDealer extends Dealer {
 						.set(extraStart.get(i - (cardsDealingIn.size() - 3)));
 			}
 
-			MoveWithSpeedEffect moveEffect;
+			MoveEffect moveEffect;
 			for (int i = 0; i < cardsDealingIn.size(); i++) {
 				if (cardsDealingIn.get(i) == null)
 					continue;
-				moveEffect = new MoveWithSpeedEffect(cardsDealingIn.get(i));
+				moveEffect = new MoveEffect(cardsDealingIn.get(i));
 				moveEffect.setLooping(false);
-				moveEffect.setDestinationAndSpeed(destinations.get(i), cardSpeed);
+				moveEffect.setDestination(destinations.get(i));
+				moveEffect.setDuration(inDuration);
 				cardsDealingIn.get(i).setDealerEffect(moveEffect);
 			}
 		}
 	}
 
 	@Override
-	protected void concreteDrawCards() {
-		for (Card card : cardsDealingIn)
-			if (card != null)
-				card.draw();
-		for (Card card : cardsDealingOut)
-			card.draw();
-	}
-
-	class DealtOutComparator implements Comparator<Vector> {
-
-		@Override
-		public int compare(Vector arg0, Vector arg1) {
-			return arg0.y < arg1.y ? 1 
-					: arg0.y > arg1.y ? -1
-							: arg0.x < arg1.x ? 1 
-									: arg0.x > arg1.x ? -1 : 0;
+	protected void setOutEffects() {
+		FadeOutEffect fadeEffect;
+		for (int i = 0; i < cardsDealingOut.size(); i++) {
+			fadeEffect = new FadeOutEffect(cardsDealingOut.get(i));
+			fadeEffect.setDuration(fadeDuration);
+			cardsDealingOut.get(i).setDealerEffect(fadeEffect);
 		}
 	}
 }

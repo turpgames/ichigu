@@ -24,14 +24,14 @@ public class TutorialModeScreen extends IchiguScreen {
 	}
 
 	@Override
-	protected boolean onBeforeActivate() {
-		tutorial.beginTutorial();
-		return super.onBeforeActivate();
-	}
-
-	@Override
 	protected void onAfterDeactivate() {
 		tutorial.endTutorial();
 		super.onAfterDeactivate();
+	}
+
+	@Override
+	protected boolean onBeforeActivate() {
+		tutorial.beginTutorial();
+		return super.onBeforeActivate();
 	}
 }

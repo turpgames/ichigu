@@ -10,7 +10,6 @@ import com.turpgames.ichigu.model.display.ResultScreenButtons;
 import com.turpgames.ichigu.model.display.TimerText;
 import com.turpgames.ichigu.model.display.TryAgainToast;
 import com.turpgames.ichigu.model.game.Card;
-import com.turpgames.ichigu.model.game.mode.IIchiguModeListener;
 import com.turpgames.ichigu.model.game.mode.RegularMode;
 import com.turpgames.ichigu.model.game.table.FullGameTable;
 
@@ -48,9 +47,59 @@ public abstract class FullGameMode extends RegularMode implements IResultScreenB
 		resultInfo.setPadding(0, 150);
 	}
 
+	public void applyTimePenalty() {		
+		getTimer().addSeconds(secondPerPenalty);
+		timerText.flash();
+	}
+	
+	public void cardTapped(Card card) {
+		hintButton.restartNotificationTimer();
+	}
+	
 	@Override
-	protected void initTable() {
-		table = new FullGameTable();
+	public void concreteIchiguFound() {
+		
+	}
+	
+	@Override
+	public void concreteInvalidIchiguSelected() {
+		tryAgain.show();
+	}
+
+	@Override
+	public void dealEnded() {
+		hintButton.activateHint();
+		super.dealEnded();
+	}
+
+	@Override
+	public void dealStarted() {
+		hintButton.deactivateHint();
+		super.dealStarted();
+	}
+
+	public void deckFinished() {
+		notifyModeEnd();
+	}
+
+	public void drawResult() {
+		resultInfo.draw();
+		resultScreenButtons.draw();
+	}
+
+	@Override
+	public void onBackToMenuTapped() {
+		getModeListener().onExitConfirmed();
+	}
+
+	@Override
+	public void onNewGameTapped() {
+		notifyNewGame();
+	}
+
+	private void notifyNewGame() {
+		if (getModeListener() != null)
+			getModeListener().onNewGame();
 	}
 	
 	@Override
@@ -58,29 +107,12 @@ public abstract class FullGameMode extends RegularMode implements IResultScreenB
 		// TODO Auto-generated method stub
 		return (FullGameTable) table;
 	}
-	
+
 	protected abstract Timer getTimer();
-	
-	@Override
-	protected void pauseTimer() {
-		getTimer().pause();
-		hintButton.deactivateHint();
-	}
 
 	@Override
-	protected void startTimer() {
-		getTimer().start();
-		hintButton.activateHint();
-	}
-
-	@Override
-	public IIchiguModeListener getModeListener() {
-		return (IIchiguModeListener) super.modeListener;
-	}
-
-	private void notifyNewGame() {
-		if (getModeListener() != null)
-			getModeListener().onNewGame();
+	protected void initTable() {
+		table = new FullGameTable();
 	}
 
 	protected void notifyModeEnd() {
@@ -88,16 +120,39 @@ public abstract class FullGameMode extends RegularMode implements IResultScreenB
 		if (getModeListener() != null)
 			getModeListener().onModeEnd();
 	}
-
-	public void cardTapped(Card card) {
-		hintButton.restartNotificationTimer();
+	
+	@Override
+	protected void onDraw() {
+		timerText.draw();
+		hintButton.draw();
+		super.onDraw();
 	}
 
-	public void applyTimePenalty() {		
-		getTimer().addSeconds(secondPerPenalty);
-		timerText.flash();
+	@Override
+	protected void onEndMode() {
+		getTimer().stop();
+		hintButton.deactivateHint();
+		resultScreenButtons.listenInput(true);
+		super.onEndMode();
 	}
-
+	
+	@Override
+	protected boolean onExitMode() {
+		if (!super.onExitMode())
+			return false;
+		getTimer().stop();
+		resultScreenButtons.listenInput(false);
+		hintButton.deactivateHint();
+		return true;
+	}
+	
+	@Override
+	protected void onResetMode() {
+		getTimer().restart();
+		timerText.syncText();
+		super.onResetMode();
+	}
+	
 	@Override
 	protected void onStartMode() {
 		getTimer().restart();
@@ -108,75 +163,14 @@ public abstract class FullGameMode extends RegularMode implements IResultScreenB
 	}
 
 	@Override
-	protected void onResetMode() {
-		getTimer().restart();
-		timerText.syncText();
-		super.onResetMode();
-	}
-	
-	@Override
-	protected void onEndMode() {
-		getTimer().stop();
+	protected void pauseTimer() {
+		getTimer().pause();
 		hintButton.deactivateHint();
-		resultScreenButtons.listenInput(true);
-		super.onEndMode();
-	}
-
-	@Override
-	protected boolean onExitMode() {
-		if (!super.onExitMode())
-			return false;
-		getTimer().stop();
-		resultScreenButtons.listenInput(false);
-		hintButton.deactivateHint();
-		return true;
-	}
-
-	@Override
-	protected void onDraw() {
-		timerText.draw();
-		hintButton.draw();
-		super.onDraw();
-	}
-
-	public void drawResult() {
-		resultInfo.draw();
-		resultScreenButtons.draw();
 	}
 	
 	@Override
-	public void onBackToMenuTapped() {
-		getModeListener().onExitConfirmed();
-	}
-
-	@Override
-	public void onNewGameTapped() {
-		notifyNewGame();
-	}
-	
-	@Override
-	public void dealStarted() {
-		hintButton.deactivateHint();
-		super.dealStarted();
-	}
-	
-	@Override
-	public void dealEnded() {
+	protected void startTimer() {
+		getTimer().start();
 		hintButton.activateHint();
-		super.dealEnded();
-	}
-	
-	public void deckFinished() {
-		notifyModeEnd();
-	}
-
-	@Override
-	public void concreteIchiguFound() {
-		
-	}
-	
-	@Override
-	public void concreteInvalidIchiguSelected() {
-		tryAgain.show();
 	}
 }

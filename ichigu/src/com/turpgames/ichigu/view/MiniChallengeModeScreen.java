@@ -12,6 +12,7 @@ public class MiniChallengeModeScreen extends IchiguScreen {
 		setScreenListener(new SingleGameController(this, new MiniGame()));
 	}
 
+	@Override
 	public void onExitConfirmed() {
 		unregisterDrawable(screenListener);
 		ScreenManager.instance.switchTo(R.game.screens.menu, true);		

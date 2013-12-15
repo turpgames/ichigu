@@ -17,6 +17,20 @@ public class TutorialMode implements IDrawable {
 		});
 	}
 
+	public void beginTutorial() {
+		tutorial.start();
+	}
+	
+	@Override
+	public void draw() {
+		tutorial.draw();
+	}
+
+	public void endTutorial() {
+		tutorial.end();
+		// Change to practice screen
+	}
+	
 	public void setModeListener(ITutorialListener modeListener) {
 		this.modeListener = modeListener;
 	}
@@ -28,19 +42,5 @@ public class TutorialMode implements IDrawable {
 	private void notifyTutorialEnd() {
 		if (getModeListener() != null)
 			getModeListener().onModeEnd();
-	}
-	
-	public void beginTutorial() {
-		tutorial.start();
-	}
-	
-	public void endTutorial() {
-		tutorial.end();
-		// Change to practice screen
-	}
-
-	@Override
-	public void draw() {
-		tutorial.draw();
 	}
 }

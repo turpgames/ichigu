@@ -18,16 +18,6 @@ public class SplashScreen extends Screen {
 	private Color progressColor;
 
 	@Override
-	public void init() {
-		// AfterUpdateProcess's must be added here UpdateProcessor.instance.addProcess();
-		
-		super.init();
-		registerDrawable(new TurpLogo(), Utils.LAYER_BACKGROUND);
-		progressColor = new Color(R.colors.ichiguYellow);
-		resourceManager = Game.getResourceManager();
-	}
-
-	@Override
 	public void draw() {
 		super.draw();
 
@@ -36,6 +26,16 @@ public class SplashScreen extends Screen {
 		float x = (Game.getVirtualWidth() - width) / 2;
 
 		ShapeDrawer.drawRect(x, 100, width, height, progressColor, true, false);
+	}
+
+	@Override
+	public void init() {
+		// AfterUpdateProcess's must be added here UpdateProcessor.instance.addProcess();
+		
+		super.init();
+		registerDrawable(new TurpLogo(), Utils.LAYER_BACKGROUND);
+		progressColor = new Color(R.colors.ichiguYellow);
+		resourceManager = Game.getResourceManager();
 	}
 
 	@Override

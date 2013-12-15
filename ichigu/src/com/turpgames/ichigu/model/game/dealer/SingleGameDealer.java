@@ -54,8 +54,12 @@ public class SingleGameDealer extends Dealer {
 	}
 
 	@Override
-	protected void selectDeal() {
-		dealConsecutive();
+	protected void concreteDrawCards() {
+		for(Card card : cardsDealingIn)
+			if (card != null)
+				card.draw();
+		for(Card card : cardsDealingOut)
+			card.draw();
 	}
 
 	@Override
@@ -63,17 +67,12 @@ public class SingleGameDealer extends Dealer {
 		return 0;
 	}
 	
-	protected void setOutEffects() {
-		MoveEffect moveEffect;
-		for (int i = 0; i < cardsDealingOut.size(); i++) {
-			moveEffect = new MoveEffect(cardsDealingOut.get(i));
-			moveEffect.setLooping(false);
-			moveEffect.setDestination(outPositions.get(i));
-			moveEffect.setDuration(outDuration);
-			cardsDealingOut.get(i).setDealerEffect(moveEffect);
-		}
+	@Override
+	protected void selectDeal() {
+		dealConsecutive();
 	}
 
+	@Override
 	protected void setInEffects() {
 		for (int i = 0; i < cardsDealingIn.size(); i++)
 			cardsDealingIn.get(i).getLocation().set(inPositions.get(0).get(i));
@@ -88,11 +87,14 @@ public class SingleGameDealer extends Dealer {
 	}
 	
 	@Override
-	protected void concreteDrawCards() {
-		for(Card card : cardsDealingIn)
-			if (card != null)
-				card.draw();
-		for(Card card : cardsDealingOut)
-			card.draw();
+	protected void setOutEffects() {
+		MoveEffect moveEffect;
+		for (int i = 0; i < cardsDealingOut.size(); i++) {
+			moveEffect = new MoveEffect(cardsDealingOut.get(i));
+			moveEffect.setLooping(false);
+			moveEffect.setDestination(outPositions.get(i));
+			moveEffect.setDuration(outDuration);
+			cardsDealingOut.get(i).setDealerEffect(moveEffect);
+		}
 	}
 }

@@ -17,18 +17,18 @@ public abstract class SudokuState extends IchiguState implements ISudokuTableLis
 	}
 
 	@Override
-	public void onModeEnd() {
-		controller.setEndState();
+	public void draw() {
+		model.draw();
 	}
 
 	@Override
-	public void onNewGame() {
-
+	public void onDealEnded() {
+		model.dealEnded();
 	}
 	
 	@Override
-	public void onTableFinished() {
-		model.tableFinished();
+	public void onDealStarted() {
+		model.dealStarted();
 	}
 	
 	@Override
@@ -37,23 +37,23 @@ public abstract class SudokuState extends IchiguState implements ISudokuTableLis
 	}
 
 	@Override
-	public void draw() {
-		model.draw();
+	public void onModeEnd() {
+		controller.setEndState();
+	}
+
+	@Override
+	public void onNewGame() {
+
 	}
 
 	@Override
 	public boolean onScreenDeactivated() {
 		return model.exitMode();
 	}
-
-	@Override
-	public void onDealStarted() {
-		model.dealStarted();
-	}
 	
 	@Override
-	public void onDealEnded() {
-		model.dealEnded();
+	public void onSwapEnded() {
+		model.swapEnded();
 	}
 	
 	@Override
@@ -62,7 +62,7 @@ public abstract class SudokuState extends IchiguState implements ISudokuTableLis
 	}
 
 	@Override
-	public void onSwapEnded() {
-		model.swapEnded();
+	public void onTableFinished() {
+		model.tableFinished();
 	}
 }

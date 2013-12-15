@@ -58,17 +58,6 @@ class SingleGameHint implements Toast.IToastListener, IEffectEndListener {
 		}
 	}
 
-	private void setToastColor() {
-		colorIndex++;
-
-		if (colorIndex % 3 == 0)
-			toast.setToastColor(R.colors.ichiguRed);
-		else if (colorIndex % 3 == 1)
-			toast.setToastColor(R.colors.ichiguGreen);
-		else if (colorIndex % 3 == 2)
-			toast.setToastColor(R.colors.ichiguBlue);
-	}
-
 	public void update(List<Card> hintCards) {		
 		CardAttributes ca1 = hintCards.get(0).getAttributes();
 		CardAttributes ca2 = hintCards.get(1).getAttributes();
@@ -86,21 +75,22 @@ class SingleGameHint implements Toast.IToastListener, IEffectEndListener {
 //		addFinalHint(ca1, ca2);
 	}
 
-	private void addShapeHint(CardAttributes ca1, CardAttributes ca2) {
-		if (ca1.getShape() == ca2.getShape()) {
-			hints.add(Ichigu.getString(R.strings.sameShapes));
-		}
-		else {
-			hints.add(Ichigu.getString(R.strings.differentShapes));
-		}
-	}
-
 	private void addColorHint(CardAttributes ca1, CardAttributes ca2) {
 		if (ca1.getColor() == ca2.getColor()) {
 			hints.add(Ichigu.getString(R.strings.sameColors));
 		}
 		else {
 			hints.add(Ichigu.getString(R.strings.differentColors));
+		}
+	}
+
+	private void addCountHint(CardAttributes ca1, CardAttributes ca2) {
+		if (ca1.getCount() == ca2.getCount()) {
+			hints.add(Ichigu.getString(R.strings.sameCounts));
+		}
+		else 
+		{
+			hints.add(Ichigu.getString(R.strings.differentCounts));
 		}
 	}
 
@@ -113,13 +103,23 @@ class SingleGameHint implements Toast.IToastListener, IEffectEndListener {
 		}
 	}
 
-	private void addCountHint(CardAttributes ca1, CardAttributes ca2) {
-		if (ca1.getCount() == ca2.getCount()) {
-			hints.add(Ichigu.getString(R.strings.sameCounts));
+	private void addShapeHint(CardAttributes ca1, CardAttributes ca2) {
+		if (ca1.getShape() == ca2.getShape()) {
+			hints.add(Ichigu.getString(R.strings.sameShapes));
 		}
-		else 
-		{
-			hints.add(Ichigu.getString(R.strings.differentCounts));
+		else {
+			hints.add(Ichigu.getString(R.strings.differentShapes));
 		}
+	}
+
+	private void setToastColor() {
+		colorIndex++;
+
+		if (colorIndex % 3 == 0)
+			toast.setToastColor(R.colors.ichiguRed);
+		else if (colorIndex % 3 == 1)
+			toast.setToastColor(R.colors.ichiguGreen);
+		else if (colorIndex % 3 == 2)
+			toast.setToastColor(R.colors.ichiguBlue);
 	}
 }

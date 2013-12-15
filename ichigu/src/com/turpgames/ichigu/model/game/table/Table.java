@@ -26,45 +26,6 @@ public abstract class Table implements IDealerListener, ICardListener {
 		setDealer();
 	}
 	
-	abstract protected void setDealer();
-	
-	protected ITableListener getListener() {
-		return listener;
-	}
-	
-	@Override
-	public final void onCardTapped(Card card) {
-		if (dealer.isWorking())
-			return;
-		concreteCardTapped(card);
-		listener.onCardTapped(card);
-	}
-
-	@Override
-	public final void onDealEnded(List<Card> dealtIn, List<Card> dealtOut) {
-		concreteDealEnded(dealtIn, dealtOut);
-		listener.onDealEnded();
-		for(Card card : selectedCards)
-			card.deselect();
-		selectedCards.clear();
-		checkIfTableFinished();
-	}
-
-	@Override
-	public void onDeckFinished() {
-		
-	}
-	
-	protected void checkIfTableFinished() {
-		
-	}
-	
-	abstract protected void concreteDealEnded(List<Card> dealtIn, List<Card> dealtOut);
-	
-	abstract protected void concreteCardTapped(Card card);
-
-	abstract public void openCloseCards(boolean open);
-
 	public void deal() {
 		List<Card> out = getCardsToDealOut();
 		List<Card> in = getCardsToDealIn();
@@ -79,30 +40,14 @@ public abstract class Table implements IDealerListener, ICardListener {
 			card.open(true);
 		dealer.deal(in, out);
 	}
-
-	abstract protected List<Card> getCardsToDealIn();
 	
-	abstract protected List<Card> getCardsToDealOut();
-	
-	abstract public void start();
-
-	abstract public void end();
-	
-	abstract public void reset();
-
-	public void setListener(ITableListener controller) {
-		listener = controller;
-	}
-
 	public void draw() {
 		for (Card card : cardsOnTable)
 			card.draw();
 		dealer.drawCards();
 	}
-
-	protected List<Card> getCardsForHints() {
-		return null;
-	}
+	
+	abstract public void end();
 
 	public int getDealtCardCount() {
 		return dealtCardCount;
@@ -111,8 +56,63 @@ public abstract class Table implements IDealerListener, ICardListener {
 	public boolean isFirstDeal() {
 		return isFirstDeal;
 	}
+	
+	@Override
+	public final void onCardTapped(Card card) {
+		if (dealer.isWorking())
+			return;
+		concreteCardTapped(card);
+		listener.onCardTapped(card);
+	}
+	
+	@Override
+	public final void onDealEnded(List<Card> dealtIn, List<Card> dealtOut) {
+		concreteDealEnded(dealtIn, dealtOut);
+		listener.onDealEnded();
+		for(Card card : selectedCards)
+			card.deselect();
+		selectedCards.clear();
+		checkIfTableFinished();
+	}
+	
+	@Override
+	public void onDeckFinished() {
+		
+	}
 
+	abstract public void openCloseCards(boolean open);
+
+	abstract public void reset();
+
+	public void setListener(ITableListener controller) {
+		listener = controller;
+	}
+	
 	public void showHint() {
 		
 	}
+	
+	abstract public void start();
+
+	protected void checkIfTableFinished() {
+		
+	}
+	
+	abstract protected void concreteCardTapped(Card card);
+
+	abstract protected void concreteDealEnded(List<Card> dealtIn, List<Card> dealtOut);
+
+	protected List<Card> getCardsForHints() {
+		return null;
+	}
+
+	abstract protected List<Card> getCardsToDealIn();
+
+	abstract protected List<Card> getCardsToDealOut();
+
+	protected ITableListener getListener() {
+		return listener;
+	}
+
+	abstract protected void setDealer();
 }

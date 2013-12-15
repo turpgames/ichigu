@@ -22,6 +22,48 @@ public class Deck {
 		r = new Random(3); // TODO FOR PRODUCTION: clear seed
 	}
 	
+	public void end() {
+		finishDeck();
+	}
+	
+	public Card getCardWithAttributes(CardAttributes att) {
+		for (Card card : unusedCards)
+			if (card.getAttributes().equals(att)) {
+				useCard(card);
+				return card;
+			}
+		return null;
+	}
+
+	public Card getRandomCard() {
+		if (unusedCards.size() == 0)
+			return null;
+		int rIndex = r.nextInt(unusedCards.size());
+		Card card = unusedCards.get(rIndex);
+		useCard(card);
+		return card;
+	}
+
+	public void giveBackRandomCard(Card card) {
+		unuseCard(card);
+	}
+	
+	public void recycleDeck() {
+		unusedCards.addAll(usedCards);
+		for (Card card : unusedCards)
+			card.reset();
+		usedCards.clear();
+	}
+	
+	public void reset() {
+		end();
+		recycleDeck();
+	}
+	
+	public void start() {
+		recycleDeck();
+	}
+	
 	private void createDeck(ICardListener table) {
 		for (int i = 0; i < colors.length; i++) {
 			for (int j = 0; j < shapes.length; j++) {
@@ -34,13 +76,6 @@ public class Deck {
 			}
 		}
 	}
-	
-	public void recycleDeck() {
-		unusedCards.addAll(usedCards);
-		for (Card card : unusedCards)
-			card.reset();
-		usedCards.clear();
-	}
 
 	private void finishDeck() {
 		usedCards.addAll(unusedCards);
@@ -48,49 +83,14 @@ public class Deck {
 			card.reset();
 		unusedCards.clear();
 	}
-
-	public Card getRandomCard() {
-		if (unusedCards.size() == 0)
-			return null;
-		int rIndex = r.nextInt(unusedCards.size());
-		Card card = unusedCards.get(rIndex);
-		useCard(card);
-		return card;
-	}
-	
-	public void giveBackRandomCard(Card card) {
-		unuseCard(card);
-	}
-	
-	private void useCard(Card card) {
-		unusedCards.remove(card);
-		usedCards.add(card);
-	}
 	
 	private void unuseCard(Card card) {
 		usedCards.remove(card);
 		unusedCards.add(card);
 	}
-	
-	public Card getCardWithAttributes(CardAttributes att) {
-		for (Card card : unusedCards)
-			if (card.getAttributes().equals(att)) {
-				useCard(card);
-				return card;
-			}
-		return null;
-	}
 
-	public void start() {
-		recycleDeck();
-	}
-	
-	public void end() {
-		finishDeck();
-	}
-
-	public void reset() {
-		end();
-		recycleDeck();
+	private void useCard(Card card) {
+		unusedCards.remove(card);
+		usedCards.add(card);
 	}
 }

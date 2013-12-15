@@ -8,6 +8,13 @@ public class MarketScreen extends IchiguScreen {
 	private IchiguMarket market;
 
 	@Override
+	public void init() {
+		super.init();
+		market = new IchiguMarket();
+		registerDrawable(market, Utils.LAYER_SCREEN);
+	}
+
+	@Override
 	protected void onAfterActivate() {
 		IchiguToolbar.getInstance().activateBackButton();
 		market.activate();
@@ -18,12 +25,5 @@ public class MarketScreen extends IchiguScreen {
 		IchiguToolbar.getInstance().deactivateBackButton();
 		market.deactivate();
 		return true;
-	}
-
-	@Override
-	public void init() {
-		super.init();
-		market = new IchiguMarket();
-		registerDrawable(market, Utils.LAYER_SCREEN);
 	}
 }

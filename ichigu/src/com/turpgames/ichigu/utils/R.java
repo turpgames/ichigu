@@ -7,6 +7,28 @@ import com.turpgames.framework.v0.util.Vector;
 import com.turpgames.ichigu.model.game.Card;
 
 public final class R {
+	public static final class colors {
+		public static final Color ichiguWhite = Color.fromHex("#ffffffff");
+		public static final Color ichiguBlack = Color.fromHex("#000000ff");
+		public static final Color ichiguRed = Color.fromHex("#d0583bff");
+		public static final Color ichiguGreen = Color.fromHex("#56bd89ff");
+		public static final Color ichiguBlue = Color.fromHex("#3974c1ff");
+		public static final Color ichiguYellow = Color.fromHex("#f9b000ff");
+		public static final Color ichiguCyan = Color.fromHex("#00f9b0ff");
+		public static final Color ichiguMagenta = Color.fromHex("#f900b0ff");
+
+		public static final Color buttonDefault = ichiguWhite;
+		public static final Color buttonTouched = ichiguYellow;
+	}
+
+	public static final class fontSize {
+		public static final float xSmall = FontManager.defaultFontSize * 0.5f;
+		public static final float small = FontManager.defaultFontSize * 0.625f;
+		public static final float medium = FontManager.defaultFontSize * 0.75f;
+		public static final float large = FontManager.defaultFontSize * 1f;
+		public static final float xLarge = FontManager.defaultFontSize * 1.25f;
+	}
+
 	/**
 	 * game.xml yapisindaki id ve key'ler
 	 */
@@ -36,40 +58,6 @@ public final class R {
 		}
 
 		public static final class textures {
-			public static final String logo = "logo";
-			public static final String splashLogo = "splash_logo";
-
-			public static final String cardBorder = "card-border";
-			public static final String cardClosed = "card-closed";
-			public static final String cardEmpty = "card-empty";
-
-			public static final String hint = "hint";
-			public static final String next = "next";
-			public static final String prev = "prev";
-			public static final String skip = "play";
-			public static final String refresh = "refresh";
-
-			public static final String stripedCircle = "card-14";
-			public static final String filledSquare = "card-22";
-			public static final String emptyTriangle = "card-41";
-
-			public static final String libgdx = "libgdx";
-
-			public final static String backgroundPixel = "backgroundPixel";
-
-			public static String questionCard = "question-card";
-
-			public static final class toolbar {
-				public static final String back = "tb_back";
-				public static final String settings = "tb_settings";
-				public static final String musicPlay = "tb_music_play";
-				public static final String musicStop = "tb_music_stop";
-				public static final String vibrationOn = "tb_vibration_on";
-				public static final String vibrationOff = "tb_vibration_off";
-				public static final String soundOn = "tb_sound_on";
-				public static final String soundOff = "tb_sound_off";
-			}
-
 			public static final class points {
 				public static final String shapecircle = "shapecircle";
 				public static final String shaperectangle = "shaperectangle";
@@ -89,26 +77,70 @@ public final class R {
 				public static final String colorone = "colorone";
 				public static final String colorall = "colorall";
 			}
-
 			public static final class singlegame {
 				public static final String questionmark = "question-mark";
 				public static final String correctmark = "correct-mark";
 				public static final String incorrectmark = "incorrect-mark";
 			}
+
+			public static final class toolbar {
+				public static final String back = "tb_back";
+				public static final String settings = "tb_settings";
+				public static final String musicPlay = "tb_music_play";
+				public static final String musicStop = "tb_music_stop";
+				public static final String vibrationOn = "tb_vibration_on";
+				public static final String vibrationOff = "tb_vibration_off";
+				public static final String soundOn = "tb_sound_on";
+				public static final String soundOff = "tb_sound_off";
+			}
+			public static final String logo = "logo";
+			public static final String splashLogo = "splash_logo";
+
+			public static final String cardBorder = "card-border";
+			public static final String cardClosed = "card-closed";
+			public static final String cardEmpty = "card-empty";
+			public static final String hint = "hint";
+			public static final String next = "next";
+
+			public static final String prev = "prev";
+			public static final String skip = "play";
+			public static final String refresh = "refresh";
+
+			public static final String stripedCircle = "card-14";
+
+			public static final String filledSquare = "card-22";
+
+			public static final String emptyTriangle = "card-41";
+
+			public static final String libgdx = "libgdx";
+
+			public final static String backgroundPixel = "backgroundPixel";
+
+			public static String questionCard = "question-card";
 		}
 	}
 
-	public static final class settings {
-		public static final String music = "music";
-		public static final String sound = "sound";
-		public static final String vibration = "vibration";
+	public static final class links {
+		public final static String turpAddress = "turp-address";
+		public final static String libgdxAddress = "libgdx-address";
+		public final static String playStoreAddress = "play-store-address";
+		public final static String appStoreAddressIOS7 = "app-store-address-ios7";
+		public final static String appStoreAddressOld = "app-store-address-old";
+		public final static String twitterAddress = "twitter-address";
+		public final static String facebookAddress = "facebook-address";
+	}
 
+	public static final class settings {
 		public static final class hiscores {
 			public static final String minichallenge = "hiscore_practice";
 			public static final String normal = "hiscore_normal";
 			public static final String normaltime = "hiscore_normal_time";
 			public static final String fullchallenge = "hiscore_challenge";
 		}
+		public static final String music = "music";
+		public static final String sound = "sound";
+
+		public static final String vibration = "vibration";
 
 		public static final String language = "language";
 		public static final String country = "country";
@@ -146,63 +178,6 @@ public final class R {
 		public static final Vector[] positions = new Vector[] {
 				cardOnTable1Pos, cardOnTable2Pos, cardToSelect1Pos,
 				cardToSelect2Pos, cardToSelect3Pos };
-	}
-
-	public static final class symbolpositions {
-		public static final Vector firstOfOne = new Vector(
-				(Card.Width - Card.SymbolWidth) / 2,
-				(Card.Height - Card.SymbolHeight) / 2);
-
-		public static final Vector firstOfTwo = new Vector(
-				(Card.Width - Card.SymbolWidth) / 2, Card.Height / 2
-						- Card.SymbolHeight * 1.1f);
-		public static final Vector secondOfTwo = new Vector(
-				(Card.Width - Card.SymbolWidth) / 2, Card.Height / 2
-						+ Card.SymbolHeight * 0.1f);
-
-		public static final Vector firstOfThree = new Vector(
-				(Card.Width - Card.SymbolWidth) / 2, 2 + Card.Height / 2
-						- Card.SymbolHeight * 1.65f);
-		public static final Vector secondOfThree = new Vector(
-				(Card.Width - Card.SymbolWidth) / 2, 2 + Card.Height / 2
-						- Card.SymbolHeight * 0.5f);
-		public static final Vector thirdOfThree = new Vector(
-				(Card.Width - Card.SymbolWidth) / 2, 2 + Card.Height / 2
-						+ Card.SymbolHeight * 0.65f);
-	}
-
-	public static final class colors {
-		public static final Color ichiguWhite = Color.fromHex("#ffffffff");
-		public static final Color ichiguBlack = Color.fromHex("#000000ff");
-		public static final Color ichiguRed = Color.fromHex("#d0583bff");
-		public static final Color ichiguGreen = Color.fromHex("#56bd89ff");
-		public static final Color ichiguBlue = Color.fromHex("#3974c1ff");
-		public static final Color ichiguYellow = Color.fromHex("#f9b000ff");
-		public static final Color ichiguCyan = Color.fromHex("#00f9b0ff");
-		public static final Color ichiguMagenta = Color.fromHex("#f900b0ff");
-
-		public static final Color buttonDefault = ichiguWhite;
-		public static final Color buttonTouched = ichiguYellow;
-	}
-
-	public static final class fontSize {
-		public static final float xSmall = FontManager.defaultFontSize * 0.5f;
-		public static final float small = FontManager.defaultFontSize * 0.625f;
-		public static final float medium = FontManager.defaultFontSize * 0.75f;
-		public static final float large = FontManager.defaultFontSize * 1f;
-		public static final float xLarge = FontManager.defaultFontSize * 1.25f;
-	}
-
-	public static final class ui {
-		public final static float questionMarkSize = 128;
-		public final static float imageButtonWidth = 64;
-		public final static float imageButtonHeight = 64;
-		public final static float flagButtonWidth = 128;
-		public final static float flagButtonHeight = 128;
-		public final static float flagControlButtonWidth = 64;
-		public final static float flagControlButtonHeight = 64;
-		public final static float libgdxLogoWidth = 200;
-		public final static float libgdxLogoHeight = 33;
 	}
 
 	public static final class strings {
@@ -318,14 +293,39 @@ public final class R {
 		public final static String sudoku = "sudoku";
 	}
 
-	public static final class links {
-		public final static String turpAddress = "turp-address";
-		public final static String libgdxAddress = "libgdx-address";
-		public final static String playStoreAddress = "play-store-address";
-		public final static String appStoreAddressIOS7 = "app-store-address-ios7";
-		public final static String appStoreAddressOld = "app-store-address-old";
-		public final static String twitterAddress = "twitter-address";
-		public final static String facebookAddress = "facebook-address";
+	public static final class symbolpositions {
+		public static final Vector firstOfOne = new Vector(
+				(Card.Width - Card.SymbolWidth) / 2,
+				(Card.Height - Card.SymbolHeight) / 2);
+
+		public static final Vector firstOfTwo = new Vector(
+				(Card.Width - Card.SymbolWidth) / 2, Card.Height / 2
+						- Card.SymbolHeight * 1.1f);
+		public static final Vector secondOfTwo = new Vector(
+				(Card.Width - Card.SymbolWidth) / 2, Card.Height / 2
+						+ Card.SymbolHeight * 0.1f);
+
+		public static final Vector firstOfThree = new Vector(
+				(Card.Width - Card.SymbolWidth) / 2, 2 + Card.Height / 2
+						- Card.SymbolHeight * 1.65f);
+		public static final Vector secondOfThree = new Vector(
+				(Card.Width - Card.SymbolWidth) / 2, 2 + Card.Height / 2
+						- Card.SymbolHeight * 0.5f);
+		public static final Vector thirdOfThree = new Vector(
+				(Card.Width - Card.SymbolWidth) / 2, 2 + Card.Height / 2
+						+ Card.SymbolHeight * 0.65f);
+	}
+
+	public static final class ui {
+		public final static float questionMarkSize = 128;
+		public final static float imageButtonWidth = 64;
+		public final static float imageButtonHeight = 64;
+		public final static float flagButtonWidth = 128;
+		public final static float flagButtonHeight = 128;
+		public final static float flagControlButtonWidth = 64;
+		public final static float flagControlButtonHeight = 64;
+		public final static float libgdxLogoWidth = 200;
+		public final static float libgdxLogoHeight = 33;
 	}
 
 	private R() {

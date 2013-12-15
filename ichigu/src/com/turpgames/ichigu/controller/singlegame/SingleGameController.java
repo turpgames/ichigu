@@ -26,31 +26,20 @@ public class SingleGameController extends IchiguController<SingleGameState> impl
 	}
 
 	@Override
-	public void onScreenActivated() {
-		model.startMode();
-		setDealingState();
+	public void onDealEnded() {
+		currentState.onDealEnded();
 	}
 
 	@Override
-	public void onNewGame() {
-		currentState.onNewGame();
-	}
-
-	@Override
-	public void onUnblock() {
-		currentState.onUnblock();
+	public void onDealStarted() {
+		currentState.onDealStarted();
 	}
 
 	@Override
 	public void onExitConfirmed() {
 		currentState.onExitConfirmed();
 	}
-	
-	@Override
-	public void onModeEnd() {
-		currentState.onModeEnd();
-	}
-	
+
 	@Override
 	public void onIchiguFound() {
 		currentState.onIchiguFound();
@@ -61,34 +50,45 @@ public class SingleGameController extends IchiguController<SingleGameState> impl
 		currentState.onInvalidIchiguSelected();
 	}
 	
-	void setDealingState() {
-		setState(dealingState);
+	@Override
+	public void onModeEnd() {
+		currentState.onModeEnd();
+	}
+	
+	@Override
+	public void onNewGame() {
+		currentState.onNewGame();
+	}
+	
+	@Override
+	public void onScreenActivated() {
+		model.startMode();
+		setDealingState();
 	}
 
-	void setWaitingState() {
-		setState(waitingState);
+	@Override
+	public void onTableFinished() {
+		
+	}
+
+	@Override
+	public void onUnblock() {
+		currentState.onUnblock();
 	}
 
 	void setBlockedState() {
 		setState(blockedState);
 	}
 
+	void setDealingState() {
+		setState(dealingState);
+	}
+	
 	void setModeEndState() {
 		setState(modeEndState);
 	}
 
-	@Override
-	public void onDealStarted() {
-		currentState.onDealStarted();
-	}
-	
-	@Override
-	public void onDealEnded() {
-		currentState.onDealEnded();
-	}
-
-	@Override
-	public void onTableFinished() {
-		
+	void setWaitingState() {
+		setState(waitingState);
 	}
 }

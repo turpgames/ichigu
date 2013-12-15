@@ -58,15 +58,6 @@ public class HiScores implements IDrawable, ILanguageListener {
 		Game.getLanguageManager().register(this);
 	}
 
-	private void resetHiscores() {
-		Settings.putInteger(R.settings.hiscores.minichallenge, 0);
-		Settings.putInteger(R.settings.hiscores.normal, 0);
-		Settings.putInteger(R.settings.hiscores.normaltime, 0);
-		Settings.putInteger(R.settings.hiscores.fullchallenge, 0);
-		info.setText(String.format(Ichigu.getString(R.strings.hiscoreInfo),
-				0, Utils.getTimeString(0), 0));
-	}
-
 	public void activate() {
 		resetScores.listenInput(true);
 
@@ -90,14 +81,23 @@ public class HiScores implements IDrawable, ILanguageListener {
 		resetScores.draw();
 	}
 
+	@Override
+	public void onLanguageChanged() {
+		setLanguageSensitiveInfo();
+	}
+
+	private void resetHiscores() {
+		Settings.putInteger(R.settings.hiscores.minichallenge, 0);
+		Settings.putInteger(R.settings.hiscores.normal, 0);
+		Settings.putInteger(R.settings.hiscores.normaltime, 0);
+		Settings.putInteger(R.settings.hiscores.fullchallenge, 0);
+		info.setText(String.format(Ichigu.getString(R.strings.hiscoreInfo),
+				0, Utils.getTimeString(0), 0));
+	}
+
 	private void setLanguageSensitiveInfo() {
 		pageTitle.setText(Ichigu.getString(R.strings.hiScores));
 		resetScores.setText(Ichigu.getString(R.strings.resetHiscore));
 		resetScores.getLocation().set((Game.getVirtualWidth() - resetScores.getWidth()) / 2, 50);
-	}
-
-	@Override
-	public void onLanguageChanged() {
-		setLanguageSensitiveInfo();
 	}
 }

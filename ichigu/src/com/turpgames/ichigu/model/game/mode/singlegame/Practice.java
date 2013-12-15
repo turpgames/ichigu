@@ -28,10 +28,9 @@ public class Practice extends SingleGameMode {
 	}
 
 	@Override
-	protected boolean onExitMode() {
-		hintButton.deactivateHint();
-		isExitConfirmed = true;
-		return super.onExitMode();
+	public void concreteInvalidIchiguSelected() {
+		tryAgain.show();
+		super.concreteInvalidIchiguSelected();
 	}
 	
 	@Override
@@ -41,15 +40,15 @@ public class Practice extends SingleGameMode {
 	}
 
 	@Override
-	public void dealStarted() {
-		hintButton.deactivateHint();
-		super.dealStarted();
-	}
-	
-	@Override
 	public void dealEnded() {
 		hintButton.activateHint();
 		super.dealEnded();
+	}
+	
+	@Override
+	public void dealStarted() {
+		hintButton.deactivateHint();
+		super.dealStarted();
 	}
 	
 	@Override
@@ -59,12 +58,14 @@ public class Practice extends SingleGameMode {
 	}
 
 	@Override
-	protected void pauseTimer() {
-		
+	protected boolean onExitMode() {
+		hintButton.deactivateHint();
+		isExitConfirmed = true;
+		return super.onExitMode();
 	}
 
 	@Override
-	protected void startTimer() {
+	protected void pauseTimer() {
 		
 	}
 
@@ -74,8 +75,7 @@ public class Practice extends SingleGameMode {
 	}
 
 	@Override
-	public void concreteInvalidIchiguSelected() {
-		tryAgain.show();
-		super.concreteInvalidIchiguSelected();
+	protected void startTimer() {
+		
 	}
 }

@@ -23,14 +23,41 @@ public abstract class IchiguObject extends GameObject implements IFadingEffectSu
 	private ScaleEffect scaleEffect;
 	private CompositeEffect moveAndScaleEffect;
 
-	private FadeOutEffect getFadeEffect() {
-		if (fadeEffect == null) {
-			fadeEffect = new FadeOutEffect(this);
-			fadeEffect.setDuration(FadingDuration);
-		}
-		return fadeEffect;
+	public void blink(IEffectEndListener listener, boolean looping) {
+		getBlinkEffect().setLooping(looping);
+		getBlinkEffect().start(listener);
 	}
 
+	public void fadeOut(IEffectEndListener listener) {
+		getFadeEffect().start(listener);
+	}
+
+	@Override
+	public float getAlpha() {
+		return getColor().a;
+	}
+	
+	public void moveTo(IEffectEndListener listener, Vector destination, float duration) {
+		getMoveEffect().setDestination(destination);
+		getMoveAndScaleEffect().setDuration(duration);
+		getMoveAndScaleEffect().start(listener);
+	}
+	
+	@Override
+	public void setAlpha(float alpha) {
+		getColor().a = alpha;	
+	}
+	
+	public void stopBlinking() {
+		getBlinkEffect().stop();
+	}
+
+	public void stopEffects() {
+		getFadeEffect().stop();
+		getBlinkEffect().stop();
+		getMoveAndScaleEffect().stop();
+	}
+	
 	private BlinkEffect getBlinkEffect() {
 		if (blinkEffect == null) {
 			blinkEffect = new BlinkEffect(this);
@@ -40,6 +67,21 @@ public abstract class IchiguObject extends GameObject implements IFadingEffectSu
 		return blinkEffect;
 	}
 
+	private FadeOutEffect getFadeEffect() {
+		if (fadeEffect == null) {
+			fadeEffect = new FadeOutEffect(this);
+			fadeEffect.setDuration(FadingDuration);
+		}
+		return fadeEffect;
+	}
+
+	private CompositeEffect getMoveAndScaleEffect() {
+		if (moveAndScaleEffect == null) {
+			moveAndScaleEffect = new CompositeEffect(this, getMoveEffect(), getScaleEffect());
+		}
+		return moveAndScaleEffect;
+	}
+	
 	private MoveEffect getMoveEffect() {
 		if (moveEffect == null) {
 			moveEffect = new MoveEffect(this);
@@ -54,47 +96,5 @@ public abstract class IchiguObject extends GameObject implements IFadingEffectSu
 			scaleEffect.setMaxScale(MaxScale);
 		}
 		return scaleEffect;
-	}
-	
-	private CompositeEffect getMoveAndScaleEffect() {
-		if (moveAndScaleEffect == null) {
-			moveAndScaleEffect = new CompositeEffect(this, getMoveEffect(), getScaleEffect());
-		}
-		return moveAndScaleEffect;
-	}
-	
-	public void fadeOut(IEffectEndListener listener) {
-		getFadeEffect().start(listener);
-	}
-
-	public void moveTo(IEffectEndListener listener, Vector destination, float duration) {
-		getMoveEffect().setDestination(destination);
-		getMoveAndScaleEffect().setDuration(duration);
-		getMoveAndScaleEffect().start(listener);
-	}
-	
-	public void blink(IEffectEndListener listener, boolean looping) {
-		getBlinkEffect().setLooping(looping);
-		getBlinkEffect().start(listener);
-	}
-
-	public void stopBlinking() {
-		getBlinkEffect().stop();
-	}
-
-	public void stopEffects() {
-		getFadeEffect().stop();
-		getBlinkEffect().stop();
-		getMoveAndScaleEffect().stop();
-	}
-	
-	@Override
-	public void setAlpha(float alpha) {
-		getColor().a = alpha;	
-	}
-	
-	@Override
-	public float getAlpha() {
-		return getColor().a;
 	}
 }

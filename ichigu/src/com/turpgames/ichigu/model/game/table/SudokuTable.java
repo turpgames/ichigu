@@ -16,31 +16,6 @@ import com.turpgames.ichigu.model.game.dealer.SudokuGameDealer;
 import com.turpgames.ichigu.utils.R;
 
 public class SudokuTable extends Table {
-	private static final List<Vector> markPositions = new ArrayList<Vector>();
-	static {
-		float dy = (Game.getVirtualHeight() - Game.getVirtualWidth()) / 2f - 20;
-		float dx = (Game.getVirtualWidth() - 3 * Card.Width) / 2;
-		dy += 3 * Card.Height;
-		
-		for (int i = 0; i < 3; i++) {
-			int x = i % 3;
-			markPositions.add(new Vector(
-					x * Card.Width + Card.Space * (x + 1) + dx + (Card.Width - R.ui.imageButtonWidth) / 2,
-					dy + (Card.Height - R.ui.imageButtonHeight) / 2 - 10));
-		}
-
-		dy -= 3 * Card.Height;
-		dx -= Card.Width;
-		
-		for (int i = 0; i < 3; i++) {
-			int y = i;
-
-			markPositions.add(new Vector(
-					dx + (Card.Width - R.ui.imageButtonWidth) / 2,
-					y * Card.Height + Card.Space * (y + 1) + dy + (Card.Height - R.ui.imageButtonHeight) / 2));
-		}
-	}
-	
 	class IchiguMark extends GameObject {
 		private ITexture correct;
 		private ITexture incorrect;
@@ -76,6 +51,31 @@ public class SudokuTable extends Table {
 		@Override
 		public void registerSelf() { }
 	}
+	private static final List<Vector> markPositions = new ArrayList<Vector>();
+	
+	static {
+		float dy = (Game.getVirtualHeight() - Game.getVirtualWidth()) / 2f - 20;
+		float dx = (Game.getVirtualWidth() - 3 * Card.Width) / 2;
+		dy += 3 * Card.Height;
+		
+		for (int i = 0; i < 3; i++) {
+			int x = i % 3;
+			markPositions.add(new Vector(
+					x * Card.Width + Card.Space * (x + 1) + dx + (Card.Width - R.ui.imageButtonWidth) / 2,
+					dy + (Card.Height - R.ui.imageButtonHeight) / 2 - 10));
+		}
+
+		dy -= 3 * Card.Height;
+		dx -= Card.Width;
+		
+		for (int i = 0; i < 3; i++) {
+			int y = i;
+
+			markPositions.add(new Vector(
+					dx + (Card.Width - R.ui.imageButtonWidth) / 2,
+					y * Card.Height + Card.Space * (y + 1) + dy + (Card.Height - R.ui.imageButtonHeight) / 2));
+		}
+	}
 	
 	private SudokuDeck deck;
 	private List<IchiguMark> marks;
@@ -87,67 +87,53 @@ public class SudokuTable extends Table {
 		}
 	}
 	@Override
-	protected void setDealer() {
-		dealer = new SudokuGameDealer(this);
+	public void draw() {
+		for (Card card : cardsOnTable) {
+			if (!(dealer.isWorking() && selectedCards.contains(card)))
+				card.draw();
+		}
+		for (IchiguMark mark : marks)
+			mark.draw();
+		dealer.drawCards();
 	}
 
-	public ISudokuTableListener getListener() {
-		return (ISudokuTableListener) listener;
+	@Override
+	public void end() {
+		deck.end();
+		selectedCards.clear();
+		cardsOnTable.clear();
 	}
 	
 	@Override
-	protected void concreteDealEnded(List<Card> dealtIn, List<Card> dealtOut) {
-		for (Card card : dealtOut) {
-			cardsOnTable.remove(card);
-			card.deactivate();
-		}
-		for (Card card : dealtIn) {
-			cardsOnTable.add(card);
-			card.open(true);
-			card.activate();
-		}
-		checkForIchigus();
+	public ISudokuTableListener getListener() {
+		return (ISudokuTableListener) listener;
 	}
 
+	@Override
+	public void openCloseCards(boolean open) {
+		for (Card card : cardsOnTable) {
+			card.open(open);
+		}
+	}
+
+	@Override
+	public void reset() {
+		deck.reset();
+		selectedCards.clear();
+		cardsOnTable.clear();
+	}
+	
+	@Override
+	public void start() {
+		deck.start();
+	}
+	
 	public void swapEnded() {
 		swapSelectedInList();
 		if (checkForIchigus())
 			getListener().onTableFinished();
 		selectedCards.clear();
 		getListener().onSwapEnded();
-	}
-
-	private void swapSelectedInList() {
-		for (int i = 0; i < 9; i++) {
-			if (cardsOnTable.get(i) == selectedCards.get(0)) {
-				for (int j = 0; j < 9; j++) {
-					if (cardsOnTable.get(j) == selectedCards.get(1)) {
-						Utils.swap(cardsOnTable, i, j);
-						return;
-					}
-				}
-			}
-		}
-	}
-	
-	@Override
-	protected void concreteCardTapped(Card card) {
-		if (selectedCards.contains(card)) {
-			selectedCards.remove(card);
-			card.deselect();
-		}
-		else {
-			selectedCards.add(card);
-			card.select();
-		}
-		
-		if (selectedCards.size() == 2)
-		{
-			selectedCards.get(0).deselect();
-			selectedCards.get(1).deselect();
-			getListener().onSwapStarted();
-			((SudokuGameDealer)dealer).swap(selectedCards);
-		}
 	}
 	
 	private boolean checkForIchigus() {
@@ -170,12 +156,52 @@ public class SudokuTable extends Table {
 		}
 		return returning;
 	}
-	
-	@Override
-	public void openCloseCards(boolean open) {
-		for (Card card : cardsOnTable) {
-			card.open(open);
+
+	private void swapSelectedInList() {
+		for (int i = 0; i < 9; i++) {
+			if (cardsOnTable.get(i) == selectedCards.get(0)) {
+				for (int j = 0; j < 9; j++) {
+					if (cardsOnTable.get(j) == selectedCards.get(1)) {
+						Utils.swap(cardsOnTable, i, j);
+						return;
+					}
+				}
+			}
 		}
+	}
+
+	@Override
+	protected void concreteCardTapped(Card card) {
+		if (selectedCards.contains(card)) {
+			selectedCards.remove(card);
+			card.deselect();
+		}
+		else {
+			selectedCards.add(card);
+			card.select();
+		}
+		
+		if (selectedCards.size() == 2)
+		{
+			selectedCards.get(0).deselect();
+			selectedCards.get(1).deselect();
+			getListener().onSwapStarted();
+			((SudokuGameDealer)dealer).swap(selectedCards);
+		}
+	}
+
+	@Override
+	protected void concreteDealEnded(List<Card> dealtIn, List<Card> dealtOut) {
+		for (Card card : dealtOut) {
+			cardsOnTable.remove(card);
+			card.deactivate();
+		}
+		for (Card card : dealtIn) {
+			cardsOnTable.add(card);
+			card.open(true);
+			card.activate();
+		}
+		checkForIchigus();
 	}
 
 	@Override
@@ -192,34 +218,9 @@ public class SudokuTable extends Table {
 			toDealOut.add(card);
 		return toDealOut;
 	}
-
-	@Override
-	public void start() {
-		deck.start();
-	}
-
-	@Override
-	public void end() {
-		deck.end();
-		selectedCards.clear();
-		cardsOnTable.clear();
-	}
-
-	@Override
-	public void reset() {
-		deck.reset();
-		selectedCards.clear();
-		cardsOnTable.clear();
-	}
 	
 	@Override
-	public void draw() {
-		for (Card card : cardsOnTable) {
-			if (!(dealer.isWorking() && selectedCards.contains(card)))
-				card.draw();
-		}
-		for (IchiguMark mark : marks)
-			mark.draw();
-		dealer.drawCards();
+	protected void setDealer() {
+		dealer = new SudokuGameDealer(this);
 	}
 }

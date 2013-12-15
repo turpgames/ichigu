@@ -9,25 +9,25 @@ public class SingleGameEndState extends SingleGameState {
 	}
 
 	@Override
-	protected void activated() {
-		Ichigu.playSoundTimeUp();
-		model.endMode();
-		Game.vibrate(100);
+	public void draw() {
+		model.drawResultScreen();
 	}
 
-	@Override
-	public void onUnblock() {
-
-	}
-	
 	@Override
 	public void onNewGame() {
 		model.startMode();
 		controller.setDealingState();
 	}
+	
+	@Override
+	public void onUnblock() {
+
+	}
 
 	@Override
-	public void draw() {
-		model.drawResultScreen();
+	protected void activated() {
+		Ichigu.playSoundTimeUp();
+		model.endMode();
+		Game.vibrate(100);
 	}
 }

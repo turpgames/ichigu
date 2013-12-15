@@ -29,27 +29,27 @@ public class SingleGameQuestion extends GameObject implements IEffectEndListener
 			effect.setListener(parent);
 		}
 
-		public void start() {
-			effect.start();
-		}
-
-		public void stop() {
-			effect.stop();
-		}
-		
 		@Override
 		public void draw() {
 			TextureDrawer.draw(texture, this);
 		}
 
 		@Override
-		public void setAlpha(float alpha) {
-			getColor().a = alpha;
+		public void registerSelf() {
+			
 		}
 		
 		@Override
-		public void registerSelf() {
-			
+		public void setAlpha(float alpha) {
+			getColor().a = alpha;
+		}
+
+		public void start() {
+			effect.start();
+		}
+		
+		public void stop() {
+			effect.stop();
 		}
 	}
 	
@@ -79,19 +79,25 @@ public class SingleGameQuestion extends GameObject implements IEffectEndListener
 //		setHeight(Card.Height);
 	}
 	
-	public void startIncorrectEffect() {
-		questionMark.setAlpha(0);
-		correctMark.setAlpha(0);
-		incorrectMark.setAlpha(1);
+	@Override
+	public void draw() {
+//		TextureDrawer.draw(emptyQuestionCard, this);
+		questionMark.draw();
+		correctMark.draw();
+		incorrectMark.draw();
+	}
+	
+	@Override
+	public boolean onEffectEnd(Object obj) {
+		questionMark.setAlpha(1);
 		correctEffectStartTimer.stop();
-		correctMark.stop();
-		incorrectEffectStartTimer.setCountDownListener(new CountDownTimer.ICountDownListener() {
-			@Override
-			public void onCountDownEnd(CountDownTimer timer) {
-				incorrectMark.start();
-			}
-		});
-		incorrectEffectStartTimer.start();
+		incorrectEffectStartTimer.stop();
+		return false;
+	}
+
+	@Override
+	public void registerSelf() {
+		
 	}
 	
 	public void startCorrectEffect() {
@@ -109,25 +115,19 @@ public class SingleGameQuestion extends GameObject implements IEffectEndListener
 		correctEffectStartTimer.start();
 	}
 
-	@Override
-	public boolean onEffectEnd(Object obj) {
-		questionMark.setAlpha(1);
+	public void startIncorrectEffect() {
+		questionMark.setAlpha(0);
+		correctMark.setAlpha(0);
+		incorrectMark.setAlpha(1);
 		correctEffectStartTimer.stop();
-		incorrectEffectStartTimer.stop();
-		return false;
-	}
-	
-	@Override
-	public void draw() {
-//		TextureDrawer.draw(emptyQuestionCard, this);
-		questionMark.draw();
-		correctMark.draw();
-		incorrectMark.draw();
-	}
-
-	@Override
-	public void registerSelf() {
-		
+		correctMark.stop();
+		incorrectEffectStartTimer.setCountDownListener(new CountDownTimer.ICountDownListener() {
+			@Override
+			public void onCountDownEnd(CountDownTimer timer) {
+				incorrectMark.start();
+			}
+		});
+		incorrectEffectStartTimer.start();
 	}
 
 }

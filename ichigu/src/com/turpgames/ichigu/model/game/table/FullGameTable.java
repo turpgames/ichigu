@@ -29,20 +29,12 @@ public class FullGameTable extends RegularGameTable {
 	}
 
 	@Override
-	protected void setDealer() {
-		dealer = new FullGameDealer(this);
+	public void afterInvalidIchiguSelected() {
+		for(Card card : selectedCards)
+			card.deselect();
+		selectedCards.clear();
 	}
 	
-	@Override
-	protected IFullGameTableListener getListener() {
-		return (IFullGameTableListener)listener; 
-	}
-	
-	@Override
-	public void onDeckFinished() {
-		
-	}
-
 	@Override
 	public void concreteDealEnded(List<Card> dealtIn, List<Card> dealtOut) {
 		// remove and deactivate dealt-out cards
@@ -93,23 +85,31 @@ public class FullGameTable extends RegularGameTable {
 
 		hint.update(getCardsForHints());
 	}
-
-	@Override
-	protected void checkIfTableFinished() {
-		if (Card.getIchiguCount(cardsOnTable) == 0)
-			listener.onTableFinished();
-	}
 	
 	@Override
-	public boolean isIchiguAttempted() {
-		return selectedCards.size() == 3;
+	public void draw() {
+		hint.draw();
+		super.draw();
 	}
 
 	@Override
-	public boolean isIchiguFound() {
-		return Card.isIchigu(selectedCards.get(0), selectedCards.get(1), selectedCards.get(2));
+	public void end() {
+		deck.end();
+		cardsOnTable.clear();
+		selectedCards.clear();
+		extraCards.clear();
+		dealtCardCount = 0;
 	}
 
+	@Override
+	public List<Card> getCardsForHints() {
+		List<Card> hintList = new ArrayList<Card>();
+		hintList.addAll(cardsOnTable);
+		if (!areExtraCardsOpened)
+			hintList.removeAll(extraCards);
+		return hintList;
+	}
+	
 	@Override
 	public List<Card> getCardsToDealIn() {
 		List<Card> toDealIn = new ArrayList<Card>();
@@ -157,12 +157,6 @@ public class FullGameTable extends RegularGameTable {
 		return toDealIn;
 	}
 
-	protected void discardFirst66() {
-		for(int i = 0; i < 66; i++)
-			deck.getRandomCard();
-		dealtCardCount = 66;
-	}
-
 	@Override
 	public List<Card> getCardsToDealOut() {
 		if (isFirstDeal()) {
@@ -181,10 +175,18 @@ public class FullGameTable extends RegularGameTable {
 	}
 
 	@Override
-	public void afterInvalidIchiguSelected() {
-		for(Card card : selectedCards)
-			card.deselect();
-		selectedCards.clear();
+	public boolean isIchiguAttempted() {
+		return selectedCards.size() == 3;
+	}
+
+	@Override
+	public boolean isIchiguFound() {
+		return Card.isIchigu(selectedCards.get(0), selectedCards.get(1), selectedCards.get(2));
+	}
+
+	@Override
+	public void onDeckFinished() {
+		
 	}
 
 	@Override
@@ -194,6 +196,36 @@ public class FullGameTable extends RegularGameTable {
 
 		for (Card card : extraCards)
 			card.open(open && areExtraCardsOpened);
+	}
+
+	@Override
+	public void reset() {
+		deck.reset();
+		cardsOnTable.clear();
+		selectedCards.clear();
+		extraCards.clear();
+		isFirstDeal = true;
+		dealer = new FullGameDealer(this);
+		dealtCardCount = 0;
+	}
+
+	@Override
+	public void showHint() {
+		hint.showHint();
+	}
+
+	@Override
+	public void start() {
+		deck.start();
+		isFirstDeal = true;
+		dealer = new FullGameDealer(this);
+		dealtCardCount = 0;
+	}
+
+	@Override
+	protected void checkIfTableFinished() {
+		if (Card.getIchiguCount(cardsOnTable) == 0)
+			listener.onTableFinished();
 	}
 
 	@Override
@@ -232,51 +264,19 @@ public class FullGameTable extends RegularGameTable {
 		}
 	}
 
-	@Override
-	public List<Card> getCardsForHints() {
-		List<Card> hintList = new ArrayList<Card>();
-		hintList.addAll(cardsOnTable);
-		if (!areExtraCardsOpened)
-			hintList.removeAll(extraCards);
-		return hintList;
-	}
-
-	@Override
-	public void start() {
-		deck.start();
-		isFirstDeal = true;
-		dealer = new FullGameDealer(this);
-		dealtCardCount = 0;
-	}
-
-	@Override
-	public void end() {
-		deck.end();
-		cardsOnTable.clear();
-		selectedCards.clear();
-		extraCards.clear();
-		dealtCardCount = 0;
-	}
-
-	@Override
-	public void reset() {
-		deck.reset();
-		cardsOnTable.clear();
-		selectedCards.clear();
-		extraCards.clear();
-		isFirstDeal = true;
-		dealer = new FullGameDealer(this);
-		dealtCardCount = 0;
+	protected void discardFirst66() {
+		for(int i = 0; i < 66; i++)
+			deck.getRandomCard();
+		dealtCardCount = 66;
 	}
 	
 	@Override
-	public void showHint() {
-		hint.showHint();
+	protected IFullGameTableListener getListener() {
+		return (IFullGameTableListener)listener; 
 	}
 
 	@Override
-	public void draw() {
-		hint.draw();
-		super.draw();
+	protected void setDealer() {
+		dealer = new FullGameDealer(this);
 	}
 }
