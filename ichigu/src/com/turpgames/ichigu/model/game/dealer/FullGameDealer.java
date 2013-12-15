@@ -1,11 +1,13 @@
 package com.turpgames.ichigu.model.game.dealer;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.turpgames.framework.v0.effects.MoveEffect;
+import com.turpgames.framework.v0.effects.MoveWithSpeedEffect;
 import com.turpgames.framework.v0.effects.fading.FadeOutEffect;
 import com.turpgames.framework.v0.util.Game;
 import com.turpgames.framework.v0.util.Vector;
@@ -15,49 +17,46 @@ import com.turpgames.ichigu.model.game.table.Table;
 
 public class FullGameDealer extends Dealer {
 
-	private static float fadeDuration = 0.2f;
-	private static float inDuration = 0.2f;
-	
+	private static float fadeDuration = 0.3f;
+	private static float cardSpeed = 1000f;
+
 	private final static Map<Integer, Vector> cardLocations = new HashMap<Integer, Vector>();
 	private final static List<Vector> extraCardLocations = new ArrayList<Vector>();
-	private final static List<List<Vector>> inPositions = new ArrayList<List<Vector>>();
-	private final static Vector inPosition = new Vector(Card.Width/2, Card.Width/2);
+	private final static List<Vector> extraStart = new ArrayList<Vector>();
+	private final static Vector inPosition = new Vector(Card.Width / 2,
+			Card.Width / 2);
 	static {
 		float dy = (Game.getVirtualHeight() - Game.getVirtualWidth()) / 2f - 20;
 		for (int i = 0; i < FullGameTable.ActiveCardCount; i++) {
 			int x = i % (FullGameTable.cols - 1);
-			int y = i / (FullGameTable.cols - 1);
+			int y = 2 - i / (FullGameTable.cols - 1);
 
 			int dx = 0;
 
-			cardLocations.put(i, new Vector(
-					x * Card.Width + Card.Space * (x + 1) + dx,
-					y * Card.Height + Card.Space * (y + 1) + dy));
+			cardLocations.put(i,
+					new Vector(x * Card.Width + Card.Space * (x + 1) + dx, y
+							* Card.Height + Card.Space * (y + 1) + dy));
 		}
-		
-		for (int i = 0; i < FullGameTable.ExtraCardCount; i++) {
+
+		for (int i = FullGameTable.ExtraCardCount - 1; i >= 0; i--) {
 			int x = FullGameTable.cols - 1;
 			int y = i;
 
 			int dx = Card.Space + 1;
 
-			extraCardLocations.add(new Vector(
-					x * Card.Width + Card.Space * (x + 1) + dx,
-					y * Card.Height + Card.Space * (y + 1) + dy));
+			extraCardLocations
+					.add(new Vector(x * Card.Width + Card.Space * (x + 1) + dx,
+							y * Card.Height + Card.Space * (y + 1) + dy));
 		}
-		
-		List<Vector> inStart = new ArrayList<Vector>();
-		inStart.add(new Vector(extraCardLocations.get(0).tmp().add(Card.Width + 30, 0)));
-		inStart.add(new Vector(extraCardLocations.get(1).tmp().add(Card.Width + 30, 0)));
-		inStart.add(new Vector(extraCardLocations.get(2).tmp().add(Card.Width + 30, 0)));
-		
-		List<Vector> inDestination = new ArrayList<Vector>();
-		inDestination.addAll(extraCardLocations);
-		
-		inPositions.add(inStart);
-		inPositions.add(inDestination);
+
+		extraStart.add(new Vector(extraCardLocations.get(0).tmp()
+				.add(Card.Width + 30, 0)));
+		extraStart.add(new Vector(extraCardLocations.get(1).tmp()
+				.add(Card.Width + 30, 0)));
+		extraStart.add(new Vector(extraCardLocations.get(2).tmp()
+				.add(Card.Width + 30, 0)));
 	}
-	
+
 	public FullGameDealer(Table table) {
 		super(table);
 	}
@@ -65,6 +64,16 @@ public class FullGameDealer extends Dealer {
 	@Override
 	protected void selectDeal() {
 		dealSimultaneous();
+	}
+
+	@Override
+	protected float getDealOutInterval() {
+		return 0;
+	}
+
+	@Override
+	protected float getDealInInterval() {
+		return table.isFirstDeal() ? 0.15f : 0;
 	}
 
 	@Override
@@ -79,58 +88,78 @@ public class FullGameDealer extends Dealer {
 
 	@Override
 	protected void setInEffects() {
-		if(table.isFirstDeal()) {
-			MoveEffect moveEffect;
-			for (int i = 0; i < FullGameTable.ExtraCardCount; i++){
-				cardsDealingIn.get(i).getLocation().set(inPositions.get(0).get(i));
-				moveEffect = new MoveEffect(cardsDealingIn.get(i));
+		if (table.isFirstDeal()) {
+			MoveWithSpeedEffect moveEffect;
+			for (int i = 0; i < FullGameTable.ActiveCardCount; i++) {
+				cardsDealingIn.get(i).getLocation().set(inPosition);
+				moveEffect = new MoveWithSpeedEffect(cardsDealingIn.get(i));
 				moveEffect.setLooping(false);
-				moveEffect.setDestination(extraCardLocations.get(i));
-				moveEffect.setDuration(inDuration);
+				moveEffect.setDestinationAndSpeed(cardLocations.get(i), cardSpeed);
 				cardsDealingIn.get(i).setDealerEffect(moveEffect);
 			}
-				
-			for (int i = 0; i < FullGameTable.ActiveCardCount; i++) {
-				cardsDealingIn.get(i + 3).getLocation().set(inPosition);
-				moveEffect = new MoveEffect(cardsDealingIn.get(i + 3));
+
+			for (int i = 0; i < FullGameTable.ExtraCardCount; i++) {
+				cardsDealingIn.get(i + FullGameTable.ActiveCardCount)
+						.getLocation().set(extraStart.get(i));
+				moveEffect = new MoveWithSpeedEffect(cardsDealingIn.get(i + FullGameTable.ActiveCardCount));
 				moveEffect.setLooping(false);
-				moveEffect.setDestination(cardLocations.get(i));
-				moveEffect.setDuration(inDuration);
-				cardsDealingIn.get(i + 3).setDealerEffect(moveEffect);
+				moveEffect.setDestinationAndSpeed(extraCardLocations.get(i), cardSpeed);
+				cardsDealingIn.get(i + FullGameTable.ActiveCardCount)
+						.setDealerEffect(moveEffect);
 			}
-		}
-		else {
-			// first three of cardsToDealOut are new cards, remaining cards are unused extra cards repositioned
-			for (int i = 0; i < 3; i++) {
+		} else {
+			// last three of cardsToDealOut are new cards, the first cards are
+			// unused extra cards repositioned
+
+			List<Vector> destinations = new ArrayList<Vector>();
+			// the destinations for unused extra cards are added.
+			List<Vector> dealtOutDestinations = new ArrayList<Vector>();
+			for (int i = 0; i < cardsDealingIn.size() - 3; i++) {
+				dealtOutDestinations.add(cardsDealingOut.get(i).getLocation());
+			}
+			Collections.sort(dealtOutDestinations, new DealtOutComparator());
+			for (int i = 0; i < cardsDealingIn.size() - 3; i++) {
+				destinations.add(dealtOutDestinations.get(i));
+			}
+
+			destinations.addAll(extraCardLocations);
+
+			for (int i = cardsDealingIn.size() - 3; i < cardsDealingIn.size(); i++) {
 				if (cardsDealingIn.get(i) == null)
 					continue;
-				cardsDealingIn.get(i).getLocation().set(inPositions.get(0).get(i));
+				cardsDealingIn.get(i).getLocation()
+						.set(extraStart.get(i - (cardsDealingIn.size() - 3)));
 			}
-			
-			// the destinations for unused extra cards are added.
-			for (int i = 3; i < cardsDealingIn.size(); i++) {
-				inPositions.get(1).add(i, cardsDealingOut.get(i-3).getLocation());	
-			}
-			
-			MoveEffect moveEffect;
+
+			MoveWithSpeedEffect moveEffect;
 			for (int i = 0; i < cardsDealingIn.size(); i++) {
 				if (cardsDealingIn.get(i) == null)
 					continue;
-				moveEffect = new MoveEffect(cardsDealingIn.get(i));
+				moveEffect = new MoveWithSpeedEffect(cardsDealingIn.get(i));
 				moveEffect.setLooping(false);
-				moveEffect.setDestination(inPositions.get(1).get(i));
-				moveEffect.setDuration(inDuration);
+				moveEffect.setDestinationAndSpeed(destinations.get(i), cardSpeed);
 				cardsDealingIn.get(i).setDealerEffect(moveEffect);
 			}
 		}
 	}
-	
+
 	@Override
 	protected void concreteDrawCards() {
-		for(Card card : cardsDealingIn)
+		for (Card card : cardsDealingIn)
 			if (card != null)
 				card.draw();
-		for(Card card : cardsDealingOut)
+		for (Card card : cardsDealingOut)
 			card.draw();
+	}
+
+	class DealtOutComparator implements Comparator<Vector> {
+
+		@Override
+		public int compare(Vector arg0, Vector arg1) {
+			return arg0.y < arg1.y ? 1 
+					: arg0.y > arg1.y ? -1
+							: arg0.x < arg1.x ? 1 
+									: arg0.x > arg1.x ? -1 : 0;
+		}
 	}
 }

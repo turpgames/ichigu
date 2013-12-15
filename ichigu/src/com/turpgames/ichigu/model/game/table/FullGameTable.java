@@ -66,7 +66,7 @@ public class FullGameTable extends RegularGameTable {
 		for(Card card : cardsOnTable)
 			card.activate();
 		
-		for(Card card : dealtIn.subList(3, dealtIn.size()))
+		for(Card card : dealtIn.subList(0, dealtIn.size() - 3))
 			card.open(true);
 
 		// calculate dealt-in cards
@@ -83,7 +83,7 @@ public class FullGameTable extends RegularGameTable {
 		}
 		
 		extraCards.clear();
-		for(Card card : dealtIn.subList(0, 3)) {
+		for(Card card : dealtIn.subList(dealtIn.size() - 3, dealtIn.size())) {
 			if (card != null) {
 				extraCards.add(card);
 			}
@@ -126,29 +126,33 @@ public class FullGameTable extends RegularGameTable {
 			}
 			while(ichiguCount == 0);
 		}
-		else {
+		else {			
+			List<Card> tempExtraCards = new ArrayList<Card>();
+			tempExtraCards.addAll(extraCards);
+			for (Card card : selectedCards)
+				tempExtraCards.remove(card);
+			toDealIn.addAll(tempExtraCards);
+			
 			List<Card> tempAllCards = new ArrayList<Card>();
 			tempAllCards.addAll(cardsOnTable);
 			tempAllCards.removeAll(selectedCards);
+			List<Card> newCards = new ArrayList<Card>();
 			do {
-				for (Card card : toDealIn) {
+				for (Card card : newCards) {
 					deck.giveBackRandomCard(card);
+					newCards.remove(card);
 					tempAllCards.remove(card);
 				}
 				for (int i = 0; i < 3; i++) {
 					Card card = deck.getRandomCard();
-					toDealIn.add(card);
+					newCards.add(card);
 					tempAllCards.add(card);
 				}
 				ichiguCount = Card.getIchiguCount(tempAllCards);
 			}
 			while(ichiguCount == 0);
 			
-			List<Card> tempExtraCards = new ArrayList<Card>();
-			tempExtraCards.addAll(extraCards);
-			for (Card card : selectedCards)
-				tempExtraCards.remove(card);
-			toDealIn.addAll(tempExtraCards);
+			toDealIn.addAll(newCards);
 		}
 		return toDealIn;
 	}
@@ -240,8 +244,8 @@ public class FullGameTable extends RegularGameTable {
 	@Override
 	public void start() {
 		deck.start();
-		dealer = new FullGameDealer(this);
 		isFirstDeal = true;
+		dealer = new FullGameDealer(this);
 		dealtCardCount = 0;
 	}
 
@@ -260,8 +264,8 @@ public class FullGameTable extends RegularGameTable {
 		cardsOnTable.clear();
 		selectedCards.clear();
 		extraCards.clear();
-		dealer = new FullGameDealer(this);
 		isFirstDeal = true;
+		dealer = new FullGameDealer(this);
 		dealtCardCount = 0;
 	}
 	

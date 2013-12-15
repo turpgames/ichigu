@@ -49,8 +49,6 @@ public abstract class Dealer {
 		this.table = table;
 		this.dealInTimer = new Timer();
 		this.dealOutTimer = new Timer();
-		dealInTimer.setInterval(getDealInInterval());
-		dealOutTimer.setInterval(getDealOutInterval());
 	}
 
 	protected float getDealOutInterval() {
@@ -135,12 +133,14 @@ public abstract class Dealer {
 
 	private final void dealOut() {
 		outTickListener = new DealListener(cardsDealingOut, outListener);
+		dealOutTimer.setInterval(getDealOutInterval());
 		dealOutTimer.setTickListener(outTickListener);
 		dealOutTimer.start();
 	}
 
 	private final void dealIn() {
 		inTickListener = new DealListener(cardsDealingIn, inListener);
+		dealInTimer.setInterval(getDealInInterval());
 		dealInTimer.setTickListener(inTickListener);
 		dealInTimer.start();
 	}

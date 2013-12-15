@@ -58,6 +58,11 @@ public class SingleGameDealer extends Dealer {
 		dealConsecutive();
 	}
 
+	@Override
+	protected float getDealOutInterval() {
+		return 0;
+	}
+	
 	protected void setOutEffects() {
 		MoveEffect moveEffect;
 		for (int i = 0; i < cardsDealingOut.size(); i++) {
