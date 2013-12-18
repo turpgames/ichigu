@@ -4,7 +4,7 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.turpgames.framework.v0.IEnvironmentProvider;
 import com.turpgames.framework.v0.impl.libgdx.GdxGame;
-import com.turpgames.framework.v0.social.ISocializer;
+import com.turpgames.framework.v0.social.ISocializerFactory;
 import com.turpgames.framework.v0.util.Game;
 import com.turpgames.framework.v0.util.Version;
 
@@ -30,11 +30,12 @@ public class Main {
 			public Version getVersion() {
 				return new Version("1.1");
 			}
-			
+
 			@Override
-			public ISocializer getSocializer() {
+			public ISocializerFactory createSocializerFactory() {
+				// TODO Auto-generated method stub
 				return null;
-			}			
+			}		
 		});
 
 		new LwjglApplication(new GdxGame(), cfg);
