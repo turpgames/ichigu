@@ -18,8 +18,11 @@ public class MainActivity extends AndroidApplication {
 		cfg.useGL20 = false;
 		cfg.useAccelerometer = false;
 		cfg.useCompass = false;
-				
-		Game.setEnvironmentProvider(new AndroidProvider(getApplicationContext()));
+		
+		AndroidProvider prov = AndroidProvider.getInstance();
+		prov.init(this, savedInstanceState);
+		
+		Game.setEnvironmentProvider(prov);
 
 		initialize(new GdxGame(), cfg);
 	}
