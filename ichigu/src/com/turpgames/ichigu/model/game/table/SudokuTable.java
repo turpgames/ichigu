@@ -72,13 +72,14 @@ public class SudokuTable extends Table {
 			int y = i;
 
 			markPositions.add(new Vector(
-					dx + (Card.Width - R.ui.imageButtonWidth) / 2,
+					dx + (Card.Width - R.ui.imageButtonWidth) / 2 + 5,
 					y * Card.Height + Card.Space * (y + 1) + dy + (Card.Height - R.ui.imageButtonHeight) / 2));
 		}
 	}
 	
 	private SudokuDeck deck;
 	private List<IchiguMark> marks;
+	private boolean marksVisible;
 	public SudokuTable() {
 		deck = new SudokuDeck(this);
 		marks = new ArrayList<IchiguMark>();
@@ -86,14 +87,16 @@ public class SudokuTable extends Table {
 			marks.add(new IchiguMark(markPositions.get(i)));
 		}
 	}
+	
 	@Override
 	public void draw() {
 		for (Card card : cardsOnTable) {
 			if (!(dealer.isWorking() && selectedCards.contains(card)))
 				card.draw();
 		}
-		for (IchiguMark mark : marks)
-			mark.draw();
+		if (marksVisible)
+			for (IchiguMark mark : marks)
+				mark.draw();
 		dealer.drawCards();
 	}
 
@@ -121,11 +124,13 @@ public class SudokuTable extends Table {
 		deck.reset();
 		selectedCards.clear();
 		cardsOnTable.clear();
+		marksVisible = false;
 	}
 	
 	@Override
 	public void start() {
 		deck.start();
+		marksVisible = false;
 	}
 	
 	public void swapEnded() {
@@ -202,6 +207,7 @@ public class SudokuTable extends Table {
 			card.activate();
 		}
 		checkForIchigus();
+		marksVisible = true;
 	}
 
 	@Override

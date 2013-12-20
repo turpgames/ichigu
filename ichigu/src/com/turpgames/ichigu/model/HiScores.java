@@ -61,12 +61,18 @@ public class HiScores implements IDrawable, ILanguageListener {
 	public void activate() {
 		resetScores.listenInput(true);
 
+		setInfo();
+	}
+
+	private void setInfo() {
 		int minichallengeScore = Settings.getInteger(R.settings.hiscores.minichallenge, 0);
+		float sudokuTime = Settings.getFloat(R.settings.hiscores.sudoku, 0);
 		int normalTime = Settings.getInteger(R.settings.hiscores.normaltime, 0);
 		int fullchallengeScore = Settings.getInteger(R.settings.hiscores.fullchallenge, 0);
 
 		info.setText(String.format(Ichigu.getString(R.strings.hiscoreInfo),
-				minichallengeScore, normalTime == 0 ? "-" : Utils.getTimeString(normalTime), fullchallengeScore));
+				minichallengeScore, sudokuTime == 0 ? "-" : Utils.getTimeString(sudokuTime),
+						normalTime == 0 ? "-" : Utils.getTimeString(normalTime), fullchallengeScore));
 	}
 
 	public void deactivate() {
@@ -88,11 +94,11 @@ public class HiScores implements IDrawable, ILanguageListener {
 
 	private void resetHiscores() {
 		Settings.putInteger(R.settings.hiscores.minichallenge, 0);
+		Settings.putFloat(R.settings.hiscores.sudoku, 0);
 		Settings.putInteger(R.settings.hiscores.normal, 0);
 		Settings.putInteger(R.settings.hiscores.normaltime, 0);
 		Settings.putInteger(R.settings.hiscores.fullchallenge, 0);
-		info.setText(String.format(Ichigu.getString(R.strings.hiscoreInfo),
-				0, Utils.getTimeString(0), 0));
+		setInfo();
 	}
 
 	private void setLanguageSensitiveInfo() {

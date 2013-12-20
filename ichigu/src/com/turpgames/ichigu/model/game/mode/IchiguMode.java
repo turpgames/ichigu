@@ -194,7 +194,7 @@ public abstract class IchiguMode implements IDrawable {
 	protected void onResetMode() {
 		resetButton.listenInput(true);
 		table.reset();
-		table.deal();
+		deal();
 	}
 
 	protected void onStartMode() {

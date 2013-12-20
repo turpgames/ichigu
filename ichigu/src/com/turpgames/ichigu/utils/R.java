@@ -136,6 +136,7 @@ public final class R {
 			public static final String normal = "hiscore_normal";
 			public static final String normaltime = "hiscore_normal_time";
 			public static final String fullchallenge = "hiscore_challenge";
+			public static final String sudoku = "hiscore_sudoku";
 		}
 		public static final String music = "music";
 		public static final String sound = "sound";

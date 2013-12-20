@@ -16,7 +16,7 @@ public class Logo extends GameObject {
 
 		setWidth(logoSize);
 		setHeight(logoSize);
-		getLocation().set((Game.getScreenWidth() - logoSize) / 2, 26*Game.getScreenHeight()/32);
+		getLocation().set((Game.getScreenWidth() - logoSize) / 2, Game.getScreenHeight() - logoSize - Game.getScreenHeight() / 32);
 	}
 
 	@Override
