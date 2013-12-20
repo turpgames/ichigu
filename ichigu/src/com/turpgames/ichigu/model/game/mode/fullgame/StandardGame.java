@@ -12,11 +12,7 @@ public class StandardGame extends FullGameMode {
 	private Text remaingCardInfo;
 
 	public StandardGame() {
-		remaingCardInfo = new Text();
-		
-//		remaingCardInfo.setAlignment(Text.HAlignCenter, Text.VAlignBottom);
-//		remaingCardInfo.setPadding(0, 55);
-		
+		remaingCardInfo = new Text();		
 		remaingCardInfo.setAlignment(Text.HAlignLeft, Text.VAlignTop);
 		remaingCardInfo.setPadding(10, 110);
 	}	

@@ -15,11 +15,7 @@ public class TimeChallenge extends FullGameMode {
 	private CountDownTimer timer;
 
 	public TimeChallenge() {
-		foundInfo = new FoundInfo();
-		
-//		foundInfo.setAlignment(Text.HAlignCenter, Text.VAlignBottom);
-//		foundInfo.setPadding(0, 55);
-		
+		foundInfo = new FoundInfo();		
 		foundInfo.setAlignment(Text.HAlignLeft, Text.VAlignTop);
 		foundInfo.setPadding(10, 110);
 	}

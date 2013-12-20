@@ -27,10 +27,12 @@ public class IchiguToolbar extends Toolbar {
 
 	public void disable() {
 		settingsButton.deactivate();
+		backButton.deactivate();
 	}
 
 	public void enable() {
 		settingsButton.activate();
+		backButton.activate();
 	}
 	
 	public GameObject getBackButton() {
@@ -39,13 +41,13 @@ public class IchiguToolbar extends Toolbar {
 
 	@Override
 	protected void concreteAddBackButton() {
-		backButton = new ImageButton(buttonSize, buttonSize, R.game.textures.toolbar.back, R.colors.buttonDefault, R.colors.ichiguRed);
+		backButton = new ImageButton(buttonSize, buttonSize, R.game.textures.toolbar.back, R.colors.buttonDefault, R.colors.ichiguYellow);
 		backButton.setLocation(Button.AlignNW, toolbarMargin, toolbarMargin);
 	}
 
 	@Override
 	protected void concreteAddSettingsButton() {
-		settingsButton = new ImageButton(buttonSize, buttonSize, R.game.textures.toolbar.settings, R.colors.buttonDefault, R.colors.ichiguRed);
+		settingsButton = new ImageButton(buttonSize, buttonSize, R.game.textures.toolbar.settings, R.colors.buttonDefault, R.colors.ichiguYellow);
 		settingsButton.setLocation(Button.AlignNE, toolbarMargin, toolbarMargin);
 	}
 

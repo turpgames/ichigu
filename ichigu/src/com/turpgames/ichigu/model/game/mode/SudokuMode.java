@@ -26,12 +26,10 @@ public class SudokuMode extends IchiguMode {
 	}
 	
 	public void cardTapped(Card card) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	public void drawResult() {
-		// TODO Auto-generated method stub
 		
 	}
 

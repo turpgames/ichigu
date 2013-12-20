@@ -104,7 +104,6 @@ public abstract class FullGameMode extends RegularMode implements IResultScreenB
 	
 	@Override
 	protected FullGameTable getTable() {
-		// TODO Auto-generated method stub
 		return (FullGameTable) table;
 	}
 

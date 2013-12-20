@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <game
     id="Ichigu"
-    class="com.turpgames.ichigu.view.IchiguGame"
-    version="1.1.0" >
+    class="com.turpgames.ichigu.view.IchiguGame" >
 
     <params>
 
@@ -28,7 +27,7 @@
 
         <param
             key="default-skin"
-            value="ppt" />
+            value="ichigu" />
 
         <param
             key="default-screen"
@@ -69,11 +68,11 @@
         <param
             key="app-store-address-old"
             value="itms-apps://itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&amp;id=737312134" />
-        
+
         <param
             key="twitter-address"
             value="http://www.twitter.com/turpgames" />
-        
+
         <param
             key="facebook-address"
             value="http://www.facebook.com/turpgames" />
@@ -98,18 +97,17 @@
             class="com.turpgames.ichigu.view.RelaxModeScreen" />
 
         <screen
-            id="normal"
-            class="com.turpgames.ichigu.view.NormalModeScreen" />
+            id="standard"
+            class="com.turpgames.ichigu.view.StandardModeScreen" />
 
         <screen
-            id="fullchallenge"
-            class="com.turpgames.ichigu.view.FullChallengeModeScreen" />
+            id="time-challenge"
+            class="com.turpgames.ichigu.view.TimeChallengeModeScreen" />
 
         <screen
             id="multiplayer"
             class="com.turpgames.ichigu.view.MultiplayerModeScreen" />
-        
-       
+
         <screen
             id="sudoku"
             class="com.turpgames.ichigu.view.SudokuModeScreen" />
@@ -200,23 +198,23 @@
                 id="btnMiniChallenge"
                 action="screen=minichallenge"
                 resource-text="miniChallenge"
-                y="18" />
+                y="19" />
 
             <button
                 id="btnSudoku"
                 action="screen=sudoku"
                 resource-text="sudoku"
                 y="13" />
-            
-            <button
-                id="btnNormal"
-                action="screen=normal"
-                resource-text="normalMode"
-                y="8" />
 
             <button
-                id="btnChallenge"
-                action="screen=fullchallenge"
+                id="btnStandard"
+                action="screen=standard"
+                resource-text="normalMode"
+                y="7" />
+
+            <button
+                id="btnTimeChallenge"
+                action="screen=time-challenge"
                 resource-text="fullChallenge"
                 y="4" />
         </form>
@@ -240,12 +238,12 @@
                 id="backgroundPixel"
                 path="img/backgroundPixel.png"
                 resource-load="primary" />
-            
+
             <texture
                 id="splash_logo"
                 path="img/logo_gold_on_black-320.png"
                 resource-load="primary" />
-            
+
             <texture
                 id="logo"
                 path="img/logo.png"
@@ -326,16 +324,19 @@
             <texture
                 id="incorrect-mark"
                 path="img/singlegame/incorrect.png" />
+
             <texture
                 id="correct-mark"
                 path="img/singlegame/correct.png" />
+
             <texture
                 id="question-mark"
                 path="img/singlegame/question.png" />
+
             <texture
                 id="question-card"
                 path="img/singlegame/card.png" />
-            
+
             <texture
                 id="tb_back"
                 path="img/toolbar/back.png" />
@@ -363,62 +364,6 @@
             <texture
                 id="bg"
                 path="img/bg.png" />
-
-            <texture
-                id="shapecircle"
-                path="img/points/shapecircle.png" />
-
-            <texture
-                id="shaperectangle"
-                path="img/points/shaperectangle.png" />
-
-            <texture
-                id="shapetriangle"
-                path="img/points/shapetriangle.png" />
-
-            <texture
-                id="shapeall"
-                path="img/points/shapeall.png" />
-
-            <texture
-                id="countone"
-                path="img/points/countone.png" />
-
-            <texture
-                id="counttwo"
-                path="img/points/counttwo.png" />
-
-            <texture
-                id="countthree"
-                path="img/points/countthree.png" />
-
-            <texture
-                id="countall"
-                path="img/points/countall.png" />
-
-            <texture
-                id="fillempty"
-                path="img/points/fillempty.png" />
-
-            <texture
-                id="fillstriped"
-                path="img/points/fillstriped.png" />
-
-            <texture
-                id="fillfull"
-                path="img/points/fillfull.png" />
-
-            <texture
-                id="fillall"
-                path="img/points/fillall.png" />
-
-            <texture
-                id="colorone"
-                path="img/points/colorone.png" />
-
-            <texture
-                id="colorall"
-                path="img/points/colorall.png" />
 
             <texture
                 id="flag_en_us"
@@ -502,7 +447,7 @@
 
     <skins>
 
-        <skin id="ppt" >
+        <skin id="ichigu" >
 
             <form
                 cols="16"
@@ -510,8 +455,8 @@
 
             <button
                 cols="8"
-                default-color="#f9b000ff"
-                focus-color="#3974b1ff"
+                default-color="#ffffffff"
+                focus-color="#f9b000ff"
                 font-scale="1.2"
                 halign="center"
                 rows="2"

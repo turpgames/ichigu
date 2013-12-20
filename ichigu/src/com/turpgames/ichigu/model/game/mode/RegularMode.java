@@ -5,7 +5,6 @@ import com.turpgames.ichigu.model.game.table.RegularGameTable;
 public abstract class RegularMode extends IchiguMode {
 
 	abstract public void concreteIchiguFound();
-	
 
 	abstract public void concreteInvalidIchiguSelected();
 	

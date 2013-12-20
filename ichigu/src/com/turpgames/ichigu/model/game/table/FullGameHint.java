@@ -145,8 +145,8 @@ class FullGameHint implements IDrawable, IEffectEndListener, Toast.IToastListene
 			ichiguInfo.getIchiguHintCard(hintIndex, 0).blink(this, false);
 			ichiguInfo.getIchiguHintCard(hintIndex, 2).blink(this, false);
 			//TODO BEFORE PRODUCTION: uncomment
-//			IchiguBank.decreaseHintCount();
-//			IchiguBank.saveData();
+			IchiguBank.decreaseHintCount();
+			IchiguBank.saveData();
 		}
 
 		isActive = true;

@@ -21,5 +21,4 @@ public class IchiguLanguageMenu extends LanguageMenu {
 		controlButton = new ImageButton(controlButtonSize, controlButtonSize, Color.white(), Color.white());
 		controlButton.setLocation(Button.AlignSW, 0, 0);
 	}
-
 }

@@ -45,6 +45,8 @@ public abstract class FullGameState extends IchiguState implements IIchiguModeLi
 		IchiguBank.increaseBalance();
 		IchiguBank.saveData();
 		model.ichiguFound();
+		Ichigu.playSoundSuccess();
+		Game.vibrate(100);
 	}
 
 	@Override

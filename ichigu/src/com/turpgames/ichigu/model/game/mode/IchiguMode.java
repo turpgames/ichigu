@@ -99,7 +99,7 @@ public abstract class IchiguMode implements IDrawable {
 		return modeListener;
 	}
 
-	public void openCloseCards(boolean open) {
+	private void openCloseCards(boolean open) {
 		table.openCloseCards(open);
 	}
 

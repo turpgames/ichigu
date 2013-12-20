@@ -7,14 +7,14 @@ import com.turpgames.framework.v0.component.ImageButton;
 import com.turpgames.framework.v0.component.TextButton;
 import com.turpgames.framework.v0.impl.Text;
 import com.turpgames.framework.v0.util.Game;
-import com.turpgames.ichigu.model.display.TurpLogo;
 import com.turpgames.ichigu.utils.Ichigu;
 import com.turpgames.ichigu.utils.R;
 
 public class AboutInfo implements IDrawable, ILanguageListener {
+	private final static float logoSize = Game.scale(140f);
+	
 	private Text version;
-	private TurpLogo logo;
-	private TextButton turpLink;
+	private ImageButton turpLink;
 	private TextButton facebookLink;
 	private TextButton twitterLink;
 	private Text info2;
@@ -22,23 +22,17 @@ public class AboutInfo implements IDrawable, ILanguageListener {
 	private TextButton rateLink;
 	private Text thanksInfo;
 
-	public AboutInfo() {
+	public AboutInfo() {		
 		version = new Text();
-		version.getColor().set(R.colors.ichiguRed);
+		version.getColor().set(R.colors.ichiguYellow);
 		version.setAlignment(Text.HAlignCenter, Text.VAlignTop);
 		version.setPadding(0, 85);
+		version.setFontScale(1.5f);
 		version.setText("Ichigu v" + Game.getVersion().toString());
-
-		logo = new TurpLogo();
-		float logoSize = 140f;
-		logo.setLogoSize(logoSize);
-		logo.getLocation().set((Game.getVirtualWidth() - logoSize) / 2, 170f + (Game.getVirtualHeight() - logoSize) / 2);
-		//35, 300
-
-		turpLink = new TextButton(R.colors.ichiguYellow, R.colors.ichiguRed);
-		turpLink.setFontScale(R.fontSize.medium);
-		turpLink.setText("www.turpgames.com");
-		turpLink.getLocation().set((Game.getVirtualWidth() - turpLink.getWidth()) / 2, Game.getVirtualHeight() - 360);
+		
+		turpLink = new ImageButton(logoSize, logoSize, R.game.textures.splashLogo);
+		turpLink.getLocation().set((Game.getScreenWidth() - logoSize) / 2, Game.scale(140f) + (Game.getScreenHeight() - logoSize) / 2);
+		turpLink.deactivate();
 		turpLink.setListener(new IButtonListener() {
 			@Override
 			public void onButtonTapped() {
@@ -46,7 +40,7 @@ public class AboutInfo implements IDrawable, ILanguageListener {
 			}
 		});
 		
-		facebookLink = new TextButton(R.colors.ichiguYellow, R.colors.ichiguRed);
+		facebookLink = new TextButton(R.colors.ichiguYellow, R.colors.ichiguBlack);
 		facebookLink.setFontScale(R.fontSize.medium);
 		facebookLink.setText("turpgames@facebook");
 		facebookLink.getLocation().set((Game.getVirtualWidth() - facebookLink.getWidth()) / 2, Game.getVirtualHeight() - 420);
@@ -57,7 +51,7 @@ public class AboutInfo implements IDrawable, ILanguageListener {
 			}
 		});
 
-		twitterLink = new TextButton(R.colors.ichiguYellow, R.colors.ichiguRed);
+		twitterLink = new TextButton(R.colors.ichiguYellow, R.colors.ichiguBlack);
 		twitterLink.setFontScale(R.fontSize.medium);
 		twitterLink.setText("turpgames@twitter");
 		twitterLink.getLocation().set((Game.getVirtualWidth() - twitterLink.getWidth()) / 2, Game.getVirtualHeight() - 480);
@@ -75,15 +69,15 @@ public class AboutInfo implements IDrawable, ILanguageListener {
 
 		libgdxLink = new ImageButton(Game.scale(R.ui.libgdxLogoWidth), Game.scale(R.ui.libgdxLogoHeight), R.game.textures.libgdx);
 		libgdxLink.getLocation().set((Game.getScreenWidth() - libgdxLink.getWidth()) / 2, Game.viewportToScreenY(Game.getVirtualHeight() - 680));
+		libgdxLink.deactivate();
 		libgdxLink.setListener(new IButtonListener() {
 			@Override
 			public void onButtonTapped() {
 				Game.openUrl(Game.getParam(R.links.libgdxAddress));
 			}
 		});
-		libgdxLink.deactivate();
 
-		rateLink = new TextButton(R.colors.ichiguYellow, R.colors.ichiguRed);
+		rateLink = new TextButton(R.colors.ichiguYellow, R.colors.ichiguBlack);
 		rateLink.setFontScale(R.fontSize.medium);
 		rateLink.setListener(new IButtonListener() {
 			@Override
@@ -128,7 +122,6 @@ public class AboutInfo implements IDrawable, ILanguageListener {
 	@Override
 	public void draw() {
 		version.draw();
-		logo.draw();
 		turpLink.draw();
 		facebookLink.draw();
 		twitterLink.draw();

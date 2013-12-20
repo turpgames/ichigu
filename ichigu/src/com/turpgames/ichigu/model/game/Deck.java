@@ -19,7 +19,7 @@ public class Deck {
 		unusedCards = new ArrayList<Card>();
 		usedCards = new ArrayList<Card>();
 		createDeck(table);
-		r = new Random(3); // TODO FOR PRODUCTION: clear seed
+		r = new Random(); // TODO FOR PRODUCTION: clear seed
 	}
 	
 	public void end() {

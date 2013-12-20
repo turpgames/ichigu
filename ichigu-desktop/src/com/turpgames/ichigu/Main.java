@@ -23,13 +23,17 @@ public class Main {
 		
 		Game.setEnvironmentProvider(new IEnvironmentProvider() {			
 			@Override
-			public Version getVersion() {
-				return new Version("1.1");
+			public Version getAppVersion() {
+				return new Version("1.1.2");
+			}
+			
+			@Override
+			public Version getOsVersion() {
+				return new Version(System.getProperty("os.version"));
 			}
 
 			@Override
 			public ISocializerFactory createSocializerFactory() {
-				// TODO Auto-generated method stub
 				return null;
 			}		
 		});

@@ -19,7 +19,6 @@ public class FullGameWaitingState extends FullGameState {
 	@Override
 	public void onIchiguFound() {
 		super.onIchiguFound();
-		model.ichiguFound();
 		controller.setDealingState();
 	}
 	

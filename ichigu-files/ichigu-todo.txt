@@ -37,14 +37,44 @@
 	+Resource text düzeltmeleri
 	+ios launch image
 v1.2
-	login with facebook
-		socialauth 
-	ichigu server		
-	Online hi-scores
-v1.3
-v1.4
-	Multiplayer Mode
-v1.5
-	ads
-v1.6
-	Puzzle mode
+	-Login with Facebook	
+		-login
+		-logout
+		-share (score api'siz normal link share)
+	-Ichigu Server
+		-Test/Prod kurulumları (tomcat, mysql)
+		-register
+		-sendScore
+		-getHiScores
+	-HiScores
+		-OnlineHiscoreScreen
+		-Günlük, Haftalık, Aylık, Genel
+		-Arkadaşlarımın rekorları
+		-Kendi rekorlarım
+	-Sudoku mode
+		-HiScore Toast
+	-Üçlü Hint
+		-25 puan
+		-Full Mode'a button
+		-Market menü
+		-Üç kullanımlık
+	-Tekli hint
+		-10 puan
+	-Zaman durdurma
+		-30 saniye
+		-Full Mode'a button
+		-Market menü
+		-Tek kullanımlık
+	-Yeni deal effectler
+		-Sound bul
+	-Çeviriler
+		-İngilizce
+		-Türkçe
+		-İtalyanca
+		-Çince
+	-Bug
+		-Mini mod zaman hızlı başlıyor
+TODO:
+	Achievements
+	Multiplayer
+	Ads
