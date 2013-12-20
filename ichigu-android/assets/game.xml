@@ -147,7 +147,7 @@
                 text="Ichigu"
                 x="0"
                 y="26"
-                color="#d0583bff" />
+                color="#f9b000ff" />
 
             <button
                 id="btnPlay"
@@ -180,12 +180,6 @@
                 y="7" />
 
             <button
-                id="btnSudoku"
-                action="screen=sudoku"
-                resource-text="sudoku"
-                y="4" />
-
-            <button
                 id="btnExitGame"
                 action="exit"
                 focus-color="#d0583bff"
@@ -200,25 +194,31 @@
                 id="btnPractice"
                 action="screen=practice"
                 resource-text="practice"
-                y="21" />
+                y="22" />
 
             <button
                 id="btnMiniChallenge"
                 action="screen=minichallenge"
                 resource-text="miniChallenge"
-                y="17" />
+                y="18" />
 
+            <button
+                id="btnSudoku"
+                action="screen=sudoku"
+                resource-text="sudoku"
+                y="13" />
+            
             <button
                 id="btnNormal"
                 action="screen=normal"
                 resource-text="normalMode"
-                y="9" />
+                y="8" />
 
             <button
                 id="btnChallenge"
                 action="screen=fullchallenge"
                 resource-text="fullChallenge"
-                y="5" />
+                y="4" />
         </form>
     </forms>
 
@@ -510,6 +510,7 @@
 
             <button
                 cols="8"
+                default-color="#f9b000ff"
                 focus-color="#3974b1ff"
                 font-scale="1.2"
                 halign="center"

@@ -1,23 +1,28 @@
 package com.turpgames.ichigu.model.game.mode;
 
+import com.turpgames.framework.v0.impl.Settings;
 import com.turpgames.framework.v0.impl.Text;
-import com.turpgames.framework.v0.util.Game;
 import com.turpgames.framework.v0.util.Timer;
+import com.turpgames.ichigu.model.display.EndGameTimeFlash;
 import com.turpgames.ichigu.model.display.TimerText;
 import com.turpgames.ichigu.model.game.Card;
 import com.turpgames.ichigu.model.game.table.SudokuTable;
+import com.turpgames.ichigu.utils.R;
 
 public class SudokuMode extends IchiguMode {
 
 	private Timer timer;
 	protected TimerText timerText;
+	private EndGameTimeFlash endGameTimeFlash;
 	
 	public SudokuMode() {	
 		timer = new Timer();
 		timer.setInterval(0.5f);
 		timerText = new TimerText(timer);
-		timerText.setAlignment(Text.HAlignLeft, Text.VAlignTop);
-		timerText.setPadding(Game.getVirtualWidth() - 115, 110);
+		timerText.setAlignment(Text.HAlignCenter, Text.VAlignBottom);
+		timerText.setPadding(0, 50);
+		
+		endGameTimeFlash = new EndGameTimeFlash();
 	}
 	
 	public void cardTapped(Card card) {
@@ -39,7 +44,9 @@ public class SudokuMode extends IchiguMode {
 	}
 	
 	public void tableFinished() {
+		prepareResultInfoAndSaveHiscore();
 		table.deal();
+		timer.restart();
 	}
 
 	@Override
@@ -49,6 +56,8 @@ public class SudokuMode extends IchiguMode {
 
 	@Override
 	protected void onDraw() {
+		if (endGameTimeFlash.isVisible)
+			endGameTimeFlash.draw();
 		timerText.draw();
 		super.onDraw();
 	}
@@ -88,8 +97,17 @@ public class SudokuMode extends IchiguMode {
 
 	@Override
 	protected void prepareResultInfoAndSaveHiscore() {
-		// TODO Auto-generated method stub
+		float hiTime = Settings.getFloat(R.settings.hiscores.sudoku, 0);
+		float completeTime = timer.getTotalElapsedTime();
 		
+		boolean isNewRecord = completeTime < hiTime || hiTime == 0;
+
+		if (isNewRecord) {
+			Settings.putFloat(R.settings.hiscores.sudoku, completeTime);
+			endGameTimeFlash.show(timer.getText(), true);
+		}
+		else
+			endGameTimeFlash.show(timer.getText(), false);
 	}
 
 	@Override

@@ -48,7 +48,7 @@ public class MenuScreen extends FormScreen implements IGameExitListener {
 		Game.exitListener = this;
 		
 		Logo logo = new Logo();
-		logo.getColor().a = 0.35f;
+		logo.getColor().a = 0.55f;
 		GameObject bg = new GameObject() {
 			ITexture texture = Game.getResourceManager().getTexture(R.game.textures.backgroundPixel);
 			@Override
@@ -67,7 +67,7 @@ public class MenuScreen extends FormScreen implements IGameExitListener {
 		};
 		bg.setWidth(Game.getScreenWidth());
 		bg.setHeight(Game.getScreenHeight());
-		bg.getColor().set(R.colors.ichiguYellow);
+		bg.getColor().set(R.colors.ichiguBlack);
 		registerDrawable(bg, Utils.LAYER_BACKGROUND);
 		registerDrawable(logo, Utils.LAYER_BACKGROUND);
 		registerDrawable(IchiguGame.getToolbar(), Utils.LAYER_SCREEN);
