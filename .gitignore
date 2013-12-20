@@ -32,6 +32,7 @@ local.properties
 # Android
 gen/
 *.keystore
+project.properties
 
 #################
 ## Visual Studio

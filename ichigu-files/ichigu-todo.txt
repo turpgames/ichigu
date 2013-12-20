@@ -54,16 +54,17 @@ v1.2
 	-Sudoku mode
 		-HiScore Toast
 	-Üçlü Hint
-		-25 puan
+		+25 puan
 		-Full Mode'a button
-		-Market menü
+		+Market menü
 		-Üç kullanımlık
 	-Tekli hint
-		-10 puan
+		+10 puan
 	-Zaman durdurma
 		-30 saniye
 		-Full Mode'a button
-		-Market menü
+		+25 puan
+		+Market menü
 		-Tek kullanımlık
 	-Yeni deal effectler
 		-Sound bul

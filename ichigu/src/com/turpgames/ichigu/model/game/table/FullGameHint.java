@@ -11,6 +11,7 @@ import com.turpgames.framework.v0.util.Game;
 import com.turpgames.ichigu.model.display.NoTipToast;
 import com.turpgames.ichigu.model.game.Card;
 import com.turpgames.ichigu.model.game.IchiguBank;
+import com.turpgames.ichigu.model.game.IchiguBonusFeature;
 import com.turpgames.ichigu.model.game.mode.IchiguMode;
 import com.turpgames.ichigu.utils.Ichigu;
 import com.turpgames.ichigu.utils.R;
@@ -105,7 +106,7 @@ class FullGameHint implements IDrawable, IEffectEndListener, Toast.IToastListene
 	}
 
 	public void showHint() {
-		if (IchiguBank.hasHint()) {
+		if (IchiguBonusFeature.singleHint.getCount() > 0) {
 			showNextHint();
 		}
 		else {
@@ -128,7 +129,7 @@ class FullGameHint implements IDrawable, IEffectEndListener, Toast.IToastListene
 	}
 
 	private void setHintCountText() {
-		hintCountText.setText(IchiguBank.getHintCount() + "");
+		hintCountText.setText(IchiguBonusFeature.singleHint.getCount() + "");
 	}
 	
 	private void showNextHint() {
@@ -142,11 +143,7 @@ class FullGameHint implements IDrawable, IEffectEndListener, Toast.IToastListene
 		}
 		else {
 			ichiguInfo.getIchiguHintCard(hintIndex, 1).blink(this, false);
-			ichiguInfo.getIchiguHintCard(hintIndex, 0).blink(this, false);
-			ichiguInfo.getIchiguHintCard(hintIndex, 2).blink(this, false);
-			//TODO BEFORE PRODUCTION: uncomment
-			IchiguBank.decreaseHintCount();
-			IchiguBank.saveData();
+			IchiguBonusFeature.singleHint.used();
 		}
 
 		isActive = true;

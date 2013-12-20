@@ -77,6 +77,7 @@ public final class R {
 				public static final String colorone = "colorone";
 				public static final String colorall = "colorall";
 			}
+
 			public static final class singlegame {
 				public static final String questionmark = "question-mark";
 				public static final String correctmark = "correct-mark";
@@ -93,6 +94,7 @@ public final class R {
 				public static final String soundOn = "tb_sound_on";
 				public static final String soundOff = "tb_sound_off";
 			}
+
 			public static final String logo = "logo";
 			public static final String splashLogo = "splash_logo";
 
@@ -138,6 +140,7 @@ public final class R {
 			public static final String fullchallenge = "hiscore_challenge";
 			public static final String sudoku = "hiscore_sudoku";
 		}
+
 		public static final String music = "music";
 		public static final String sound = "sound";
 
@@ -147,7 +150,9 @@ public final class R {
 		public static final String country = "country";
 
 		public static final String ichiguBalance = "ichigu-points";
-		public static final String hintCount = "hint-count";
+		public static final String singleHintCount = "single-hint-count";
+		public static final String tripleHintCount = "triple-hint-count";
+		public static final String timerStopCount = "timer-stop-count";
 	}
 
 	public static final class singleGameMode {
@@ -286,35 +291,39 @@ public final class R {
 
 		public final static String insufficientIchiguBalance = "insufficientIchiguBalance";
 		public final static String market = "market";
-		public final static String marketInfo = "marketInfo";
-		public final static String bankInfo = "bankInfo";
+		public final static String marketPriceInfo = "marketPriceInfo";
+		public final static String marketFeatureStatus = "marketFeatureStatus";
+		public final static String singleHint = "singleHint";
+		public final static String tripleHint = "tripleHint";
+		public final static String timerStop = "timerStop";
+		public final static String singleHintInfo = "singleHintInfo";
+		public final static String tripleHintInfo = "tripleHintInfo";
+		public final static String timerStopInfo = "timerStopInfo";
+		
 		public final static String ok = "ok";
 		public final static String buy = "buy";
-		
+
 		public final static String sudoku = "sudoku";
 	}
 
 	public static final class symbolpositions {
 		public static final Vector firstOfOne = new Vector(
-				(Card.Width - Card.SymbolWidth) / 2,
-				(Card.Height - Card.SymbolHeight) / 2);
+				(Card.Width - Card.SymbolWidth) / 2, (Card.Height - Card.SymbolHeight) / 2);
 
 		public static final Vector firstOfTwo = new Vector(
-				(Card.Width - Card.SymbolWidth) / 2, Card.Height / 2
-						- Card.SymbolHeight * 1.1f);
+				(Card.Width - Card.SymbolWidth) / 2, Card.Height / 2 - Card.SymbolHeight * 1.1f);
+
 		public static final Vector secondOfTwo = new Vector(
-				(Card.Width - Card.SymbolWidth) / 2, Card.Height / 2
-						+ Card.SymbolHeight * 0.1f);
+				(Card.Width - Card.SymbolWidth) / 2, Card.Height / 2 + Card.SymbolHeight * 0.1f);
 
 		public static final Vector firstOfThree = new Vector(
-				(Card.Width - Card.SymbolWidth) / 2, 2 + Card.Height / 2
-						- Card.SymbolHeight * 1.65f);
+				(Card.Width - Card.SymbolWidth) / 2, 2 + Card.Height / 2 - Card.SymbolHeight * 1.65f);
+
 		public static final Vector secondOfThree = new Vector(
-				(Card.Width - Card.SymbolWidth) / 2, 2 + Card.Height / 2
-						- Card.SymbolHeight * 0.5f);
+				(Card.Width - Card.SymbolWidth) / 2, 2 + Card.Height / 2 - Card.SymbolHeight * 0.5f);
+
 		public static final Vector thirdOfThree = new Vector(
-				(Card.Width - Card.SymbolWidth) / 2, 2 + Card.Height / 2
-						+ Card.SymbolHeight * 0.65f);
+				(Card.Width - Card.SymbolWidth) / 2, 2 + Card.Height / 2 + Card.SymbolHeight * 0.65f);
 	}
 
 	public static final class ui {

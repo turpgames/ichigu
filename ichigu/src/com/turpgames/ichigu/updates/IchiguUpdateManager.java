@@ -6,8 +6,9 @@ public final class IchiguUpdateManager {
 	public static void runUpdates() {
 		UpdateProcessor p = UpdateProcessor.instance;		
 		
-		p.addProcess(new V11_IchiguBank());
-		p.addProcess(new V112_HiScoreFix());
+		p.addProcess(new V1_1_0());
+		p.addProcess(new V1_1_2());
+		p.addProcess(new V1_2_0());
 		
 		p.execute();
 	}

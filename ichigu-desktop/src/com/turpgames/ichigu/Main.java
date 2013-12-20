@@ -16,7 +16,7 @@ public class Main {
 
 		float w = 11f;
 		float h = 16f;
-		float x = 40f;
+		float x = 35f;
 		
 		cfg.width = (int) (x * w);
 		cfg.height = (int) (x * h);
@@ -24,7 +24,7 @@ public class Main {
 		Game.setEnvironmentProvider(new IEnvironmentProvider() {			
 			@Override
 			public Version getAppVersion() {
-				return new Version("1.1.2");
+				return new Version("1.2.0");
 			}
 			
 			@Override

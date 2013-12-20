@@ -5,7 +5,7 @@ import com.turpgames.framework.v0.impl.Settings;
 import com.turpgames.framework.v0.util.Version;
 import com.turpgames.ichigu.utils.R;
 
-public class V112_HiScoreFix implements IUpdateProcess {
+public class V1_1_2 implements IUpdateProcess {
 	private final Version version = new Version("1.1.2");
 
 	@Override
