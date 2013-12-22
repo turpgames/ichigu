@@ -10,13 +10,9 @@ import com.turpgames.framework.v0.effects.fading.FadeOutEffect;
 import com.turpgames.framework.v0.effects.fading.IFadingEffectSubject;
 import com.turpgames.framework.v0.impl.GameObject;
 import com.turpgames.framework.v0.util.Vector;
+import com.turpgames.ichigu.utils.R;
 
 public abstract class IchiguObject extends GameObject implements IFadingEffectSubject, IBlinkEffectSubject {
-	public static final float FadingDuration = 0.25f;
-	public static final float BlinkDuration = 1f;
-	public static final int BlinkPerSecond = 10;
-	public static final float MaxScale = 0.2f;
-	
 	private FadeOutEffect fadeEffect;
 	private BlinkEffect blinkEffect;
 	private MoveEffect moveEffect;
@@ -61,8 +57,8 @@ public abstract class IchiguObject extends GameObject implements IFadingEffectSu
 	private BlinkEffect getBlinkEffect() {
 		if (blinkEffect == null) {
 			blinkEffect = new BlinkEffect(this);
-			blinkEffect.setDuration(BlinkDuration);
-			blinkEffect.setBlinkPerSecond(BlinkPerSecond);
+			blinkEffect.setDuration(R.durations.blinkDuration);
+			blinkEffect.setBlinkPerSecond(R.counts.blinkPerSecond);
 		}
 		return blinkEffect;
 	}
@@ -70,7 +66,7 @@ public abstract class IchiguObject extends GameObject implements IFadingEffectSu
 	private FadeOutEffect getFadeEffect() {
 		if (fadeEffect == null) {
 			fadeEffect = new FadeOutEffect(this);
-			fadeEffect.setDuration(FadingDuration);
+			fadeEffect.setDuration(R.durations.fadingDuration);
 		}
 		return fadeEffect;
 	}
@@ -93,7 +89,7 @@ public abstract class IchiguObject extends GameObject implements IFadingEffectSu
 	private ScaleEffect getScaleEffect() {
 		if (scaleEffect == null) {
 			scaleEffect = new ScaleEffect(this);
-			scaleEffect.setMaxScale(MaxScale);
+			scaleEffect.setMaxScale(R.sizes.maxScale);
 		}
 		return scaleEffect;
 	}

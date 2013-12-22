@@ -7,7 +7,6 @@ import com.turpgames.framework.v0.impl.ScreenManager;
 import com.turpgames.framework.v0.util.Color;
 import com.turpgames.framework.v0.util.Game;
 import com.turpgames.framework.v0.util.ShapeDrawer;
-import com.turpgames.framework.v0.util.Utils;
 import com.turpgames.ichigu.model.display.TurpLogo;
 import com.turpgames.ichigu.updates.IchiguUpdateManager;
 import com.turpgames.ichigu.utils.R;
@@ -33,7 +32,7 @@ public class SplashScreen extends Screen {
 		// AfterUpdateProcess's must be added here UpdateProcessor.instance.addProcess();
 		
 		super.init();
-		registerDrawable(new TurpLogo(), Utils.LAYER_BACKGROUND);
+		registerDrawable(new TurpLogo(), Game.LAYER_BACKGROUND);
 		progressColor = new Color(R.colors.ichiguYellow);
 		resourceManager = Game.getResourceManager();
 	}

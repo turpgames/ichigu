@@ -13,8 +13,8 @@ import com.turpgames.framework.v0.effects.fading.FadeOutEffect;
 import com.turpgames.framework.v0.util.Game;
 import com.turpgames.framework.v0.util.Vector;
 import com.turpgames.ichigu.model.game.Card;
-import com.turpgames.ichigu.model.game.table.FullGameTable;
 import com.turpgames.ichigu.model.game.table.Table;
+import com.turpgames.ichigu.utils.R;
 
 public class FullGameDealer extends Dealer {
 
@@ -35,38 +35,38 @@ public class FullGameDealer extends Dealer {
 	private final static Map<Integer, Vector> cardLocations = new HashMap<Integer, Vector>();
 	private final static List<Vector> extraCardLocations = new ArrayList<Vector>();
 	private final static List<Vector> extraStart = new ArrayList<Vector>();
-	private final static Vector inPosition = new Vector(Card.Width / 2, Card.Width / 2);
+	private final static Vector inPosition = new Vector(R.sizes.cardWidth / 2, R.sizes.cardWidth / 2);
 
 	static {
 		float dy = (Game.getVirtualHeight() - Game.getVirtualWidth()) / 2f - 20;
-		for (int i = 0; i < FullGameTable.ActiveCardCount; i++) {
-			int x = i % (FullGameTable.cols - 1);
-			int y = 2 - i / (FullGameTable.cols - 1);
+		for (int i = 0; i < R.counts.fullModeActiveCardCount; i++) {
+			int x = i % (R.counts.fullModeCols - 1);
+			int y = 2 - i / (R.counts.fullModeCols - 1);
 
 			int dx = 0;
 
 			cardLocations.put(i,
-					new Vector(x * Card.Width + Card.Space * (x + 1) + dx, y
-							* Card.Height + Card.Space * (y + 1) + dy));
+					new Vector(x * R.sizes.cardWidth + R.sizes.cardSpace * (x + 1) + dx, y
+							* R.sizes.cardHeight + R.sizes.cardSpace * (y + 1) + dy));
 		}
 
-		for (int i = FullGameTable.ExtraCardCount - 1; i >= 0; i--) {
-			int x = FullGameTable.cols - 1;
+		for (int i = R.counts.fullModeExtraCardCount - 1; i >= 0; i--) {
+			int x = R.counts.fullModeCols - 1;
 			int y = i;
 
-			int dx = Card.Space + 1;
+			int dx = R.sizes.cardSpace + 1;
 
 			extraCardLocations
-					.add(new Vector(x * Card.Width + Card.Space * (x + 1) + dx,
-							y * Card.Height + Card.Space * (y + 1) + dy));
+					.add(new Vector(x * R.sizes.cardWidth + R.sizes.cardSpace * (x + 1) + dx,
+							y * R.sizes.cardHeight + R.sizes.cardSpace * (y + 1) + dy));
 		}
 
 		extraStart.add(new Vector(extraCardLocations.get(0).tmp()
-				.add(Card.Width + 30, 0)));
+				.add(R.sizes.cardWidth + 30, 0)));
 		extraStart.add(new Vector(extraCardLocations.get(1).tmp()
-				.add(Card.Width + 30, 0)));
+				.add(R.sizes.cardWidth + 30, 0)));
 		extraStart.add(new Vector(extraCardLocations.get(2).tmp()
-				.add(Card.Width + 30, 0)));
+				.add(R.sizes.cardWidth + 30, 0)));
 	}
 
 	public FullGameDealer(Table table) {
@@ -101,7 +101,7 @@ public class FullGameDealer extends Dealer {
 	protected void setInEffects() {
 		if (table.isFirstDeal()) {
 			MoveWithSpeedEffect moveEffect;
-			for (int i = 0; i < FullGameTable.ActiveCardCount; i++) {
+			for (int i = 0; i < R.counts.fullModeActiveCardCount; i++) {
 				cardsDealingIn.get(i).getLocation().set(inPosition);
 				moveEffect = new MoveWithSpeedEffect(cardsDealingIn.get(i));
 				moveEffect.setLooping(false);
@@ -109,13 +109,13 @@ public class FullGameDealer extends Dealer {
 				cardsDealingIn.get(i).setDealerEffect(moveEffect);
 			}
 
-			for (int i = 0; i < FullGameTable.ExtraCardCount; i++) {
-				cardsDealingIn.get(i + FullGameTable.ActiveCardCount)
+			for (int i = 0; i < R.counts.fullModeExtraCardCount; i++) {
+				cardsDealingIn.get(i + R.counts.fullModeActiveCardCount)
 						.getLocation().set(extraStart.get(i));
-				moveEffect = new MoveWithSpeedEffect(cardsDealingIn.get(i + FullGameTable.ActiveCardCount));
+				moveEffect = new MoveWithSpeedEffect(cardsDealingIn.get(i + R.counts.fullModeActiveCardCount));
 				moveEffect.setLooping(false);
 				moveEffect.setDestinationAndSpeed(extraCardLocations.get(i), cardSpeed);
-				cardsDealingIn.get(i + FullGameTable.ActiveCardCount)
+				cardsDealingIn.get(i + R.counts.fullModeActiveCardCount)
 						.setDealerEffect(moveEffect);
 			}
 		} else {

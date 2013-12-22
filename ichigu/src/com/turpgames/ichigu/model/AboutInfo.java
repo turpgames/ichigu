@@ -11,7 +11,6 @@ import com.turpgames.ichigu.utils.Ichigu;
 import com.turpgames.ichigu.utils.R;
 
 public class AboutInfo implements IDrawable, ILanguageListener {
-	private final static float logoSize = Game.scale(140f);
 	
 	private Text version;
 	private ImageButton turpLink;
@@ -30,13 +29,15 @@ public class AboutInfo implements IDrawable, ILanguageListener {
 		version.setFontScale(1.5f);
 		version.setText("Ichigu v" + Game.getVersion().toString());
 		
-		turpLink = new ImageButton(logoSize, logoSize, R.game.textures.splashLogo);
-		turpLink.getLocation().set((Game.getScreenWidth() - logoSize) / 2, Game.scale(140f) + (Game.getScreenHeight() - logoSize) / 2);
+		turpLink = new ImageButton(R.sizes.logoSize, R.sizes.logoSize, R.game.textures.splashLogo);
+		turpLink.getLocation().set(
+				(Game.getScreenWidth() - R.sizes.logoSize) / 2, 
+				 Game.scale(140f) + (Game.getScreenHeight() - R.sizes.logoSize) / 2);
 		turpLink.deactivate();
 		turpLink.setListener(new IButtonListener() {
 			@Override
 			public void onButtonTapped() {
-				Game.openUrl(Game.getParam(R.links.turpAddress));
+				Game.openUrl(Game.getParam(R.game.params.turpAddress));
 			}
 		});
 		
@@ -47,7 +48,7 @@ public class AboutInfo implements IDrawable, ILanguageListener {
 		facebookLink.setListener(new IButtonListener() {
 			@Override
 			public void onButtonTapped() {
-				Game.openUrl(Game.getParam(R.links.facebookAddress));
+				Game.openUrl(Game.getParam(R.game.params.facebookAddress));
 			}
 		});
 
@@ -58,7 +59,7 @@ public class AboutInfo implements IDrawable, ILanguageListener {
 		twitterLink.setListener(new IButtonListener() {
 			@Override
 			public void onButtonTapped() {
-				Game.openUrl(Game.getParam(R.links.twitterAddress));
+				Game.openUrl(Game.getParam(R.game.params.twitterAddress));
 			}
 		});
 		
@@ -67,13 +68,13 @@ public class AboutInfo implements IDrawable, ILanguageListener {
 		info2.setFontScale(R.fontSize.medium);
 		info2.setPadding(35, 620);
 
-		libgdxLink = new ImageButton(Game.scale(R.ui.libgdxLogoWidth), Game.scale(R.ui.libgdxLogoHeight), R.game.textures.libgdx);
+		libgdxLink = new ImageButton(Game.scale(R.sizes.libgdxLogoWidth), Game.scale(R.sizes.libgdxLogoHeight), R.game.textures.libgdx);
 		libgdxLink.getLocation().set((Game.getScreenWidth() - libgdxLink.getWidth()) / 2, Game.viewportToScreenY(Game.getVirtualHeight() - 680));
 		libgdxLink.deactivate();
 		libgdxLink.setListener(new IButtonListener() {
 			@Override
 			public void onButtonTapped() {
-				Game.openUrl(Game.getParam(R.links.libgdxAddress));
+				Game.openUrl(Game.getParam(R.game.params.libgdxAddress));
 			}
 		});
 
@@ -84,12 +85,12 @@ public class AboutInfo implements IDrawable, ILanguageListener {
 			public void onButtonTapped() {
 				if (Game.isIOS()) {
 					if (Game.getOSVersion().getMajor() < 7)
-						Game.openUrl(Game.getParam(R.links.appStoreAddressOld));
+						Game.openUrl(Game.getParam(R.game.params.appStoreAddressOld));
 					else
-						Game.openUrl(Game.getParam(R.links.appStoreAddressIOS7));
+						Game.openUrl(Game.getParam(R.game.params.appStoreAddressIOS7));
 				}
 				else {
-					Game.openUrl(Game.getParam(R.links.playStoreAddress));
+					Game.openUrl(Game.getParam(R.game.params.playStoreAddress));
 				}
 			}
 		});

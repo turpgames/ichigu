@@ -20,8 +20,8 @@ public class SingleGameQuestion extends GameObject implements IEffectEndListener
 		protected Mark(IEffectEndListener parent, String path, Color color) {
 			this.texture = Game.getResourceManager().getTexture(path);
 			getColor().set(color);
-			setWidth(R.ui.questionMarkSize);
-			setHeight(R.ui.questionMarkSize);
+			setWidth(R.sizes.questionMarkSize);
+			setHeight(R.sizes.questionMarkSize);
 			getLocation().set(R.singleGameMode.markPos);
 			
 			effect = new FadeOutEffect(this);
@@ -60,7 +60,6 @@ public class SingleGameQuestion extends GameObject implements IEffectEndListener
 	private CountDownTimer correctEffectStartTimer;
 	private CountDownTimer incorrectEffectStartTimer;
 	
-//	private ITexture emptyQuestionCard;
 	public SingleGameQuestion(float correctTime, float incorrectTime) {
 		questionMark = new Mark(this, R.game.textures.singlegame.questionmark, R.colors.ichiguYellow);
 		correctMark = new Mark(this, R.game.textures.singlegame.correctmark, R.colors.ichiguGreen);
@@ -72,16 +71,10 @@ public class SingleGameQuestion extends GameObject implements IEffectEndListener
 
 		correctEffectStartTimer = new CountDownTimer(correctTime);
 		incorrectEffectStartTimer = new CountDownTimer(incorrectTime);
-		
-//		emptyQuestionCard = Game.getResourceManager().getTexture(R.game.textures.questionCard);
-//		getLocation().set(R.learningModeScreen.layout.cardOnTable3Pos);
-//		setWidth(Card.Width);
-//		setHeight(Card.Height);
 	}
 	
 	@Override
 	public void draw() {
-//		TextureDrawer.draw(emptyQuestionCard, this);
 		questionMark.draw();
 		correctMark.draw();
 		incorrectMark.draw();

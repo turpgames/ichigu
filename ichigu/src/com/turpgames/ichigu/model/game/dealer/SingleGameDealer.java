@@ -15,10 +15,10 @@ public class SingleGameDealer extends Dealer {
 	public static float inDuration = 0.15f;
 	public static float outDuration = 0.15f;
 	
-	private final static Vector selectedStart = new Vector(- Card.Width, (Game.getVirtualHeight() - Card.Height) / 2);
-	private final static Vector toSelectStart = new Vector(- Card.Width, (Game.getVirtualHeight() - Card.Height) / 2);
-	private final static Vector selectedDestination = new Vector(Game.getVirtualWidth(), (Game.getVirtualHeight() - Card.Height) / 2);
-	private final static Vector toSelectDestination = new Vector(Game.getVirtualWidth(), (Game.getVirtualHeight() - Card.Height) / 2);
+	private final static Vector selectedStart = new Vector(- R.sizes.cardWidth, (Game.getVirtualHeight() - R.sizes.cardHeight) / 2);
+	private final static Vector toSelectStart = new Vector(- R.sizes.cardWidth, (Game.getVirtualHeight() - R.sizes.cardHeight) / 2);
+	private final static Vector selectedDestination = new Vector(Game.getVirtualWidth(), (Game.getVirtualHeight() - R.sizes.cardHeight) / 2);
+	private final static Vector toSelectDestination = new Vector(Game.getVirtualWidth(), (Game.getVirtualHeight() - R.sizes.cardHeight) / 2);
 
 	private final static List<List<Vector>>inPositions;
 	private final static List<Vector> outPositions = new ArrayList<Vector>();

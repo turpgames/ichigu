@@ -1,6 +1,6 @@
 package com.turpgames.ichigu.view;
 
-import com.turpgames.framework.v0.util.Utils;
+import com.turpgames.framework.v0.util.Game;
 import com.turpgames.ichigu.model.AboutInfo;
 import com.turpgames.ichigu.model.display.IchiguToolbar;
 
@@ -11,7 +11,7 @@ public class AboutScreen extends IchiguScreen {
 	public void init() {
 		super.init();
 		aboutInfo = new AboutInfo();
-		registerDrawable(aboutInfo, Utils.LAYER_SCREEN);
+		registerDrawable(aboutInfo, Game.LAYER_SCREEN);
 	}
 	
 	@Override

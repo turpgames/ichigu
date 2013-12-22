@@ -1,6 +1,6 @@
 package com.turpgames.ichigu.view;
 
-import com.turpgames.framework.v0.util.Utils;
+import com.turpgames.framework.v0.util.Game;
 import com.turpgames.ichigu.model.display.IchiguToolbar;
 import com.turpgames.ichigu.model.game.IchiguMarket;
 
@@ -11,7 +11,7 @@ public class MarketScreen extends IchiguScreen {
 	public void init() {
 		super.init();
 		market = new IchiguMarket();
-		registerDrawable(market, Utils.LAYER_SCREEN);
+		registerDrawable(market, Game.LAYER_SCREEN);
 	}
 
 	@Override

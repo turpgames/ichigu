@@ -392,6 +392,18 @@
             <texture
                 id="libgdx"
                 path="img/about/libgdx.png" />
+
+            <texture
+                id="hint_single"
+                path="img/hint-single-64.png" />
+
+            <texture
+                id="hint_triple"
+                path="img/hint-triple-64.png" />
+
+            <texture
+                id="pause_timer"
+                path="img/pause-timer-64.png" />
         </textures>
 
         <sounds>

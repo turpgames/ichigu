@@ -13,7 +13,6 @@ import com.turpgames.ichigu.utils.Ichigu;
 import com.turpgames.ichigu.utils.R;
 
 public abstract class IchiguMode implements IDrawable {
-	public final static float buttonSize = Game.scale(R.ui.imageButtonWidth);
 
 	protected Table table;
 	protected IIchiguModeListener modeListener;
@@ -25,8 +24,8 @@ public abstract class IchiguMode implements IDrawable {
 	protected boolean isExitConfirmed;
 
 	public IchiguMode() {
-		resetButton = new ImageButton(buttonSize, buttonSize, R.game.textures.refresh, R.colors.buttonDefault, R.colors.buttonTouched);
-		resetButton.getLocation().set(Game.getScreenWidth() - buttonSize - 10, Game.viewportToScreenY(30));
+		resetButton = new ImageButton(R.sizes.menuButtonSizeToScreen, R.sizes.menuButtonSizeToScreen, R.game.textures.refresh, R.colors.buttonDefault, R.colors.buttonTouched);
+		resetButton.getLocation().set(Game.getScreenWidth() - R.sizes.menuButtonSizeToScreen - 10, Game.viewportToScreenY(30));
 		resetButton.setListener(new IButtonListener() {
 			@Override
 			public void onButtonTapped() {

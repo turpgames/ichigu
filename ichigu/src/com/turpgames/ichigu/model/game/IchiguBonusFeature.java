@@ -4,18 +4,19 @@ import com.turpgames.framework.v0.impl.Settings;
 import com.turpgames.ichigu.utils.R;
 
 public final class IchiguBonusFeature {
-	private static final int singleHintPrice = 10;
-	private static final int tripleHintPrice = 25;
-	private static final int timerStopPrice = 25;
-	
+	public static interface IListener {
+		void onFeatureUpdated(IchiguBonusFeature feature);
+	}
+
+
 	public static final IchiguBonusFeature singleHint;
 	public static final IchiguBonusFeature tripleHint;
-	public static final IchiguBonusFeature timerStop;
-	
+	public static final IchiguBonusFeature timerPause;
+
 	static {
-		singleHint = new IchiguBonusFeature(R.settings.singleHintCount, R.strings.singleHint, R.strings.singleHintInfo, singleHintPrice);
-		tripleHint = new IchiguBonusFeature(R.settings.tripleHintCount, R.strings.tripleHint, R.strings.tripleHintInfo, tripleHintPrice);
-		timerStop = new IchiguBonusFeature(R.settings.timerStopCount, R.strings.timerStop, R.strings.timerStopInfo, timerStopPrice);
+		singleHint = new IchiguBonusFeature(R.settings.singleHintCount, R.strings.singleHint, R.strings.singleHintInfo, R.prices.singleHintPrice);
+		tripleHint = new IchiguBonusFeature(R.settings.tripleHintCount, R.strings.tripleHint, R.strings.tripleHintInfo, R.prices.tripleHintPrice);
+		timerPause = new IchiguBonusFeature(R.settings.timerPauseCount, R.strings.pauseTimer, R.strings.pauseTimerInfo, R.prices.timerPausePrice);
 	}
 
 	private final String key;
@@ -23,6 +24,8 @@ public final class IchiguBonusFeature {
 	private final String info;
 	private final int price;
 	private int count;
+
+	private IListener listener;
 
 	private IchiguBonusFeature(String key, String name, String info, int price) {
 		this.key = key;
@@ -32,14 +35,25 @@ public final class IchiguBonusFeature {
 		this.count = Settings.getInteger(key, 0);
 	}
 
+	private void notifyListener() {
+		if (listener != null)
+			listener.onFeatureUpdated(this);
+	}
+
+	public void setListener(IListener listener) {
+		this.listener = listener;
+	}
+
 	public void bought() {
 		count++;
 		saveData();
+		notifyListener();
 	}
-	
+
 	public void used() {
 		count--;
 		saveData();
+		notifyListener();
 	}
 
 	public String getName() {
@@ -49,15 +63,15 @@ public final class IchiguBonusFeature {
 	public String getInfo() {
 		return info;
 	}
-	
+
 	public int getPrice() {
 		return price;
 	}
-	
+
 	public int getCount() {
 		return count;
 	}
-	
+
 	private void saveData() {
 		Settings.putInteger(key, count);
 	}

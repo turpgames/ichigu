@@ -87,11 +87,7 @@ public abstract class Table implements IDealerListener, ICardListener {
 	public void setListener(ITableListener controller) {
 		listener = controller;
 	}
-	
-	public void showHint() {
 		
-	}
-	
 	abstract public void start();
 
 	protected void checkIfTableFinished() {

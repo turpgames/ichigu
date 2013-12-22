@@ -1,6 +1,5 @@
 package com.turpgames.ichigu.model.game.mode.singlegame;
 
-import com.turpgames.framework.v0.forms.xml.Toast;
 import com.turpgames.framework.v0.impl.Settings;
 import com.turpgames.framework.v0.impl.Text;
 import com.turpgames.framework.v0.util.CountDownTimer;
@@ -8,40 +7,29 @@ import com.turpgames.framework.v0.util.Game;
 import com.turpgames.framework.v0.util.Timer;
 import com.turpgames.ichigu.model.display.FoundInfo;
 import com.turpgames.ichigu.model.display.IResultScreenButtonsListener;
+import com.turpgames.ichigu.model.display.IchiguToast;
 import com.turpgames.ichigu.model.display.ResultScreenButtons;
 import com.turpgames.ichigu.model.display.SingleGameQuestion;
 import com.turpgames.ichigu.model.display.TimerText;
-import com.turpgames.ichigu.model.display.WaitToast;
 import com.turpgames.ichigu.utils.Ichigu;
 import com.turpgames.ichigu.utils.R;
 
 public class MiniGame extends SingleGameMode implements IResultScreenButtonsListener {
-	private final static float blockDuration = 2f;
-	private final static int challengeTime = 60;
 
 	private final CountDownTimer blockTimer;
 	private final CountDownTimer challengeTimer;
-	
+
 	private FoundInfo foundInfo;
 
 	private TimerText timeInfo;
-	private WaitToast waitInfo;
 	private Text resultInfo;
 
 	private ResultScreenButtons resultScreenButtons;
 
 	public MiniGame() {
 		question = new SingleGameQuestion(0.3f, 2.2f);
-		
-		resultScreenButtons = new ResultScreenButtons(this);
 
-		waitInfo = new WaitToast();
-		waitInfo.setToastListener(new Toast.IToastListener() {
-			@Override
-			public void onToastHidden(Toast toast) {
-				notifyUnblocked();
-			}
-		});
+		resultScreenButtons = new ResultScreenButtons(this);
 
 		foundInfo = new FoundInfo();
 		foundInfo.setAlignment(Text.HAlignLeft, Text.VAlignTop);
@@ -51,16 +39,17 @@ public class MiniGame extends SingleGameMode implements IResultScreenButtonsList
 		resultInfo.setAlignment(Text.HAlignCenter, Text.VAlignTop);
 		resultInfo.setPadding(0, 150);
 
-		blockTimer = new CountDownTimer(challengeTime);
-		blockTimer.setInterval(blockDuration);
+		blockTimer = new CountDownTimer(R.durations.miniModeChallengeDuration);
+		blockTimer.setInterval(R.durations.miniModeBlockDuration);
 		blockTimer.setTickListener(new Timer.ITimerTickListener() {
 			@Override
 			public void timerTick(Timer timer) {
 				timer.stop();
+				notifyUnblocked();
 			}
 		});
 
-		challengeTimer = new CountDownTimer(challengeTime);
+		challengeTimer = new CountDownTimer(R.durations.miniModeChallengeDuration);
 		challengeTimer.setInterval(0.5f);
 		challengeTimer.setCountDownListener(new CountDownTimer.ICountDownListener() {
 			@Override
@@ -115,20 +104,25 @@ public class MiniGame extends SingleGameMode implements IResultScreenButtonsList
 	public void onNewGameTapped() {
 		notifyNewGame();
 	}
-	
+
 	private void block() {
 		blockTimer.start();
-		waitInfo.show(blockDuration);
+		IchiguToast.preapreToast()
+				.setHideOnTap(false)
+				.setMessage(Ichigu.getString(R.strings.wait) + ": " + String.format("%.1f", R.durations.miniModeBlockDuration))
+				.setBackColor(R.colors.ichiguRed)
+				.setDisplayDuration(R.durations.miniModeBlockDuration)
+				.show();
 	}
 
 	private void drawRemainingTime() {
 		timeInfo.draw();
 	}
-	
+
 	private void drawWaitMessage() {
-		waitInfo.setText(String.format("%.1f", blockDuration - blockTimer.getElapsedTime()));
+		IchiguToast.updateMessage(Ichigu.getString(R.strings.wait) + ": " + String.format("%.1f", R.durations.miniModeBlockDuration - blockTimer.getElapsedTime()));
 	}
-	
+
 	private void notifyModeEnd() {
 		prepareResultInfoAndSaveHiscore();
 		resultScreenButtons.listenInput(true);
@@ -161,7 +155,7 @@ public class MiniGame extends SingleGameMode implements IResultScreenButtonsList
 		blockTimer.stop();
 		challengeTimer.stop();
 		timeInfo.syncText();
-		
+
 		super.onEndMode();
 	}
 

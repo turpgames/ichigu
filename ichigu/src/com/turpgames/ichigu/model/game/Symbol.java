@@ -15,16 +15,16 @@ class Symbol extends GameObject {
 		this.texture = texture;
 		this.parent = parent;
 
-		setWidth(Card.SymbolWidth);
-		setHeight(Card.SymbolHeight);
+		setWidth(R.sizes.symbolWidth);
+		setHeight(R.sizes.symbolHeight);
 
 		super.getLocation().set(location);
 
-		if (colorAttribute == CardAttributes.Color_Red)
+		if (colorAttribute == R.cardAttributes.colorRed)
 			getColor().set(R.colors.ichiguRed);
-		if (colorAttribute == CardAttributes.Color_Green)
+		if (colorAttribute == R.cardAttributes.colorGreen)
 			getColor().set(R.colors.ichiguGreen);
-		if (colorAttribute == CardAttributes.Color_Blue)
+		if (colorAttribute == R.cardAttributes.colorBlue)
 			getColor().set(R.colors.ichiguBlue);
 	}
 

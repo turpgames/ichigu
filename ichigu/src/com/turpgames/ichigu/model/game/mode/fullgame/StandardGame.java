@@ -3,7 +3,6 @@ package com.turpgames.ichigu.model.game.mode.fullgame;
 import com.turpgames.framework.v0.impl.Settings;
 import com.turpgames.framework.v0.impl.Text;
 import com.turpgames.framework.v0.util.Timer;
-import com.turpgames.ichigu.model.game.Card;
 import com.turpgames.ichigu.utils.Ichigu;
 import com.turpgames.ichigu.utils.R;
 
@@ -28,7 +27,7 @@ public class StandardGame extends FullGameMode {
 
 	@Override
 	protected void onDraw() {
-		remaingCardInfo.setText(table.getDealtCardCount() + "/" + Card.CardsInDeck);
+		remaingCardInfo.setText(table.getDealtCardCount() + "/" + R.counts.ichiguDeckCardCount);
 		remaingCardInfo.draw();
 		super.onDraw();
 	}

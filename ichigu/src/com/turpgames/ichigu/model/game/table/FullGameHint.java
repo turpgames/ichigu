@@ -3,20 +3,10 @@ package com.turpgames.ichigu.model.game.table;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.turpgames.framework.v0.IDrawable;
 import com.turpgames.framework.v0.effects.IEffectEndListener;
-import com.turpgames.framework.v0.forms.xml.Toast;
-import com.turpgames.framework.v0.impl.Text;
-import com.turpgames.framework.v0.util.Game;
-import com.turpgames.ichigu.model.display.NoTipToast;
 import com.turpgames.ichigu.model.game.Card;
-import com.turpgames.ichigu.model.game.IchiguBank;
-import com.turpgames.ichigu.model.game.IchiguBonusFeature;
-import com.turpgames.ichigu.model.game.mode.IchiguMode;
-import com.turpgames.ichigu.utils.Ichigu;
-import com.turpgames.ichigu.utils.R;
 
-class FullGameHint implements IDrawable, IEffectEndListener, Toast.IToastListener {
+class FullGameHint {
 	class FullGameIchiguInfo {
 		private final List<Card> ichiguCards;
 
@@ -31,7 +21,7 @@ class FullGameHint implements IDrawable, IEffectEndListener, Toast.IToastListene
 		public Card getIchiguHintCard(int ichiguIndex, int cardIndex) {
 			return ichiguCards.get(ichiguIndex * 3 + cardIndex);
 		}
-		
+
 		public void update(List<Card> cards) {
 			ichiguCards.clear();
 
@@ -48,104 +38,52 @@ class FullGameHint implements IDrawable, IEffectEndListener, Toast.IToastListene
 			}
 		}
 	}
-	private Text hintCountText;
+
 	private FullGameIchiguInfo ichiguInfo;
 	private int hintIndex;
 
-	private boolean isActive;
-	private Toast toast;
-	
-	private NoTipToast noTip;
-
 	FullGameHint(Table table) {
-		noTip = new NoTipToast();
-		
-		hintCountText = new Text(true, false);
-		hintCountText.setFontScale(0.75f);
-		hintCountText.getColor().set(R.colors.ichiguYellow);
-		hintCountText.setAlignment(Text.HAlignLeft, Text.VAlignBottom);
-		setHintCountText();
-		hintCountText.setLocation(10 + IchiguMode.buttonSize * 0.8f, Game.viewportToScreenY(30) + IchiguMode.buttonSize * 0.8f);
-		
 		ichiguInfo = new FullGameIchiguInfo();
-
-		toast = new Toast();
-		toast.setListener(this);
-		toast.setToastColor(R.colors.ichiguYellow);
-		
-		IchiguBank.registerListener(new IchiguBank.IIchiguBankListener() {			
-			@Override
-			public void update() {
-				setHintCountText();			
-			}
-		});
-	}
-
-	@Override
-	public void draw() {
-		hintCountText.draw();
 	}
 
 	public int getIchiguCount() {
 		return ichiguInfo.getIchiguCount();
 	}
 
-	public boolean isActive() {
-		return isActive;
-	}
-	
-	@Override
-	public boolean onEffectEnd(Object card) {
-		hintEnd();
-		return true;
-	}
-
-	@Override
-	public void onToastHidden(Toast toast) {
-		hintEnd();
-	}
-
-	public void showHint() {
-		if (IchiguBonusFeature.singleHint.getCount() > 0) {
-			showNextHint();
-		}
-		else {
-			Ichigu.playSoundError();
-			noTip.show();
-		}
-	}
-
 	public void update(List<Card> hintCards) {
 		ichiguInfo.update(hintCards);
-		toast.hide();
 		hintIndex = 0;
-		isActive = false;
 	}
 
 	private void hintEnd() {
 		if (ichiguInfo.getIchiguCount() > 0)
 			hintIndex = (hintIndex + 1) % ichiguInfo.getIchiguCount();
-		isActive = false;
 	}
 
-	private void setHintCountText() {
-		hintCountText.setText(IchiguBonusFeature.singleHint.getCount() + "");
+	public boolean hasHint() {
+		return ichiguInfo.getIchiguCount() > 0;
 	}
-	
-	private void showNextHint() {
-		if (isActive) {
-			toast.hide();
+
+	public void showHint(boolean triple) {
+		if (!hasHint())
 			return;
-		}
 
-		if (ichiguInfo.getIchiguCount() == 0) {
-			toast.show(Ichigu.getString(R.strings.noIchigu), 3f);
+		if (triple) {
+			// null: sadece biri hintEnd çaðýrsa yeter,
+			ichiguInfo.getIchiguHintCard(hintIndex, 0).blink(null, false);
+			ichiguInfo.getIchiguHintCard(hintIndex, 1).blink(blinkEndListener, false);
+			ichiguInfo.getIchiguHintCard(hintIndex, 2).blink(null, false);
 		}
 		else {
-			ichiguInfo.getIchiguHintCard(hintIndex, 1).blink(this, false);
-			IchiguBonusFeature.singleHint.used();
+			ichiguInfo.getIchiguHintCard(hintIndex, 1).blink(blinkEndListener, false);
 		}
-
-		isActive = true;
 	}
+
+	private IEffectEndListener blinkEndListener = new IEffectEndListener() {
+		@Override
+		public boolean onEffectEnd(Object card) {
+			hintEnd();
+			return true;
+		}
+	};
 }

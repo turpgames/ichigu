@@ -9,7 +9,6 @@ import com.turpgames.framework.v0.impl.FormScreen;
 import com.turpgames.framework.v0.impl.GameObject;
 import com.turpgames.framework.v0.util.Game;
 import com.turpgames.framework.v0.util.TextureDrawer;
-import com.turpgames.framework.v0.util.Utils;
 import com.turpgames.ichigu.model.display.IchiguDialog;
 import com.turpgames.ichigu.model.display.IchiguLanguageMenu;
 import com.turpgames.ichigu.model.display.IchiguToolbar;
@@ -40,7 +39,7 @@ public class MenuScreen extends FormScreen implements IGameExitListener {
 				IchiguToolbar.getInstance().enable();
 			}
 		});
-		registerDrawable(languageBar, Utils.LAYER_SCREEN);
+		registerDrawable(languageBar, Game.LAYER_SCREEN);
 		languageBar.listenInput(true);
 		
 		Dialog.clickSound = Game.getResourceManager().getSound(R.game.sounds.flip);
@@ -68,9 +67,9 @@ public class MenuScreen extends FormScreen implements IGameExitListener {
 		bg.setWidth(Game.getScreenWidth());
 		bg.setHeight(Game.getScreenHeight());
 		bg.getColor().set(R.colors.ichiguBlack);
-		registerDrawable(bg, Utils.LAYER_BACKGROUND);
-		registerDrawable(logo, Utils.LAYER_BACKGROUND);
-		registerDrawable(IchiguGame.getToolbar(), Utils.LAYER_SCREEN);
+		registerDrawable(bg, Game.LAYER_BACKGROUND);
+		registerDrawable(logo, Game.LAYER_BACKGROUND);
+		registerDrawable(IchiguGame.getToolbar(), Game.LAYER_SCREEN);
 		
 		exitConfirm = new IchiguDialog();
 		exitConfirm.setListener(new Dialog.IDialogListener() {			
@@ -106,7 +105,7 @@ public class MenuScreen extends FormScreen implements IGameExitListener {
 	@Override
 	protected void onAfterActivate() {
 		super.onAfterActivate();
-		registerDrawable(languageBar, Utils.LAYER_SCREEN);
+		registerDrawable(languageBar, Game.LAYER_SCREEN);
 		languageBar.listenInput(true);
 		if (getCurrentForm().getId().equals(R.game.forms.playMenu)) {
 			IchiguToolbar.getInstance().activateBackButton();

@@ -15,29 +15,23 @@ import com.turpgames.framework.v0.util.Vector;
 import com.turpgames.ichigu.model.game.Card;
 import com.turpgames.ichigu.model.game.table.SudokuTable;
 import com.turpgames.ichigu.model.game.table.Table;
+import com.turpgames.ichigu.utils.R;
 
 public class SudokuGameDealer extends Dealer {
-	public static float inDuration = 0.15f;
-	public static float outDuration = 0.15f;
-
-	private final static float swapDuration = 0.5f;
-	private final static float maxScale = 0.15f;
-
-	private final static Vector inPosition = new Vector(Card.Width / 2,
-			Card.Width / 2);
-	private final static Vector outPosition = new Vector(Game.getVirtualWidth()
-			+ Card.Width / 2, Card.Width / 2);
+	private final static Vector inPosition = new Vector(R.sizes.cardWidth / 2, R.sizes.cardWidth / 2);
+	private final static Vector outPosition = new Vector(Game.getVirtualWidth() + R.sizes.cardWidth / 2, R.sizes.cardWidth / 2);
+	
 	public final static Map<Integer, Vector> cardLocations = new HashMap<Integer, Vector>();
 	static {
-		float dy = (Game.getVirtualHeight() - Game.getVirtualWidth()) / 2f - 20;
-		float dx = (Game.getVirtualWidth() - 3 * Card.Width) / 2;
+		float dy = (Game.getVirtualHeight() - (3 * R.sizes.cardHeight + 2 * 4 * R.sizes.cardSpace)) / 2f;
+		float dx = (Game.getVirtualWidth() - (3 * R.sizes.cardWidth + 2 * 4 * R.sizes.cardSpace)) / 2f;
 		for (int i = 0; i < 9; i++) {
 			int x = i % 3;
 			int y = i / 3;
 
-			cardLocations.put(i,
-					new Vector(x * Card.Width + Card.Space * (x + 1) + dx, y
-							* Card.Height + Card.Space * (y + 1) + dy));
+			cardLocations.put(i, new Vector(
+					dx + x * (R.sizes.cardWidth + 4 * R.sizes.cardSpace), 
+					dy + y * (R.sizes.cardHeight + 4 * R.sizes.cardSpace)));
 		}
 	}
 
@@ -86,21 +80,21 @@ public class SudokuGameDealer extends Dealer {
 		moveEffect = new ProjectileMoveEffect(swappingCards.get(0));
 		moveEffect.setDestination(d1);
 		scaleEffect = new ScaleEffect(swappingCards.get(0));
-		scaleEffect.setMaxScale(maxScale);
+		scaleEffect.setMaxScale(R.sizes.maxScale);
 
 		moveAndScaleEffect = new CompositeEffect(this, moveEffect, scaleEffect);
 		moveAndScaleEffect.setLooping(false);
-		moveAndScaleEffect.setDuration(swapDuration);
+		moveAndScaleEffect.setDuration(R.durations.sudokuModeSwapDuration);
 		swappingCards.get(0).setDealerEffect(moveAndScaleEffect);
 
 		moveEffect = new ProjectileMoveEffect(swappingCards.get(1));
 		moveEffect.setDestination(d2);
 		scaleEffect = new ScaleEffect(swappingCards.get(1));
-		scaleEffect.setMaxScale(maxScale);
+		scaleEffect.setMaxScale(R.sizes.maxScale);
 
 		moveAndScaleEffect = new CompositeEffect(this, moveEffect, scaleEffect);
 		moveAndScaleEffect.setLooping(false);
-		moveAndScaleEffect.setDuration(swapDuration);
+		moveAndScaleEffect.setDuration(R.durations.sudokuModeSwapDuration);
 		swappingCards.get(1).setDealerEffect(moveAndScaleEffect);
 
 		swappingCards.get(0).startDealerEffect(listener);
@@ -110,16 +104,10 @@ public class SudokuGameDealer extends Dealer {
 	@Override
 	protected void concreteDrawCards() {
 		if (isSwapping) {
-			for (Card card : swappingCards)
-				if (card != null)
-					card.draw();
+			draw(swappingCards);
 		} else {
-			for (Card card : cardsDealingIn)
-				if (card != null)
-					card.draw();
-			for (Card card : cardsDealingOut)
-				if (card != null)
-					card.draw();
+			draw(cardsDealingIn);
+			draw(cardsDealingOut);
 		}
 	}
 
@@ -150,5 +138,11 @@ public class SudokuGameDealer extends Dealer {
 			moveEffect.setDestinationAndSpeed(outPosition, cardSpeed);
 			cardsDealingOut.get(i).setDealerEffect(moveEffect);
 		}
+	}
+	
+	private static void draw(List<Card> cards) {
+		for (Card card : cards)
+			if (card != null)
+				card.draw();
 	}
 }

@@ -8,13 +8,6 @@ import com.turpgames.ichigu.model.game.Deck;
 import com.turpgames.ichigu.model.game.dealer.FullGameDealer;
 
 public class FullGameTable extends RegularGameTable {
-
-	public static final int ActiveCardCount = 12;
-	public static final int ExtraCardCount = 3;
-	public static final int IchiguCardCount = 3;
-	public static final int TotalCardsOnTable = ActiveCardCount + ExtraCardCount;
-
-	public final static int cols = 5;
 	
 	private Deck deck;
 	private List<Card> extraCards;
@@ -86,12 +79,6 @@ public class FullGameTable extends RegularGameTable {
 		hint.update(getCardsForHints());
 	}
 	
-	@Override
-	public void draw() {
-		hint.draw();
-		super.draw();
-	}
-
 	@Override
 	public void end() {
 		deck.end();
@@ -209,9 +196,8 @@ public class FullGameTable extends RegularGameTable {
 		dealtCardCount = 0;
 	}
 
-	@Override
-	public void showHint() {
-		hint.showHint();
+	public void showHint(boolean triple) {
+		hint.showHint(triple);
 	}
 
 	@Override

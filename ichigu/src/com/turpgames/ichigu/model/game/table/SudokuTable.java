@@ -20,26 +20,26 @@ public class SudokuTable extends Table {
 		private ITexture correct;
 		private ITexture incorrect;
 		private boolean isActive;
-		
+
 		public IchiguMark(Vector location) {
 			getLocation().set(location);
 			this.correct = Game.getResourceManager().getTexture(R.game.textures.singlegame.correctmark);
 			this.incorrect = Game.getResourceManager().getTexture(R.game.textures.singlegame.incorrectmark);
-			setWidth(R.ui.imageButtonWidth);
-			setHeight(R.ui.imageButtonHeight);
+			setWidth(R.sizes.menuButtonSize);
+			setHeight(R.sizes.menuButtonSize);
 			deactivate();
 		}
-		
+
 		public void activate() {
 			isActive = true;
 			getColor().set(R.colors.ichiguGreen);
 		}
-		
+
 		public void deactivate() {
 			isActive = false;
 			getColor().set(R.colors.ichiguRed);
 		}
-		
+
 		@Override
 		public void draw() {
 			if (isActive)
@@ -49,37 +49,37 @@ public class SudokuTable extends Table {
 		}
 
 		@Override
-		public void registerSelf() { }
+		public void registerSelf() {
+		}
 	}
+
 	private static final List<Vector> markPositions = new ArrayList<Vector>();
-	
+
 	static {
-		float dy = (Game.getVirtualHeight() - Game.getVirtualWidth()) / 2f - 20;
-		float dx = (Game.getVirtualWidth() - 3 * Card.Width) / 2;
-		dy += 3 * Card.Height;
+		float dx = (Game.getVirtualWidth() - (3 * R.sizes.cardWidth + 2 * 4 * R.sizes.cardSpace)) / 2f;
+		float dy = (Game.getVirtualHeight() - (3 * R.sizes.cardHeight + 2 * 4 * R.sizes.cardSpace)) / 2f;
+
+		float halfButtonSize = R.sizes.menuButtonSize / 2;
 		
+		float margin = 10f;
+
 		for (int i = 0; i < 3; i++) {
-			int x = i % 3;
 			markPositions.add(new Vector(
-					x * Card.Width + Card.Space * (x + 1) + dx + (Card.Width - R.ui.imageButtonWidth) / 2,
-					dy + (Card.Height - R.ui.imageButtonHeight) / 2 - 10));
+					dx + ((i + 0.5f) * R.sizes.cardWidth) + i * (4 * R.sizes.cardSpace) - halfButtonSize,
+					Game.getVirtualHeight() - dy + margin));
 		}
 
-		dy -= 3 * Card.Height;
-		dx -= Card.Width;
-		
 		for (int i = 0; i < 3; i++) {
-			int y = i;
-
 			markPositions.add(new Vector(
-					dx + (Card.Width - R.ui.imageButtonWidth) / 2 + 5,
-					y * Card.Height + Card.Space * (y + 1) + dy + (Card.Height - R.ui.imageButtonHeight) / 2));
+					dx - R.sizes.menuButtonSize - margin,
+					dy + ((i + 0.5f) * R.sizes.cardHeight) + i * (4 * R.sizes.cardSpace) - halfButtonSize));
 		}
 	}
-	
+
 	private SudokuDeck deck;
 	private List<IchiguMark> marks;
 	private boolean marksVisible;
+
 	public SudokuTable() {
 		deck = new SudokuDeck(this);
 		marks = new ArrayList<IchiguMark>();
@@ -87,7 +87,7 @@ public class SudokuTable extends Table {
 			marks.add(new IchiguMark(markPositions.get(i)));
 		}
 	}
-	
+
 	@Override
 	public void draw() {
 		for (Card card : cardsOnTable) {
@@ -106,7 +106,7 @@ public class SudokuTable extends Table {
 		selectedCards.clear();
 		cardsOnTable.clear();
 	}
-	
+
 	@Override
 	public ISudokuTableListener getListener() {
 		return (ISudokuTableListener) listener;
@@ -126,13 +126,13 @@ public class SudokuTable extends Table {
 		cardsOnTable.clear();
 		marksVisible = false;
 	}
-	
+
 	@Override
 	public void start() {
 		deck.start();
 		marksVisible = false;
 	}
-	
+
 	public void swapEnded() {
 		swapSelectedInList();
 		if (checkForIchigus())
@@ -140,19 +140,19 @@ public class SudokuTable extends Table {
 		selectedCards.clear();
 		getListener().onSwapEnded();
 	}
-	
+
 	private boolean checkForIchigus() {
 		boolean returning = true;
-		for (int i = 0; i < 9; i+= 3) {
-			if (!CardAttributes.isIchigu(cardsOnTable.get(i).getAttributes(), cardsOnTable.get(i+1).getAttributes(), cardsOnTable.get(i+2).getAttributes())) {
-				marks.get(i/3+3).deactivate();
+		for (int i = 0; i < 9; i += 3) {
+			if (!CardAttributes.isIchigu(cardsOnTable.get(i).getAttributes(), cardsOnTable.get(i + 1).getAttributes(), cardsOnTable.get(i + 2).getAttributes())) {
+				marks.get(i / 3 + 3).deactivate();
 				returning = false;
 			}
 			else
-				marks.get(i/3+3).activate();
+				marks.get(i / 3 + 3).activate();
 		}
 		for (int j = 0; j < 3; j++) {
-			if (!CardAttributes.isIchigu(cardsOnTable.get(j).getAttributes(), cardsOnTable.get(j+3).getAttributes(), cardsOnTable.get(j+6).getAttributes())) {
+			if (!CardAttributes.isIchigu(cardsOnTable.get(j).getAttributes(), cardsOnTable.get(j + 3).getAttributes(), cardsOnTable.get(j + 6).getAttributes())) {
 				marks.get(j).deactivate();
 				returning = false;
 			}
@@ -185,13 +185,13 @@ public class SudokuTable extends Table {
 			selectedCards.add(card);
 			card.select();
 		}
-		
+
 		if (selectedCards.size() == 2)
 		{
 			selectedCards.get(0).deselect();
 			selectedCards.get(1).deselect();
 			getListener().onSwapStarted();
-			((SudokuGameDealer)dealer).swap(selectedCards);
+			((SudokuGameDealer) dealer).swap(selectedCards);
 		}
 	}
 
@@ -220,11 +220,11 @@ public class SudokuTable extends Table {
 	@Override
 	protected List<Card> getCardsToDealOut() {
 		List<Card> toDealOut = new ArrayList<Card>();
-		for(Card card : cardsOnTable)
+		for (Card card : cardsOnTable)
 			toDealOut.add(card);
 		return toDealOut;
 	}
-	
+
 	@Override
 	protected void setDealer() {
 		dealer = new SudokuGameDealer(this);

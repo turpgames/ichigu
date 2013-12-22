@@ -123,7 +123,6 @@ public class SingleGameTable extends RegularGameTable {
 		cardsOnTable.clear();
 	}
 
-	@Override
 	public void showHint() {
 		hint.showNextHint();
 	}

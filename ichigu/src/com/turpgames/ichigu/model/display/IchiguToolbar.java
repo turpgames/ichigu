@@ -5,13 +5,9 @@ import com.turpgames.framework.v0.component.ImageButton;
 import com.turpgames.framework.v0.component.ToggleButton;
 import com.turpgames.framework.v0.component.Toolbar;
 import com.turpgames.framework.v0.impl.GameObject;
-import com.turpgames.framework.v0.util.Game;
 import com.turpgames.ichigu.utils.R;
 
 public class IchiguToolbar extends Toolbar {
-	private static final float buttonSpacing = Game.scale(10);
-	private static final float toolbarMargin = Game.scale(15);
-	private static final float buttonSize = Game.scale(R.ui.imageButtonWidth);
 
 	private static IchiguToolbar instance;
 
@@ -41,27 +37,27 @@ public class IchiguToolbar extends Toolbar {
 
 	@Override
 	protected void concreteAddBackButton() {
-		backButton = new ImageButton(buttonSize, buttonSize, R.game.textures.toolbar.back, R.colors.buttonDefault, R.colors.ichiguYellow);
-		backButton.setLocation(Button.AlignNW, toolbarMargin, toolbarMargin);
+		backButton = new ImageButton(R.sizes.menuButtonSizeToScreen, R.sizes.menuButtonSizeToScreen, R.game.textures.toolbar.back, R.colors.buttonDefault, R.colors.ichiguYellow);
+		backButton.setLocation(Button.AlignNW, R.sizes.toolbarMargin, R.sizes.toolbarMargin);
 	}
 
 	@Override
 	protected void concreteAddSettingsButton() {
-		settingsButton = new ImageButton(buttonSize, buttonSize, R.game.textures.toolbar.settings, R.colors.buttonDefault, R.colors.ichiguYellow);
-		settingsButton.setLocation(Button.AlignNE, toolbarMargin, toolbarMargin);
+		settingsButton = new ImageButton(R.sizes.menuButtonSizeToScreen, R.sizes.menuButtonSizeToScreen, R.game.textures.toolbar.settings, R.colors.buttonDefault, R.colors.ichiguYellow);
+		settingsButton.setLocation(Button.AlignNE,R.sizes. toolbarMargin, R.sizes.toolbarMargin);
 	}
 
 	@Override
 	protected void concreteAddSoundButton() {
-		soundButton = new ToggleButton(buttonSize, buttonSize, R.settings.sound, R.game.textures.toolbar.soundOn, R.game.textures.toolbar.soundOff, 
+		soundButton = new ToggleButton(R.sizes.menuButtonSizeToScreen, R.sizes.menuButtonSizeToScreen, R.settings.sound, R.game.textures.toolbar.soundOn, R.game.textures.toolbar.soundOff, 
 				R.colors.ichiguCyan, R.colors.ichiguWhite);
-		soundButton.setLocation(Button.AlignNE, buttonSize + 2 * buttonSpacing + toolbarMargin, toolbarMargin);
+		soundButton.setLocation(Button.AlignNE, R.sizes.menuButtonSizeToScreen + 2 * R.sizes.menuButtonSpacing + R.sizes.toolbarMargin, R.sizes.toolbarMargin);
 	}
 
 	@Override
 	protected void concreteAddVibrationButton() {
-		vibrationButton = new ToggleButton(buttonSize, buttonSize, R.settings.vibration, R.game.textures.toolbar.vibrationOn, 
+		vibrationButton = new ToggleButton(R.sizes.menuButtonSizeToScreen, R.sizes.menuButtonSizeToScreen, R.settings.vibration, R.game.textures.toolbar.vibrationOn, 
 				R.game.textures.toolbar.vibrationOff, R.colors.ichiguCyan, R.colors.ichiguWhite);
-		vibrationButton.setLocation(Button.AlignNE, 2 * buttonSize + 3 * buttonSpacing + toolbarMargin, toolbarMargin);	
+		vibrationButton.setLocation(Button.AlignNE, 2 * R.sizes.menuButtonSizeToScreen + 3 * R.sizes.menuButtonSpacing + R.sizes.toolbarMargin, R.sizes.toolbarMargin);	
 	}
 }
