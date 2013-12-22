@@ -3,9 +3,7 @@ package com.turpgames.ichigu.server.entity;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import com.turpgames.framework.v0.db.DbManager;
 import com.turpgames.framework.v0.db.SqlQuery;
@@ -16,10 +14,9 @@ public class Score {
 	public static final int ModeTime = 3;
 
 	private int playerId;
-	private int score;
 	private int mode;
+	private int score;
 	private Date time;
-	private String username;
 
 	public int getPlayerId() {
 		return playerId;
@@ -27,14 +24,6 @@ public class Score {
 
 	public void setPlayerId(int playerId) {
 		this.playerId = playerId;
-	}
-
-	public int getScore() {
-		return score;
-	}
-
-	public void setScore(int score) {
-		this.score = score;
 	}
 
 	public int getMode() {
@@ -45,20 +34,20 @@ public class Score {
 		this.mode = mode;
 	}
 
+	public int getScore() {
+		return score;
+	}
+
+	public void setScore(int score) {
+		this.score = score;
+	}
+
 	public Date getTime() {
 		return time;
 	}
 
 	public void setTime(Date time) {
 		this.time = time;
-	}
-
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
 	}
 
 	public boolean insert() {
@@ -75,49 +64,8 @@ public class Score {
 		}
 		return false;
 	}
-	
 
-	public static List<Score> getHiScores(int mode) {
-		return getHiScores(mode, -1);
-	}
-
-	public static List<Score> getHiScores(int mode, int playerId) {
-		SqlQuery sql = new SqlQuery(
-				"select s.*, p.username from scores s, players p where s.player_id = p.id and mode = "
-						+ mode);
-
-		if (playerId > 0)
-			sql.append(" and p.id = " + playerId);
-
-		sql.append(" order by score");
-
-		if (mode != ModeStandard)
-			sql.append(" desc");
-
-		sql.append(" limit 10");
-
-		List<Score> hiscores = new ArrayList<Score>();
-
-		DbManager man = null;
-		ResultSet rs = null;
-		try {
-			man = new DbManager();
-			rs = man.select(sql);
-			
-			Score hiscore = null;			
-			while ((hiscore = fromResultSet(rs)) != null)
-				hiscores.add(hiscore);			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			if (man != null)
-				man.close(rs);
-		}
-
-		return hiscores;
-	}
-
-	private static Score fromResultSet(ResultSet rs) throws SQLException {
+	public static Score fromResultSet(ResultSet rs) throws SQLException {
 		if (!rs.next())
 			return null;
 
@@ -127,8 +75,12 @@ public class Score {
 		score.mode = rs.getInt("mode");
 		score.score = rs.getInt("score");
 		score.time = rs.getDate("time");
-		score.username = rs.getString("username");
 
 		return score;
+	}
+	
+	public String toJson() {
+		return String.format("{ playerId: %d, mode: %d, score: %d, time: %d }", 
+				playerId, mode, score, time.getTime());
 	}
 }

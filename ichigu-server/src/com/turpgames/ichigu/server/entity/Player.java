@@ -121,4 +121,9 @@ public class Player {
 
 		return player;
 	}
+	
+	public String toJson() {
+		return String.format("{ id: %d, username: '%s', email: '%s', facebookId: '%s' }", 
+				id, username, email, facebookId);
+	}
 }
