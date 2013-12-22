@@ -45,6 +45,7 @@ public final class R {
 		public final static float toastDisplayDurationPerWord = 0.15f;
 		public final static float toastDisplayDurationBuffer = 1.5f;
 		public final static float sudokuModeSwapDuration = 0.5f;
+		public final static float fullModeTimerPauseDuration = 30f;
 	}
 
 	public final static class counts {

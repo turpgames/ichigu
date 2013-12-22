@@ -3,20 +3,19 @@ package com.turpgames.ichigu.model.game;
 import com.turpgames.framework.v0.impl.Settings;
 import com.turpgames.ichigu.utils.R;
 
-public final class IchiguBonusFeature {
+public final class BonusFeature {
 	public static interface IListener {
-		void onFeatureUpdated(IchiguBonusFeature feature);
+		void onFeatureUpdated(BonusFeature feature);
 	}
-
-
-	public static final IchiguBonusFeature singleHint;
-	public static final IchiguBonusFeature tripleHint;
-	public static final IchiguBonusFeature timerPause;
+	
+	public static final BonusFeature singleHint;
+	public static final BonusFeature tripleHint;
+	public static final BonusFeature timerPause;
 
 	static {
-		singleHint = new IchiguBonusFeature(R.settings.singleHintCount, R.strings.singleHint, R.strings.singleHintInfo, R.prices.singleHintPrice);
-		tripleHint = new IchiguBonusFeature(R.settings.tripleHintCount, R.strings.tripleHint, R.strings.tripleHintInfo, R.prices.tripleHintPrice);
-		timerPause = new IchiguBonusFeature(R.settings.timerPauseCount, R.strings.pauseTimer, R.strings.pauseTimerInfo, R.prices.timerPausePrice);
+		singleHint = new BonusFeature(R.settings.singleHintCount, R.strings.singleHint, R.strings.singleHintInfo, R.prices.singleHintPrice);
+		tripleHint = new BonusFeature(R.settings.tripleHintCount, R.strings.tripleHint, R.strings.tripleHintInfo, R.prices.tripleHintPrice);
+		timerPause = new BonusFeature(R.settings.timerPauseCount, R.strings.pauseTimer, R.strings.pauseTimerInfo, R.prices.timerPausePrice);
 	}
 
 	private final String key;
@@ -27,7 +26,7 @@ public final class IchiguBonusFeature {
 
 	private IListener listener;
 
-	private IchiguBonusFeature(String key, String name, String info, int price) {
+	private BonusFeature(String key, String name, String info, int price) {
 		this.key = key;
 		this.name = name;
 		this.info = info;

@@ -51,21 +51,22 @@ v1.2
 		-Günlük, Haftalık, Aylık, Genel
 		-Arkadaşlarımın rekorları
 		-Kendi rekorlarım
-	-Sudoku mode
-		-HiScore Toast
-	-Üçlü Hint
+	+Sudoku mode
+		+Score Toast
+	+Üçlü Hint
 		+25 puan
-		-Full Mode'a button
+		+Full Mode'a button
 		+Market menü
-		-Üç kullanımlık
-	-Tekli hint
+		+Tek kullanımlık
+	+Tekli hint
 		+10 puan
 	-Zaman durdurma
-		-30 saniye
-		-Full Mode'a button
+		+30 saniye
+		+Full Mode'a button
 		+25 puan
 		+Market menü
-		-Tek kullanımlık
+		+Tek kullanımlık
+		-30 saniyeden kalanı göster
 	-Yeni deal effectler
 		-Sound bul
 	-Çeviriler
@@ -73,8 +74,10 @@ v1.2
 		-Türkçe
 		-İtalyanca
 		-Çince
+	+Update Process
+		+Yeni fetureları settings e yaz
 	-Bug
-		-Mini mod zaman hızlı başlıyor
+		-Mini mod ve Time Challenge zaman hızlı başlıyor, muhtemelen CountDownTimer'da bir bug var.
 TODO:
 	Achievements
 	Multiplayer

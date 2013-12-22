@@ -4,7 +4,7 @@ import com.turpgames.framework.v0.component.BlinkingImageButton;
 import com.turpgames.framework.v0.impl.Text;
 import com.turpgames.framework.v0.util.Game;
 import com.turpgames.framework.v0.util.Timer;
-import com.turpgames.ichigu.model.game.IchiguBonusFeature;
+import com.turpgames.ichigu.model.game.BonusFeature;
 import com.turpgames.ichigu.utils.R;
 
 public class HintButton extends BlinkingImageButton {
@@ -34,12 +34,12 @@ public class HintButton extends BlinkingImageButton {
 		});
 	}
 	
-	public void listenFeature(IchiguBonusFeature feature) {
+	public void listenFeature(BonusFeature feature) {
 		feature.setListener(featureListener);
 		updateHintCountText(feature);
 	}
 
-	private void updateHintCountText(IchiguBonusFeature feature) {
+	private void updateHintCountText(BonusFeature feature) {
 		if (feature.getCount() > 0) {
 			hintCountText.setText(feature.getCount() + "");			
 		}
@@ -68,9 +68,9 @@ public class HintButton extends BlinkingImageButton {
 		super.draw();
 	}
 	
-	private IchiguBonusFeature.IListener featureListener = new IchiguBonusFeature.IListener() {		
+	private BonusFeature.IListener featureListener = new BonusFeature.IListener() {		
 		@Override
-		public void onFeatureUpdated(IchiguBonusFeature feature) {
+		public void onFeatureUpdated(BonusFeature feature) {
 			updateHintCountText(feature);
 		}
 	};

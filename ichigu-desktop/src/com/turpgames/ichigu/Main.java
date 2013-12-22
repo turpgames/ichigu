@@ -21,7 +21,7 @@ public class Main {
 		cfg.width = (int) (x * w);
 		cfg.height = (int) (x * h);
 		
-		Game.setEnvironmentProvider(new IEnvironmentProvider() {			
+		Game.setEnvironmentProvider(new IEnvironmentProvider() {
 			@Override
 			public Version getAppVersion() {
 				return new Version("1.2.0");

@@ -2,7 +2,6 @@ package com.turpgames.ichigu.model.display;
 
 import com.turpgames.framework.v0.forms.xml.Toast;
 import com.turpgames.framework.v0.util.Color;
-import com.turpgames.framework.v0.util.Game;
 import com.turpgames.ichigu.utils.Ichigu;
 import com.turpgames.ichigu.utils.R;
 
@@ -15,24 +14,43 @@ public class IchiguToast {
 		toast = new Toast();
 	}
 
-	public static void showError(String resourceId) {
-		show(resourceId, R.colors.ichiguRed);
+	public static void showError(String text) {
+		show(text, R.colors.ichiguRed);
 	}
 
-	public static void showInfo(String resourceId) {
-		show(resourceId, R.colors.ichiguBlue);
+	public static void showWarning(String text) {
+		show(text, R.colors.ichiguYellow);
 	}
 
-	public static void show(String resourceId, Color backColor) {
-		showMessage(Ichigu.getString(resourceId), backColor);
+	public static void showInfo(String text) {
+		show(text, R.colors.ichiguGreen);
 	}
 
-	public static void showMessage(String message, Color backColor) {
-		showMessage(message, calculateFontScale(message), backColor, R.colors.ichiguWhite, true, 1.0f,
-				Game.scale(30f), Game.scale(30f), calculateDuration(message), R.durations.toastSlideDuration);
+	public static void showError(String text, float fontScale) {
+		show(text, fontScale, R.colors.ichiguRed);
 	}
 
-	public static void showMessage(String message, float fontScale, Color backColor, Color foreColor,
+	public static void showWarning(String text, float fontScale) {
+		show(text, fontScale, R.colors.ichiguYellow);
+	}
+
+	public static void showInfo(String text, float fontScale) {
+		show(text, fontScale, R.colors.ichiguGreen);
+	}
+
+	public static void show(String text, Color backColor) {
+		String message = Ichigu.getString(text);
+		float fontScale = calculateFontScale(message);
+		show(message, fontScale, backColor);
+	}
+
+	public static void show(String text, float fontScale, Color backColor) {
+		String message = Ichigu.getString(text);
+		show(message, fontScale, backColor, R.colors.ichiguWhite, true, 1.0f,
+				30f, 30f, calculateDuration(message), R.durations.toastSlideDuration);
+	}
+
+	private static void show(String message, float fontScale, Color backColor, Color foreColor,
 			boolean hideOnTap, float alpha, float padX, float padY, float displayDuration, float slideDuration) {
 		preapreToast()
 				.setAlpha(alpha)
@@ -47,22 +65,44 @@ public class IchiguToast {
 				.show();
 	}
 
+	public static IchiguToast preapreToast() {
+		hide();
+		reset();
+		return instance;
+	}
+
+	public static void hide() {
+		instance.toast.hide();
+	}
+
+	public static void updateMessage(String message) {
+		instance.toast.setMessage(message);
+	}
+
+	private static float calculateDuration(String message) {
+		return message.split(" ").length * R.durations.toastDisplayDurationPerWord + R.durations.toastDisplayDurationBuffer;
+	}
+
+	private static float calculateFontScale(String message) {
+		if (message.length() < 20) {
+			return R.fontSize.large;
+		}
+		if (message.length() < 40) {
+			return R.fontSize.large;
+		}
+		return R.fontSize.small;
+	}
+
 	private static void reset() {
 		instance.setAlpha(1)
 				.setDisplayDuration(3f)
 				.setFontScale(R.fontSize.medium)
 				.setHideOnTap(true)
 				.setMessage("")
-				.setPadding(Game.scale(30f), Game.scale(30f))
+				.setPadding(30f, 30f)
 				.setSlideDuration(R.durations.toastSlideDuration)
 				.setTextColor(R.colors.ichiguWhite)
 				.setBackColor(R.colors.ichiguBlue);
-	}
-
-	public static IchiguToast preapreToast() {
-		hide();
-		reset();
-		return instance;
 	}
 
 	public IchiguToast setFontScale(float fontScale) {
@@ -113,27 +153,5 @@ public class IchiguToast {
 
 	public void show() {
 		toast.show();
-	}
-	
-	public static void updateMessage(String message) {
-		instance.toast.setMessage(message);
-	}
-
-	public static void hide() {
-		instance.toast.hide();
-	}
-
-	private static float calculateDuration(String message) {
-		return message.split(" ").length * R.durations.toastDisplayDurationPerWord + R.durations.toastDisplayDurationBuffer;
-	}
-
-	private static float calculateFontScale(String message) {
-		if (message.length() < 20) {
-			return R.fontSize.large;
-		}
-		if (message.length() < 40) {
-			return R.fontSize.large;
-		}
-		return R.fontSize.small;
 	}
 }

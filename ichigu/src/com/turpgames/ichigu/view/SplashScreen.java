@@ -28,9 +28,7 @@ public class SplashScreen extends Screen {
 	}
 
 	@Override
-	public void init() {
-		// AfterUpdateProcess's must be added here UpdateProcessor.instance.addProcess();
-		
+	public void init() {		
 		super.init();
 		registerDrawable(new TurpLogo(), Game.LAYER_BACKGROUND);
 		progressColor = new Color(R.colors.ichiguYellow);
@@ -45,23 +43,7 @@ public class SplashScreen extends Screen {
 			Button.defaultClickSound = Game.getResourceManager().getSound(R.game.sounds.flip);
 			switchToMenu();
 		}
-//		else {
-//			setProgressColor(resourceManager.getProgress());
-//		}
 	}
-
-//	private void setProgressColor(float progress) {
-//		if (progress < 0.5f) {
-//			progressColor.r = (1 - 2 * progress) * R.colors.ichiguRed.r + 2 * progress * R.colors.ichiguGreen.r;
-//			progressColor.g = (1 - 2 * progress) * R.colors.ichiguRed.g + 2 * progress * R.colors.ichiguGreen.g;
-//			progressColor.b = (1 - 2 * progress) * R.colors.ichiguRed.b + 2 * progress * R.colors.ichiguGreen.b;
-//		}
-//		else {
-//			progressColor.r = 2 * (1 - progress) * R.colors.ichiguGreen.r + 2 * (progress - 0.5f) * R.colors.ichiguBlue.r;
-//			progressColor.g = 2 * (1 - progress) * R.colors.ichiguGreen.g + 2 * (progress - 0.5f) * R.colors.ichiguBlue.g;
-//			progressColor.b = 2 * (1 - progress) * R.colors.ichiguGreen.b + 2 * (progress - 0.5f) * R.colors.ichiguBlue.b;
-//		}
-//	}
 
 	private void switchToMenu() {
 		ScreenManager.instance.switchTo(R.game.screens.menu, false);

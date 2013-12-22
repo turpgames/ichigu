@@ -4,7 +4,7 @@ import com.turpgames.framework.v0.impl.Settings;
 
 public final class IchiguSettings {
 	public static int getHintCount() {
-		return Settings.getInteger(R.settings.singleHintCount, 10);
+		return Settings.getInteger(R.settings.singleHintCount, 0);
 	}
 	
 	public static int getIchiguBalance() {

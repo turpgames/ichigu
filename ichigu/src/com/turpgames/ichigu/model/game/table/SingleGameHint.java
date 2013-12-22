@@ -36,7 +36,7 @@ class SingleGameHint implements Toast.IListener {
 
 			String hint = hints.get(index++);
 
-			IchiguToast.showMessage(hint, getToastColor());
+			IchiguToast.show(hint, getToastColor());
 		}
 	}
 

@@ -15,7 +15,7 @@ public class TimerText extends Text {
 				syncText();
 			}
 		});
-		flasher = new TextFlasher(this);
+		this.flasher = new TextFlasher(this);
 	}
 	
 	public void flash() {

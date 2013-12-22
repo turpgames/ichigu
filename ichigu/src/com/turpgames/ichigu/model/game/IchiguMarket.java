@@ -4,7 +4,6 @@ import com.turpgames.framework.v0.IDrawable;
 import com.turpgames.framework.v0.ILanguageListener;
 import com.turpgames.framework.v0.component.IButtonListener;
 import com.turpgames.framework.v0.component.TextButton;
-import com.turpgames.framework.v0.forms.xml.Dialog;
 import com.turpgames.framework.v0.impl.Text;
 import com.turpgames.framework.v0.util.Game;
 import com.turpgames.ichigu.model.display.IchiguToast;
@@ -19,9 +18,8 @@ public class IchiguMarket implements IDrawable, ILanguageListener {
 	private TextButton btnTripleHint;
 	private TextButton btnTimerPause;
 	private TextButton btnBuy;
-	private Dialog dialog;
 
-	private IchiguBonusFeature currentFeature = IchiguBonusFeature.singleHint;
+	private BonusFeature currentFeature = BonusFeature.singleHint;
 
 	public IchiguMarket() {
 		pageTitle = new Text();
@@ -44,7 +42,7 @@ public class IchiguMarket implements IDrawable, ILanguageListener {
 		btnSingleHint.setListener(new IButtonListener() {
 			@Override
 			public void onButtonTapped() {
-				setCurrentFeature(IchiguBonusFeature.singleHint);
+				setCurrentFeature(BonusFeature.singleHint);
 
 				setActive(btnSingleHint, true);
 				setActive(btnTripleHint, false);
@@ -56,7 +54,7 @@ public class IchiguMarket implements IDrawable, ILanguageListener {
 		btnTripleHint.setListener(new IButtonListener() {
 			@Override
 			public void onButtonTapped() {
-				setCurrentFeature(IchiguBonusFeature.tripleHint);
+				setCurrentFeature(BonusFeature.tripleHint);
 
 				setActive(btnSingleHint, false);
 				setActive(btnTripleHint, true);
@@ -68,7 +66,7 @@ public class IchiguMarket implements IDrawable, ILanguageListener {
 		btnTimerPause.setListener(new IButtonListener() {
 			@Override
 			public void onButtonTapped() {
-				setCurrentFeature(IchiguBonusFeature.timerPause);
+				setCurrentFeature(BonusFeature.timerPause);
 
 				setActive(btnSingleHint, false);
 				setActive(btnTripleHint, false);
@@ -84,16 +82,13 @@ public class IchiguMarket implements IDrawable, ILanguageListener {
 			}
 		});
 		
-		dialog = new Dialog();
-		dialog.addButton("ok", R.strings.ok);
-
 		Game.getLanguageManager().register(this);
 	}
 
-	private void setCurrentFeature(IchiguBonusFeature feature) {
+	private void setCurrentFeature(BonusFeature feature) {
 		currentFeature = feature;
 		setLanguageSensitiveInfo();
-		IchiguToast.showInfo(feature.getInfo());
+		IchiguToast.showInfo(feature.getInfo(), R.fontSize.small);
 	}
 
 	private void setActive(TextButton btn, boolean isActive) {
@@ -118,7 +113,7 @@ public class IchiguMarket implements IDrawable, ILanguageListener {
 		setActive(btnTripleHint, true);
 		setActive(btnTimerPause, false);
 		
-		setCurrentFeature(IchiguBonusFeature.tripleHint);
+		setCurrentFeature(BonusFeature.tripleHint);
 	}
 
 	public void deactivate() {
@@ -148,7 +143,7 @@ public class IchiguMarket implements IDrawable, ILanguageListener {
 		if (IchiguBank.buy(currentFeature))
 			setBankInfoText();
 		else
-			dialog.open(String.format(
+			IchiguToast.showError(String.format(
 					Ichigu.getString(R.strings.insufficientIchiguBalance), 
 					Ichigu.getString(currentFeature.getName())));
 	}

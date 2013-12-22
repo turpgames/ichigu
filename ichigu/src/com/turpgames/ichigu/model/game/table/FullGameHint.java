@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.turpgames.framework.v0.effects.IEffectEndListener;
+import com.turpgames.ichigu.model.display.IchiguToast;
 import com.turpgames.ichigu.model.game.Card;
+import com.turpgames.ichigu.utils.R;
 
 class FullGameHint {
 	class FullGameIchiguInfo {
@@ -64,9 +66,11 @@ class FullGameHint {
 		return ichiguInfo.getIchiguCount() > 0;
 	}
 
-	public void showHint(boolean triple) {
-		if (!hasHint())
-			return;
+	public boolean showHint(boolean triple) {
+		if (!hasHint()) {
+			IchiguToast.showWarning(R.strings.noIchigu);
+			return false;
+		}
 
 		if (triple) {
 			// null: sadece biri hintEnd çaðýrsa yeter,
@@ -77,6 +81,8 @@ class FullGameHint {
 		else {
 			ichiguInfo.getIchiguHintCard(hintIndex, 1).blink(blinkEndListener, false);
 		}
+		
+		return true;
 	}
 
 	private IEffectEndListener blinkEndListener = new IEffectEndListener() {

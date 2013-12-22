@@ -196,8 +196,8 @@ public class FullGameTable extends RegularGameTable {
 		dealtCardCount = 0;
 	}
 
-	public void showHint(boolean triple) {
-		hint.showHint(triple);
+	public boolean showHint(boolean triple) {
+		return hint.showHint(triple);
 	}
 
 	@Override

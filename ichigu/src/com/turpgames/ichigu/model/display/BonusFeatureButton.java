@@ -6,21 +6,34 @@ import com.turpgames.framework.v0.component.IButtonListener;
 import com.turpgames.framework.v0.impl.Text;
 import com.turpgames.framework.v0.util.Game;
 import com.turpgames.framework.v0.util.Timer;
-import com.turpgames.ichigu.model.game.IchiguBonusFeature;
+import com.turpgames.ichigu.model.game.BonusFeature;
 import com.turpgames.ichigu.utils.R;
 
-public class FullGameBonusFeature implements IDrawable {
+public class BonusFeatureButton implements IDrawable {
+	public static interface IListener {
+		/**
+		 * returns true if feature is used
+		 */
+		boolean onUseBonusFeature();
+
+		void onInsufficientBonusFeature();
+
+		void onBonusFeatureAlreadyUsed();
+	}
+	
 	private final BlinkingImageButton button;
 	private final Text featureCountText;
-	
-	private IchiguBonusFeature feature;
+
+	private BonusFeature feature;
 	private Timer notificationTimer = Timer.NULL;
-	
+
 	private boolean isActive;
 	private boolean singleUse;
-	private boolean permanentlyDeactivated;
+	private String defaultTextureId;
+	private boolean isUsed;
+	private IListener listener;
 
-	private FullGameBonusFeature() {
+	private BonusFeatureButton() {
 		this.button = new BlinkingImageButton();
 		this.button.setWidth(R.sizes.menuButtonSizeToScreen);
 		this.button.setHeight(R.sizes.menuButtonSizeToScreen);
@@ -29,16 +42,10 @@ public class FullGameBonusFeature implements IDrawable {
 		this.featureCountText = new Text(true, false);
 		this.featureCountText.setFontScale(0.75f);
 		this.featureCountText.getColor().set(R.colors.ichiguYellow);
-		this.featureCountText.setAlignment(Text.HAlignLeft, Text.VAlignBottom);		
-	}
-
-	public void reset() {
-		permanentlyDeactivated = false;
+		this.featureCountText.setAlignment(Text.HAlignLeft, Text.VAlignBottom);
 	}
 
 	public void enable() {
-		if (permanentlyDeactivated)
-			return;
 		button.listenInput(true);
 		notificationTimer.start();
 	}
@@ -49,8 +56,6 @@ public class FullGameBonusFeature implements IDrawable {
 	}
 
 	public void activate() {
-		if (permanentlyDeactivated)
-			return;
 		button.activate();
 		notificationTimer.restart();
 		isActive = true;
@@ -70,42 +75,69 @@ public class FullGameBonusFeature implements IDrawable {
 	public void draw() {
 		if (!isActive)
 			return;
-
+		
 		button.draw();
 		featureCountText.draw();
 	}
 
-	private void onUsed() {
-		feature.used();
-		if (singleUse) {
-			deactivate();
-			permanentlyDeactivated = true;
+	private void useFeature() {
+		if (listener == null)
+			return;
+
+		if (singleUse && isUsed) {
+			listener.onBonusFeatureAlreadyUsed();
+			return;
+		}
+
+		if (feature.getCount() < 1) {
+			listener.onInsufficientBonusFeature();
+			return;
+		}
+
+		if (listener.onUseBonusFeature()) {
+			feature.used();	
+			if (singleUse)
+				setAsUsed();
 		}
 	}
 
-	private void updateFeatureCountText(IchiguBonusFeature feature) {
+	private void setAsUsed() {
+		isUsed = true;
+		button.setDefaultColor(R.colors.ichiguYellow);
+		button.setTouchedColor(R.colors.ichiguRed);
+		button.setTexture(R.game.textures.singlegame.incorrectmark);
+	}
+
+	public void reset() {
+		isUsed = false;
+		button.setDefaultColor(R.colors.ichiguWhite);
+		button.setTouchedColor(R.colors.ichiguWhite);
+		button.setTexture(defaultTextureId);
+	}
+
+	private void updateFeatureCountText(BonusFeature feature) {
 		featureCountText.setText(feature.getCount() + "");
 	}
 
-	private IchiguBonusFeature.IListener featureListener = new IchiguBonusFeature.IListener() {
+	private BonusFeature.IListener featureListener = new BonusFeature.IListener() {
 		@Override
-		public void onFeatureUpdated(IchiguBonusFeature feature) {
+		public void onFeatureUpdated(BonusFeature feature) {
 			updateFeatureCountText(feature);
 		}
 	};
 
 	public static final class Builder {
-		private final FullGameBonusFeature featureButton;
+		private final BonusFeatureButton featureButton;
 
 		private Builder() {
-			featureButton = new FullGameBonusFeature();
+			featureButton = new BonusFeatureButton();
 		}
 
 		public static Builder newBuilder() {
 			return new Builder();
 		}
 
-		public Builder listenFeature(IchiguBonusFeature feature) {
+		public Builder listenFeature(BonusFeature feature) {
 			featureButton.feature = feature;
 			featureButton.feature.setListener(featureButton.featureListener);
 			featureButton.updateFeatureCountText(feature);
@@ -113,6 +145,7 @@ public class FullGameBonusFeature implements IDrawable {
 		}
 
 		public Builder setTexture(String textureId) {
+			featureButton.defaultTextureId = textureId;
 			featureButton.button.setTexture(textureId);
 			return this;
 		}
@@ -148,18 +181,18 @@ public class FullGameBonusFeature implements IDrawable {
 			return this;
 		}
 
-		public Builder setListener(final IButtonListener listener) {
+		public Builder setListener(IListener listener) {
+			featureButton.listener = listener;
 			featureButton.button.setListener(new IButtonListener() {
 				@Override
 				public void onButtonTapped() {
-					listener.onButtonTapped();
-					featureButton.onUsed();
+					featureButton.useFeature();
 				}
 			});
 			return this;
 		}
 
-		public FullGameBonusFeature build() {
+		public BonusFeatureButton build() {
 			return featureButton;
 		}
 	}

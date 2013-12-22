@@ -37,7 +37,7 @@ public final class IchiguBank {
 		listeners.unregister(listener);
 	}
 
-	public static boolean buy(IchiguBonusFeature feature) {
+	public static boolean buy(BonusFeature feature) {
 		if (balance < feature.getPrice())
 			return false;
 		

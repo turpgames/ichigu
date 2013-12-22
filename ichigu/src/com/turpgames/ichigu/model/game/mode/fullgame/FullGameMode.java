@@ -1,25 +1,24 @@
 package com.turpgames.ichigu.model.game.mode.fullgame;
 
-import com.turpgames.framework.v0.component.IButtonListener;
 import com.turpgames.framework.v0.impl.Text;
 import com.turpgames.framework.v0.util.Game;
 import com.turpgames.framework.v0.util.Timer;
-import com.turpgames.ichigu.model.display.FullGameBonusFeature;
+import com.turpgames.ichigu.model.display.BonusFeatureButton;
 import com.turpgames.ichigu.model.display.IResultScreenButtonsListener;
 import com.turpgames.ichigu.model.display.IchiguToast;
 import com.turpgames.ichigu.model.display.ResultScreenButtons;
 import com.turpgames.ichigu.model.display.TimerText;
+import com.turpgames.ichigu.model.game.BonusFeature;
 import com.turpgames.ichigu.model.game.Card;
-import com.turpgames.ichigu.model.game.IchiguBonusFeature;
 import com.turpgames.ichigu.model.game.mode.RegularMode;
 import com.turpgames.ichigu.model.game.table.FullGameTable;
 import com.turpgames.ichigu.utils.R;
 
 public abstract class FullGameMode extends RegularMode implements IResultScreenButtonsListener {
 
-	private FullGameBonusFeature singleHintButton;
-	private FullGameBonusFeature tripleHintButton;
-	private FullGameBonusFeature timerPauseButton;
+	private BonusFeatureButton singleHintFeatureButton;
+	private BonusFeatureButton tripleHintFeatureButton;
+	private BonusFeatureButton timerPauseFeatureButton;
 
 	protected Text resultInfo;
 	protected TimerText timerText;
@@ -29,44 +28,28 @@ public abstract class FullGameMode extends RegularMode implements IResultScreenB
 	public FullGameMode() {
 		resultScreenButtons = new ResultScreenButtons(this);
 
-		singleHintButton = FullGameBonusFeature.Builder.newBuilder()
-				.listenFeature(IchiguBonusFeature.singleHint)
+		singleHintFeatureButton = BonusFeatureButton.Builder.newBuilder()
+				.listenFeature(BonusFeature.singleHint)
 				.setTexture(R.game.textures.hintSingle)
 				.setLocation(10, 30)
 				.enableNotification()
-				.setListener(new IButtonListener() {
-					@Override
-					public void onButtonTapped() {
-						getTable().showHint(false);
-					}
-				})
+				.setListener(singleHintFeatureListener)
 				.build();
 
-		tripleHintButton = FullGameBonusFeature.Builder.newBuilder()
-				.listenFeature(IchiguBonusFeature.tripleHint)
+		tripleHintFeatureButton = BonusFeatureButton.Builder.newBuilder()
+				.listenFeature(BonusFeature.tripleHint)
 				.setTexture(R.game.textures.hintTriple)
 				.setLocation(10 + R.sizes.menuButtonSize + 20, 30)
 				.setAsSingleUse()
-				.setListener(new IButtonListener() {
-					@Override
-					public void onButtonTapped() {
-						getTable().showHint(true);
-						tripleHintButton.deactivate();
-					}
-				})
+				.setListener(tripleHintFeatureListener)
 				.build();
 
-		timerPauseButton = FullGameBonusFeature.Builder.newBuilder()
-				.listenFeature(IchiguBonusFeature.timerPause)
+		timerPauseFeatureButton = BonusFeatureButton.Builder.newBuilder()
+				.listenFeature(BonusFeature.timerPause)
 				.setTexture(R.game.textures.timerPause)
 				.setLocation(10 + 2 * (R.sizes.menuButtonSize + 20), 30)
 				.setAsSingleUse()
-				.setListener(new IButtonListener() {
-					@Override
-					public void onButtonTapped() {
-						timerPauseButton.deactivate();
-					}
-				})
+				.setListener(timerPauseFeatureListener)
 				.build();
 
 		timerText = new TimerText(getTimer());
@@ -80,11 +63,12 @@ public abstract class FullGameMode extends RegularMode implements IResultScreenB
 
 	public void applyTimePenalty() {
 		getTimer().addSeconds(R.counts.fullModeSecondPerPenalty);
+		timerText.syncText();
 		timerText.flash();
 	}
 
 	public void cardTapped(Card card) {
-		singleHintButton.restartNotificationTimer();
+		singleHintFeatureButton.restartNotificationTimer();
 	}
 
 	@Override
@@ -207,38 +191,98 @@ public abstract class FullGameMode extends RegularMode implements IResultScreenB
 	}
 
 	private void enableFeatureButtons() {
-		singleHintButton.enable();
-		tripleHintButton.enable();
-		timerPauseButton.enable();
+		singleHintFeatureButton.enable();
+		tripleHintFeatureButton.enable();
+		timerPauseFeatureButton.enable();
 	}
 
 	private void disableFeatureButtons() {
-		singleHintButton.disable();
-		tripleHintButton.disable();
-		timerPauseButton.disable();
+		singleHintFeatureButton.disable();
+		tripleHintFeatureButton.disable();
+		timerPauseFeatureButton.disable();
 	}
 
 	private void activateFeatureButtons() {
-		singleHintButton.activate();
-		tripleHintButton.activate();
-		timerPauseButton.activate();
+		singleHintFeatureButton.activate();
+		tripleHintFeatureButton.activate();
+		timerPauseFeatureButton.activate();
 	}
 
 	private void deactivateFeatureButtons() {
-		singleHintButton.deactivate();
-		tripleHintButton.deactivate();
-		timerPauseButton.deactivate();
+		singleHintFeatureButton.deactivate();
+		tripleHintFeatureButton.deactivate();
+		timerPauseFeatureButton.deactivate();
 	}
 
 	private void resetFeatureButtons() {
-		singleHintButton.reset();
-		tripleHintButton.reset();
-		timerPauseButton.reset();
+		singleHintFeatureButton.reset();
+		tripleHintFeatureButton.reset();
+		timerPauseFeatureButton.reset();
 	}
 
 	private void drawFeatureButtons() {
-		singleHintButton.draw();
-		tripleHintButton.draw();
-		timerPauseButton.draw();
+		singleHintFeatureButton.draw();
+		tripleHintFeatureButton.draw();
+		timerPauseFeatureButton.draw();
 	}
+	
+	private void toastInsufficientFeature() {
+		IchiguToast.showError(R.strings.buyFromMarket);
+	}
+	
+	private void toastFeatureAlreadyUsed() {
+		IchiguToast.showError(R.strings.bonusFeatureOnceWarning);
+	}
+	
+	private BonusFeatureButton.IListener singleHintFeatureListener = new BonusFeatureButton.IListener() {
+		@Override
+		public boolean onUseBonusFeature() {
+			return getTable().showHint(false);
+		}
+
+		@Override
+		public void onInsufficientBonusFeature() {
+			toastInsufficientFeature();
+		}
+
+		@Override
+		public void onBonusFeatureAlreadyUsed() {
+			toastFeatureAlreadyUsed();
+		}
+	};
+	
+	private BonusFeatureButton.IListener tripleHintFeatureListener = new BonusFeatureButton.IListener() {
+		@Override
+		public boolean onUseBonusFeature() {
+			return getTable().showHint(true);
+		}
+
+		@Override
+		public void onInsufficientBonusFeature() {
+			toastInsufficientFeature();
+		}
+
+		@Override
+		public void onBonusFeatureAlreadyUsed() {
+			toastFeatureAlreadyUsed();
+		}
+	};
+	
+	private BonusFeatureButton.IListener timerPauseFeatureListener = new BonusFeatureButton.IListener() {
+		@Override
+		public boolean onUseBonusFeature() {
+			getTimer().pauseFor(R.durations.fullModeTimerPauseDuration);
+			return true;
+		}
+
+		@Override
+		public void onInsufficientBonusFeature() {
+			toastInsufficientFeature();
+		}
+
+		@Override
+		public void onBonusFeatureAlreadyUsed() {
+			toastFeatureAlreadyUsed();
+		}
+	};
 }
