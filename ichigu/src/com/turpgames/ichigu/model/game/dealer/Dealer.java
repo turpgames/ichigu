@@ -24,8 +24,7 @@ public abstract class Dealer {
 		public void timerTick(Timer timer) {
 			if (i >= cards.size())
 				return;
-			if (cards.get(i) != null)
-				cards.get(i).startDealerEffect(listener);
+			cards.get(i).startDealerEffect(listener);
 			i++;
 		}
 	}
@@ -53,11 +52,9 @@ public abstract class Dealer {
 
 	public final void deal(List<Card> cardsToDealIn, List<Card> cardsToDealOut) {
 		for(Card card : cardsToDealIn)
-			if(card != null)
-				card.resetDealerEffect();
+			card.resetDealerEffect();
 		for(Card card : cardsToDealOut)
-			if(card != null)
-				card.resetDealerEffect();
+			card.resetDealerEffect();
 
 		this.cardsDealingIn = cardsToDealIn;
 		this.cardsDealingOut = cardsToDealOut;
@@ -69,12 +66,17 @@ public abstract class Dealer {
 		selectDeal();
 	}
 	
-	public void drawCards() {
+	public void draw() {
 		if (!isWorking())
 			return;
 		concreteDrawCards();
 	}
 	
+	protected final static void drawCards(List<Card> cards) {
+		for (Card card : cards)
+			card.draw();
+	}
+
 	public boolean isWorking() {
 		return effectsToFinish != 0;
 	}
@@ -97,11 +99,10 @@ public abstract class Dealer {
 		effectsToFinish--;
 		if (effectsToFinish == 0) {
 			for(Card card : cardsDealingIn)
-				if (card != null)
-					card.resetDealerEffect();
+				card.resetDealerEffect();
 			for(Card card : cardsDealingOut)
 				card.resetDealerEffect();
-			table.onDealEnded(cardsDealingIn, cardsDealingOut);
+			table.onDealEnded();
 			dealInTimer.stop();
 			dealOutTimer.stop();
 		}

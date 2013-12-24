@@ -9,6 +9,7 @@ import com.turpgames.framework.v0.component.TutorialPage;
 import com.turpgames.framework.v0.impl.Text;
 import com.turpgames.framework.v0.util.Game;
 import com.turpgames.ichigu.model.game.Card;
+import com.turpgames.ichigu.model.game.CardAttributes;
 import com.turpgames.ichigu.utils.Ichigu;
 import com.turpgames.ichigu.utils.R;
 
@@ -71,9 +72,9 @@ class IchiguTutorial extends Tutorial {
 		float x2 = x1 + R.sizes.cardWidth + cardSpace;
 		float x3 = x2 + R.sizes.cardWidth + cardSpace;
 		float y = Game.getVirtualHeight() - R.sizes.tutorialMarginTop - info.getTextAreaHeight() - R.sizes.cardHeight - 150;
-		page.addImage(Card.createTutorialCard(R.cardAttributes.colorRed, R.cardAttributes.shapeTriangle, R.cardAttributes.count1, R.cardAttributes.patternEmpty, x1, y));
-		page.addImage(Card.createTutorialCard(R.cardAttributes.colorGreen, R.cardAttributes.shapeSquare, R.cardAttributes.count2, R.cardAttributes.patternStriped, x2, y));
-		page.addImage(Card.createTutorialCard(R.cardAttributes.colorBlue, R.cardAttributes.shapeCircle, R.cardAttributes.count3, R.cardAttributes.patternFilled, x3, y));
+		page.addImage(Card.createTutorialCard(CardAttributes.colorRed, CardAttributes.shapeTriangle, CardAttributes.count1, CardAttributes.patternEmpty, x1, y));
+		page.addImage(Card.createTutorialCard(CardAttributes.colorGreen, CardAttributes.shapeSquare, CardAttributes.count2, CardAttributes.patternStriped, x2, y));
+		page.addImage(Card.createTutorialCard(CardAttributes.colorBlue, CardAttributes.shapeCircle, CardAttributes.count3, CardAttributes.patternFilled, x3, y));
 		pages.add(page);
 
 		page = new TutorialPage("4", R.fontSize.medium);
@@ -85,9 +86,9 @@ class IchiguTutorial extends Tutorial {
 		info = page.addInfo(Ichigu.getString(R.strings.tutSampleIchiguTitle), Text.HAlignCenter, R.sizes.tutorialMarginTop);
 		info.getColor().set(R.colors.ichiguYellow);
 		y = Game.getVirtualHeight() - R.sizes.tutorialMarginTop - info.getTextAreaHeight() - R.sizes.cardHeight - 50;
-		page.addImage(Card.createTutorialCard(R.cardAttributes.colorBlue, R.cardAttributes.shapeCircle, R.cardAttributes.count1, R.cardAttributes.patternEmpty, x1, y));
-		page.addImage(Card.createTutorialCard(R.cardAttributes.colorBlue, R.cardAttributes.shapeSquare, R.cardAttributes.count1, R.cardAttributes.patternEmpty, x2, y));
-		page.addImage(Card.createTutorialCard(R.cardAttributes.colorBlue, R.cardAttributes.shapeTriangle, R.cardAttributes.count1, R.cardAttributes.patternEmpty, x3, y));
+		page.addImage(Card.createTutorialCard(CardAttributes.colorBlue, CardAttributes.shapeCircle, CardAttributes.count1, CardAttributes.patternEmpty, x1, y));
+		page.addImage(Card.createTutorialCard(CardAttributes.colorBlue, CardAttributes.shapeSquare, CardAttributes.count1, CardAttributes.patternEmpty, x2, y));
+		page.addImage(Card.createTutorialCard(CardAttributes.colorBlue, CardAttributes.shapeTriangle, CardAttributes.count1, CardAttributes.patternEmpty, x3, y));
 
 		page.addInfo("- " + Ichigu.getString(R.strings.tutDifferentShapes), Text.HAlignLeft, R.sizes.cardHeight + 50 + 30).setPadX(50);
 		page.addInfo("- " + Ichigu.getString(R.strings.tutSameColor), Text.HAlignLeft, 20).setPadX(50);
@@ -99,9 +100,9 @@ class IchiguTutorial extends Tutorial {
 		info = page.addInfo(Ichigu.getString(R.strings.tutSampleIchiguTitle), Text.HAlignCenter, R.sizes.tutorialMarginTop);
 		info.getColor().set(R.colors.ichiguYellow);
 		y = Game.getVirtualHeight() - R.sizes.tutorialMarginTop - info.getTextAreaHeight() - R.sizes.cardHeight - 50;
-		page.addImage(Card.createTutorialCard(R.cardAttributes.colorBlue, R.cardAttributes.shapeTriangle, R.cardAttributes.count1, R.cardAttributes.patternFilled, x1, y));
-		page.addImage(Card.createTutorialCard(R.cardAttributes.colorGreen, R.cardAttributes.shapeTriangle, R.cardAttributes.count2, R.cardAttributes.patternFilled, x2, y));
-		page.addImage(Card.createTutorialCard(R.cardAttributes.colorRed, R.cardAttributes.shapeTriangle, R.cardAttributes.count3, R.cardAttributes.patternFilled, x3, y));
+		page.addImage(Card.createTutorialCard(CardAttributes.colorBlue, CardAttributes.shapeTriangle, CardAttributes.count1, CardAttributes.patternFilled, x1, y));
+		page.addImage(Card.createTutorialCard(CardAttributes.colorGreen, CardAttributes.shapeTriangle, CardAttributes.count2, CardAttributes.patternFilled, x2, y));
+		page.addImage(Card.createTutorialCard(CardAttributes.colorRed, CardAttributes.shapeTriangle, CardAttributes.count3, CardAttributes.patternFilled, x3, y));
 
 		page.addInfo("- " + Ichigu.getString(R.strings.tutSameShape), Text.HAlignLeft, R.sizes.cardHeight + 50 + 30).setPadX(50);
 		page.addInfo("- " + Ichigu.getString(R.strings.tutDifferentColors), Text.HAlignLeft, 20).setPadX(50);
@@ -113,9 +114,9 @@ class IchiguTutorial extends Tutorial {
 		info = page.addInfo(Ichigu.getString(R.strings.tutSampleIchiguTitle), Text.HAlignCenter, R.sizes.tutorialMarginTop);
 		info.getColor().set(R.colors.ichiguYellow);
 		y = Game.getVirtualHeight() - R.sizes.tutorialMarginTop - info.getTextAreaHeight() - R.sizes.cardHeight - 50;
-		page.addImage(Card.createTutorialCard(R.cardAttributes.colorGreen, R.cardAttributes.shapeCircle, R.cardAttributes.count2, R.cardAttributes.patternEmpty, x1, y));
-		page.addImage(Card.createTutorialCard(R.cardAttributes.colorBlue, R.cardAttributes.shapeSquare, R.cardAttributes.count1, R.cardAttributes.patternFilled, x2, y));
-		page.addImage(Card.createTutorialCard(R.cardAttributes.colorRed, R.cardAttributes.shapeTriangle, R.cardAttributes.count3, R.cardAttributes.patternStriped, x3, y));
+		page.addImage(Card.createTutorialCard(CardAttributes.colorGreen, CardAttributes.shapeCircle, CardAttributes.count2, CardAttributes.patternEmpty, x1, y));
+		page.addImage(Card.createTutorialCard(CardAttributes.colorBlue, CardAttributes.shapeSquare, CardAttributes.count1, CardAttributes.patternFilled, x2, y));
+		page.addImage(Card.createTutorialCard(CardAttributes.colorRed, CardAttributes.shapeTriangle, CardAttributes.count3, CardAttributes.patternStriped, x3, y));
 
 		page.addInfo("- " + Ichigu.getString(R.strings.tutDifferentShapes), Text.HAlignLeft, R.sizes.cardHeight + 50 + 30).setPadX(50);
 		page.addInfo("- " + Ichigu.getString(R.strings.tutDifferentColors), Text.HAlignLeft, 20).setPadX(50);
@@ -127,9 +128,9 @@ class IchiguTutorial extends Tutorial {
 		info = page.addInfo(Ichigu.getString(R.strings.tutSampleNotIchiguTitle), Text.HAlignCenter, R.sizes.tutorialMarginTop);
 		info.getColor().set(R.colors.ichiguYellow);
 		y = Game.getVirtualHeight() - R.sizes.tutorialMarginTop - info.getTextAreaHeight() - R.sizes.cardHeight - 50;
-		page.addImage(Card.createTutorialCard(R.cardAttributes.colorBlue, R.cardAttributes.shapeSquare, R.cardAttributes.count1, R.cardAttributes.patternFilled, x1, y));
-		page.addImage(Card.createTutorialCard(R.cardAttributes.colorGreen, R.cardAttributes.shapeCircle, R.cardAttributes.count2, R.cardAttributes.patternFilled, x2, y));
-		page.addImage(Card.createTutorialCard(R.cardAttributes.colorRed, R.cardAttributes.shapeSquare, R.cardAttributes.count3, R.cardAttributes.patternFilled, x3, y));
+		page.addImage(Card.createTutorialCard(CardAttributes.colorBlue, CardAttributes.shapeSquare, CardAttributes.count1, CardAttributes.patternFilled, x1, y));
+		page.addImage(Card.createTutorialCard(CardAttributes.colorGreen, CardAttributes.shapeCircle, CardAttributes.count2, CardAttributes.patternFilled, x2, y));
+		page.addImage(Card.createTutorialCard(CardAttributes.colorRed, CardAttributes.shapeSquare, CardAttributes.count3, CardAttributes.patternFilled, x3, y));
 
 		page.addInfo("!! " + String.format(Ichigu.getString(R.strings.tutTwoAndOneShape),
 				Ichigu.getString(R.strings.square), Ichigu.getString(R.strings.circle))
@@ -143,9 +144,9 @@ class IchiguTutorial extends Tutorial {
 		info = page.addInfo(Ichigu.getString(R.strings.tutSampleNotIchiguTitle), Text.HAlignCenter, R.sizes.tutorialMarginTop);
 		info.getColor().set(R.colors.ichiguYellow);
 		y = Game.getVirtualHeight() - R.sizes.tutorialMarginTop - info.getTextAreaHeight() - R.sizes.cardHeight - 50;
-		page.addImage(Card.createTutorialCard(R.cardAttributes.colorBlue, R.cardAttributes.shapeSquare, R.cardAttributes.count2, R.cardAttributes.patternEmpty, x1, y));
-		page.addImage(Card.createTutorialCard(R.cardAttributes.colorBlue, R.cardAttributes.shapeCircle, R.cardAttributes.count2, R.cardAttributes.patternEmpty, x2, y));
-		page.addImage(Card.createTutorialCard(R.cardAttributes.colorRed, R.cardAttributes.shapeTriangle, R.cardAttributes.count2, R.cardAttributes.patternEmpty, x3, y));
+		page.addImage(Card.createTutorialCard(CardAttributes.colorBlue, CardAttributes.shapeSquare, CardAttributes.count2, CardAttributes.patternEmpty, x1, y));
+		page.addImage(Card.createTutorialCard(CardAttributes.colorBlue, CardAttributes.shapeCircle, CardAttributes.count2, CardAttributes.patternEmpty, x2, y));
+		page.addImage(Card.createTutorialCard(CardAttributes.colorRed, CardAttributes.shapeTriangle, CardAttributes.count2, CardAttributes.patternEmpty, x3, y));
 
 		page.addInfo("- " + Ichigu.getString(R.strings.tutDifferentShapes), Text.HAlignLeft, R.sizes.cardHeight + 50 + 30).setPadX(50);
 		page.addInfo("!! " + String.format(Ichigu.getString(R.strings.tutTwoAndOneColor),

@@ -3,15 +3,12 @@ package com.turpgames.ichigu.model.game;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.turpgames.framework.v0.util.Utils;
-import com.turpgames.ichigu.utils.R;
-
 
 public class Deck {
-	private static int[] colors = new int[] { R.cardAttributes.colorRed, R.cardAttributes.colorGreen, R.cardAttributes.colorBlue };
-	private static int[] shapes = new int[] { R.cardAttributes.shapeCircle, R.cardAttributes.shapeSquare, R.cardAttributes.shapeTriangle };
-	private static int[] counts = new int[] { R.cardAttributes.count1, R.cardAttributes.count2, R.cardAttributes.count3 };
-	private static int[] patterns = new int[] { R.cardAttributes.patternEmpty, R.cardAttributes.patternFilled, R.cardAttributes.patternStriped };
+	private static int[] colors = new int[] { CardAttributes.colorRed, CardAttributes.colorGreen, CardAttributes.colorBlue };
+	private static int[] shapes = new int[] { CardAttributes.shapeCircle, CardAttributes.shapeSquare, CardAttributes.shapeTriangle };
+	private static int[] counts = new int[] { CardAttributes.count1, CardAttributes.count2, CardAttributes.count3 };
+	private static int[] patterns = new int[] { CardAttributes.patternEmpty, CardAttributes.patternFilled, CardAttributes.patternStriped };
 	
 	private List<Card> unusedCards;
 	private List<Card> usedCards;
@@ -38,7 +35,8 @@ public class Deck {
 	public Card getRandomCard() {
 		if (unusedCards.size() == 0)
 			return null;
-		int rIndex = Utils.randInt(unusedCards.size());
+		int rIndex = 0;
+//		int rIndex = Utils.randInt(unusedCards.size());
 		Card card = unusedCards.get(rIndex);
 		useCard(card);
 		return card;

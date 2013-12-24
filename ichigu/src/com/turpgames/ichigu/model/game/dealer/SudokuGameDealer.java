@@ -104,10 +104,10 @@ public class SudokuGameDealer extends Dealer {
 	@Override
 	protected void concreteDrawCards() {
 		if (isSwapping) {
-			draw(swappingCards);
+			drawCards(swappingCards);
 		} else {
-			draw(cardsDealingIn);
-			draw(cardsDealingOut);
+			drawCards(cardsDealingIn);
+			drawCards(cardsDealingOut);
 		}
 	}
 
@@ -138,11 +138,5 @@ public class SudokuGameDealer extends Dealer {
 			moveEffect.setDestinationAndSpeed(outPosition, cardSpeed);
 			cardsDealingOut.get(i).setDealerEffect(moveEffect);
 		}
-	}
-	
-	private static void draw(List<Card> cards) {
-		for (Card card : cards)
-			if (card != null)
-				card.draw();
 	}
 }

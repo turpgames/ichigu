@@ -59,30 +59,6 @@ public final class R {
 		public final static int blinkPerSecond = 10;
 	}
 
-	public final static class cardAttributes {
-		public final static int allDiff = 7;
-
-		public final static int value1 = 1;
-		public final static int value2 = value1 << 1;
-		public final static int value3 = value1 << 2;
-
-		public final static int colorRed = value1;
-		public final static int colorGreen = value2;
-		public final static int colorBlue = value3;
-
-		public final static int count1 = value1;
-		public final static int count2 = value2;
-		public final static int count3 = value3;
-
-		public final static int patternEmpty = value1;
-		public final static int patternFilled = value2;
-		public final static int patternStriped = value3;
-
-		public final static int shapeCircle = value1;
-		public final static int shapeSquare = value2;
-		public final static int shapeTriangle = value3;
-	}
-
 	public final static class prices {
 		public final static int singleHintPrice = 10;
 		public final static int tripleHintPrice = 25;

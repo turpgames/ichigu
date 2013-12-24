@@ -16,9 +16,13 @@ class SingleGameHint implements Toast.IListener {
 	private int index;
 	private Card thirdCard;
 	private int colorIndex;
-
-	public SingleGameHint() {
-		hints = new ArrayList<String>();
+	private Table table;
+	private List<Card> hintCards;
+	
+	public SingleGameHint(Table table) {
+		this.hints = new ArrayList<String>();
+		this.table= table;
+		this.hintCards = new ArrayList<Card>();
 	}
 
 	@Override
@@ -40,7 +44,8 @@ class SingleGameHint implements Toast.IListener {
 		}
 	}
 
-	public void update(List<Card> hintCards) {
+	public void update() {
+		table.populateCardsForHints(hintCards);
 		CardAttributes ca1 = hintCards.get(0).getAttributes();
 		CardAttributes ca2 = hintCards.get(1).getAttributes();
 

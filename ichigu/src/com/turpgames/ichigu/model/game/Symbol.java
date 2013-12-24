@@ -1,18 +1,15 @@
 package com.turpgames.ichigu.model.game;
 
-import com.turpgames.framework.v0.ITexture;
 import com.turpgames.framework.v0.impl.GameObject;
 import com.turpgames.framework.v0.util.Rotation;
-import com.turpgames.framework.v0.util.TextureDrawer;
 import com.turpgames.framework.v0.util.Vector;
+import com.turpgames.ichigu.utils.Ichigu;
 import com.turpgames.ichigu.utils.R;
 
 class Symbol extends GameObject {
 	private Card parent;
-	private ITexture texture;
 
-	public Symbol(ITexture texture, int colorAttribute, Vector location, Card parent) {
-		this.texture = texture;
+	public Symbol(Vector location, Card parent) {
 		this.parent = parent;
 
 		setWidth(R.sizes.symbolWidth);
@@ -20,17 +17,17 @@ class Symbol extends GameObject {
 
 		super.getLocation().set(location);
 
-		if (colorAttribute == R.cardAttributes.colorRed)
+		if (parent.getAttributes().getColor() == CardAttributes.colorRed)
 			getColor().set(R.colors.ichiguRed);
-		if (colorAttribute == R.cardAttributes.colorGreen)
+		if (parent.getAttributes().getColor() == CardAttributes.colorGreen)
 			getColor().set(R.colors.ichiguGreen);
-		if (colorAttribute == R.cardAttributes.colorBlue)
+		if (parent.getAttributes().getColor() == CardAttributes.colorBlue)
 			getColor().set(R.colors.ichiguBlue);
 	}
 
 	@Override
 	public void draw() {
-		TextureDrawer.draw(texture, this);
+		Ichigu.drawSymbol(parent.getAttributes().getShape(), parent.getAttributes().getPattern(), this);
 	}
 
 	@Override

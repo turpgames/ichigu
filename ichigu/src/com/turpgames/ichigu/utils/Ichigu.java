@@ -6,6 +6,7 @@ import com.turpgames.framework.v0.ISound;
 import com.turpgames.framework.v0.ITexture;
 import com.turpgames.framework.v0.util.Game;
 import com.turpgames.framework.v0.util.TextureDrawer;
+import com.turpgames.ichigu.model.game.CardAttributes;
 
 public final class Ichigu {
 	private static final ISound soundError;
@@ -18,6 +19,7 @@ public final class Ichigu {
 
 	private static final ITexture textureCardClosed;
 	private static final ITexture textureCardEmpty;
+	private static final ITexture[][] textureSymbols;
 	static {
 		IResourceManager r = Game.getResourceManager();
 
@@ -30,6 +32,14 @@ public final class Ichigu {
 		textureCardEmpty = r.getTexture(R.game.textures.cardEmpty);
 		textureCardClosed = r.getTexture(R.game.textures.cardClosed);
 		textureCardBorder = r.getTexture(R.game.textures.cardBorder);
+		
+		textureSymbols = new ITexture[3][3];
+		
+		for (int i = 0, shape = 1; shape < CardAttributes.allDiff; shape = shape << 1, i++) {
+			for (int j = 0, pattern = 1; pattern < CardAttributes.allDiff; pattern = pattern << 1, j++) {
+				textureSymbols[i][j] =  r.getTexture("card-" + shape + pattern);
+			}
+		}
 	}
 
 	public static void drawTextureCardBorder(IDrawingInfo info) {
@@ -44,6 +54,10 @@ public final class Ichigu {
 		TextureDrawer.draw(textureCardEmpty, info);
 	}
 
+	public static void drawSymbol(int shape, int pattern, IDrawingInfo info) {
+		TextureDrawer.draw(textureSymbols[shape/2][pattern/2], info);
+	}
+	
 	public static String getString(String resourceKey) {
 		return Game.getLanguageManager().getString(resourceKey);
 	}

@@ -25,6 +25,8 @@ public abstract class Table implements IDealerListener, ICardListener {
 		selectedCards = new ArrayList<Card>();
 		setDealer();
 	}
+
+	abstract protected void setDealer();
 	
 	public void deal() {
 		List<Card> out = getCardsToDealOut();
@@ -44,7 +46,7 @@ public abstract class Table implements IDealerListener, ICardListener {
 	public void draw() {
 		for (Card card : cardsOnTable)
 			card.draw();
-		dealer.drawCards();
+		dealer.draw();
 	}
 	
 	abstract public void end();
@@ -66,8 +68,8 @@ public abstract class Table implements IDealerListener, ICardListener {
 	}
 	
 	@Override
-	public final void onDealEnded(List<Card> dealtIn, List<Card> dealtOut) {
-		concreteDealEnded(dealtIn, dealtOut);
+	public final void onDealEnded() {
+		concreteDealEnded();
 		listener.onDealEnded();
 		for(Card card : selectedCards)
 			card.deselect();
@@ -96,10 +98,10 @@ public abstract class Table implements IDealerListener, ICardListener {
 	
 	abstract protected void concreteCardTapped(Card card);
 
-	abstract protected void concreteDealEnded(List<Card> dealtIn, List<Card> dealtOut);
+	abstract protected void concreteDealEnded();
 
-	protected List<Card> getCardsForHints() {
-		return null;
+	public void populateCardsForHints(List<Card> cards) {
+		return;
 	}
 
 	abstract protected List<Card> getCardsToDealIn();
@@ -109,6 +111,4 @@ public abstract class Table implements IDealerListener, ICardListener {
 	protected ITableListener getListener() {
 		return listener;
 	}
-
-	abstract protected void setDealer();
 }

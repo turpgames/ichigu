@@ -14,11 +14,20 @@ public class FullGameTable extends RegularGameTable {
 	private boolean areExtraCardsOpened;
 	private FullGameHint hint;
 	
+	private List<Card> toDealOut;
+	private List<Card> toDealIn;
 	public FullGameTable() {
 		super();
 		deck = new Deck(this);
-		extraCards = new ArrayList<Card>();
 		hint = new FullGameHint(this);
+		extraCards = new ArrayList<Card>();
+		toDealOut = new ArrayList<Card>();
+		toDealIn = new ArrayList<Card>();
+	}
+	
+	@Override
+	protected void setDealer() {
+		dealer = new FullGameDealer(this);
 	}
 
 	@Override
@@ -29,54 +38,49 @@ public class FullGameTable extends RegularGameTable {
 	}
 	
 	@Override
-	public void concreteDealEnded(List<Card> dealtIn, List<Card> dealtOut) {
+	public void concreteDealEnded() {
 		// remove and deactivate dealt-out cards
-		cardsOnTable.removeAll(dealtOut);
-		for(Card card : dealtOut)
+		cardsOnTable.removeAll(toDealOut);
+		for(Card card : toDealOut)
 			card.deactivate();
 
 		// dealt-in cards are first removed than added back to prevent having two of each extra card
-		cardsOnTable.removeAll(dealtIn);
-		cardsOnTable.addAll(dealtIn);
+		cardsOnTable.removeAll(toDealIn);
+		cardsOnTable.addAll(toDealIn);
 		
-		/*
-		 * the null values come when the deck is already finished but there are ichigus on the table
-		 * they cause problems with the existing operations so they are removed or checked for
-		 * on some points in FullGameDealer and FullGameTable
-		 */
-		List<Card> nullList = new ArrayList<Card>();
-		nullList.add(null);
-		cardsOnTable.removeAll(nullList);
 		
 		for(Card card : cardsOnTable)
 			card.activate();
 		
-		for(Card card : dealtIn.subList(0, dealtIn.size() - 3))
-			card.open(true);
-
-		// calculate dealt-in cards
-		if (isFirstDeal) {
-			dealtCardCount += 15;
-			isFirstDeal = false;
-		}
-		else {
-			List<Card> tmp = new ArrayList<Card>();
-			tmp.addAll(dealtIn);
-			tmp.removeAll(nullList);
-			tmp.removeAll(extraCards);
-			dealtCardCount += tmp.size();
-		}
-		
 		extraCards.clear();
-		for(Card card : dealtIn.subList(dealtIn.size() - 3, dealtIn.size())) {
-			if (card != null) {
-				extraCards.add(card);
+		
+		if (toDealIn.size() > 3) {
+			for(Card card : toDealIn.subList(0, toDealIn.size() - 3))
+				card.open(true);
+
+			// calculate dealt-in cards
+			if (isFirstDeal) {
+				dealtCardCount += 15;
+				isFirstDeal = false;
 			}
+			else {
+				dealtCardCount += 3;
+			}
+			
+			for(Card card : toDealIn.subList(toDealIn.size() - 3, toDealIn.size())) {
+				if (card != null) {
+					extraCards.add(card);
+				}
+			}	
+		}
+		else if (toDealIn.size() == 3){
+			for(Card card : toDealIn)
+				card.open(true);
 		}
 		
 		areExtraCardsOpened = false;
-
-		hint.update(getCardsForHints());
+		
+		hint.update();
 	}
 	
 	@Override
@@ -89,21 +93,20 @@ public class FullGameTable extends RegularGameTable {
 	}
 
 	@Override
-	public List<Card> getCardsForHints() {
-		List<Card> hintList = new ArrayList<Card>();
-		hintList.addAll(cardsOnTable);
+	public void populateCardsForHints(List<Card> cards) {
+		cards.clear();
+		cards.addAll(cardsOnTable);
 		if (!areExtraCardsOpened)
-			hintList.removeAll(extraCards);
-		return hintList;
+			cards.removeAll(extraCards);
 	}
 	
 	@Override
 	public List<Card> getCardsToDealIn() {
-		List<Card> toDealIn = new ArrayList<Card>();
+		toDealIn.clear();
 
 		int ichiguCount = 0;
 		if (isFirstDeal) {
-//			discardFirst66(); // TODO FOR TEST: uncomment to try full game end
+			discardFirst66(); // TODO FOR TEST: uncomment to try full game end
 			do {
 				for(Card card : toDealIn)
 					deck.giveBackRandomCard(card);
@@ -113,51 +116,48 @@ public class FullGameTable extends RegularGameTable {
 			}
 			while(ichiguCount == 0);
 		}
-		else {			
-			List<Card> tempExtraCards = new ArrayList<Card>();
-			tempExtraCards.addAll(extraCards);
-			for (Card card : selectedCards)
-				tempExtraCards.remove(card);
-			toDealIn.addAll(tempExtraCards);
+		else {
+			toDealIn.addAll(cardsOnTable);
+			toDealIn.removeAll(selectedCards);
 			
-			List<Card> tempAllCards = new ArrayList<Card>();
-			tempAllCards.addAll(cardsOnTable);
-			tempAllCards.removeAll(selectedCards);
-			List<Card> newCards = new ArrayList<Card>();
+			int dealingIn = 0;
 			do {
-				for (Card card : newCards) {
+				for (Card card : toDealIn.subList(toDealIn.size() - dealingIn, toDealIn.size())) {
 					deck.giveBackRandomCard(card);
-					newCards.remove(card);
-					tempAllCards.remove(card);
+					toDealIn.remove(card);
 				}
+				dealingIn = 0;
 				for (int i = 0; i < 3; i++) {
 					Card card = deck.getRandomCard();
-					newCards.add(card);
-					tempAllCards.add(card);
+					if (card != null) {
+						dealingIn++;
+						toDealIn.add(card);
+					}
 				}
-				ichiguCount = Card.getIchiguCount(tempAllCards);
+				ichiguCount = Card.getIchiguCount(toDealIn);
 			}
-			while(ichiguCount == 0);
+			while(ichiguCount == 0 && dealingIn != 0);
 			
-			toDealIn.addAll(newCards);
+			toDealIn.removeAll(cardsOnTable);
+			toDealIn.addAll(0, extraCards);
+			toDealIn.removeAll(selectedCards);
 		}
 		return toDealIn;
 	}
 
 	@Override
 	public List<Card> getCardsToDealOut() {
-		if (isFirstDeal()) {
-			return new ArrayList<Card>();
+		toDealOut.clear();
+		if (!isFirstDeal()) {
+			// the selected extra cards are put to end
+			for (Card card : selectedCards)
+				if (!extraCards.contains(card))
+					toDealOut.add(card);
+			
+			for (Card card : selectedCards)
+				if (extraCards.contains(card))
+					toDealOut.add(card);
 		}
-		// the selected extra cards are put to end
-		List<Card> toDealOut = new ArrayList<Card>();
-		List<Card> temp = new ArrayList<Card>();
-		for (Card card : selectedCards)
-			if (!extraCards.contains(card))
-				toDealOut.add(card);
-			else
-				temp.add(card);
-		toDealOut.addAll(temp);
 		return toDealOut;
 	}
 
@@ -192,7 +192,6 @@ public class FullGameTable extends RegularGameTable {
 		selectedCards.clear();
 		extraCards.clear();
 		isFirstDeal = true;
-		dealer = new FullGameDealer(this);
 		dealtCardCount = 0;
 	}
 
@@ -204,7 +203,6 @@ public class FullGameTable extends RegularGameTable {
 	public void start() {
 		deck.start();
 		isFirstDeal = true;
-		dealer = new FullGameDealer(this);
 		dealtCardCount = 0;
 	}
 
@@ -226,7 +224,7 @@ public class FullGameTable extends RegularGameTable {
 
 			if (hint.getIchiguCount() > 0)
 				getListener().onOpenedExtraCardsWhileThereIsIchigu();
-			hint.update(getCardsForHints());
+			hint.update();
 		}
 		// add card to selected
 		else if (cardsOnTable.contains(card)){
@@ -259,10 +257,5 @@ public class FullGameTable extends RegularGameTable {
 	@Override
 	protected IFullGameTableListener getListener() {
 		return (IFullGameTableListener)listener; 
-	}
-
-	@Override
-	protected void setDealer() {
-		dealer = new FullGameDealer(this);
 	}
 }

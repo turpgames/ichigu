@@ -3,7 +3,6 @@ package com.turpgames.ichigu.model.game;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.turpgames.framework.v0.ITexture;
 import com.turpgames.framework.v0.effects.Effect;
 import com.turpgames.framework.v0.effects.IEffectEndListener;
 import com.turpgames.framework.v0.util.Color;
@@ -159,22 +158,19 @@ public class Card extends IchiguObject {
 	}
 	
 	private void initSymbols() {
-		String symbolName = "card-" + attributes.getShape() + attributes.getPattern();
-
-		ITexture symbolTexture = Game.getResourceManager().getTexture(symbolName);
 		symbols = new ArrayList<Symbol>();
 
-		if (attributes.getCount() == 1) {
-			symbols.add(new Symbol(symbolTexture, attributes.getColor(), R.symbolpositions.firstOfOne, this));
+		if (attributes.getCount() == CardAttributes.count1) {
+			symbols.add(new Symbol(R.symbolpositions.firstOfOne, this));
 		}
-		else if (attributes.getCount() == 2) {
-			symbols.add(new Symbol(symbolTexture, attributes.getColor(), R.symbolpositions.firstOfTwo, this));
-			symbols.add(new Symbol(symbolTexture, attributes.getColor(), R.symbolpositions.secondOfTwo, this));
+		else if (attributes.getCount() == CardAttributes.count2) {
+			symbols.add(new Symbol(R.symbolpositions.firstOfTwo, this));
+			symbols.add(new Symbol(R.symbolpositions.secondOfTwo, this));
 		}
-		else if (attributes.getCount() == 4) {
-			symbols.add(new Symbol(symbolTexture, attributes.getColor(), R.symbolpositions.firstOfThree, this));
-			symbols.add(new Symbol(symbolTexture, attributes.getColor(), R.symbolpositions.secondOfThree, this));
-			symbols.add(new Symbol(symbolTexture, attributes.getColor(), R.symbolpositions.thirdOfThree, this));
+		else if (attributes.getCount() == CardAttributes.count3) {
+			symbols.add(new Symbol(R.symbolpositions.firstOfThree, this));
+			symbols.add(new Symbol(R.symbolpositions.secondOfThree, this));
+			symbols.add(new Symbol(R.symbolpositions.thirdOfThree, this));
 		}
 	}
 

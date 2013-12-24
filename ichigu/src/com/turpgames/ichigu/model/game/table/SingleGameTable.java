@@ -14,22 +14,24 @@ public class SingleGameTable extends RegularGameTable {
 
 	private SingleGameHint hint;
 	
+	private List<Card> toDealIn;
 	public SingleGameTable() {
 		deck = new Deck(this);
-		hint = new SingleGameHint();
+		hint = new SingleGameHint(this);
+		toDealIn = new ArrayList<Card>();
 	}
 
 	@Override
-	public void concreteDealEnded(List<Card> dealtIn, List<Card> dealtOut) {
+	public void concreteDealEnded() {
 		cardsOnTable.clear();
-		cardsOnTable.addAll(dealtIn);
-		for(Card card : dealtIn) {
+		cardsOnTable.addAll(toDealIn);
+		for(Card card : toDealIn) {
 			card.open(true);
 		}
 		for(int i = 2; i < 5; i++)
-			dealtIn.get(i).activate();
+			toDealIn.get(i).activate();
 		
-		hint.update(getCardsForHints());
+		hint.update();
 	}
 	
 	@Override
@@ -40,18 +42,17 @@ public class SingleGameTable extends RegularGameTable {
 	}
 
 	@Override
-	public List<Card> getCardsForHints() {
-		List<Card> hintCards = new ArrayList<Card>();
-		hintCards.add(cardsOnTable.get(0));
-		hintCards.add(cardsOnTable.get(1));
+	public void populateCardsForHints(List<Card> cards) {
+		cards.clear();
+		cards.add(cardsOnTable.get(0));
+		cards.add(cardsOnTable.get(1));
 		
 		for (int i = 2; i < cardsOnTable.size(); i++) {
-			if (Card.isIchigu(hintCards.get(0), hintCards.get(1), cardsOnTable.get(i))) {
-				hintCards.add(cardsOnTable.get(i));
+			if (Card.isIchigu(cards.get(0), cards.get(1), cardsOnTable.get(i))) {
+				cards.add(cardsOnTable.get(i));
 				break;
 			}
 		}
-		return hintCards;
 	}
 
 	@Override
@@ -83,7 +84,7 @@ public class SingleGameTable extends RegularGameTable {
 		toSelect.add(card5);
 		Utils.shuffle(toSelect);
 		
-		List<Card> toDealIn = new ArrayList<Card>();
+		toDealIn.clear();
 		toDealIn.add(card1);
 		toDealIn.add(card2);
 		toDealIn.addAll(toSelect);

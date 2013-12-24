@@ -109,14 +109,10 @@ public abstract class FullGameMode extends RegularMode implements IResultScreenB
 
 	@Override
 	public void onNewGameTapped() {
-		notifyNewGame();
-	}
-
-	private void notifyNewGame() {
 		if (getModeListener() != null)
 			getModeListener().onNewGame();
 	}
-
+	
 	@Override
 	protected FullGameTable getTable() {
 		return (FullGameTable) table;

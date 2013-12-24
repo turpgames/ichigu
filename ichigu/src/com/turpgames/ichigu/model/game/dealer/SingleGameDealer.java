@@ -6,7 +6,6 @@ import java.util.List;
 import com.turpgames.framework.v0.effects.MoveEffect;
 import com.turpgames.framework.v0.util.Game;
 import com.turpgames.framework.v0.util.Vector;
-import com.turpgames.ichigu.model.game.Card;
 import com.turpgames.ichigu.model.game.table.Table;
 import com.turpgames.ichigu.utils.R;
 
@@ -55,11 +54,8 @@ public class SingleGameDealer extends Dealer {
 
 	@Override
 	protected void concreteDrawCards() {
-		for(Card card : cardsDealingIn)
-			if (card != null)
-				card.draw();
-		for(Card card : cardsDealingOut)
-			card.draw();
+		drawCards(cardsDealingIn);
+		drawCards(cardsDealingOut);
 	}
 
 	@Override

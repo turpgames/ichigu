@@ -12,14 +12,12 @@ import com.turpgames.framework.v0.effects.MoveWithSpeedEffect;
 import com.turpgames.framework.v0.effects.fading.FadeOutEffect;
 import com.turpgames.framework.v0.util.Game;
 import com.turpgames.framework.v0.util.Vector;
-import com.turpgames.ichigu.model.game.Card;
 import com.turpgames.ichigu.model.game.table.Table;
 import com.turpgames.ichigu.utils.R;
 
 public class FullGameDealer extends Dealer {
 
 	class DealtOutComparator implements Comparator<Vector> {
-
 		@Override
 		public int compare(Vector arg0, Vector arg1) {
 			return arg0.y < arg1.y ? 1 
@@ -28,6 +26,7 @@ public class FullGameDealer extends Dealer {
 									: arg0.x > arg1.x ? -1 : 0;
 		}
 	}
+	
 	private static float fadeDuration = 0.3f;
 	private static float inDuration = 0.2f;
 
@@ -75,11 +74,8 @@ public class FullGameDealer extends Dealer {
 
 	@Override
 	protected void concreteDrawCards() {
-		for (Card card : cardsDealingIn)
-			if (card != null)
-				card.draw();
-		for (Card card : cardsDealingOut)
-			card.draw();
+		drawCards(cardsDealingIn);
+		drawCards(cardsDealingOut);
 	}
 
 	@Override
@@ -122,30 +118,29 @@ public class FullGameDealer extends Dealer {
 			// last three of cardsToDealOut are new cards, the first cards are
 			// unused extra cards repositioned
 
+			if (cardsDealingIn.size() == 0)
+				return;
+			
 			List<Vector> destinations = new ArrayList<Vector>();
 			// the destinations for unused extra cards are added.
 			List<Vector> dealtOutDestinations = new ArrayList<Vector>();
-			for (int i = 0; i < cardsDealingIn.size() - 3; i++) {
+			for (int i = 0; i < 3; i++) {
 				dealtOutDestinations.add(cardsDealingOut.get(i).getLocation());
 			}
 			Collections.sort(dealtOutDestinations, new DealtOutComparator());
-			for (int i = 0; i < cardsDealingIn.size() - 3; i++) {
+			for (int i = 0; i < 3; i++) {
 				destinations.add(dealtOutDestinations.get(i));
 			}
 
 			destinations.addAll(extraCardLocations);
 
 			for (int i = cardsDealingIn.size() - 3; i < cardsDealingIn.size(); i++) {
-				if (cardsDealingIn.get(i) == null)
-					continue;
 				cardsDealingIn.get(i).getLocation()
 						.set(extraStart.get(i - (cardsDealingIn.size() - 3)));
 			}
 
 			MoveEffect moveEffect;
 			for (int i = 0; i < cardsDealingIn.size(); i++) {
-				if (cardsDealingIn.get(i) == null)
-					continue;
 				moveEffect = new MoveEffect(cardsDealingIn.get(i));
 				moveEffect.setLooping(false);
 				moveEffect.setDestination(destinations.get(i));

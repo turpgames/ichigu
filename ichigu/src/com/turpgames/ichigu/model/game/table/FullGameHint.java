@@ -43,16 +43,21 @@ class FullGameHint {
 
 	private FullGameIchiguInfo ichiguInfo;
 	private int hintIndex;
+	private Table table;
+	private List<Card> hintCards;
 
 	FullGameHint(Table table) {
 		ichiguInfo = new FullGameIchiguInfo();
+		hintCards = new ArrayList<Card>();
+		this.table = table;
 	}
 
 	public int getIchiguCount() {
 		return ichiguInfo.getIchiguCount();
 	}
 
-	public void update(List<Card> hintCards) {
+	public void update() {
+		table.populateCardsForHints(hintCards);
 		ichiguInfo.update(hintCards);
 		hintIndex = 0;
 	}

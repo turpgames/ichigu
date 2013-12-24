@@ -80,12 +80,17 @@ public class SudokuTable extends Table {
 	private List<IchiguMark> marks;
 	private boolean marksVisible;
 
+	private List<Card> toDealOut;
+	private List<Card> toDealIn;
 	public SudokuTable() {
 		deck = new SudokuDeck(this);
 		marks = new ArrayList<IchiguMark>();
 		for (int i = 0; i < 6; i++) {
 			marks.add(new IchiguMark(markPositions.get(i)));
 		}
+		
+		toDealOut = new ArrayList<Card>();
+		toDealIn = new ArrayList<Card>();
 	}
 
 	@Override
@@ -97,7 +102,7 @@ public class SudokuTable extends Table {
 		if (marksVisible)
 			for (IchiguMark mark : marks)
 				mark.draw();
-		dealer.drawCards();
+		dealer.draw();
 	}
 
 	@Override
@@ -196,12 +201,12 @@ public class SudokuTable extends Table {
 	}
 
 	@Override
-	protected void concreteDealEnded(List<Card> dealtIn, List<Card> dealtOut) {
-		for (Card card : dealtOut) {
+	protected void concreteDealEnded() {
+		for (Card card : toDealOut) {
 			cardsOnTable.remove(card);
 			card.deactivate();
 		}
-		for (Card card : dealtIn) {
+		for (Card card : toDealIn) {
 			cardsOnTable.add(card);
 			card.open(true);
 			card.activate();
@@ -212,14 +217,15 @@ public class SudokuTable extends Table {
 
 	@Override
 	protected List<Card> getCardsToDealIn() {
-		List<Card> toDealIn = deck.get9Cards();
+		toDealIn.clear();
+		toDealIn.addAll(deck.get9Cards());
 		Utils.shuffle(toDealIn);
 		return toDealIn;
 	}
 
 	@Override
 	protected List<Card> getCardsToDealOut() {
-		List<Card> toDealOut = new ArrayList<Card>();
+		toDealOut.clear();
 		for (Card card : cardsOnTable)
 			toDealOut.add(card);
 		return toDealOut;

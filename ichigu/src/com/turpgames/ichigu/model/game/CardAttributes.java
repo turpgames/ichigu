@@ -5,10 +5,32 @@ import com.turpgames.ichigu.utils.R;
 
 public final class CardAttributes {
 
+	public final static int allDiff = 7;
+
+	private final static int value1 = 1;
+	private final static int value2 = value1 << 1;
+	private final static int value3 = value1 << 2;
+
+	public final static int colorRed = value1;
+	public final static int colorGreen = value2;
+	public final static int colorBlue = value3;
+
+	public final static int count1 = value1;
+	public final static int count2 = value2;
+	public final static int count3 = value3;
+
+	public final static int patternEmpty = value1;
+	public final static int patternFilled = value2;
+	public final static int patternStriped = value3;
+
+	public final static int shapeCircle = value1;
+	public final static int shapeSquare = value2;
+	public final static int shapeTriangle = value3;
+	
 	public static String getColorName(int color) {
-		if (color == R.cardAttributes.colorBlue)
+		if (color == colorBlue)
 			return "Blue";
-		if (color == R.cardAttributes.colorGreen)
+		if (color == colorGreen)
 			return "Green";
 		return "Red";
 	}
@@ -18,9 +40,9 @@ public final class CardAttributes {
 	}
 
 	public static int getCountValue(int count) {
-		if (count == R.cardAttributes.count1)
+		if (count == count1)
 			return 1;
-		if (count == R.cardAttributes.count2)
+		if (count == count2)
 			return 2;
 		return 3;
 	}
@@ -37,23 +59,23 @@ public final class CardAttributes {
 	}
 
 	public static String getPatternName(int pattern) {
-		if (pattern == R.cardAttributes.patternEmpty)
+		if (pattern == patternEmpty)
 			return "Empty";
-		if (pattern == R.cardAttributes.patternFilled)
+		if (pattern == patternFilled)
 			return "Filled";
 		return "Striped";
 	}
 
 	public static String getShapeName(int shape) {
-		if (shape == R.cardAttributes.shapeCircle)
+		if (shape == shapeCircle)
 			return Ichigu.getString(R.strings.circle);
-		if (shape == R.cardAttributes.shapeSquare)
+		if (shape == shapeSquare)
 			return Ichigu.getString(R.strings.square);
 		return Ichigu.getString(R.strings.triangle);
 	}
 	
 	public static int getThird(int a1, int a2) {
-		return R.cardAttributes.allDiff ^ a1 ^ a2;
+		return allDiff ^ a1 ^ a2;
 	}
 
 	public static CardAttributes getThirdCardAttributes(CardAttributes a1, CardAttributes a2) {
@@ -91,13 +113,13 @@ public final class CardAttributes {
 	private static int getIchiguScore(int a1, int a2, int a3) {
 		if ((a1 & a2) == a3)
 			return 1;
-		if ((a1 | a2 | a3) == R.cardAttributes.allDiff)
+		if ((a1 | a2 | a3) == allDiff)
 			return 3;
 		return 0;
 	}
 
 	private static boolean isIchigu(int a1, int a2, int a3) {
-		return (a1 & a2) == a3 || (a1 | a2 | a3) == R.cardAttributes.allDiff;
+		return (a1 & a2) == a3 || (a1 | a2 | a3) == allDiff;
 	}
 
 	private int color;
@@ -164,30 +186,30 @@ public final class CardAttributes {
 	@Override
 	public String toString() {
 		String s = "";
-		if (count == R.cardAttributes.value1)
+		if (count == count1)
 			s += "1 ";
-		else if (count == R.cardAttributes.value2)
+		else if (count == count2)
 			s += "2 ";
 		else
 			s += "3 ";
 
-		if (color == R.cardAttributes.value1)
+		if (color == colorRed)
 			s += "red ";
-		else if (color == R.cardAttributes.value2)
+		else if (color == colorGreen)
 			s += "green ";
 		else
 			s += "blue ";
 		
-		if (pattern == R.cardAttributes.value1)
+		if (pattern == patternEmpty)
 			s += "empty ";
-		else if (pattern == R.cardAttributes.value2)
+		else if (pattern == patternFilled)
 			s += "filled ";
 		else
 			s += "striped ";
 		
-		if (shape == R.cardAttributes.value1)
+		if (shape == shapeCircle)
 			s += "circle ";
-		else if (shape == R.cardAttributes.value2)
+		else if (shape == shapeSquare)
 			s += "square ";
 		else
 			s += "triangle ";
