@@ -78,6 +78,8 @@ v1.2
 		+Yeni fetureları settings e yaz
 	-Bug
 		-Mini mod ve Time Challenge zaman hızlı başlıyor, muhtemelen CountDownTimer'da bir bug var.
+		-FullModlarda deste bitince hata veriyor.
+		-TimeChallenge deste bitince oyun devam etsin.
 TODO:
 	Achievements
 	Multiplayer

@@ -59,7 +59,7 @@ public abstract class IchiguMode implements IDrawable {
 			}
 		});
 		
-		initTable();
+		table = createTable();
 	}
 
 	public void deal() {
@@ -166,7 +166,7 @@ public abstract class IchiguMode implements IDrawable {
 		return table;
 	}
 
-	protected abstract void initTable();
+	protected abstract Table createTable();
 	
 	protected void onDraw() {
 		drawResetButton();

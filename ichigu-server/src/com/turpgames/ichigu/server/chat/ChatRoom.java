@@ -26,8 +26,6 @@ import org.atmosphere.cpr.AtmosphereResource;
 import org.atmosphere.cpr.AtmosphereResourceEvent;
 import org.atmosphere.cpr.AtmosphereResourceFactory;
 import org.atmosphere.cpr.BroadcasterFactory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Simple annotated class that demonstrate the power of Atmosphere. This class
@@ -36,7 +34,6 @@ import org.slf4j.LoggerFactory;
  */
 @ManagedService(path = "{room: [a-zA-Z][a-zA-Z_0-9]*}")
 public class ChatRoom {
-	private final Logger logger = LoggerFactory.getLogger(ChatRoom.class);
 
 	private final ConcurrentHashMap<String, String> users = new ConcurrentHashMap<String, String>();
 	private String chatroomName;
@@ -49,9 +46,9 @@ public class ChatRoom {
 	 * 
 	 * @param r
 	 */
-	@Ready(value = Ready.DELIVER_TO.ALL, encoders = { JacksonEncoder.class })
+	@Ready(value = Ready.DELIVER_TO.ALL, encoders = { ChatMessage.Encoder.class })
 	public ChatMessage onReady(final AtmosphereResource r) {
-		logger.info("Browser {} connected.", r.uuid());
+		// logger.info("Browser {} connected.", r.uuid());
 		if (chatroomName == null) {
 			mappedPath = r.getBroadcaster().getID();
 			// Get rid of the AtmosphereFramework mapped path.
@@ -76,10 +73,10 @@ public class ChatRoom {
 		if (event.isCancelled()) {
 			// We didn't get notified, so we remove the user.
 			users.values().remove(event.getResource().uuid());
-			logger.info("Browser {} unexpectedly disconnected", event.getResource().uuid());
+			// logger.info("Browser {} unexpectedly disconnected", event.getResource().uuid());
 		}
 		else if (event.isClosedByClient()) {
-			logger.info("Browser {} closed the connection", event.getResource().uuid());
+			// logger.info("Browser {} closed the connection", event.getResource().uuid());
 		}
 	}
 
@@ -91,7 +88,7 @@ public class ChatRoom {
 * @return
 * @throws IOException
 */
-	@Message(encoders = { JacksonEncoder.class }, decoders = { ChatMessageDecoder.class })
+	@Message(encoders = { ChatMessage.Encoder.class }, decoders = { ChatMessage.Encoder.class })
 	public ChatMessage onMessage(ChatMessage message) throws IOException {
 		if (!users.containsKey(message.getFrom())) {
 			users.put(message.getFrom(), message.getFromUuid());
@@ -120,7 +117,7 @@ public class ChatRoom {
 			return null;
 		}
 
-		logger.info("{} just send {}", message.getFrom(), message.getMessage());
+		// logger.info("{} just send {}", message.getFrom(), message.getMessage());
 		return message;
 	}
 }

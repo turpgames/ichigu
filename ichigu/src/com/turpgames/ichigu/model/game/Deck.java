@@ -3,6 +3,8 @@ package com.turpgames.ichigu.model.game;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.turpgames.framework.v0.util.Utils;
+import com.turpgames.ichigu.utils.R;
 
 public class Deck {
 	private static int[] colors = new int[] { CardAttributes.colorRed, CardAttributes.colorGreen, CardAttributes.colorBlue };
@@ -12,11 +14,21 @@ public class Deck {
 	
 	private List<Card> unusedCards;
 	private List<Card> usedCards;
-	
+
+	private boolean isInfinite;
+		
 	public Deck(ICardListener table) {
 		unusedCards = new ArrayList<Card>();
 		usedCards = new ArrayList<Card>();
 		createDeck(table);
+	}
+	
+	public void setInfinite(boolean isInfinite) {
+		this.isInfinite = isInfinite;
+	}
+	
+	public boolean isInfinite() {
+		return isInfinite;
 	}
 	
 	public void end() {
@@ -33,10 +45,14 @@ public class Deck {
 	}
 
 	public Card getRandomCard() {
-		if (unusedCards.size() == 0)
-			return null;
-		int rIndex = 0;
-//		int rIndex = Utils.randInt(unusedCards.size());
+		if (unusedCards.size() == 0) {
+			if (!isInfinite)
+				return null;
+			recycleDeck();
+		}
+		int rIndex = Utils.randInt(unusedCards.size());
+		if (R.isDebug)
+			rIndex = 0;
 		Card card = unusedCards.get(rIndex);
 		useCard(card);
 		return card;

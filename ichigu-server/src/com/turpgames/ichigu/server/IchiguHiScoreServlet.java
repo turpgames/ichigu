@@ -2,6 +2,7 @@ package com.turpgames.ichigu.server;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -10,10 +11,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.turpgames.framework.v0.db.DbManager;
-import com.turpgames.framework.v0.util.Utils;
+import com.turpgames.db.DbManager;
 import com.turpgames.ichigu.server.db.IchiguConnectionProvider;
 import com.turpgames.ichigu.server.entity.HiScore;
+import com.turpgames.ichigu.server.entity.Score;
 
 @WebServlet("/hiscores")
 public class IchiguHiScoreServlet extends HttpServlet {
@@ -21,7 +22,7 @@ public class IchiguHiScoreServlet extends HttpServlet {
 
 	@Override
 	public void init() throws ServletException {
-		DbManager.setConnectionProvider(new IchiguConnectionProvider());
+		DbManager.setConnectionProvider(new IchiguConnectionProvider());				
 		super.init();
 	}
 
@@ -89,6 +90,15 @@ public class IchiguHiScoreServlet extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+		String mode = request.getParameter("m");
+		String playerIdStr = request.getParameter("p");
+		String scoreStr = request.getParameter("s");
+		
+		Score score = new Score();
+		score.setMode(Utils.parseInt(mode));
+		score.setPlayerId(Utils.parseInt(playerIdStr));
+		score.setScore(Utils.parseInt(scoreStr));
+		score.setTime(Calendar.getInstance().getTimeInMillis());
+		score.insert();
 	}
 }

@@ -17,13 +17,15 @@ package com.turpgames.ichigu.server.chat;
 
 import java.util.Date;
 
-public class ChatMessage implements JacksonEncoder.Encodable {
+import com.turpgames.ichigu.server.JsonEncoder;
+
+public class ChatMessage {
 	private String message;
 	private String from;
 	private String to;
 	private String fromUuid;
 	private long time;
-	
+
 	public ChatMessage() {
 		time = new Date().getTime();
 	}
@@ -66,5 +68,11 @@ public class ChatMessage implements JacksonEncoder.Encodable {
 
 	public void setTime(long time) {
 		this.time = time;
+	}
+
+	public static class Encoder extends JsonEncoder<ChatMessage> {
+		public Encoder() {
+			super(ChatMessage.class);
+		}
 	}
 }

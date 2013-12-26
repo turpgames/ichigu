@@ -5,6 +5,7 @@ import com.turpgames.framework.v0.util.ShapeDrawer;
 import com.turpgames.ichigu.model.display.SingleGameQuestion;
 import com.turpgames.ichigu.model.game.mode.RegularMode;
 import com.turpgames.ichigu.model.game.table.SingleGameTable;
+import com.turpgames.ichigu.model.game.table.Table;
 import com.turpgames.ichigu.utils.R;
 
 public abstract class SingleGameMode extends RegularMode {
@@ -26,8 +27,8 @@ public abstract class SingleGameMode extends RegularMode {
 	}
 
 	@Override
-	protected void initTable() {
-		table = new SingleGameTable();
+	protected Table createTable() {
+		return new SingleGameTable();
 	}
 	
 	@Override

@@ -4,9 +4,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
 
-import com.turpgames.framework.v0.db.DbManager;
-import com.turpgames.framework.v0.db.SqlQuery;
-import com.turpgames.framework.v0.util.Utils;
+import com.turpgames.db.DbManager;
+import com.turpgames.db.SqlQuery;
+import com.turpgames.ichigu.server.Utils;
 
 public class Player {
 	private int id;
@@ -123,7 +123,10 @@ public class Player {
 	}
 	
 	public String toJson() {
-		return String.format("{ id: %d, username: '%s', email: '%s', facebookId: '%s' }", 
-				id, username, email, facebookId);
+		return JsonEncoders.player.encode(this);
+	}
+	
+	public static Player fromJson(String json) {
+		return JsonEncoders.player.decode(json);
 	}
 }

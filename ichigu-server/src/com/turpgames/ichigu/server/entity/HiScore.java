@@ -7,8 +7,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import com.turpgames.framework.v0.db.DbManager;
-import com.turpgames.framework.v0.db.SqlQuery;
+import com.turpgames.db.DbManager;
+import com.turpgames.db.SqlQuery;
 
 public class HiScore {
 	private Score score;
@@ -50,7 +50,7 @@ public class HiScore {
 			cal.add(Calendar.DAY_OF_MONTH, -days);
 
 			sql.append(" and time > ?")
-					.addParameter(cal.getTime(), Types.DATE);
+					.addParameter(cal.getTimeInMillis(), Types.BIGINT);
 		}
 		
 		if (playerId > 0) {
@@ -101,6 +101,10 @@ public class HiScore {
 	}
 	
 	public String toJson() {
-		return String.format("{ player: %s, score: %s }", player.toJson(), score.toJson());
+		return JsonEncoders.hiscore.encode(this);
+	}
+	
+	public static HiScore fromJson(String json) {
+		return JsonEncoders.hiscore.decode(json);
 	}
 }

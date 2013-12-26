@@ -1,11 +1,12 @@
 package com.turpgames.ichigu.server.test;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 
-import com.turpgames.framework.v0.db.DbManager;
-import com.turpgames.framework.v0.util.Utils;
+import com.turpgames.db.DbManager;
 import com.turpgames.ichigu.server.IchiguHiScores;
+import com.turpgames.ichigu.server.Utils;
 import com.turpgames.ichigu.server.db.IchiguConnectionProvider;
 import com.turpgames.ichigu.server.entity.HiScore;
 import com.turpgames.ichigu.server.entity.Player;
@@ -15,6 +16,7 @@ public class TestMain {
 	public static void main(String[] args) {
 		DbManager.setConnectionProvider(new IchiguConnectionProvider());
 
+		// insertRandomData(); 
 		displayHiscores();
 
 		System.out.println("OK!");
@@ -76,26 +78,21 @@ public class TestMain {
 		displayHiScores(IchiguHiScores.timeModeToday(42));
 	}
 
+	private final static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss,SSSZ");
+	
 	private static void displayHiScores(List<HiScore> hiscores) {
 		System.out.println("----------------------------------------");
-		System.out.println(padRight("Rank", 10) + padRight("Player", 20) + "Score");
+		System.out.println(Utils.padRight("Rank", 10) + Utils.padRight("Player", 20) + Utils.padRight("Score", 20) + "Date");
 		System.out.println("----------------------------------------");
 		int i = 1;
 		for (HiScore hiscore : hiscores) {
 			System.out.println(
-					padRight("" + i++ + ".", 10) +
-							padRight(hiscore.getPlayer().getUsername(), 20) +
-							padRight("" + hiscore.getScore().getScore(), 10));
+					Utils.padRight("" + i++ + ".", 10) +
+							Utils.padRight(hiscore.getPlayer().getUsername(), 20) +
+							Utils.padRight("" + hiscore.getScore().getScore(), 10) +
+							sdf.format(hiscore.getScore().getDate()));
 		}
 		System.out.println();
-	}
-
-	public static String padRight(String s, int n) {
-		return String.format("%1$-" + n + "s", s);
-	}
-
-	public static String padLeft(String s, int n) {
-		return String.format("%1$" + n + "s", s);
 	}
 
 	private static String getModeName(int mode) {
@@ -109,7 +106,7 @@ public class TestMain {
 		}
 	}
 
-	private static void insertData() {
+	private static void insertRandomData() {
 		System.out.println("inserting players...");
 
 		for (int i = 0; i < 100; i++) {
@@ -132,7 +129,7 @@ public class TestMain {
 			s.setScore(Utils.randInt(10, 10000));
 			Calendar time = Calendar.getInstance();
 			time.add(Calendar.HOUR, Utils.randInt(-40 * 24, 1));
-			s.setTime(time.getTime());
+			s.setTime(time.getTimeInMillis());
 			s.insert();
 		}
 	}

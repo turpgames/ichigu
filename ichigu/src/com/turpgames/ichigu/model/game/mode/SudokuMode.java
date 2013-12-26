@@ -6,6 +6,7 @@ import com.turpgames.ichigu.model.display.IchiguToast;
 import com.turpgames.ichigu.model.display.TimerText;
 import com.turpgames.ichigu.model.game.Card;
 import com.turpgames.ichigu.model.game.table.SudokuTable;
+import com.turpgames.ichigu.model.game.table.Table;
 
 public class SudokuMode extends IchiguMode {
 
@@ -43,8 +44,8 @@ public class SudokuMode extends IchiguMode {
 	}
 
 	@Override
-	protected void initTable() {
-		table = new SudokuTable();
+	protected Table createTable() {
+		return new SudokuTable();
 	}
 
 	@Override

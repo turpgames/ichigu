@@ -6,6 +6,8 @@ import com.turpgames.framework.v0.util.Game;
 import com.turpgames.framework.v0.util.Vector;
 
 public final class R {
+	public static final boolean isDebug = true;
+	
 	public final static class sizes {
 		public final static float maxScale = 0.2f;
 		public final static float menuButtonSpacing = Game.scale(30);

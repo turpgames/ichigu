@@ -65,7 +65,12 @@ public class MiniGame extends SingleGameMode implements IResultScreenButtonsList
 		// Center reset button
 		resetButton.getLocation().set((Game.getScreenWidth() - resetButton.getWidth()) / 2, Game.viewportToScreenY(50));
 	}
-
+	
+	@Override
+	public void onSendScore() {
+		IchiguToast.showError("Not implemented!!!");
+	}
+	
 	@Override
 	public void concreteIchiguFound() {
 		foundInfo.increaseFound();

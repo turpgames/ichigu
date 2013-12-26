@@ -47,4 +47,9 @@ public class StandardGame extends FullGameMode {
 				timer.getText(),
 				(isNewRecord ? Ichigu.getString(R.strings.newHiscore) : "")));
 	}
+	
+	@Override
+	protected int getScore() {		
+		return (int) timer.getTotalElapsedTime();
+	}
 }

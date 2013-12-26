@@ -6,6 +6,7 @@ import java.util.List;
 import com.turpgames.ichigu.model.game.Card;
 import com.turpgames.ichigu.model.game.Deck;
 import com.turpgames.ichigu.model.game.dealer.FullGameDealer;
+import com.turpgames.ichigu.utils.R;
 
 public class FullGameTable extends RegularGameTable {
 	
@@ -23,6 +24,10 @@ public class FullGameTable extends RegularGameTable {
 		extraCards = new ArrayList<Card>();
 		toDealOut = new ArrayList<Card>();
 		toDealIn = new ArrayList<Card>();
+	}
+	
+	public void setAsInfiniteDeal() {
+		deck.setInfinite(true);
 	}
 	
 	@Override
@@ -106,7 +111,8 @@ public class FullGameTable extends RegularGameTable {
 
 		int ichiguCount = 0;
 		if (isFirstDeal) {
-			discardFirst66(); // TODO FOR TEST: uncomment to try full game end
+			if (R.isDebug)
+				discardFirst66();
 			do {
 				for(Card card : toDealIn)
 					deck.giveBackRandomCard(card);

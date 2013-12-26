@@ -9,7 +9,7 @@ import com.turpgames.ichigu.utils.Ichigu;
 import com.turpgames.ichigu.utils.R;
 
 public class TimeChallenge extends FullGameMode {
-	private static int challengeTime = 5 * 60;
+	private static int challengeTime = R.isDebug ? 5 : 5 * 60;
 
 	private FoundInfo foundInfo;
 	private CountDownTimer timer;
@@ -18,6 +18,8 @@ public class TimeChallenge extends FullGameMode {
 		foundInfo = new FoundInfo();		
 		foundInfo.setAlignment(Text.HAlignLeft, Text.VAlignTop);
 		foundInfo.setPadding(10, 110);
+		
+		getTable().setAsInfiniteDeal();
 	}
 
 	@Override
@@ -39,6 +41,11 @@ public class TimeChallenge extends FullGameMode {
 			});
 		}
 		return timer;
+	}
+	
+	@Override
+	protected int getScore() {		
+		return foundInfo.getFound();
 	}
 	
 	@Override
