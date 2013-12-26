@@ -73,7 +73,7 @@ public class FullGameTable extends RegularGameTable {
 				}
 			}	
 		}
-		else if (toDealIn.size() == 3){
+		else {
 			for(Card card : toDealIn)
 				card.open(true);
 		}
@@ -106,7 +106,7 @@ public class FullGameTable extends RegularGameTable {
 
 		int ichiguCount = 0;
 		if (isFirstDeal) {
-			discardFirst66(); // TODO FOR TEST: uncomment to try full game end
+//			discardFirst66(); // TODO FOR TEST: uncomment to try full game end
 			do {
 				for(Card card : toDealIn)
 					deck.giveBackRandomCard(card);

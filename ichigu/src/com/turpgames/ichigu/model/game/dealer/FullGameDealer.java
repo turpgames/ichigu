@@ -115,7 +115,7 @@ public class FullGameDealer extends Dealer {
 						.setDealerEffect(moveEffect);
 			}
 		} else {
-			// last three of cardsToDealOut are new cards, the first cards are
+			// last three of cardsToDealIn are new cards, the first cards are
 			// unused extra cards repositioned
 
 			if (cardsDealingIn.size() == 0)
@@ -124,17 +124,17 @@ public class FullGameDealer extends Dealer {
 			List<Vector> destinations = new ArrayList<Vector>();
 			// the destinations for unused extra cards are added.
 			List<Vector> dealtOutDestinations = new ArrayList<Vector>();
-			for (int i = 0; i < 3; i++) {
+			for (int i = 0; i < ((cardsDealingIn.size() % 3) == 0 ? 3 : (cardsDealingIn.size() % 3)); i++) {
 				dealtOutDestinations.add(cardsDealingOut.get(i).getLocation());
 			}
 			Collections.sort(dealtOutDestinations, new DealtOutComparator());
-			for (int i = 0; i < 3; i++) {
+			for (int i = 0; i < dealtOutDestinations.size(); i++) {
 				destinations.add(dealtOutDestinations.get(i));
 			}
 
 			destinations.addAll(extraCardLocations);
 
-			for (int i = cardsDealingIn.size() - 3; i < cardsDealingIn.size(); i++) {
+			for (int i = Math.max(0, cardsDealingIn.size() - 3); i < cardsDealingIn.size(); i++) {
 				cardsDealingIn.get(i).getLocation()
 						.set(extraStart.get(i - (cardsDealingIn.size() - 3)));
 			}

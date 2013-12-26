@@ -59,10 +59,6 @@ public class MenuScreen extends FormScreen implements IGameExitListener {
 			public boolean ignoreViewport() {
 				return true;
 			}
-			@Override
-			public void registerSelf() {
-				
-			}
 		};
 		bg.setWidth(Game.getScreenWidth());
 		bg.setHeight(Game.getScreenHeight());

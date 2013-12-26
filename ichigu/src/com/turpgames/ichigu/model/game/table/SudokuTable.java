@@ -47,10 +47,6 @@ public class SudokuTable extends Table {
 			else
 				TextureDrawer.draw(incorrect, this);
 		}
-
-		@Override
-		public void registerSelf() {
-		}
 	}
 
 	private static final List<Vector> markPositions = new ArrayList<Vector>();
@@ -220,6 +216,8 @@ public class SudokuTable extends Table {
 		toDealIn.clear();
 		toDealIn.addAll(deck.get9Cards());
 		Utils.shuffle(toDealIn);
+		for(Card card : toDealIn)
+			card.open(false);
 		return toDealIn;
 	}
 

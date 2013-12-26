@@ -28,9 +28,4 @@ public class Logo extends GameObject {
 	public boolean ignoreViewport() {
 		return true;
 	}
-	
-	@Override
-	public void registerSelf() {
-		
-	}
 }
