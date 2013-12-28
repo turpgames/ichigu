@@ -1,4 +1,4 @@
-package com.turpgames.ichigu.server.entity;
+package com.turpgames.ichigu.entity;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -8,9 +8,10 @@ import java.util.Calendar;
 import java.util.List;
 
 import com.turpgames.db.DbManager;
+import com.turpgames.db.IJson;
 import com.turpgames.db.SqlQuery;
 
-public class HiScore {
+public class HiScore implements IJson {
 	private Score score;
 	private Player player;
 

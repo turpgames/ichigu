@@ -13,11 +13,11 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.turpgames.ichigu.server.chat;
+package com.turpgames.ichigu.chat.servlet;
 
 import java.util.Date;
 
-import com.turpgames.ichigu.server.JsonEncoder;
+import com.turpgames.servlet.JsonEncoder;
 
 public class ChatMessage {
 	private String message;

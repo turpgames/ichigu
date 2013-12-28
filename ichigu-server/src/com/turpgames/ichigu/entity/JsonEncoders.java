@@ -1,6 +1,6 @@
-package com.turpgames.ichigu.server.entity;
+package com.turpgames.ichigu.entity;
 
-import com.turpgames.ichigu.server.JsonEncoder;
+import com.turpgames.servlet.JsonEncoder;
 
 public final class JsonEncoders {
 	private JsonEncoders() {

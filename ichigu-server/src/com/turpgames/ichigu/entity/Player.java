@@ -1,14 +1,15 @@
-package com.turpgames.ichigu.server.entity;
+package com.turpgames.ichigu.entity;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
 
 import com.turpgames.db.DbManager;
+import com.turpgames.db.IJson;
 import com.turpgames.db.SqlQuery;
-import com.turpgames.ichigu.server.Utils;
+import com.turpgames.servlet.Utils;
 
-public class Player {
+public class Player implements IJson {
 	private int id;
 	private String username;
 	private String password;

@@ -1,9 +1,9 @@
-package com.turpgames.ichigu.server;
+package com.turpgames.ichigu.db;
 
 import java.util.List;
 
-import com.turpgames.ichigu.server.entity.HiScore;
-import com.turpgames.ichigu.server.entity.Score;
+import com.turpgames.ichigu.entity.HiScore;
+import com.turpgames.ichigu.entity.Score;
 
 public final class IchiguHiScores {
 	private IchiguHiScores() {

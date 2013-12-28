@@ -1,18 +1,7 @@
 package com.turpgames.ichigu.model.game.mode.fullgame;
 
-import java.io.InputStream;
-import java.net.URL;
-import java.util.HashMap;
-import java.util.Map;
-
-import com.turpgames.framework.v0.IHttpClient;
-import com.turpgames.framework.v0.IHttpRequest;
-import com.turpgames.framework.v0.IHttpResponse;
-import com.turpgames.framework.v0.IHttpResponseListener;
 import com.turpgames.framework.v0.impl.Text;
 import com.turpgames.framework.v0.social.ICallback;
-import com.turpgames.framework.v0.social.ISocializer;
-import com.turpgames.framework.v0.social.Player;
 import com.turpgames.framework.v0.util.Game;
 import com.turpgames.framework.v0.util.Timer;
 import com.turpgames.ichigu.model.display.BonusFeatureButton;
@@ -25,6 +14,7 @@ import com.turpgames.ichigu.model.game.Card;
 import com.turpgames.ichigu.model.game.mode.RegularMode;
 import com.turpgames.ichigu.model.game.table.FullGameTable;
 import com.turpgames.ichigu.model.game.table.Table;
+import com.turpgames.ichigu.social.Facebook;
 import com.turpgames.ichigu.utils.R;
 
 public abstract class FullGameMode extends RegularMode implements IResultScreenButtonsListener {
@@ -125,91 +115,29 @@ public abstract class FullGameMode extends RegularMode implements IResultScreenB
 		if (getModeListener() != null)
 			getModeListener().onNewGame();
 	}
-	
+
 	@Override
 	public void onSendScore() {
 		sendScore(getScore());
 	}
-	
+
 	protected abstract int getScore();
-			
+
 	private void sendScore(final int score) {
-		final ISocializer facebook = Game.getSocializer("facebook");
-		
-		if (!facebook.isLoggedIn()) {
-			facebook.login(new ICallback() {				
-				@Override
-				public void onSuccess() {
-					Player player = facebook.getPlayer();
-					sendScore(player, score);
-				}
-				
-				@Override
-				public void onFail(Throwable t) {
-					IchiguToast.showError("Login Failed!");					
-				}
-			});
-		}
-		else {
-			Player player = facebook.getPlayer();
-			sendScore(player, score);
-		}
-	}
-	
-	private void sendScore(Player player, int score) {
 		int mode = this instanceof TimeChallenge ? 3 : 2;
-		final String uri = String.format("http://localhost:8080/ichigu-server/hiscores?m=%d&p=%s&s=%d", mode, player.getId(), score);
-		IHttpClient client = Game.createHttpClient();
-		client.send(new IHttpRequest() {
-			
+		Facebook.sendScore(mode, score, new ICallback() {			
 			@Override
-			public String getUrl() {
-				return uri;
+			public void onSuccess() {
+				IchiguToast.showInfo("Score sent to the server successfully!");				
 			}
 			
 			@Override
-			public int getTimeout() {
-				return 5000;
-			}
-			
-			@Override
-			public String getMethod() {
-				return "POST";
-			}
-			
-			@Override
-			public Map<String, String> getHeaders() {
-				return new HashMap<String, String>();
-			}
-			
-			@Override
-			public InputStream getContentStream() {
-				return null;
-			}
-			
-			@Override
-			public long getContentLength() {
-				return 0;
-			}
-		}, new IHttpResponseListener() {
-			
-			@Override
-			public void onHttpResponseReceived(IHttpResponse response) {
-				if (response.getStatus() == 200) {
-					IchiguToast.showInfo("Score sent to the server successfully!");
-				}
-				else {
-					IchiguToast.showError("Ooops! Could not send score to the server, please try again!");
-				}
-			}
-			
-			@Override
-			public void onError(Throwable t) {
-				IchiguToast.showError("Ooops! Could not send score to the server, please try again!");
+			public void onFail(Throwable t) {
+				IchiguToast.showError("Ooops! Could not send score to the server, please try again!");				
 			}
 		});
 	}
-	
+
 	@Override
 	protected FullGameTable getTable() {
 		return (FullGameTable) table;
@@ -318,15 +246,15 @@ public abstract class FullGameMode extends RegularMode implements IResultScreenB
 		tripleHintFeatureButton.draw();
 		timerPauseFeatureButton.draw();
 	}
-	
+
 	private void toastInsufficientFeature() {
 		IchiguToast.showError(R.strings.buyFromMarket);
 	}
-	
+
 	private void toastFeatureAlreadyUsed() {
 		IchiguToast.showError(R.strings.bonusFeatureOnceWarning);
 	}
-	
+
 	private BonusFeatureButton.IListener singleHintFeatureListener = new BonusFeatureButton.IListener() {
 		@Override
 		public boolean onUseBonusFeature() {
@@ -343,7 +271,7 @@ public abstract class FullGameMode extends RegularMode implements IResultScreenB
 			toastFeatureAlreadyUsed();
 		}
 	};
-	
+
 	private BonusFeatureButton.IListener tripleHintFeatureListener = new BonusFeatureButton.IListener() {
 		@Override
 		public boolean onUseBonusFeature() {
@@ -360,7 +288,7 @@ public abstract class FullGameMode extends RegularMode implements IResultScreenB
 			toastFeatureAlreadyUsed();
 		}
 	};
-	
+
 	private BonusFeatureButton.IListener timerPauseFeatureListener = new BonusFeatureButton.IListener() {
 		@Override
 		public boolean onUseBonusFeature() {

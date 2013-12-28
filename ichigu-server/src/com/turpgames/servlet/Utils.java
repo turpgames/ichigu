@@ -1,4 +1,4 @@
-package com.turpgames.ichigu.server;
+package com.turpgames.servlet;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.xml.bind.DatatypeConverter;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -18,6 +19,8 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+
+import com.turpgames.db.IJson;
 
 public class Utils {
 	private static final Random rnd = new Random();
@@ -299,5 +302,16 @@ public class Utils {
 
 	public static String padLeft(String s, int n) {
 		return String.format("%1$" + n + "s", s);
+	}
+
+	public static <T extends IJson> void writeJsonListToResponse(List<T> hiscores, HttpServletResponse response) throws IOException {
+		response.getWriter().write("[");
+		for (int i = 0; i < hiscores.size(); i++) {
+			T t = hiscores.get(i);
+			response.getWriter().write(t.toJson());
+			if (i < hiscores.size() - 1)
+				response.getWriter().write(",");
+		}
+		response.getWriter().write("]");
 	}
 }

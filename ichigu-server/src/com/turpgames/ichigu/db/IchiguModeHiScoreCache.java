@@ -1,8 +1,9 @@
-package com.turpgames.ichigu.server;
+package com.turpgames.ichigu.db;
 
 import java.util.List;
 
-import com.turpgames.ichigu.server.entity.HiScore;
+import com.turpgames.db.Cache;
+import com.turpgames.ichigu.entity.HiScore;
 
 class IchiguModeHiScoreCache {
 	private final static int cacheTimeout = 20;

@@ -1,4 +1,4 @@
-package com.turpgames.ichigu.server;
+package com.turpgames.servlet;
 
 import org.atmosphere.config.managed.Decoder;
 import org.atmosphere.config.managed.Encoder;

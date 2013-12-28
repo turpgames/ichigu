@@ -1,4 +1,4 @@
-package com.turpgames.ichigu.server.db;
+package com.turpgames.ichigu.db;
 
 import com.turpgames.db.IConnectionProvider;
 

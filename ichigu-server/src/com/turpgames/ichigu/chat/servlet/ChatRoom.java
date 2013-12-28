@@ -13,7 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.turpgames.ichigu.server.chat;
+package com.turpgames.ichigu.chat.servlet;
 
 import java.io.IOException;
 import java.util.concurrent.ConcurrentHashMap;

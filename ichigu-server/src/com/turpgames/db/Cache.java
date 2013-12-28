@@ -1,15 +1,15 @@
-package com.turpgames.ichigu.server;
+package com.turpgames.db;
 
 import java.util.Calendar;
 import java.util.List;
 
-abstract class Cache<T> {
+public abstract class Cache<T> {
 	private final int timeoutMinutes;
 	
 	private Calendar timeout;	
 	private List<T> data;
 	
-	public Cache(int timeoutMinutes) {
+	protected Cache(int timeoutMinutes) {
 		this.timeoutMinutes = timeoutMinutes;
 	}
 	

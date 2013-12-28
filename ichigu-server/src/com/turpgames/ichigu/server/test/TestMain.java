@@ -5,12 +5,12 @@ import java.util.Calendar;
 import java.util.List;
 
 import com.turpgames.db.DbManager;
-import com.turpgames.ichigu.server.IchiguHiScores;
-import com.turpgames.ichigu.server.Utils;
-import com.turpgames.ichigu.server.db.IchiguConnectionProvider;
-import com.turpgames.ichigu.server.entity.HiScore;
-import com.turpgames.ichigu.server.entity.Player;
-import com.turpgames.ichigu.server.entity.Score;
+import com.turpgames.ichigu.db.IchiguConnectionProvider;
+import com.turpgames.ichigu.db.IchiguHiScores;
+import com.turpgames.ichigu.entity.HiScore;
+import com.turpgames.ichigu.entity.Player;
+import com.turpgames.ichigu.entity.Score;
+import com.turpgames.servlet.Utils;
 
 public class TestMain {
 	public static void main(String[] args) {
