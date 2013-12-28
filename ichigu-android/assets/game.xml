@@ -6,6 +6,10 @@
     <params>
 
         <param
+            key="debug"
+            value="false" />
+
+        <param
             key="provider"
             value="com.turpgames.framework.v0.impl.libgdx.GdxGameProvider" />
 

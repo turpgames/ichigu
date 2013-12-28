@@ -3,10 +3,10 @@ package com.turpgames.ichigu.model.game.table;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.turpgames.framework.v0.util.Game;
 import com.turpgames.ichigu.model.game.Card;
 import com.turpgames.ichigu.model.game.Deck;
 import com.turpgames.ichigu.model.game.dealer.FullGameDealer;
-import com.turpgames.ichigu.utils.R;
 
 public class FullGameTable extends RegularGameTable {
 	
@@ -111,7 +111,7 @@ public class FullGameTable extends RegularGameTable {
 
 		int ichiguCount = 0;
 		if (isFirstDeal) {
-			if (R.isDebug)
+			if (Game.isDebug())
 				discardFirst66();
 			do {
 				for(Card card : toDealIn)
