@@ -17,14 +17,19 @@ public class RegisterPlayerActionHandler implements IServletActionHandler {
 		String email = request.getParameter(IchiguServlet.request.params.email);
 		String username = request.getParameter(IchiguServlet.request.params.username);
 
-		Player player = new Player();
+		Player player = Player.findByFacebookId(facebookId);
 
-		player.setFacebookId(facebookId);
-		player.setEmail(email);
-		player.setUsername(username);
-		player.setPassword("");
+		if (player == null) {
 
-		player.insert();
+			player = new Player();
+
+			player.setFacebookId(facebookId);
+			player.setEmail(email);
+			player.setUsername(username);
+			player.setPassword("");
+
+			player.insert();
+		}
 
 		response.getWriter().write("" + player.getId());
 	}
