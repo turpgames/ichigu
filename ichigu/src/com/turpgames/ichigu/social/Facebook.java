@@ -9,6 +9,7 @@ import com.turpgames.framework.v0.impl.Settings;
 import com.turpgames.framework.v0.social.ICallback;
 import com.turpgames.framework.v0.social.ISocializer;
 import com.turpgames.framework.v0.social.Player;
+import com.turpgames.framework.v0.util.Debug;
 import com.turpgames.framework.v0.util.Game;
 import com.turpgames.framework.v0.util.Utils;
 
@@ -34,7 +35,9 @@ public class Facebook {
 		return facebook.getPlayer();
 	}
 
-	public static void sendScore(final int mode, final int score, final ICallback callback) {
+	public static void sendScore(final int mode, final int score,
+			final ICallback callback) {
+		Debug.println("sendScore, execute...");
 		execute(new IAction() {
 			@Override
 			public void execute() {
@@ -43,18 +46,19 @@ public class Facebook {
 		}, callback);
 	}
 
-	private static void doSendScore(int mode, int score, final ICallback callback) {
-		HttpRequest.newPostRequestBuilder()
-				.setUrl(String.format(saveHiScorescoreUrlFormat, mode, getPlayer().getId(), score))
-				.setTimeout(5000)
-				.build()
+	private static void doSendScore(int mode, int score,
+			final ICallback callback) {
+		Debug.println("doSendScore, sending score...");
+		HttpRequest
+				.newPostRequestBuilder()
+				.setUrl(String.format(saveHiScorescoreUrlFormat, mode,
+						getPlayer().getId(), score)).setTimeout(5000).build()
 				.send(new IHttpResponseListener() {
 					@Override
 					public void onHttpResponseReceived(IHttpResponse response) {
 						if (response.getStatus() == 200) {
 							callback.onSuccess();
-						}
-						else {
+						} else {
 							callback.onFail(null);
 						}
 					}
@@ -68,13 +72,15 @@ public class Facebook {
 
 	private static void execute(final IAction action, final ICallback callback) {
 		if (facebook.isLoggedIn()) {
+			Debug.println("user already logged in, executing action...");
 			action.execute();
 			return;
 		}
 
+		Debug.println("user not logged in, logging in...");
 		facebook.login(new ICallback() {
 			@Override
-			public void onSuccess() { // Login baþarýlý oldu
+			public void onSuccess() { // Login baï¿½arï¿½lï¿½ oldu
 				onLoginSuccess(action, callback);
 			}
 
@@ -85,13 +91,17 @@ public class Facebook {
 		});
 	}
 
-	private static void onLoginSuccess(final IAction action, final ICallback callback) {
-		// facebook kullanýcý bilgilerini getir
+	private static void onLoginSuccess(final IAction action,
+			final ICallback callback) {
+		Debug.println("login suceeded, getting player...");
+		// facebook kullanï¿½cï¿½ bilgilerini getir
 		final Player player = getPlayer();
 
-		// Login baþarýlý olmasýna raðmen kullanýcý bilgileri alýnamýyorsa logout ol
-		// logout baþarýlý da baþarýsýz da olsa callback fail çaðýr
+		// Login baï¿½arï¿½lï¿½ olmasï¿½na raï¿½men kullanï¿½cï¿½ bilgileri alï¿½namï¿½yorsa
+		// logout ol
+		// logout baï¿½arï¿½lï¿½ da baï¿½arï¿½sï¿½z da olsa callback fail ï¿½aï¿½ï¿½r
 		if (player == null) {
+			Debug.println("unable to get player, logging out...");
 			facebook.logout(new ICallback() {
 				@Override
 				public void onSuccess() {
@@ -106,18 +116,21 @@ public class Facebook {
 			return;
 		}
 
-		// Settingsdeki facebookId, login olan user'ýn facebook idsine
-		// eþitse action ý çalýþtýr
+		// Settingsdeki facebookId, login olan user'ï¿½n facebook idsine
+		// eï¿½itse action ï¿½ ï¿½alï¿½ï¿½tï¿½r
 		if (getFacebookId().equals(player.getSocialId())) {
+			Debug.println("player already registered, executing action now...");
 			player.setId(getPlayerId() + "");
 			action.execute();
 			return;
 		}
 
-		// Id ler uyuþmuyorsa kullanýcýyý register edip action'ý çalýþtýr
+		Debug.println("player not registered, registering now...");
+		// Id ler uyuï¿½muyorsa kullanï¿½cï¿½yï¿½ register edip action'ï¿½ ï¿½alï¿½ï¿½tï¿½r
 		registerPlayer(new ICallback() {
 			@Override
 			public void onSuccess() {
+				Debug.println("player registered, executing action now...");
 				Settings.putString("player-facebook-id", player.getSocialId());
 				Settings.putString("player-id", player.getId());
 				action.execute();
@@ -125,6 +138,7 @@ public class Facebook {
 
 			@Override
 			public void onFail(Throwable t) {
+				Debug.println("player registeration failed...");
 				callback.onFail(t);
 			}
 		});
@@ -132,37 +146,48 @@ public class Facebook {
 
 	private static void registerPlayer(final ICallback callback) {
 		try {
-		final Player player = getPlayer();
+			Debug.println("registerPlayer, getting player...");
+			final Player player = getPlayer();
 
-		HttpRequest.newPostRequestBuilder()
-				.setUrl(String.format(registerPlayerUrlFormat, player.getSocialId(), URLEncoder.encode(player.getEmail(), "UTF-8"), URLEncoder.encode(player.getName(), "UTF-8")))
-				.setTimeout(5000)
-				.build()
-				.send(new IHttpResponseListener() {
-					@Override
-					public void onHttpResponseReceived(IHttpResponse response) {
-						if (response.getStatus() == 200) {
-							try {
-								String idStr = Utils.readUtf8String(response.getInputStream());
-								player.setId(idStr);
-								callback.onSuccess();
-							}
-							catch (Throwable t) {
-								callback.onFail(t);
+
+			Debug.println("sending http request...");
+			HttpRequest
+					.newPostRequestBuilder()
+					.setUrl(String.format(registerPlayerUrlFormat,
+							player.getSocialId(),
+							URLEncoder.encode(player.getEmail(), "UTF-8"),
+							URLEncoder.encode(player.getName(), "UTF-8")))
+					.setTimeout(5000).build().send(new IHttpResponseListener() {
+						@Override
+						public void onHttpResponseReceived(
+								IHttpResponse response) {
+							if (response.getStatus() == 200) {
+								try {
+									String idStr = Utils
+											.readUtf8String(response
+													.getInputStream());
+									player.setId(idStr);
+
+									Debug.println("register player suceeded...");
+									callback.onSuccess();
+								} catch (Throwable t) {
+									Debug.println("register player failed while processing registration response");
+									callback.onFail(t);
+								}
+							} else {
+								Debug.println("register player failed with http status code: " + response.getStatus());
+								callback.onFail(null);
 							}
 						}
-						else {
-							callback.onFail(null);
-						}
-					}
 
-					@Override
-					public void onError(Throwable t) {
-						callback.onFail(t);
-					}
-				});
-		}
-		catch (Throwable t) {
+						@Override
+						public void onError(Throwable t) {
+							Debug.println("register player http request failed");
+							callback.onFail(t);
+						}
+					});
+		} catch (Throwable t) {
+			Debug.println("register player failed");
 			callback.onFail(t);
 		}
 	}
