@@ -9,6 +9,7 @@ import com.turpgames.ichigu.model.display.IResultScreenButtonsListener;
 import com.turpgames.ichigu.model.display.IchiguToast;
 import com.turpgames.ichigu.model.display.ResultScreenButtons;
 import com.turpgames.ichigu.model.display.TimerText;
+import com.turpgames.ichigu.model.display.UIBlocker;
 import com.turpgames.ichigu.model.game.BonusFeature;
 import com.turpgames.ichigu.model.game.Card;
 import com.turpgames.ichigu.model.game.mode.RegularMode;
@@ -125,14 +126,18 @@ public abstract class FullGameMode extends RegularMode implements IResultScreenB
 
 	private void sendScore(final int score) {
 		int mode = this instanceof TimeChallenge ? 3 : 2;
+		
+		UIBlocker.instance.block("Wait!");
 		Facebook.sendScore(mode, score, new ICallback() {			
 			@Override
 			public void onSuccess() {
+				UIBlocker.instance.unblock();
 				IchiguToast.showInfo("Score sent to the server successfully!");				
 			}
 			
 			@Override
 			public void onFail(Throwable t) {
+				UIBlocker.instance.unblock();
 				IchiguToast.showError("Ooops! Could not send score to the server, please try again!");				
 			}
 		});

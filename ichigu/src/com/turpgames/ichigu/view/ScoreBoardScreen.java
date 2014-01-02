@@ -1,8 +1,8 @@
 package com.turpgames.ichigu.view;
 
 import com.turpgames.framework.v0.util.Game;
-import com.turpgames.ichigu.model.HiScores;
 import com.turpgames.ichigu.model.display.IchiguToolbar;
+import com.turpgames.ichigu.model.hiscores.HiScores;
 
 public class ScoreBoardScreen extends IchiguScreen {
 	private HiScores hiScores;

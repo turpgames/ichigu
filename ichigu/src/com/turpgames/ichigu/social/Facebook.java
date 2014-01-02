@@ -14,8 +14,8 @@ import com.turpgames.framework.v0.util.Game;
 import com.turpgames.framework.v0.util.Utils;
 
 public class Facebook {
-	private final static String saveHiScorescoreUrlFormat = "http://192.168.2.4:8080/ichigu-server/ichigu?a=h&m=%d&p=%s&s=%d";
-	private final static String registerPlayerUrlFormat = "http://192.168.2.4:8080/ichigu-server/ichigu?a=r&f=%s&e=%s&u=%s";
+	private final static String saveHiScorescoreUrlFormat = "http://78.188.46.171/ichigu-server/ichigu?a=h&m=%d&p=%s&s=%d";
+	private final static String registerPlayerUrlFormat = "http://78.188.46.171/ichigu-server/ichigu?a=r&f=%s&e=%s&u=%s";
 
 	private static ISocializer facebook;
 
@@ -33,6 +33,10 @@ public class Facebook {
 
 	public static Player getPlayer() {
 		return facebook.getPlayer();
+	}
+	
+	public static boolean isLoggedIn() {
+		return facebook.isLoggedIn();
 	}
 
 	public static void sendScore(final int mode, final int score,

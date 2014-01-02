@@ -1,7 +1,5 @@
-package com.turpgames.ichigu.model;
+package com.turpgames.ichigu.model.hiscores;
 
-import com.turpgames.framework.v0.IDrawable;
-import com.turpgames.framework.v0.ILanguageListener;
 import com.turpgames.framework.v0.component.IButtonListener;
 import com.turpgames.framework.v0.component.TextButton;
 import com.turpgames.framework.v0.forms.xml.Dialog;
@@ -13,13 +11,16 @@ import com.turpgames.ichigu.model.display.IchiguDialog;
 import com.turpgames.ichigu.utils.Ichigu;
 import com.turpgames.ichigu.utils.R;
 
-public class HiScores implements IDrawable, ILanguageListener {
+class OfflineHiScores implements IHiScores {
+	static final IHiScores instance = new OfflineHiScores();
+	
 	private Text pageTitle;
 	private Text info;
 	private TextButton resetScores;
+	private TextButton loginWithFacebook;
 	private Dialog confirmDialog;
 
-	public HiScores() {
+	private OfflineHiScores() {
 		pageTitle = new Text();
 		pageTitle.setAlignment(Text.HAlignCenter, Text.VAlignTop);
 		pageTitle.getColor().set(R.colors.ichiguYellow);
@@ -58,23 +59,14 @@ public class HiScores implements IDrawable, ILanguageListener {
 		Game.getLanguageManager().register(this);
 	}
 
+	@Override
 	public void activate() {
 		resetScores.listenInput(true);
 
 		setInfo();
 	}
 
-	private void setInfo() {
-		int minichallengeScore = Settings.getInteger(R.settings.hiscores.minichallenge, 0);
-		int normalTime = Settings.getInteger(R.settings.hiscores.normaltime, 0);
-		int fullchallengeScore = Settings.getInteger(R.settings.hiscores.fullchallenge, 0);
-
-		info.setText(String.format(Ichigu.getString(R.strings.hiscoreInfo),
-				minichallengeScore,
-				normalTime == 0 ? "-" : Utils.getTimeString(normalTime),
-				fullchallengeScore));
-	}
-
+	@Override
 	public void deactivate() {
 		confirmDialog.close();
 		resetScores.listenInput(false);
@@ -98,6 +90,17 @@ public class HiScores implements IDrawable, ILanguageListener {
 		Settings.putInteger(R.settings.hiscores.normaltime, 0);
 		Settings.putInteger(R.settings.hiscores.fullchallenge, 0);
 		setInfo();
+	}
+
+	private void setInfo() {
+		int minichallengeScore = Settings.getInteger(R.settings.hiscores.minichallenge, 0);
+		int normalTime = Settings.getInteger(R.settings.hiscores.normaltime, 0);
+		int fullchallengeScore = Settings.getInteger(R.settings.hiscores.fullchallenge, 0);
+
+		info.setText(String.format(Ichigu.getString(R.strings.hiscoreInfo),
+				minichallengeScore,
+				normalTime == 0 ? "-" : Utils.getTimeString(normalTime),
+				fullchallengeScore));
 	}
 
 	private void setLanguageSensitiveInfo() {

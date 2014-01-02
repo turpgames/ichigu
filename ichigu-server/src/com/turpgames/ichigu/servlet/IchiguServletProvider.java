@@ -25,9 +25,11 @@ public class IchiguServletProvider implements IServletProvider {
 	public IServletActionHandler createActionHandler(HttpServletRequest request, String httpMethod) {
 		String action = request.getParameter(IchiguServlet.request.params.action);
 
+		String key = httpMethod + "." + action;
+		
 		synchronized (actionHandlers) {
-			if (actionHandlers.containsKey(action))
-				return actionHandlers.get(action);
+			if (actionHandlers.containsKey(key))
+				return actionHandlers.get(key);
 
 			IServletActionHandler handler;
 
@@ -36,7 +38,7 @@ public class IchiguServletProvider implements IServletProvider {
 			else
 				handler = createPostActionHandler(action);
 
-			actionHandlers.put(action, handler);
+			actionHandlers.put(key, handler);
 			return handler;
 		}
 	}
