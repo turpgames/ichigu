@@ -7,7 +7,7 @@
 
         <param
             key="debug"
-            value="false" />
+            value="true" />
 
         <param
             key="provider"

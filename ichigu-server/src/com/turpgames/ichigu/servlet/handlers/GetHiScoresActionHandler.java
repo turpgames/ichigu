@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.turpgames.ichigu.db.IchiguHiScores;
 import com.turpgames.ichigu.entity.HiScore;
+import com.turpgames.ichigu.entity.JsonEncoders;
 import com.turpgames.ichigu.servlet.IchiguServlet;
 import com.turpgames.servlet.IServletActionHandler;
 import com.turpgames.servlet.Utils;
@@ -17,6 +18,10 @@ import com.turpgames.servlet.Utils;
 public class GetHiScoresActionHandler implements IServletActionHandler {
 	@Override
 	public void handle(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		getHiScores(request, response);
+	}
+
+	private void getHiScores(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		String mode = request.getParameter(IchiguServlet.request.params.mode);
 		String playerIdStr = request.getParameter(IchiguServlet.request.params.playerId);
 
@@ -29,8 +34,10 @@ public class GetHiScoresActionHandler implements IServletActionHandler {
 			}
 		}
 
-		List<HiScore> hiscores = getHiscores(mode, playerId);
-		Utils.writeJsonListToResponse(hiscores, response);
+		HiScore[] hiscores = getHiscores(mode, playerId).toArray(new HiScore[0]);
+		
+		String json = JsonEncoders.hiscores.encode(hiscores);
+		response.getWriter().write(json);
 	}
 
 	private List<HiScore> getHiscores(String mode, int playerId) {
