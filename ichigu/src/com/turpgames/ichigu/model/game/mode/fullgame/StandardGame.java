@@ -9,6 +9,7 @@ import com.turpgames.ichigu.utils.R;
 public class StandardGame extends FullGameMode {
 	private Timer timer;
 	private Text remaingCardInfo;
+	private int completeTime;
 
 	public StandardGame() {
 		remaingCardInfo = new Text();		
@@ -35,7 +36,7 @@ public class StandardGame extends FullGameMode {
 	@Override
 	protected void prepareResultInfoAndSaveHiscore() {
 		int hiTime = Settings.getInteger(R.settings.hiscores.normaltime, 0);
-		int completeTime = (int) timer.getTotalElapsedTime();
+		completeTime = (int) timer.getTotalElapsedTime();
 
 		boolean isNewRecord = completeTime < hiTime || hiTime == 0;
 
@@ -50,6 +51,12 @@ public class StandardGame extends FullGameMode {
 	
 	@Override
 	protected int getScore() {		
-		return (int) timer.getTotalElapsedTime();
+		return completeTime;
+	}
+	
+	@Override
+	protected void onStartMode() {
+		completeTime = -1;
+		super.onStartMode();
 	}
 }
