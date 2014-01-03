@@ -4,7 +4,6 @@ import com.turpgames.framework.v0.IView;
 import com.turpgames.framework.v0.IViewFinder;
 import com.turpgames.framework.v0.IViewSwitcher;
 import com.turpgames.framework.v0.impl.FadingViewSwitcher;
-import com.turpgames.framework.v0.impl.SlidingViewSwitcher;
 import com.turpgames.framework.v0.social.ICallback;
 import com.turpgames.ichigu.social.Facebook;
 
@@ -26,7 +25,7 @@ public class HiScores implements IHiScores {
 
 	@Override
 	public void activate() {
-		if (Facebook.canLogin()) {
+		if (!Facebook.isLoggedIn() && Facebook.canLogin()) {
 			Facebook.login(new ICallback() {
 				@Override
 				public void onSuccess() {

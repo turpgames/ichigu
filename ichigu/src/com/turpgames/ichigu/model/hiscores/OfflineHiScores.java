@@ -63,7 +63,7 @@ class OfflineHiScores implements IHiScores, IView {
 		});
 
 		loginWithFacebook = new ImageButton(R.sizes.loginWidth, R.sizes.loginHeight, R.game.textures.fb_login);
-		loginWithFacebook.setLocation(Button.AlignS, 0, Game.viewportToScreenY(120));
+		loginWithFacebook.setLocation(Button.AlignS, 0, Game.viewportToScreenY(50));
 		loginWithFacebook.listenInput(false);
 		loginWithFacebook.setListener(new IButtonListener() {
 			@Override
@@ -148,6 +148,6 @@ class OfflineHiScores implements IHiScores, IView {
 	private void setLanguageSensitiveInfo() {
 		pageTitle.setText(Ichigu.getString(R.strings.hiScores));
 		resetScores.setText(Ichigu.getString(R.strings.resetHiscore));
-		resetScores.getLocation().set((Game.getVirtualWidth() - resetScores.getWidth()) / 2, 50);
+		resetScores.getLocation().set((Game.getVirtualWidth() - resetScores.getWidth()) / 2, 120);
 	}
 }

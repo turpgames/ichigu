@@ -27,7 +27,7 @@ class OnlineHiScores implements IHiScores {
 		pageTitle.setPadding(0, 85);
 		
 		logoutOfFacebook = new ImageButton(R.sizes.loginWidth, R.sizes.loginHeight, R.game.textures.fb_logout);
-		logoutOfFacebook.setLocation(Button.AlignS, 0, Game.viewportToScreenY(120));
+		logoutOfFacebook.setLocation(Button.AlignS, 0, Game.viewportToScreenY(50));
 		logoutOfFacebook.listenInput(false);
 		logoutOfFacebook.setListener(new IButtonListener() {
 			@Override
