@@ -1,26 +1,33 @@
 package com.turpgames.ichigu.model.hiscores;
 
+import com.turpgames.framework.v0.IView;
+import com.turpgames.framework.v0.component.Button;
 import com.turpgames.framework.v0.component.IButtonListener;
+import com.turpgames.framework.v0.component.ImageButton;
 import com.turpgames.framework.v0.component.TextButton;
 import com.turpgames.framework.v0.forms.xml.Dialog;
 import com.turpgames.framework.v0.impl.Settings;
 import com.turpgames.framework.v0.impl.Text;
+import com.turpgames.framework.v0.social.ICallback;
 import com.turpgames.framework.v0.util.Game;
 import com.turpgames.framework.v0.util.Utils;
 import com.turpgames.ichigu.model.display.IchiguDialog;
+import com.turpgames.ichigu.model.display.IchiguToast;
+import com.turpgames.ichigu.social.Facebook;
 import com.turpgames.ichigu.utils.Ichigu;
 import com.turpgames.ichigu.utils.R;
 
-class OfflineHiScores implements IHiScores {
-	static final IHiScores instance = new OfflineHiScores();
-	
+class OfflineHiScores implements IHiScores, IView {
 	private Text pageTitle;
 	private Text info;
 	private TextButton resetScores;
-	private TextButton loginWithFacebook;
+	private ImageButton loginWithFacebook;
 	private Dialog confirmDialog;
+	private final HiScores parent;
 
-	private OfflineHiScores() {
+	OfflineHiScores(HiScores parent) {
+		this.parent = parent;
+
 		pageTitle = new Text();
 		pageTitle.setAlignment(Text.HAlignCenter, Text.VAlignTop);
 		pageTitle.getColor().set(R.colors.ichiguYellow);
@@ -55,21 +62,55 @@ class OfflineHiScores implements IHiScores {
 			}
 		});
 
+		loginWithFacebook = new ImageButton(R.sizes.loginWidth, R.sizes.loginHeight, R.game.textures.fb_login);
+		loginWithFacebook.setLocation(Button.AlignS, 0, Game.viewportToScreenY(120));
+		loginWithFacebook.listenInput(false);
+		loginWithFacebook.setListener(new IButtonListener() {
+			@Override
+			public void onButtonTapped() {
+				loginWithFacebook();
+			}
+		});
+
 		setLanguageSensitiveInfo();
 		Game.getLanguageManager().register(this);
+	}
+
+	private void loginWithFacebook() {
+		Facebook.login(new ICallback() {
+			
+			@Override
+			public void onSuccess() {
+				parent.updateView();
+			}
+			
+			@Override
+			public void onFail(Throwable t) {
+				IchiguToast.showError(R.strings.loginError);
+			}
+		});
+		
+	}
+
+	@Override
+	public String getId() {
+		return "OfflineHiScores";
 	}
 
 	@Override
 	public void activate() {
 		resetScores.listenInput(true);
+		loginWithFacebook.listenInput(true);
 
 		setInfo();
 	}
 
 	@Override
-	public void deactivate() {
+	public boolean deactivate() {
 		confirmDialog.close();
 		resetScores.listenInput(false);
+		loginWithFacebook.listenInput(false);
+		return true;
 	}
 
 	@Override
@@ -77,6 +118,7 @@ class OfflineHiScores implements IHiScores {
 		pageTitle.draw();
 		info.draw();
 		resetScores.draw();
+		loginWithFacebook.draw();
 	}
 
 	@Override

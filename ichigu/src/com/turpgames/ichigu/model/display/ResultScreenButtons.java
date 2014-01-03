@@ -11,7 +11,6 @@ import com.turpgames.ichigu.utils.R;
 public class ResultScreenButtons implements IDrawable, ILanguageListener {
 	private TextButton backToMenu;
 	private TextButton newGame;
-	private TextButton sendScore;
 	private IResultScreenButtonsListener listener;
 
 	public ResultScreenButtons(IResultScreenButtonsListener l) {
@@ -37,15 +36,6 @@ public class ResultScreenButtons implements IDrawable, ILanguageListener {
 			}
 		});
 
-		sendScore = new TextButton(R.colors.ichiguYellow, R.colors.ichiguRed);
-		sendScore.listenInput(false);
-		sendScore.setListener(new IButtonListener() {
-			@Override
-			public void onButtonTapped() {
-				listener.onSendScore();
-			}
-		});
-
 		setLanguageSensitiveInfo();
 		Game.getLanguageManager().register(this);
 	}
@@ -54,13 +44,11 @@ public class ResultScreenButtons implements IDrawable, ILanguageListener {
 	public void draw() {
 		backToMenu.draw();
 		newGame.draw();
-		sendScore.draw();
 	}
 
 	public void listenInput(boolean listen) {
 		backToMenu.listenInput(listen);
 		newGame.listenInput(listen);
-		sendScore.listenInput(listen);
 	}
 
 	@Override
@@ -73,7 +61,5 @@ public class ResultScreenButtons implements IDrawable, ILanguageListener {
 		backToMenu.getLocation().set((Game.getVirtualWidth() - backToMenu.getWidth()) / 2, 80);
 		newGame.setText(Ichigu.getString(R.strings.newGame));
 		newGame.getLocation().set((Game.getVirtualWidth() - newGame.getWidth()) / 2, 150);
-		sendScore.setText("Send Score");
-		sendScore.getLocation().set((Game.getVirtualWidth() - sendScore.getWidth()) / 2, 220);
 	}
 }

@@ -38,14 +38,14 @@
 	+ios launch image
 v1.2
 	-Login with Facebook	
-		-login
-		-logout
+		+login
+		+logout
 		-share (score api'siz normal link share)
 	-Ichigu Server
 		-Test/Prod kurulumları (tomcat, mysql)
-		-register
-		-sendScore
-		-getHiScores
+		+register
+		+sendScore
+		+getHiScores
 	-HiScores
 		-OnlineHiscoreScreen
 		-Günlük, Haftalık, Aylık, Genel
@@ -75,11 +75,11 @@ v1.2
 		-İtalyanca
 		-Çince
 	+Update Process
-		+Yeni fetureları settings e yaz
+		+Yeni featureları settings e yaz
 	-Bug
 		-Mini mod ve Time Challenge zaman hızlı başlıyor, muhtemelen CountDownTimer'da bir bug var.
-		-FullModlarda deste bitince hata veriyor.
-		-TimeChallenge deste bitince oyun devam etsin.
+		+FullModlarda deste bitince hata veriyor.
+		+TimeChallenge deste bitince oyun devam etsin.
 TODO:
 	Achievements
 	Multiplayer

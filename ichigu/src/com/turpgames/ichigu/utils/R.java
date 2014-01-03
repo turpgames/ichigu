@@ -33,6 +33,9 @@ public final class R {
 
 		public final static float menuButtonSizeToScreen = Game.scale(menuButtonSize);
 		public final static float langFlagButtonSizeToScreen = Game.scale(flagButtonSize);
+		
+		public final static float loginWidth = Game.scale(312);
+		public final static float loginHeight = Game.scale(40);
 	}
 
 	public final static class durations {
@@ -87,6 +90,12 @@ public final class R {
 		public static final float xLarge = FontManager.defaultFontSize * 1.25f;
 	}
 
+	public static final class hiScoreMode {
+		public static final int miniChallenge = 1;
+		public static final int standard = 2;
+		public static final int timeChallenge = 3;
+	}
+	
 	/**
 	 * game.xml yapisindaki id ve key'ler
 	 */
@@ -185,6 +194,9 @@ public final class R {
 			public static final String hintSingle = "hint_single";
 			public static final String hintTriple = "hint_triple";
 			public static final String timerPause = "pause_timer";
+			
+			public static final String fb_login = "fb_login";
+			public static final String fb_logout = "fb_logout";
 		}
 	}
 
@@ -360,6 +372,14 @@ public final class R {
 		public final static String buy = "buy";
 
 		public final static String sudoku = "sudoku";
+		public final static String loginError = "loginError";
+		public final static String logoutError = "logoutError";
+		public final static String sendingScore = "sendingScore";
+		public final static String sendScoreFail = "sendScoreFail";
+		public final static String sendScoreSuccess = "sendScoreSuccess";
+		public final static String loggingIn = "loggingIn";
+		public final static String registeringPlayer = "registeringPlayer";
+		public final static String loggingOut = "loggingOut";
 	}
 
 	public static final class symbolpositions {

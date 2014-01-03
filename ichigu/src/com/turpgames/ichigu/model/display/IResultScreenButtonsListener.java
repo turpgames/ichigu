@@ -4,6 +4,4 @@ public interface IResultScreenButtonsListener {
 	void onBackToMenuTapped();
 	
 	void onNewGameTapped();
-	
-	void onSendScore();
 }

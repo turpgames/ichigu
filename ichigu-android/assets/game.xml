@@ -408,6 +408,14 @@
             <texture
                 id="pause_timer"
                 path="img/pause-timer-64.png" />
+
+            <texture
+                id="fb_login"
+                path="img/fb_login.png" />
+
+            <texture
+                id="fb_logout"
+                path="img/fb_logout.png" />
         </textures>
 
         <sounds>

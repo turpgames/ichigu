@@ -9,14 +9,13 @@ import com.turpgames.ichigu.utils.R;
 public class StandardGame extends FullGameMode {
 	private Timer timer;
 	private Text remaingCardInfo;
-	private int completeTime;
 
 	public StandardGame() {
-		remaingCardInfo = new Text();		
+		remaingCardInfo = new Text();
 		remaingCardInfo.setAlignment(Text.HAlignLeft, Text.VAlignTop);
 		remaingCardInfo.setPadding(10, 110);
-	}	
-	
+	}
+
 	@Override
 	protected Timer getTimer() {
 		if (timer == null) {
@@ -32,11 +31,11 @@ public class StandardGame extends FullGameMode {
 		remaingCardInfo.draw();
 		super.onDraw();
 	}
-	
+
 	@Override
 	protected void prepareResultInfoAndSaveHiscore() {
 		int hiTime = Settings.getInteger(R.settings.hiscores.normaltime, 0);
-		completeTime = (int) timer.getTotalElapsedTime();
+		int completeTime = (int) timer.getTotalElapsedTime();
 
 		boolean isNewRecord = completeTime < hiTime || hiTime == 0;
 
@@ -47,16 +46,7 @@ public class StandardGame extends FullGameMode {
 				Ichigu.getString(R.strings.normalResult),
 				timer.getText(),
 				(isNewRecord ? Ichigu.getString(R.strings.newHiscore) : "")));
-	}
-	
-	@Override
-	protected int getScore() {		
-		return completeTime;
-	}
-	
-	@Override
-	protected void onStartMode() {
-		completeTime = -1;
-		super.onStartMode();
+
+		super.sendScore(completeTime, R.hiScoreMode.standard);
 	}
 }

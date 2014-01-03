@@ -1,37 +1,34 @@
 package com.turpgames.ichigu.model.hiscores;
 
-import com.turpgames.framework.v0.IDrawable;
 import com.turpgames.framework.v0.ILanguageListener;
+import com.turpgames.framework.v0.IView;
 
-interface IHiScores extends IDrawable, ILanguageListener {
+interface IHiScores extends IView, ILanguageListener {
 	public final static IHiScores NULL = new IHiScores() {
 		
 		@Override
 		public void onLanguageChanged() {
-			// TODO Auto-generated method stub
 			
 		}
 		
 		@Override
 		public void draw() {
-			// TODO Auto-generated method stub
 			
 		}
 		
 		@Override
-		public void deactivate() {
-			// TODO Auto-generated method stub
-			
+		public boolean deactivate() {
+			return true;
 		}
 		
 		@Override
 		public void activate() {
-			// TODO Auto-generated method stub
 			
 		}
-	};
-	
-	void activate();
 
-	void deactivate();
+		@Override
+		public String getId() {
+			return "null hiscores";
+		}
+	};
 }

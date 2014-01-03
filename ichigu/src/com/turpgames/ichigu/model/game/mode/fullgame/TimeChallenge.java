@@ -43,12 +43,7 @@ public class TimeChallenge extends FullGameMode {
 		}
 		return timer;
 	}
-	
-	@Override
-	protected int getScore() {		
-		return foundInfo.getFound();
-	}
-	
+		
 	@Override
 	protected void onDraw() {
 		foundInfo.draw();
@@ -76,5 +71,7 @@ public class TimeChallenge extends FullGameMode {
 
 		resultInfo.setText(String.format(Ichigu.getString(R.strings.fullChallengeResult),
 				score, (score > hiScore ? Ichigu.getString(R.strings.newHiscore) : "")));
+		
+		super.sendScore(score, R.hiScoreMode.timeChallenge);
 	}
 }

@@ -67,11 +67,6 @@ public class MiniGame extends SingleGameMode implements IResultScreenButtonsList
 	}
 	
 	@Override
-	public void onSendScore() {
-		IchiguToast.showError("Not implemented!!!");
-	}
-	
-	@Override
 	public void concreteIchiguFound() {
 		foundInfo.increaseFound();
 		super.concreteIchiguFound();

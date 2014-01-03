@@ -1,30 +1,30 @@
 package com.turpgames.ichigu.model.display;
 
 import com.turpgames.framework.v0.IDrawable;
-import com.turpgames.framework.v0.IInputListener;
 import com.turpgames.framework.v0.impl.Text;
 import com.turpgames.framework.v0.util.Color;
 import com.turpgames.framework.v0.util.Drawer;
 import com.turpgames.framework.v0.util.Game;
 import com.turpgames.framework.v0.util.ShapeDrawer;
+import com.turpgames.ichigu.utils.Ichigu;
 
 public class UIBlocker implements IDrawable {
 	public final static UIBlocker instance = new UIBlocker();
+
+	private IDrawable blockMessage;
+	private Text message;
+	private Color color;
 
 	private UIBlocker() {
 		color = Color.black();
 		color.a = 0.5f;
 
-		text = new Text();
-		text.setAlignment(Text.HAlignCenter, Text.VAlignCenter);
-		text.setSize(Game.getVirtualWidth(), Game.getVirtualHeight());
-		text.setFontScale(1.5f);
-		text.getColor().set(Color.white());
+		message = new Text();
+		message.setAlignment(Text.HAlignCenter, Text.VAlignCenter);
+		message.setSize(Game.getVirtualWidth(), Game.getVirtualHeight());
+		message.setFontScale(1.5f);
+		message.getColor().set(Color.white());
 	}
-
-	private IDrawable blockMessage;
-	private Text text;
-	private Color color;
 
 	public void block(String blockMessage) {
 		block(blockMessage, Color.white(), 1.5f);
@@ -39,22 +39,26 @@ public class UIBlocker implements IDrawable {
 	}
 
 	public void block(String blockMessage, Color color, float fontScale) {
-		text.setText(blockMessage);
-		text.getColor().set(color);
-		text.setFontScale(fontScale);
-		block(text);
+		message.setText(Ichigu.getString(blockMessage));
+		message.getColor().set(color);
+		message.setFontScale(fontScale);
+		block(message);
 	}
 
 	public void block(IDrawable blockMessage) {
 		this.blockMessage = blockMessage;
-		Game.getInputManager().register(IInputListener.blocker, Game.LAYER_DIALOG);
+		Game.getInputManager().deactivate();
 		Drawer.getCurrent().register(this, Game.LAYER_DIALOG);
 	}
 
 	public void unblock() {
 		Drawer.getCurrent().unregister(this);
-		Game.getInputManager().unregister(IInputListener.blocker);
+		Game.getInputManager().activate();
 		this.blockMessage = null;
+	}
+	
+	public void setMessage(String blockMessage) {
+		message.setText(Ichigu.getString(blockMessage));
 	}
 
 	public Color getColor() {
