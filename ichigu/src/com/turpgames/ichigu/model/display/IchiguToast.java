@@ -1,6 +1,6 @@
 package com.turpgames.ichigu.model.display;
 
-import com.turpgames.framework.v0.forms.xml.Toast;
+import com.turpgames.framework.v0.component.Toast;
 import com.turpgames.framework.v0.util.Color;
 import com.turpgames.ichigu.utils.Ichigu;
 import com.turpgames.ichigu.utils.R;
