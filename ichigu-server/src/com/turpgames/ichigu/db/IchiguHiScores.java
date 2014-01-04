@@ -66,73 +66,73 @@ public final class IchiguHiScores {
 
 	public static List<HiScore> miniModeToday(int playerId) {
 		if (playerId > 0)
-			return HiScore.getHiScores(Score.ModeMini, 1, playerId);
+			return Db.HiScores.getHiScores(Score.ModeMini, 1, playerId);
 		return miniModeToday();
 	}
 
 	public static List<HiScore> miniModeLastWeek(int playerId) {
 		if (playerId > 0)
-			return HiScore.getHiScores(Score.ModeMini, 7, playerId);
+			return Db.HiScores.getHiScores(Score.ModeMini, 7, playerId);
 		return miniModeLastWeek();
 	}
 
 	public static List<HiScore> miniModeLastMonth(int playerId) {
 		if (playerId > 0)
-			return HiScore.getHiScores(Score.ModeMini, 30, playerId);
+			return Db.HiScores.getHiScores(Score.ModeMini, 30, playerId);
 		return miniModeLastMonth();
 	}
 
 	public static List<HiScore> miniModeAllTime(int playerId) {
 		if (playerId > 0)
-			return HiScore.getHiScoresOfPlayer(Score.ModeMini, playerId);
+			return Db.HiScores.getHiScoresOfPlayer(Score.ModeMini, playerId);
 		return miniModeAllTime();
 	}
 
 	public static List<HiScore> standartModeToday(int playerId) {
 		if (playerId > 0)
-			return HiScore.getHiScores(Score.ModeStandard, 1, playerId);
+			return Db.HiScores.getHiScores(Score.ModeStandard, 1, playerId);
 		return standartModeToday();
 	}
 
 	public static List<HiScore> standartModeLastWeek(int playerId) {
 		if (playerId > 0)
-			return HiScore.getHiScores(Score.ModeStandard, 7, playerId);
+			return Db.HiScores.getHiScores(Score.ModeStandard, 7, playerId);
 		return standartModeLastWeek();
 	}
 
 	public static List<HiScore> standartModeLastMonth(int playerId) {
 		if (playerId > 0)
-			return HiScore.getHiScores(Score.ModeStandard, 30, playerId);
+			return Db.HiScores.getHiScores(Score.ModeStandard, 30, playerId);
 		return standartModeLastMonth();
 	}
 
 	public static List<HiScore> standartModeAllTime(int playerId) {
 		if (playerId > 0)
-			return HiScore.getHiScoresOfPlayer(Score.ModeStandard, playerId);
+			return Db.HiScores.getHiScoresOfPlayer(Score.ModeStandard, playerId);
 		return standartModeAllTime();
 	}
 
 	public static List<HiScore> timeModeToday(int playerId) {
 		if (playerId > 0)
-			return HiScore.getHiScores(Score.ModeTime, 1, playerId);
+			return Db.HiScores.getHiScores(Score.ModeTime, 1, playerId);
 		return timeModeToday();
 	}
 
 	public static List<HiScore> timeModeLastWeek(int playerId) {
 		if (playerId > 0)
-			return HiScore.getHiScores(Score.ModeTime, 7, playerId);
+			return Db.HiScores.getHiScores(Score.ModeTime, 7, playerId);
 		return timeModeLastWeek();
 	}
 
 	public static List<HiScore> timeModeLastMonth(int playerId) {
 		if (playerId > 0)
-			return HiScore.getHiScores(Score.ModeTime, 30, playerId);
+			return Db.HiScores.getHiScores(Score.ModeTime, 30, playerId);
 		return timeModeLastMonth();
 	}
 
 	public static List<HiScore> timeModeAllTime(int playerId) {
 		if (playerId > 0)
-			return HiScore.getHiScoresOfPlayer(Score.ModeTime, playerId);
+			return Db.HiScores.getHiScoresOfPlayer(Score.ModeTime, playerId);
 		return timeModeAllTime();
 	}
 }

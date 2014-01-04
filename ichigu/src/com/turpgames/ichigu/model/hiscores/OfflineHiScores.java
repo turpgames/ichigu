@@ -10,12 +10,12 @@ import com.turpgames.framework.v0.impl.Settings;
 import com.turpgames.framework.v0.impl.Text;
 import com.turpgames.framework.v0.social.ICallback;
 import com.turpgames.framework.v0.util.Game;
-import com.turpgames.framework.v0.util.Utils;
 import com.turpgames.ichigu.model.display.IchiguDialog;
 import com.turpgames.ichigu.model.display.IchiguToast;
 import com.turpgames.ichigu.social.Facebook;
 import com.turpgames.ichigu.utils.Ichigu;
 import com.turpgames.ichigu.utils.R;
+import com.turpgames.utils.Util;
 
 class OfflineHiScores implements IHiScores, IView {
 	private Text pageTitle;
@@ -141,7 +141,7 @@ class OfflineHiScores implements IHiScores, IView {
 
 		info.setText(String.format(Ichigu.getString(R.strings.hiscoreInfo),
 				minichallengeScore,
-				normalTime == 0 ? "-" : Utils.getTimeString(normalTime),
+				normalTime == 0 ? "-" : Util.Strings.getTimeString(normalTime),
 				fullchallengeScore));
 	}
 

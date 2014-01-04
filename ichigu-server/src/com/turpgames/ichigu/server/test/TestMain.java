@@ -1,25 +1,57 @@
 package com.turpgames.ichigu.server.test;
 
+import java.io.InputStream;
+import java.io.PrintWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Map;
 
 import com.turpgames.db.DbManager;
+import com.turpgames.ichigu.db.Db;
 import com.turpgames.ichigu.db.IchiguConnectionProvider;
 import com.turpgames.ichigu.db.IchiguHiScores;
 import com.turpgames.ichigu.entity.HiScore;
 import com.turpgames.ichigu.entity.Player;
 import com.turpgames.ichigu.entity.Score;
-import com.turpgames.servlet.Utils;
+import com.turpgames.ichigu.servlet.Utils;
+import com.turpgames.utils.Util;
 
 public class TestMain {
 	public static void main(String[] args) {
 		DbManager.setConnectionProvider(new IchiguConnectionProvider());
-
-		// insertRandomData(); 
-		displayHiscores();
+		
+		testEncoding();
+		// insertRandomData();
+		// displayHiscores();
 
 		System.out.println("OK!");
+	}
+
+	private static void testEncoding() {
+		HttpURLConnection conn = null;
+		try {
+			String uri = String.format("http://localhost:8080/ichigu-server/ichigu?p=%s", URLEncoder.encode("ýðüþöçÖÇÞÝÐÜ", "utf-8"));
+			
+			URL url = new URL(uri);
+			conn = (HttpURLConnection) url.openConnection();
+
+			conn.setDoInput(true);
+			conn.setDoOutput(false);
+
+			conn.setRequestMethod("GET");
+			conn.setConnectTimeout(5000);
+			conn.setReadTimeout(5000);
+			
+			String resp = Util.IO.readUtf8String(conn.getInputStream());
+			System.out.println(resp);
+		}
+		catch (Throwable t) {
+			t.printStackTrace();
+		}
 	}
 
 	private static void displayHiscores() {
@@ -79,7 +111,7 @@ public class TestMain {
 	}
 
 	private final static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss,SSSZ");
-	
+
 	private static void displayHiScores(List<HiScore> hiscores) {
 		System.out.println("----------------------------------------");
 		System.out.println(Utils.padRight("Rank", 10) + Utils.padRight("Player", 20) + Utils.padRight("Score", 20) + "Date");
@@ -116,7 +148,7 @@ public class TestMain {
 			p.setUsername("player" + r);
 			p.setFacebookId("" + r);
 			p.setPassword("" + r);
-			p.insert();
+			Db.Players.insert(p);
 		}
 
 		System.out.println("inserting scores...");
@@ -130,7 +162,7 @@ public class TestMain {
 			Calendar time = Calendar.getInstance();
 			time.add(Calendar.HOUR, Utils.randInt(-40 * 24, 1));
 			s.setTime(time.getTimeInMillis());
-			s.insert();
+			Db.Scores.insert(s);
 		}
 	}
 }

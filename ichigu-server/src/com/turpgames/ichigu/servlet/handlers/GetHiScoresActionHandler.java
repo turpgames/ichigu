@@ -4,26 +4,23 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import com.turpgames.ichigu.db.IchiguHiScores;
 import com.turpgames.ichigu.entity.HiScore;
-import com.turpgames.ichigu.entity.JsonEncoders;
 import com.turpgames.ichigu.servlet.IchiguServlet;
+import com.turpgames.ichigu.servlet.JsonEncoders;
+import com.turpgames.ichigu.servlet.Utils;
 import com.turpgames.servlet.IServletActionHandler;
-import com.turpgames.servlet.Utils;
+import com.turpgames.servlet.RequestContext;
 
 public class GetHiScoresActionHandler implements IServletActionHandler {
 	@Override
-	public void handle(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		getHiScores(request, response);
+	public void handle(RequestContext context) throws IOException {
+		getHiScores(context);
 	}
 
-	private void getHiScores(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		String mode = request.getParameter(IchiguServlet.request.params.mode);
-		String playerIdStr = request.getParameter(IchiguServlet.request.params.playerId);
+	private void getHiScores(RequestContext context) throws IOException {
+		String mode = context.getParam(IchiguServlet.request.params.mode);
+		String playerIdStr = context.getParam(IchiguServlet.request.params.playerId);
 
 		int playerId = 0;
 		if (!Utils.isNullOrWhitespace(playerIdStr)) {
@@ -37,7 +34,7 @@ public class GetHiScoresActionHandler implements IServletActionHandler {
 		HiScore[] hiscores = getHiscores(mode, playerId).toArray(new HiScore[0]);
 		
 		String json = JsonEncoders.hiscores.encode(hiscores);
-		response.getWriter().write(json);
+		context.writeToResponse(json);
 	}
 
 	private List<HiScore> getHiscores(String mode, int playerId) {

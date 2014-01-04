@@ -5,7 +5,6 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.turpgames.framework.v0.IEnvironmentProvider;
 import com.turpgames.framework.v0.impl.libgdx.GdxGame;
 import com.turpgames.framework.v0.social.ICallback;
-import com.turpgames.framework.v0.social.IFriendLoader;
 import com.turpgames.framework.v0.social.ISocializer;
 import com.turpgames.framework.v0.social.ISocializerFactory;
 import com.turpgames.framework.v0.social.Player;
@@ -43,7 +42,6 @@ public class Main {
 
 					@Override
 					public ISocializer getSocializer(String provider) {
-						// TODO Auto-generated method stub
 						return new ISocializer() {
 
 							@Override
@@ -68,12 +66,17 @@ public class Main {
 
 							@Override
 							public Player getPlayer() {
-								return new Player(new IFriendLoader() {
-									@Override
-									public Player[] loadFriends(Player player) {
-										return new Player[0];
-									}
-								}) { };
+								Player player = new Player();
+								player.setName("Test Player");
+								player.setId("1");
+								player.setSocialId("1");
+								player.setEmail("player@test.com");
+								return player;
+							}
+
+							@Override
+							public void loadFriends(Player player, ICallback callback) {
+								callback.onSuccess();
 							}
 						};
 					}

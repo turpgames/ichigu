@@ -41,7 +41,7 @@ class OnlineHiScores implements IHiScores {
 	}
 
 	private void logoutOfFacebook() {
-		Facebook.logout(new ICallback() {			
+		Facebook.logout(new ICallback() {
 			@Override
 			public void onSuccess() {
 				parent.updateView();

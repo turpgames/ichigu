@@ -4,6 +4,7 @@ import java.net.URLEncoder;
 
 import com.turpgames.framework.v0.IHttpResponse;
 import com.turpgames.framework.v0.IHttpResponseListener;
+import com.turpgames.framework.v0.component.UIBlocker;
 import com.turpgames.framework.v0.impl.HttpRequest;
 import com.turpgames.framework.v0.impl.Settings;
 import com.turpgames.framework.v0.social.ICallback;
@@ -11,9 +12,9 @@ import com.turpgames.framework.v0.social.ISocializer;
 import com.turpgames.framework.v0.social.Player;
 import com.turpgames.framework.v0.util.Debug;
 import com.turpgames.framework.v0.util.Game;
-import com.turpgames.framework.v0.util.Utils;
-import com.turpgames.ichigu.model.display.UIBlocker;
+import com.turpgames.ichigu.utils.Ichigu;
 import com.turpgames.ichigu.utils.R;
+import com.turpgames.utils.Util;
 
 public class Facebook {
 	private final static String saveHiScorescoreUrlFormat = "http://78.188.46.171/ichigu-server/ichigu?a=h&m=%d&p=%s&s=%d";
@@ -170,7 +171,7 @@ public class Facebook {
 		if (player == null) {
 			updateBlockMessage(R.strings.loginError);
 			Debug.println("unable to get player, logging out...");
-			facebook.logout(new ICallback() {
+			logout(new ICallback() {
 				@Override
 				public void onSuccess() {
 					callback.onFail(null);
@@ -203,8 +204,18 @@ public class Facebook {
 
 			@Override
 			public void onFail(Throwable t) {
-				Debug.println("player registration failed...");
-				callback.onFail(t);
+				Debug.println("player registration failed, logging out...");
+				logout(new ICallback() {
+					@Override
+					public void onSuccess() {
+						callback.onFail(null);
+					}
+
+					@Override
+					public void onFail(Throwable t) {
+						callback.onFail(null);
+					}
+				});
 			}
 		});
 	}
@@ -231,7 +242,7 @@ public class Facebook {
 						public void onHttpResponseReceived(IHttpResponse response) {
 							if (response.getStatus() == 200) {
 								try {
-									String idStr = Utils.readUtf8String(response.getInputStream());
+									String idStr = Util.IO.readUtf8String(response.getInputStream());
 									player.setId(idStr);
 
 									Debug.println("register player succeeded...");
@@ -259,7 +270,7 @@ public class Facebook {
 	}
 
 	private static void blockUI(String message) {
-		UIBlocker.instance.block(message);
+		UIBlocker.instance.block(Ichigu.getString(message));
 	}
 
 	private static void unblockUI() {
@@ -267,7 +278,7 @@ public class Facebook {
 	}
 
 	private static void updateBlockMessage(String message) {
-		UIBlocker.instance.setMessage(message);
+		UIBlocker.instance.setMessage(Ichigu.getString(message));
 	}
 
 	private static class CallbackInterceptor implements ICallback {
