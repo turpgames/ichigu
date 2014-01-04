@@ -26,11 +26,11 @@ public class Facebook {
 		facebook = Game.getSocializer("facebook");
 	}
 
-	public static String getPlayerId() {
+	private static String getPlayerId() {
 		return Settings.getString("player-id", "");
 	}
 
-	public static String getFacebookId() {
+	private static String getFacebookId() {
 		return Settings.getString("player-facebook-id", "");
 	}
 
@@ -235,7 +235,6 @@ public class Facebook {
 			HttpRequest.newPostRequestBuilder()
 					.setUrl(url)
 					.setTimeout(5000)
-					.setAsync(true)
 					.build()
 					.send(new IHttpResponseListener() {
 						@Override
