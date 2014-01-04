@@ -17,8 +17,8 @@ import com.turpgames.ichigu.utils.R;
 import com.turpgames.utils.Util;
 
 public class Facebook {
-	private final static String saveHiScorescoreUrlFormat = "http://78.188.46.171/ichigu-server/ichigu?a=h&m=%d&p=%s&s=%d";
-	private final static String registerPlayerUrlFormat = "http://78.188.46.171/ichigu-server/ichigu?a=r&f=%s&e=%s&u=%s";
+	private final static String saveHiScorescoreUrlFormat = "http://94.138.207.162/ichigu-test/ichigu?a=h&m=%d&p=%s&s=%d";
+	private final static String registerPlayerUrlFormat = "http://94.138.207.162/ichigu-test/ichigu?a=r&f=%s&e=%s&u=%s";
 
 	private static ISocializer facebook;
 
