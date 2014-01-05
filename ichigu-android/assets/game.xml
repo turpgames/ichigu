@@ -80,6 +80,30 @@
         <param
             key="facebook-address"
             value="http://www.facebook.com/turpgames" />
+
+        <param
+            key="server"
+            value="test" />
+
+        <param
+            key="prod-server"
+            value="http://ichigu.turpgam.es/" />
+
+        <param
+            key="test-server"
+            value="http://ichigutest.turpgam.es/" />
+
+        <param
+            key="local-server"
+            value="http://192.168.2.4:8080/ichigu-server/" />
+
+        <param
+            key="send-score-params"
+            value="?a=h&amp;m=%d&amp;p=%s&amp;s=%d" />
+
+        <param
+            key="register-player-params"
+            value="?a=r&amp;f=%s&amp;e=%s&amp;u=%s" />
     </params>
 
     <screens>

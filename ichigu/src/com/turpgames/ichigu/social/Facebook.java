@@ -17,13 +17,19 @@ import com.turpgames.ichigu.utils.R;
 import com.turpgames.utils.Util;
 
 public class Facebook {
-	private final static String saveHiScorescoreUrlFormat = "http://94.138.207.162/ichigu-test/ichigu?a=h&m=%d&p=%s&s=%d";
-	private final static String registerPlayerUrlFormat = "http://94.138.207.162/ichigu-test/ichigu?a=r&f=%s&e=%s&u=%s";
-
+	private final static String sendScoreUrlFormat;
+	private final static String registerPlayerUrlFormat;
+	
 	private static ISocializer facebook;
 
 	static {
 		facebook = Game.getSocializer("facebook");
+		
+		String server = Game.getParam("server");		
+		String baseUrl = Game.getParam(server + "-server");
+		
+		sendScoreUrlFormat = baseUrl + Game.getParam("send-score-params");
+		registerPlayerUrlFormat = baseUrl + Game.getParam("register-player-params");
 	}
 
 	private static String getPlayerId() {
@@ -95,7 +101,7 @@ public class Facebook {
 
 	private static void doSendScore(int mode, int score, final ICallback callback) {
 		blockUI(R.strings.sendingScore);
-		String url = String.format(saveHiScorescoreUrlFormat, mode, getPlayer().getId(), score);
+		String url = String.format(sendScoreUrlFormat, mode, getPlayer().getId(), score);
 
 		Debug.println("doSendScore, sending score...");
 		HttpRequest.newPostRequestBuilder()
