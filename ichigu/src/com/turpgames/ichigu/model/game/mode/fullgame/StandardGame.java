@@ -3,6 +3,7 @@ package com.turpgames.ichigu.model.game.mode.fullgame;
 import com.turpgames.framework.v0.impl.Settings;
 import com.turpgames.framework.v0.impl.Text;
 import com.turpgames.framework.v0.util.Timer;
+import com.turpgames.ichigu.entity.Score;
 import com.turpgames.ichigu.utils.Ichigu;
 import com.turpgames.ichigu.utils.R;
 
@@ -47,6 +48,6 @@ public class StandardGame extends FullGameMode {
 				timer.getText(),
 				(isNewRecord ? Ichigu.getString(R.strings.newHiscore) : "")));
 
-		super.sendScore(completeTime, R.hiScoreMode.standard);
+		super.sendScore(completeTime, Score.ModeStandard);
 	}
 }

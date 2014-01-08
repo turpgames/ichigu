@@ -2,8 +2,9 @@ package com.turpgames.ichigu.model.game;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import com.turpgames.framework.v0.util.Game;
-import com.turpgames.framework.v0.util.Utils;
+import com.turpgames.utils.Util;
 
 public class Deck {
 	private static int[] colors = new int[] { CardAttributes.colorRed, CardAttributes.colorGreen, CardAttributes.colorBlue };

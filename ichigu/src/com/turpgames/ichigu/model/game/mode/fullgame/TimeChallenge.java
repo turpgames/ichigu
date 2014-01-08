@@ -5,6 +5,7 @@ import com.turpgames.framework.v0.impl.Text;
 import com.turpgames.framework.v0.util.CountDownTimer;
 import com.turpgames.framework.v0.util.Game;
 import com.turpgames.framework.v0.util.Timer;
+import com.turpgames.ichigu.entity.Score;
 import com.turpgames.ichigu.model.display.FoundInfo;
 import com.turpgames.ichigu.utils.Ichigu;
 import com.turpgames.ichigu.utils.R;
@@ -72,6 +73,6 @@ public class TimeChallenge extends FullGameMode {
 		resultInfo.setText(String.format(Ichigu.getString(R.strings.fullChallengeResult),
 				score, (score > hiScore ? Ichigu.getString(R.strings.newHiscore) : "")));
 		
-		super.sendScore(score, R.hiScoreMode.timeChallenge);
+		super.sendScore(score, Score.ModeTime);
 	}
 }

@@ -102,6 +102,10 @@
             value="?a=h&amp;m=%d&amp;p=%s&amp;s=%d" />
 
         <param
+            key="get-hiscores-params"
+            value="?a=h&amp;m=ta&amp;p=%s" />
+
+        <param
             key="register-player-params"
             value="?a=r&amp;f=%s&amp;e=%s&amp;u=%s" />
     </params>

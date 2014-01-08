@@ -89,12 +89,6 @@ public final class R {
 		public static final float large = FontManager.defaultFontSize * 1f;
 		public static final float xLarge = FontManager.defaultFontSize * 1.25f;
 	}
-
-	public static final class hiScoreMode {
-		public static final int miniChallenge = 1;
-		public static final int standard = 2;
-		public static final int timeChallenge = 3;
-	}
 	
 	/**
 	 * game.xml yapisindaki id ve key'ler
