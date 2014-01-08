@@ -44,9 +44,4 @@ class Symbol extends GameObject {
 	public Vector getScale() {
 		return parent.getScale();
 	}
-
-	@Override
-	public void registerSelf() {
-		
-	}
 }

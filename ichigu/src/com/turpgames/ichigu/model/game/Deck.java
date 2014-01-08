@@ -53,6 +53,7 @@ public class Deck {
 		int rIndex = Util.Random.randInt(unusedCards.size());
 		if (Game.isDebug())
 			rIndex = 0;
+
 		Card card = unusedCards.get(rIndex);
 		useCard(card);
 		return card;

@@ -22,11 +22,6 @@ public class TurpLogo extends GameObject {
 	public void draw() {
 		TextureDrawer.draw(logo, this);
 	}
-	
-	@Override
-	public void registerSelf() {
-		
-	}
 
 	public void setLogoSize(float f) {
 		logoSize = f;

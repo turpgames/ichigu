@@ -36,10 +36,6 @@ public abstract class Table implements IDealerListener, ICardListener {
 				in = getCardsToDealIn();
 				i = 0;
 			}
-		for(Card card : in)
-			card.open(false);
-		for(Card card : out)
-			card.open(true);
 		dealer.deal(in, out);
 	}
 	

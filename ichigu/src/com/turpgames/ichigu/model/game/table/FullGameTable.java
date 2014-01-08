@@ -78,7 +78,7 @@ public class FullGameTable extends RegularGameTable {
 				}
 			}	
 		}
-		else if (toDealIn.size() == 3){
+		else {
 			for(Card card : toDealIn)
 				card.open(true);
 		}
@@ -113,6 +113,7 @@ public class FullGameTable extends RegularGameTable {
 		if (isFirstDeal) {
 			if (Game.isDebug())
 				discardFirst66();
+
 			do {
 				for(Card card : toDealIn)
 					deck.giveBackRandomCard(card);
