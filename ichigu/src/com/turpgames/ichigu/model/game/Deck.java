@@ -2,7 +2,6 @@ package com.turpgames.ichigu.model.game;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import com.turpgames.framework.v0.util.Game;
 import com.turpgames.framework.v0.util.Utils;
 

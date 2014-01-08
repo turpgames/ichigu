@@ -3,7 +3,7 @@ package com.turpgames.ichigu.model.game.table;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.turpgames.framework.v0.forms.xml.Toast;
+import com.turpgames.framework.v0.component.Toast;
 import com.turpgames.framework.v0.util.Color;
 import com.turpgames.ichigu.model.display.IchiguToast;
 import com.turpgames.ichigu.model.game.Card;

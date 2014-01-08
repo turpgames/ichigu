@@ -78,7 +78,7 @@ public class FullGameTable extends RegularGameTable {
 				}
 			}	
 		}
-		else if (toDealIn.size() == 3){
+		else {
 			for(Card card : toDealIn)
 				card.open(true);
 		}

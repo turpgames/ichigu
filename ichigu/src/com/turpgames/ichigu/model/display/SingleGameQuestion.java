@@ -33,11 +33,6 @@ public class SingleGameQuestion extends GameObject implements IEffectEndListener
 		public void draw() {
 			TextureDrawer.draw(texture, this);
 		}
-
-		@Override
-		public void registerSelf() {
-			
-		}
 		
 		@Override
 		public void setAlpha(float alpha) {
@@ -86,11 +81,6 @@ public class SingleGameQuestion extends GameObject implements IEffectEndListener
 		correctEffectStartTimer.stop();
 		incorrectEffectStartTimer.stop();
 		return false;
-	}
-
-	@Override
-	public void registerSelf() {
-		
 	}
 	
 	public void startCorrectEffect() {
