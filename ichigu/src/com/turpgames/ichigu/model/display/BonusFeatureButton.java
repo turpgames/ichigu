@@ -95,9 +95,9 @@ public class BonusFeatureButton implements IDrawable {
 		}
 
 		if (listener.onUseBonusFeature()) {
-			feature.used();	
-			if (singleUse)
-				setAsUsed();
+//			feature.used();	
+//			if (singleUse)
+//				setAsUsed();
 		}
 	}
 

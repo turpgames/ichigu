@@ -11,7 +11,7 @@ public abstract class RegularGameTable extends Table {
 		
 	}
 	
-	abstract public boolean isIchiguAttempted();
+	public abstract boolean isIchiguAttempted();
 
-	abstract public boolean isIchiguFound();
+	public abstract boolean isIchiguFound();
 }
