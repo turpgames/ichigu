@@ -6,8 +6,8 @@ import java.util.List;
 
 import com.turpgames.ichigu.db.IchiguHiScores;
 import com.turpgames.ichigu.entity.HiScore;
+import com.turpgames.ichigu.entity.JsonEncoders;
 import com.turpgames.ichigu.servlet.IchiguServlet;
-import com.turpgames.ichigu.servlet.JsonEncoders;
 import com.turpgames.ichigu.servlet.Utils;
 import com.turpgames.servlet.IServletActionHandler;
 import com.turpgames.servlet.RequestContext;

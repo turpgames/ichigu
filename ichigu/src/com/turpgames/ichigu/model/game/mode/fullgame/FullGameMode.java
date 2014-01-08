@@ -31,24 +31,24 @@ public abstract class FullGameMode extends RegularMode implements IResultScreenB
 	public FullGameMode() {
 		resultScreenButtons = new ResultScreenButtons(this);
 
-		singleHintFeatureButton = BonusFeatureButton.Builder.newBuilder()
-				.listenFeature(BonusFeature.singleHint)
+		singleHintFeatureButton = BonusFeatureButton.newBuilder()
+				.attachToFeature(BonusFeature.singleHint)
 				.setTexture(R.game.textures.hintSingle)
 				.setLocation(10, 30)
 				.enableNotification()
 				.setListener(singleHintFeatureListener)
 				.build();
 
-		tripleHintFeatureButton = BonusFeatureButton.Builder.newBuilder()
-				.listenFeature(BonusFeature.tripleHint)
+		tripleHintFeatureButton = BonusFeatureButton.newBuilder()
+				.attachToFeature(BonusFeature.tripleHint)
 				.setTexture(R.game.textures.hintTriple)
 				.setLocation(10 + R.sizes.menuButtonSize + 20, 30)
 				.setAsSingleUse()
 				.setListener(tripleHintFeatureListener)
 				.build();
 
-		timerPauseFeatureButton = BonusFeatureButton.Builder.newBuilder()
-				.listenFeature(BonusFeature.timerPause)
+		timerPauseFeatureButton = BonusFeatureButton.newBuilder()
+				.attachToFeature(BonusFeature.timerPause)
 				.setTexture(R.game.textures.timerPause)
 				.setLocation(10 + 2 * (R.sizes.menuButtonSize + 20), 30)
 				.setAsSingleUse()
