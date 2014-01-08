@@ -17,7 +17,7 @@ package com.turpgames.ichigu.chat.servlet;
 
 import java.util.Date;
 
-import com.turpgames.servlet.JsonEncoder;
+import com.turpgames.json.JsonEncoder;
 
 public class ChatMessage {
 	private String message;
@@ -70,7 +70,9 @@ public class ChatMessage {
 		this.time = time;
 	}
 
-	public static class Encoder extends JsonEncoder<ChatMessage> {
+	public static class Encoder
+			extends JsonEncoder<ChatMessage>
+			implements org.atmosphere.config.managed.Encoder<ChatMessage, String>, org.atmosphere.config.managed.Decoder<String, ChatMessage> {
 		public Encoder() {
 			super(ChatMessage.class);
 		}

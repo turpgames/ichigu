@@ -30,7 +30,7 @@ public class ChatClientMain {
 
 	public static void main(String[] args) throws IOException {
 
-		String url = "http://192.168.2.4:8080/ichigu-server/chat/";
+		String url = "http://94.138.207.162/ichigu-test/chat/";
 		if (args.length > 0) {
 			url = args[0];
 		}
@@ -81,8 +81,7 @@ public class ChatClientMain {
 						}
 					}
 				}).transport(Request.TRANSPORT.WEBSOCKET)
-				.transport(Request.TRANSPORT.SSE)
-				.transport(Request.TRANSPORT.LONG_POLLING);
+				.transport(Request.TRANSPORT.WEBSOCKET);
 
 		final SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
 

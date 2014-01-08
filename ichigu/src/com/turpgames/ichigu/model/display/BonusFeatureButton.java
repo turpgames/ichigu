@@ -95,9 +95,9 @@ public class BonusFeatureButton implements IDrawable {
 		}
 
 		if (listener.onUseBonusFeature()) {
-			feature.used();	
-			if (singleUse)
-				setAsUsed();
+//			feature.used();	
+//			if (singleUse)
+//				setAsUsed();
 		}
 	}
 
@@ -126,6 +126,10 @@ public class BonusFeatureButton implements IDrawable {
 		}
 	};
 
+	public static Builder newBuilder() {
+		return new Builder();
+	}
+	
 	public static final class Builder {
 		private final BonusFeatureButton featureButton;
 
@@ -133,11 +137,7 @@ public class BonusFeatureButton implements IDrawable {
 			featureButton = new BonusFeatureButton();
 		}
 
-		public static Builder newBuilder() {
-			return new Builder();
-		}
-
-		public Builder listenFeature(BonusFeature feature) {
+		public Builder attachToFeature(BonusFeature feature) {
 			featureButton.feature = feature;
 			featureButton.feature.setListener(featureButton.featureListener);
 			featureButton.updateFeatureCountText(feature);

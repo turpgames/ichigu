@@ -4,6 +4,7 @@ import java.net.URLEncoder;
 
 import com.turpgames.framework.v0.IHttpResponse;
 import com.turpgames.framework.v0.IHttpResponseListener;
+import com.turpgames.framework.v0.component.UIBlocker;
 import com.turpgames.framework.v0.impl.HttpRequest;
 import com.turpgames.framework.v0.impl.Settings;
 import com.turpgames.framework.v0.social.ICallback;
@@ -11,25 +12,31 @@ import com.turpgames.framework.v0.social.ISocializer;
 import com.turpgames.framework.v0.social.Player;
 import com.turpgames.framework.v0.util.Debug;
 import com.turpgames.framework.v0.util.Game;
-import com.turpgames.framework.v0.util.Utils;
-import com.turpgames.ichigu.model.display.UIBlocker;
+import com.turpgames.ichigu.utils.Ichigu;
 import com.turpgames.ichigu.utils.R;
+import com.turpgames.utils.Util;
 
 public class Facebook {
-	private final static String saveHiScorescoreUrlFormat = "http://78.188.46.171/ichigu-server/ichigu?a=h&m=%d&p=%s&s=%d";
-	private final static String registerPlayerUrlFormat = "http://78.188.46.171/ichigu-server/ichigu?a=r&f=%s&e=%s&u=%s";
-
+	private final static String sendScoreUrlFormat;
+	private final static String registerPlayerUrlFormat;
+	
 	private static ISocializer facebook;
 
 	static {
 		facebook = Game.getSocializer("facebook");
+		
+		String server = Game.getParam("server");		
+		String baseUrl = Game.getParam(server + "-server");
+		
+		sendScoreUrlFormat = baseUrl + Game.getParam("send-score-params");
+		registerPlayerUrlFormat = baseUrl + Game.getParam("register-player-params");
 	}
 
-	public static String getPlayerId() {
+	private static String getPlayerId() {
 		return Settings.getString("player-id", "");
 	}
 
-	public static String getFacebookId() {
+	private static String getFacebookId() {
 		return Settings.getString("player-facebook-id", "");
 	}
 
@@ -94,7 +101,7 @@ public class Facebook {
 
 	private static void doSendScore(int mode, int score, final ICallback callback) {
 		blockUI(R.strings.sendingScore);
-		String url = String.format(saveHiScorescoreUrlFormat, mode, getPlayer().getId(), score);
+		String url = String.format(sendScoreUrlFormat, mode, getPlayer().getId(), score);
 
 		Debug.println("doSendScore, sending score...");
 		HttpRequest.newPostRequestBuilder()
@@ -170,7 +177,7 @@ public class Facebook {
 		if (player == null) {
 			updateBlockMessage(R.strings.loginError);
 			Debug.println("unable to get player, logging out...");
-			facebook.logout(new ICallback() {
+			logout(new ICallback() {
 				@Override
 				public void onSuccess() {
 					callback.onFail(null);
@@ -203,8 +210,18 @@ public class Facebook {
 
 			@Override
 			public void onFail(Throwable t) {
-				Debug.println("player registration failed...");
-				callback.onFail(t);
+				Debug.println("player registration failed, logging out...");
+				logout(new ICallback() {
+					@Override
+					public void onSuccess() {
+						callback.onFail(null);
+					}
+
+					@Override
+					public void onFail(Throwable t) {
+						callback.onFail(null);
+					}
+				});
 			}
 		});
 	}
@@ -224,14 +241,13 @@ public class Facebook {
 			HttpRequest.newPostRequestBuilder()
 					.setUrl(url)
 					.setTimeout(5000)
-					.setAsync(true)
 					.build()
 					.send(new IHttpResponseListener() {
 						@Override
 						public void onHttpResponseReceived(IHttpResponse response) {
 							if (response.getStatus() == 200) {
 								try {
-									String idStr = Utils.readUtf8String(response.getInputStream());
+									String idStr = Util.IO.readUtf8String(response.getInputStream());
 									player.setId(idStr);
 
 									Debug.println("register player succeeded...");
@@ -259,7 +275,7 @@ public class Facebook {
 	}
 
 	private static void blockUI(String message) {
-		UIBlocker.instance.block(message);
+		UIBlocker.instance.block(Ichigu.getString(message));
 	}
 
 	private static void unblockUI() {
@@ -267,7 +283,7 @@ public class Facebook {
 	}
 
 	private static void updateBlockMessage(String message) {
-		UIBlocker.instance.setMessage(message);
+		UIBlocker.instance.setMessage(Ichigu.getString(message));
 	}
 
 	private static class CallbackInterceptor implements ICallback {

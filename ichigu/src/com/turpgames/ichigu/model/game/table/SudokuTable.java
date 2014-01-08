@@ -7,13 +7,13 @@ import com.turpgames.framework.v0.ITexture;
 import com.turpgames.framework.v0.impl.GameObject;
 import com.turpgames.framework.v0.util.Game;
 import com.turpgames.framework.v0.util.TextureDrawer;
-import com.turpgames.framework.v0.util.Utils;
 import com.turpgames.framework.v0.util.Vector;
 import com.turpgames.ichigu.model.game.Card;
 import com.turpgames.ichigu.model.game.CardAttributes;
 import com.turpgames.ichigu.model.game.SudokuDeck;
 import com.turpgames.ichigu.model.game.dealer.SudokuGameDealer;
 import com.turpgames.ichigu.utils.R;
+import com.turpgames.utils.Util;
 
 public class SudokuTable extends Table {
 	class IchiguMark extends GameObject {
@@ -168,7 +168,7 @@ public class SudokuTable extends Table {
 			if (cardsOnTable.get(i) == selectedCards.get(0)) {
 				for (int j = 0; j < 9; j++) {
 					if (cardsOnTable.get(j) == selectedCards.get(1)) {
-						Utils.swap(cardsOnTable, i, j);
+						Util.Misc.swap(cardsOnTable, i, j);
 						return;
 					}
 				}
@@ -215,9 +215,12 @@ public class SudokuTable extends Table {
 	protected List<Card> getCardsToDealIn() {
 		toDealIn.clear();
 		toDealIn.addAll(deck.get9Cards());
-		Utils.shuffle(toDealIn);
+
+		Util.Random.shuffle(toDealIn);
+
 		for(Card card : toDealIn)
 			card.open(false);
+
 		return toDealIn;
 	}
 

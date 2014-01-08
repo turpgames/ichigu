@@ -31,11 +31,12 @@ public abstract class Table implements IDealerListener, ICardListener {
 	public void deal() {
 		List<Card> out = getCardsToDealOut();
 		List<Card> in = getCardsToDealIn();
-		for (int i = 0; i < out.size(); i++)
+		for (int i = 0; i < out.size(); i++) {
 			if (in.contains(out.get(i))) {
 				in = getCardsToDealIn();
 				i = 0;
 			}
+		}
 		dealer.deal(in, out);
 	}
 	

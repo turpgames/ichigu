@@ -33,28 +33,28 @@ class IchiguModeHiScoreCache {
 	private Cache<HiScore> today = new Cache<HiScore>(cacheTimeout) {
 		@Override
 		protected List<HiScore> load() {
-			return HiScore.getHiScoresOfTime(mode, 1);
+			return Db.HiScores.getHiScoresOfTime(mode, 1);
 		}
 	};
 
 	private Cache<HiScore> lastWeek = new Cache<HiScore>(cacheTimeout) {
 		@Override
 		protected List<HiScore> load() {
-			return HiScore.getHiScoresOfTime(mode, 7);
+			return Db.HiScores.getHiScoresOfTime(mode, 7);
 		}
 	};
 
 	private Cache<HiScore> lastMonth = new Cache<HiScore>(cacheTimeout) {
 		@Override
 		protected List<HiScore> load() {
-			return HiScore.getHiScoresOfTime(mode, 30);
+			return Db.HiScores.getHiScoresOfTime(mode, 30);
 		}
 	};
 
 	private Cache<HiScore> allTime = new Cache<HiScore>(cacheTimeout) {
 		@Override
 		protected List<HiScore> load() {
-			return HiScore.getHiScores(mode);
+			return Db.HiScores.getHiScores(mode);
 		}
 	};
 }

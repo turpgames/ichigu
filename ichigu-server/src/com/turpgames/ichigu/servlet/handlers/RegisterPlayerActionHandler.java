@@ -2,22 +2,20 @@ package com.turpgames.ichigu.servlet.handlers;
 
 import java.io.IOException;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import com.turpgames.ichigu.db.Db;
 import com.turpgames.ichigu.entity.Player;
 import com.turpgames.ichigu.servlet.IchiguServlet;
 import com.turpgames.servlet.IServletActionHandler;
+import com.turpgames.servlet.RequestContext;
 
 public class RegisterPlayerActionHandler implements IServletActionHandler {
 	@Override
-	public void handle(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String facebookId = request.getParameter(IchiguServlet.request.params.facebookId);
-		String email = request.getParameter(IchiguServlet.request.params.email);
-		String username = request.getParameter(IchiguServlet.request.params.username);
+	public void handle(RequestContext context) throws IOException {
+		String facebookId = context.getParam(IchiguServlet.request.params.facebookId);
+		String email = context.getParam(IchiguServlet.request.params.email);
+		String username = context.getParam(IchiguServlet.request.params.username);
 
-		Player player = Player.findByFacebookId(facebookId);
+		Player player = Db.Players.findByFacebookId(facebookId);
 
 		if (player == null) {
 
@@ -28,9 +26,9 @@ public class RegisterPlayerActionHandler implements IServletActionHandler {
 			player.setUsername(username);
 			player.setPassword("");
 
-			player.insert();
+			Db.Players.insert(player);
 		}
 
-		response.getWriter().write("" + player.getId());
+		context.writeToResponse("" + player.getId());
 	}
 }

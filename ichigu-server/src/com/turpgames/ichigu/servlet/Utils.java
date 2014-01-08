@@ -1,4 +1,4 @@
-package com.turpgames.servlet;
+package com.turpgames.ichigu.servlet;
 
 import java.io.Closeable;
 import java.io.IOException;

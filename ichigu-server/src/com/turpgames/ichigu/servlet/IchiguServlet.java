@@ -4,7 +4,7 @@ import javax.servlet.annotation.WebServlet;
 
 import com.turpgames.servlet.TurpServlet;
 
-@WebServlet("/ichigu")
+@WebServlet("/")
 public class IchiguServlet extends TurpServlet {
 	private static final long serialVersionUID = 1L;
 

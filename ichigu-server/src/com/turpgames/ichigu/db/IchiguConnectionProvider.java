@@ -1,26 +1,27 @@
 package com.turpgames.ichigu.db;
 
 import com.turpgames.db.IConnectionProvider;
+import com.turpgames.ichigu.server.ServerConfig;
 
 public class IchiguConnectionProvider implements IConnectionProvider {
 
 	@Override
 	public String getConnectionProvider() {
-		return "com.mysql.jdbc.Driver";
+		return ServerConfig.getJdbcDriver();
 	}
 
 	@Override
 	public String getConnectionString() {
-		return "jdbc:mysql://localhost/ichigu";
+		return ServerConfig.getDbConnectionString();
 	}
 
 	@Override
 	public String getUsername() {
-		return "root";
+		return ServerConfig.getDbUser();
 	}
 
 	@Override
 	public String getPassword() {
-		return "123456";
+		return ServerConfig.getDbPassword();
 	}
 }

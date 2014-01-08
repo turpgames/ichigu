@@ -3,11 +3,11 @@ package com.turpgames.ichigu.model.game.table;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.turpgames.framework.v0.util.Utils;
 import com.turpgames.ichigu.model.game.Card;
 import com.turpgames.ichigu.model.game.CardAttributes;
 import com.turpgames.ichigu.model.game.Deck;
 import com.turpgames.ichigu.model.game.dealer.SingleGameDealer;
+import com.turpgames.utils.Util;
 
 public class SingleGameTable extends RegularGameTable {
 	private Deck deck;
@@ -82,7 +82,7 @@ public class SingleGameTable extends RegularGameTable {
 		toSelect.add(card3);
 		toSelect.add(card4);
 		toSelect.add(card5);
-		Utils.shuffle(toSelect);
+		Util.Random.shuffle(toSelect);
 		
 		toDealIn.clear();
 		toDealIn.add(card1);

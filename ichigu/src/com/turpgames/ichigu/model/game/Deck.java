@@ -49,7 +49,7 @@ public class Deck {
 				return null;
 			recycleDeck();
 		}
-		int rIndex = Utils.randInt(unusedCards.size());
+		int rIndex = Util.Random.randInt(unusedCards.size());
 		if (Game.isDebug())
 			rIndex = 0;
 		Card card = unusedCards.get(rIndex);
