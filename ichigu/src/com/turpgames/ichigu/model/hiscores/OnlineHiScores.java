@@ -6,7 +6,7 @@ import com.turpgames.framework.v0.component.ImageButton;
 import com.turpgames.framework.v0.impl.Text;
 import com.turpgames.framework.v0.social.ICallback;
 import com.turpgames.framework.v0.util.Game;
-import com.turpgames.ichigu.entity.HiScore;
+import com.turpgames.ichigu.entity.LeadersBoard;
 import com.turpgames.ichigu.entity.Score;
 import com.turpgames.ichigu.model.display.IchiguToast;
 import com.turpgames.ichigu.social.Facebook;
@@ -74,7 +74,7 @@ class OnlineHiScores implements IHiScores {
 	}
  
 	private void loadHiScores() {
-		HiScore[] hiscores = Facebook.getHiScores(Score.ModeStandard, false);
+		LeadersBoard hiscores = Facebook.getLeadersBoard(Score.ModeStandard, false);
 		
 	}
 

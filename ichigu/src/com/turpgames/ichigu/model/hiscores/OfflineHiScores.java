@@ -87,6 +87,8 @@ class OfflineHiScores implements IHiScores, IView {
 			@Override
 			public void onFail(Throwable t) {
 				IchiguToast.showError(R.strings.loginError);
+				if (t != null)
+					t.printStackTrace();
 			}
 		});
 		

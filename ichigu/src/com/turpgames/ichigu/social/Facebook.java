@@ -2,8 +2,6 @@ package com.turpgames.ichigu.social;
 
 import java.io.IOException;
 import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.List;
 
 import com.turpgames.framework.v0.IHttpResponse;
 import com.turpgames.framework.v0.IHttpResponseListener;
@@ -15,8 +13,8 @@ import com.turpgames.framework.v0.social.ISocializer;
 import com.turpgames.framework.v0.social.Player;
 import com.turpgames.framework.v0.util.Debug;
 import com.turpgames.framework.v0.util.Game;
-import com.turpgames.ichigu.entity.HiScore;
 import com.turpgames.ichigu.entity.JsonEncoders;
+import com.turpgames.ichigu.entity.LeadersBoard;
 import com.turpgames.ichigu.utils.Ichigu;
 import com.turpgames.ichigu.utils.R;
 import com.turpgames.utils.Util;
@@ -35,7 +33,7 @@ public class Facebook {
 		String baseUrl = Game.getParam(server + "-server");
 
 		sendScoreUrlFormat = baseUrl + Game.getParam("send-score-params");
-		getHiScroresUrlFormat = baseUrl + Game.getParam("get-hiscores-params");
+		getHiScroresUrlFormat = baseUrl + Game.getParam("get-leadersboard-params");
 		registerPlayerUrlFormat = baseUrl + Game.getParam("register-player-params");
 	}
 
@@ -106,12 +104,12 @@ public class Facebook {
 		}, callbackInterceptor);
 	}
 
-	public static HiScore[] getHiScores(int mode, boolean ownScores) {
+	public static LeadersBoard getLeadersBoard(int mode, boolean ownScores) {
 
 		String url = String.format(getHiScroresUrlFormat,
 				ownScores ? getPlayerId() : "0");
 
-		final List<HiScore> hiscores = new ArrayList<HiScore>();
+		final LeadersBoard leadersBoard = new LeadersBoard();
 
 		HttpRequest.newGetRequestBuilder()
 				.setUrl(url)
@@ -123,9 +121,13 @@ public class Facebook {
 						if (response.getStatus() == 200) {
 							try {
 								String json = Util.IO.readUtf8String(response.getInputStream());
-								HiScore[] ss = JsonEncoders.hiscores.decode(json);
-								for (HiScore s : ss)
-									hiscores.add(s);
+								LeadersBoard lb = JsonEncoders.leadersBoard.decode(json);
+								
+								leadersBoard.setDays(lb.getDays());
+								leadersBoard.setPlayerId(lb.getPlayerId());
+								leadersBoard.setScoreMode(lb.getScoreMode());
+								leadersBoard.setPlayers(lb.getPlayers());
+								leadersBoard.setScores(lb.getScores());
 							} catch (IOException e) {
 								e.printStackTrace();
 							}
@@ -136,10 +138,11 @@ public class Facebook {
 
 					@Override
 					public void onError(Throwable t) {
-
+						if (t != null)
+							t.printStackTrace();
 					}
 				});
-		return hiscores.toArray(new HiScore[0]);
+		return leadersBoard;
 	}
 
 	private static void doSendScore(int mode, int score, final ICallback callback) {
@@ -253,7 +256,7 @@ public class Facebook {
 
 			@Override
 			public void onFail(Throwable t) {
-				Debug.println("player registration failed, logging out...");
+
 				logout(new ICallback() {
 					@Override
 					public void onSuccess() {

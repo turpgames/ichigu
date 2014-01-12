@@ -31,7 +31,7 @@ public class IchiguServlet extends TurpServlet {
 		public static class values {
 			public static class action {
 				public final static String saveHiScore = "h";
-				public final static String getHiScores = "h";
+				public final static String getLeadersBoard = "l";
 				public final static String registerPlayer = "r";
 			}
 

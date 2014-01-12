@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.turpgames.db.IConnectionProvider;
 import com.turpgames.ichigu.db.IchiguConnectionProvider;
-import com.turpgames.ichigu.servlet.handlers.GetHiScoresActionHandler;
+import com.turpgames.ichigu.servlet.handlers.GetLeadersBoardActionHandler;
 import com.turpgames.ichigu.servlet.handlers.RegisterPlayerActionHandler;
 import com.turpgames.ichigu.servlet.handlers.SaveHiScoreActionHandler;
 import com.turpgames.servlet.IServletActionHandler;
@@ -44,8 +44,8 @@ public class IchiguServletProvider implements IServletProvider {
 	}
 
 	private IServletActionHandler createGetActionHandler(String action) {
-		if (IchiguServlet.request.values.action.getHiScores.equals(action))
-			return new GetHiScoresActionHandler();
+		if (IchiguServlet.request.values.action.getLeadersBoard.equals(action))
+			return new GetLeadersBoardActionHandler();
 
 		return IServletActionHandler.NULL;
 	}

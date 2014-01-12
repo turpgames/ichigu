@@ -30,19 +30,16 @@ public class HiScores implements IHiScores {
 				@Override
 				public void onSuccess() {
 					updateView();
-					hiscores.activate();
 				}
 
 				@Override
 				public void onFail(Throwable t) {
-					updateView();
-					hiscores.activate();
+					updateView();;
 				}
 			});
 		}
 		else {
 			updateView();
-			hiscores.activate();
 		}
 	}
 

@@ -1,70 +1,64 @@
 package com.turpgames.ichigu.servlet.handlers;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
-import com.turpgames.ichigu.db.IchiguHiScores;
-import com.turpgames.ichigu.entity.HiScore;
-import com.turpgames.ichigu.entity.JsonEncoders;
+import com.turpgames.ichigu.db.IchiguLeadersBoardJson;
 import com.turpgames.ichigu.servlet.IchiguServlet;
-import com.turpgames.ichigu.servlet.Utils;
 import com.turpgames.servlet.IServletActionHandler;
 import com.turpgames.servlet.RequestContext;
+import com.turpgames.utils.Util;
 
-public class GetHiScoresActionHandler implements IServletActionHandler {
+public class GetLeadersBoardActionHandler implements IServletActionHandler {
 	@Override
 	public void handle(RequestContext context) throws IOException {
-		getHiScores(context);
+		getLeadersBoard(context);
 	}
 
-	private void getHiScores(RequestContext context) throws IOException {
+	private void getLeadersBoard(RequestContext context) throws IOException {
 		String mode = context.getParam(IchiguServlet.request.params.mode);
 		String playerIdStr = context.getParam(IchiguServlet.request.params.playerId);
 
 		int playerId = 0;
-		if (!Utils.isNullOrWhitespace(playerIdStr)) {
+		if (!Util.Strings.isNullOrWhitespace(playerIdStr)) {
 			try {
-				playerId = Utils.parseInt(playerIdStr);
+				playerId = Util.Strings.parseInt(playerIdStr);
 			} catch (Throwable t) {
 
 			}
 		}
 
-		HiScore[] hiscores = getHiscores(mode, playerId).toArray(new HiScore[0]);
-		
-		String json = JsonEncoders.hiscores.encode(hiscores);
+		String json = getLeadersBoardJson(mode, playerId);
 		context.writeToResponse(json);
 	}
 
-	private List<HiScore> getHiscores(String mode, int playerId) {
+	private String getLeadersBoardJson(String mode, int playerId) {
 		if (IchiguServlet.request.values.mode.miniModeAllHiScores.equals(mode))
-			return IchiguHiScores.miniModeAllTime(playerId);
+			return IchiguLeadersBoardJson.miniModeAllTime(playerId);
 		if (IchiguServlet.request.values.mode.miniModeLastMonthHiScores.equals(mode))
-			return IchiguHiScores.miniModeLastMonth(playerId);
+			return IchiguLeadersBoardJson.miniModeLastMonth(playerId);
 		if (IchiguServlet.request.values.mode.miniModeLastWeekHiScores.equals(mode))
-			return IchiguHiScores.miniModeLastWeek(playerId);
+			return IchiguLeadersBoardJson.miniModeLastWeek(playerId);
 		if (IchiguServlet.request.values.mode.miniModeTodaysHiScores.equals(mode))
-			return IchiguHiScores.miniModeToday(playerId);
+			return IchiguLeadersBoardJson.miniModeToday(playerId);
 
 		if (IchiguServlet.request.values.mode.standartModeAllHiScores.equals(mode))
-			return IchiguHiScores.standartModeAllTime(playerId);
+			return IchiguLeadersBoardJson.standartModeAllTime(playerId);
 		if (IchiguServlet.request.values.mode.standartModeLastMonthHiScores.equals(mode))
-			return IchiguHiScores.standartModeLastMonth(playerId);
+			return IchiguLeadersBoardJson.standartModeLastMonth(playerId);
 		if (IchiguServlet.request.values.mode.standartModeLastWeekHiScores.equals(mode))
-			return IchiguHiScores.standartModeLastWeek(playerId);
+			return IchiguLeadersBoardJson.standartModeLastWeek(playerId);
 		if (IchiguServlet.request.values.mode.standartModeTodaysHiScores.equals(mode))
-			return IchiguHiScores.standartModeToday(playerId);
+			return IchiguLeadersBoardJson.standartModeToday(playerId);
 
 		if (IchiguServlet.request.values.mode.timeModeAllHiScores.equals(mode))
-			return IchiguHiScores.timeModeAllTime(playerId);
+			return IchiguLeadersBoardJson.timeModeAllTime(playerId);
 		if (IchiguServlet.request.values.mode.timeModeLastMonthHiScores.equals(mode))
-			return IchiguHiScores.timeModeLastMonth(playerId);
+			return IchiguLeadersBoardJson.timeModeLastMonth(playerId);
 		if (IchiguServlet.request.values.mode.timeModeLastWeekHiScores.equals(mode))
-			return IchiguHiScores.timeModeLastWeek(playerId);
+			return IchiguLeadersBoardJson.timeModeLastWeek(playerId);
 		if (IchiguServlet.request.values.mode.timeModeTodaysHiScores.equals(mode))
-			return IchiguHiScores.timeModeToday(playerId);
+			return IchiguLeadersBoardJson.timeModeToday(playerId);
 
-		return new ArrayList<HiScore>();
+		return "[]";
 	}
 }

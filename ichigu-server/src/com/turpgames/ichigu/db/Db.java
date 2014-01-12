@@ -9,7 +9,7 @@ import java.util.List;
 
 import com.turpgames.db.DbManager;
 import com.turpgames.db.SqlQuery;
-import com.turpgames.ichigu.entity.HiScore;
+import com.turpgames.ichigu.entity.LeadersBoard;
 import com.turpgames.ichigu.entity.Player;
 import com.turpgames.ichigu.entity.Score;
 import com.turpgames.utils.Util;
@@ -21,7 +21,7 @@ public final class Db {
 	public static final class Players {
 		public static boolean insert(Player player) {
 			try {
-				int id = (int) (long) DbManager
+				int id = (int) DbManager
 						.executeInsert(new SqlQuery(
 								"insert into players (username,password,email,facebook_id) values (?,?,?,?)")
 								.addParameter(player.getUsername(), Types.VARCHAR)
@@ -84,21 +84,57 @@ public final class Db {
 		}
 	}
 
-	public static final class HiScores {
+	public static final class LeadersBoards {
 
-		public static List<HiScore> getHiScores(int mode) {
-			return getHiScores(mode, -1, -1);
+		public static LeadersBoard getLeadersBoard(int mode) {
+			return getLeadersBoard(mode, -1, -1);
 		}
 
-		public static List<HiScore> getHiScoresOfTime(int mode, int days) {
-			return getHiScores(mode, days, -1);
+		public static LeadersBoard getLeadersBoardOfTime(int mode, int days) {
+			return getLeadersBoard(mode, days, -1);
 		}
 
-		public static List<HiScore> getHiScoresOfPlayer(int mode, int playerId) {
-			return getHiScores(mode, -1, playerId);
+		public static LeadersBoard getHiScoresOfPlayer(int mode, int playerId) {
+			return getLeadersBoard(mode, -1, playerId);
 		}
 
-		public static List<HiScore> getHiScores(int mode, int days, int playerId) {
+		public static LeadersBoard getLeadersBoard(int mode, int days, int playerId) {
+			SqlQuery sql = prepareSql(mode, days, playerId);
+
+			List<Player> players = new ArrayList<Player>();
+			List<Score> scores = new ArrayList<Score>();
+
+			DbManager man = null;
+			ResultSet rs = null;
+			try {
+				man = new DbManager();
+				rs = man.select(sql);
+
+				Score score = null;
+				while ((score = Scores.fromResultSet(rs)) != null) {
+					if (addPlayer(players, score.getPlayerId()))
+						scores.add(score);
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				if (man != null)
+					man.close(rs);
+			}
+
+			LeadersBoard LeadersBoard = new LeadersBoard();
+			
+			LeadersBoard.setScoreMode(mode);
+			LeadersBoard.setDays(days);
+			LeadersBoard.setPlayerId(playerId);
+
+			LeadersBoard.setPlayers(players.toArray(new Player[0]));
+			LeadersBoard.setScores(scores.toArray(new Score[0]));
+
+			return LeadersBoard;
+		}
+
+		private static SqlQuery prepareSql(int mode, int days, int playerId) {
 			SqlQuery sql = new SqlQuery("select * from scores where mode = " + mode);
 
 			if (days > 0) {
@@ -119,41 +155,24 @@ public final class Db {
 				sql.append(" desc");
 
 			sql.append(", time");
-
 			sql.append(" limit 10");
+			return sql;
+		}
 
-			List<HiScore> hiscores = new ArrayList<HiScore>();
-
-			Player player = null;
-			if (playerId > 0)
-				player = Players.get(playerId);
-
-			DbManager man = null;
-			ResultSet rs = null;
-			try {
-				man = new DbManager();
-				rs = man.select(sql);
-
-				Score score = null;
-				while ((score = Scores.fromResultSet(rs)) != null) {
-					HiScore hiscore = new HiScore();
-					hiscore.setScore(score);
-
-					if (playerId > 0)
-						hiscore.setPlayer(player);
-					else
-						hiscore.setPlayer(Players.get(score.getPlayerId()));
-
-					hiscores.add(hiscore);
+		private static boolean addPlayer(List<Player> players, int playerId) {
+			for (int i = 0; i < players.size(); i++) {
+				if (players.get(i).getId() == playerId) {
+					return true;
 				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-			} finally {
-				if (man != null)
-					man.close(rs);
 			}
 
-			return hiscores;
+			Player player = Players.get(playerId);
+
+			if (player == null)
+				return false;
+
+			players.add(player);
+			return true;
 		}
 	}
 

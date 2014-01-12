@@ -11,7 +11,5 @@ public final class JsonEncoders {
 	
 	public static final JsonEncoder<Score> score = new JsonEncoder<Score>(Score.class);
 	
-	public static final JsonEncoder<HiScore> hiscore = new JsonEncoder<HiScore>(HiScore.class);
-	
-	public static final JsonEncoder<HiScore[]> hiscores = new JsonEncoder<HiScore[]>(HiScore[].class);
+	public static final JsonEncoder<LeadersBoard> leadersBoard = new JsonEncoder<LeadersBoard>(LeadersBoard.class);	
 }

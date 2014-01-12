@@ -7,7 +7,7 @@
 
         <param
             key="debug"
-            value="false" />
+            value="true" />
 
         <param
             key="provider"
@@ -102,8 +102,8 @@
             value="?a=h&amp;m=%d&amp;p=%s&amp;s=%d" />
 
         <param
-            key="get-hiscores-params"
-            value="?a=h&amp;m=ta&amp;p=%s" />
+            key="get-leadersboard-params"
+            value="?a=l&amp;m=ta&amp;p=%s" />
 
         <param
             key="register-player-params"
