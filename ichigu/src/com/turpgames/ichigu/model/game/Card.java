@@ -128,6 +128,7 @@ public class Card extends IchiguObject {
 	public void reset() {
 		deactivate();
 		deselect();
+		open(false);
 		getColor().set(Color.white());
 	}
 
