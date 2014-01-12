@@ -39,10 +39,12 @@ public class Main {
 			@Override
 			public ISocializerFactory createSocializerFactory() {
 				return new ISocializerFactory() {
-
 					@Override
 					public ISocializer getSocializer(String provider) {
 						return new ISocializer() {
+
+							private boolean isLoggedin = false;
+							private Player player;
 
 							@Override
 							public void postFeed(SocialFeed feed, ICallback callback) {
@@ -51,26 +53,30 @@ public class Main {
 
 							@Override
 							public void logout(ICallback callback) {
+								isLoggedin = false;
+								player = null;
 								callback.onSuccess();
 							}
 
 							@Override
 							public void login(ICallback callback) {
+								isLoggedin = true;
+
+								player = new Player();
+								player.setName("Seda Çetinkaya");
+								player.setSocialId("718801914");
+								player.setEmail("player@test.com");
+
 								callback.onSuccess();
 							}
 
 							@Override
 							public boolean isLoggedIn() {
-								return false;
+								return isLoggedin;
 							}
 
 							@Override
 							public Player getPlayer() {
-								Player player = new Player();
-								player.setName("Test Player");
-								player.setId("1");
-								player.setSocialId("1");
-								player.setEmail("player@test.com");
 								return player;
 							}
 

@@ -116,7 +116,7 @@ public abstract class FullGameMode extends RegularMode implements IResultScreenB
 			getModeListener().onNewGame();
 	}
 
-	protected void sendScore(final int score, int mode) {
+	protected void sendScore(int score, int mode) {
 		if (!Facebook.canLogin())
 			return;
 				

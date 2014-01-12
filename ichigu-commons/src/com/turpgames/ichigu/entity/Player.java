@@ -47,6 +47,14 @@ public class Player {
 		this.facebookId = facebookId;
 	}
 
+	private String profilePictureUrl;
+
+	public String getFacebookProfilePictureUrl() {
+		if (profilePictureUrl == null)
+			profilePictureUrl = "http://graph.facebook.com/" + facebookId + "/picture";
+		return profilePictureUrl;
+	}
+
 	@Override
 	public String toString() {
 		return username;

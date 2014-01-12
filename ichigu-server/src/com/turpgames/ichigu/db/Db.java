@@ -85,19 +85,6 @@ public final class Db {
 	}
 
 	public static final class LeadersBoards {
-
-		public static LeadersBoard getLeadersBoard(int mode) {
-			return getLeadersBoard(mode, -1, -1);
-		}
-
-		public static LeadersBoard getLeadersBoardOfTime(int mode, int days) {
-			return getLeadersBoard(mode, days, -1);
-		}
-
-		public static LeadersBoard getHiScoresOfPlayer(int mode, int playerId) {
-			return getLeadersBoard(mode, -1, playerId);
-		}
-
 		public static LeadersBoard getLeadersBoard(int mode, int days, int playerId) {
 			SqlQuery sql = prepareSql(mode, days, playerId);
 

@@ -83,7 +83,7 @@
 
         <param
             key="server"
-            value="test" />
+            value="local" />
 
         <param
             key="prod-server"
@@ -103,7 +103,7 @@
 
         <param
             key="get-leadersboard-params"
-            value="?a=l&amp;m=ta&amp;p=%s" />
+            value="?a=l&amp;m=%d&amp;d=%d&amp;p=%d" />
 
         <param
             key="register-player-params"

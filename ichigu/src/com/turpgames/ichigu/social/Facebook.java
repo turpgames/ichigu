@@ -21,8 +21,14 @@ import com.turpgames.utils.Util;
 
 public class Facebook {
 	private final static String sendScoreUrlFormat;
-	private final static String getHiScroresUrlFormat;
+	private final static String getLeadersBoardUrlFormat;
 	private final static String registerPlayerUrlFormat;
+
+	public static interface ILeadersBoardCallback {
+		void onSuccess(LeadersBoard leadersBoard);
+
+		void onFail(Throwable t);
+	}
 
 	private static ISocializer facebook;
 
@@ -33,7 +39,7 @@ public class Facebook {
 		String baseUrl = Game.getParam(server + "-server");
 
 		sendScoreUrlFormat = baseUrl + Game.getParam("send-score-params");
-		getHiScroresUrlFormat = baseUrl + Game.getParam("get-leadersboard-params");
+		getLeadersBoardUrlFormat = baseUrl + Game.getParam("get-leadersboard-params");
 		registerPlayerUrlFormat = baseUrl + Game.getParam("register-player-params");
 	}
 
@@ -104,16 +110,15 @@ public class Facebook {
 		}, callbackInterceptor);
 	}
 
-	public static LeadersBoard getLeadersBoard(int mode, boolean ownScores) {
+	public static void getLeadersBoard(int mode, int days, int playerId, final ILeadersBoardCallback callback) {
+		String url = String.format(getLeadersBoardUrlFormat, mode, days, playerId);
 
-		String url = String.format(getHiScroresUrlFormat,
-				ownScores ? getPlayerId() : "0");
-
-		final LeadersBoard leadersBoard = new LeadersBoard();
-
+		blockUI("Getting Scores...");
+		
 		HttpRequest.newGetRequestBuilder()
 				.setUrl(url)
 				.setTimeout(5000)
+				.setAsync(true)
 				.build()
 				.send(new IHttpResponseListener() {
 					@Override
@@ -122,27 +127,23 @@ public class Facebook {
 							try {
 								String json = Util.IO.readUtf8String(response.getInputStream());
 								LeadersBoard lb = JsonEncoders.leadersBoard.decode(json);
-								
-								leadersBoard.setDays(lb.getDays());
-								leadersBoard.setPlayerId(lb.getPlayerId());
-								leadersBoard.setScoreMode(lb.getScoreMode());
-								leadersBoard.setPlayers(lb.getPlayers());
-								leadersBoard.setScores(lb.getScores());
+								unblockUI();
+								callback.onSuccess(lb);
 							} catch (IOException e) {
-								e.printStackTrace();
+								callback.onFail(e);
+								unblockUI();
 							}
 						} else {
-
+							unblockUI();
 						}
 					}
 
 					@Override
 					public void onError(Throwable t) {
-						if (t != null)
-							t.printStackTrace();
+						unblockUI();
+						callback.onFail(t);
 					}
 				});
-		return leadersBoard;
 	}
 
 	private static void doSendScore(int mode, int score, final ICallback callback) {

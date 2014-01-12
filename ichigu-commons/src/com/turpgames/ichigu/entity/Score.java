@@ -7,6 +7,12 @@ public class Score {
 	public static final int ModeMini = 1;
 	public static final int ModeStandard = 2;
 	public static final int ModeTime = 3;
+	
+
+	public static final int Daily = 1;
+	public static final int Weekly = 7;
+	public static final int Monthly = 30;
+	public static final int AllTime = -1;
 
 	private int playerId;
 	private int mode;

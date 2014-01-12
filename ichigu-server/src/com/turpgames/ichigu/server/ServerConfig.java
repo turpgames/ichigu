@@ -53,6 +53,10 @@ public class ServerConfig {
 		return getProp("dbPassword");
 	}
 
+	public static int getCacheTimeout() {
+		return Util.Strings.parseInt(getProp("cacheTimeout"));
+	}
+
 	private static String getProp(String key) {
 		return props.get(key);
 	}

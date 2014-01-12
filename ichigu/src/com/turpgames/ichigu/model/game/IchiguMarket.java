@@ -38,7 +38,8 @@ public class IchiguMarket implements IDrawable, ILanguageListener {
 		balanceInfo.setFontScale(R.fontSize.medium);
 		balanceInfo.setPadding(0, 425);
 
-		btnSingleHint = new TextButton(R.colors.ichiguYellow, R.colors.ichiguRed);
+		btnSingleHint = new TextButton(R.colors.ichiguYellow, R.colors.ichiguBlack);
+		btnSingleHint.setFontScale(R.fontSize.small);
 		btnSingleHint.setListener(new IButtonListener() {
 			@Override
 			public void onButtonTapped() {
@@ -50,7 +51,8 @@ public class IchiguMarket implements IDrawable, ILanguageListener {
 			}
 		});
 
-		btnTripleHint = new TextButton(R.colors.ichiguYellow, R.colors.ichiguRed);
+		btnTripleHint = new TextButton(R.colors.ichiguYellow, R.colors.ichiguBlack);
+		btnTripleHint.setFontScale(R.fontSize.small);
 		btnTripleHint.setListener(new IButtonListener() {
 			@Override
 			public void onButtonTapped() {
@@ -62,7 +64,8 @@ public class IchiguMarket implements IDrawable, ILanguageListener {
 			}
 		});
 
-		btnTimerPause = new TextButton(R.colors.ichiguYellow, R.colors.ichiguRed);
+		btnTimerPause = new TextButton(R.colors.ichiguYellow, R.colors.ichiguBlack);
+		btnTimerPause.setFontScale(R.fontSize.small);
 		btnTimerPause.setListener(new IButtonListener() {
 			@Override
 			public void onButtonTapped() {
@@ -74,7 +77,7 @@ public class IchiguMarket implements IDrawable, ILanguageListener {
 			}
 		});
 
-		btnBuy = new TextButton(R.colors.ichiguYellow, R.colors.ichiguRed);
+		btnBuy = new TextButton(R.colors.ichiguYellow, R.colors.ichiguBlack);
 		btnBuy.setListener(new IButtonListener() {
 			@Override
 			public void onButtonTapped() {
@@ -94,12 +97,9 @@ public class IchiguMarket implements IDrawable, ILanguageListener {
 	private void setActive(TextButton btn, boolean isActive) {
 		if (isActive) {
 			btn.getColor().a = 1f;
-			btn.setFontScale(R.fontSize.medium);
 		} else {
 			btn.getColor().a = 0.5f;
-			btn.setFontScale(R.fontSize.xSmall);
 		}
-		ensureButtonLocations();
 	}
 
 	public void activate() {
@@ -161,7 +161,7 @@ public class IchiguMarket implements IDrawable, ILanguageListener {
 				currentFeature.getPrice()));
 
 		setBankInfoText();
-		ensureButtonLocations();
+		setButtonLocations();
 	}
 
 	private void setBankInfoText() {
@@ -171,7 +171,7 @@ public class IchiguMarket implements IDrawable, ILanguageListener {
 				currentFeature.getCount()));
 	}
 
-	private void ensureButtonLocations() {
+	private void setButtonLocations() {
 		btnSingleHint.getLocation().set(20, Game.getVirtualHeight() - 250);
 		btnTripleHint.getLocation().set((Game.getVirtualWidth() - btnTripleHint.getWidth()) / 2, Game.getVirtualHeight() - 250);
 		btnTimerPause.getLocation().set((Game.getVirtualWidth() - btnTimerPause.getWidth() - 20), Game.getVirtualHeight() - 250);

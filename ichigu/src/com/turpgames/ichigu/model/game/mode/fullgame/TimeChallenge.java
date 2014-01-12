@@ -3,7 +3,6 @@ package com.turpgames.ichigu.model.game.mode.fullgame;
 import com.turpgames.framework.v0.impl.Settings;
 import com.turpgames.framework.v0.impl.Text;
 import com.turpgames.framework.v0.util.CountDownTimer;
-import com.turpgames.framework.v0.util.Game;
 import com.turpgames.framework.v0.util.Timer;
 import com.turpgames.ichigu.entity.Score;
 import com.turpgames.ichigu.model.display.FoundInfo;
@@ -11,8 +10,6 @@ import com.turpgames.ichigu.utils.Ichigu;
 import com.turpgames.ichigu.utils.R;
 
 public class TimeChallenge extends FullGameMode {
-	private static int challengeTime = Game.isDebug() ? 5 : 5 * 60;
-
 	private FoundInfo foundInfo;
 	private CountDownTimer timer;
 
@@ -33,7 +30,7 @@ public class TimeChallenge extends FullGameMode {
 	@Override
 	protected Timer getTimer() {
 		if (timer == null) {
-			timer = new CountDownTimer(challengeTime);
+			timer = new CountDownTimer(R.durations.timeChallengeModeDuration);
 			timer.setInterval(0.5f);
 			timer.setCountDownListener(new CountDownTimer.ICountDownListener() {
 				@Override

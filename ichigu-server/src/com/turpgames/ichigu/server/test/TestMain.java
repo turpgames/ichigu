@@ -7,14 +7,13 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import com.turpgames.db.DbManager;
-import com.turpgames.db.IConnectionProvider;
 import com.turpgames.ichigu.db.Db;
 import com.turpgames.ichigu.db.IchiguConnectionProvider;
-import com.turpgames.ichigu.db.IchiguLeadersBoardJson;
+import com.turpgames.ichigu.db.LeadersBoardJsonCache;
 import com.turpgames.ichigu.entity.JsonEncoders;
+import com.turpgames.ichigu.entity.LeadersBoard;
 import com.turpgames.ichigu.entity.Player;
 import com.turpgames.ichigu.entity.Score;
-import com.turpgames.ichigu.entity.LeadersBoard;
 import com.turpgames.utils.Util;
 
 public class TestMain {
@@ -22,61 +21,14 @@ public class TestMain {
 	
 	public static void main(String[] args) {
 		DbManager.setConnectionProvider(new IchiguConnectionProvider());
-		
-		testH2Db();
-		
+				
 		// testEncoding();
 		// insertRandomData();
-		// displayHiscores();
+		displayHiscores();
 
 		System.out.println("OK!");
 	}
 	
-	private static void testH2Db() {
-		DbManager.setConnectionProvider(new IConnectionProvider() {
-			@Override
-			public String getUsername() {
-				return "sa";
-			}
-			
-			@Override
-			public String getPassword() {
-				return "Tu1234Ga";
-			}
-			
-			@Override
-			public String getConnectionString() {
-				return "jdbc:h2:C:/h2db/ichigu-test/db";
-			}
-			
-			@Override
-			public String getConnectionProvider() {
-				return "org.h2.Driver";
-			}
-		});
-
-//		int i = threadsToComplete;
-//		while (i-- > 0)
-//			new Thread(new Runnable() {				
-//				@Override
-//				public void run() {
-//					insertRandomData();
-//					threadsToComplete--;
-//				}
-//			}).start();
-//
-//
-//		System.out.print("waiting for inserts");
-//		while (threadsToComplete > 0) {
-//			Util.Misc.threadSleep(10000);
-//			System.out.print(".");
-//		}
-//		System.out.println();
-//		System.out.println("all inserts completed, displaying hiscores");
-		
-		displayHiscores();		
-	}
-
 	private static void testEncoding() {
 		HttpURLConnection conn = null;
 		try {
@@ -102,58 +54,58 @@ public class TestMain {
 
 	private static void displayHiscores() {
 		System.out.println("Mini All Time");
-		displayHiScores(IchiguLeadersBoardJson.miniModeAllTime());
+		displayHiScores(LeadersBoardJsonCache.getLeadersBoard(Score.ModeMini, Score.AllTime, -1));
 		System.out.println("Mini Last Month");
-		displayHiScores(IchiguLeadersBoardJson.miniModeLastMonth());
+		displayHiScores(LeadersBoardJsonCache.getLeadersBoard(Score.ModeMini, Score.Monthly, -1));
 		System.out.println("Mini Last Week");
-		displayHiScores(IchiguLeadersBoardJson.miniModeLastWeek());
+		displayHiScores(LeadersBoardJsonCache.getLeadersBoard(Score.ModeMini, Score.Weekly, -1));
 		System.out.println("Mini Today");
-		displayHiScores(IchiguLeadersBoardJson.miniModeToday());
+		displayHiScores(LeadersBoardJsonCache.getLeadersBoard(Score.ModeMini, Score.Daily, -1));
 
 		System.out.println("Standard All Time");
-		displayHiScores(IchiguLeadersBoardJson.standartModeAllTime());
+		displayHiScores(LeadersBoardJsonCache.getLeadersBoard(Score.ModeStandard, Score.AllTime, -1));
 		System.out.println("Standard Last Month");
-		displayHiScores(IchiguLeadersBoardJson.standartModeLastMonth());
+		displayHiScores(LeadersBoardJsonCache.getLeadersBoard(Score.ModeStandard, Score.Monthly, -1));
 		System.out.println("Standard Last Week");
-		displayHiScores(IchiguLeadersBoardJson.standartModeLastWeek());
+		displayHiScores(LeadersBoardJsonCache.getLeadersBoard(Score.ModeStandard, Score.Weekly, -1));
 		System.out.println("Standard Today");
-		displayHiScores(IchiguLeadersBoardJson.standartModeToday());
+		displayHiScores(LeadersBoardJsonCache.getLeadersBoard(Score.ModeStandard, Score.Daily, -1));
 
 		System.out.println("Time All Time");
-		displayHiScores(IchiguLeadersBoardJson.timeModeAllTime());
+		displayHiScores(LeadersBoardJsonCache.getLeadersBoard(Score.ModeTime, Score.AllTime, -1));
 		System.out.println("Time Last Month");
-		displayHiScores(IchiguLeadersBoardJson.timeModeLastMonth());
+		displayHiScores(LeadersBoardJsonCache.getLeadersBoard(Score.ModeTime, Score.Monthly, -1));
 		System.out.println("Time Last Week");
-		displayHiScores(IchiguLeadersBoardJson.timeModeLastWeek());
+		displayHiScores(LeadersBoardJsonCache.getLeadersBoard(Score.ModeTime, Score.Weekly, -1));
 		System.out.println("Time Today");
-		displayHiScores(IchiguLeadersBoardJson.timeModeToday());
+		displayHiScores(LeadersBoardJsonCache.getLeadersBoard(Score.ModeTime, Score.Daily, -1));
 
 		System.out.println("Mini All Time For Player 1");
-		displayHiScores(IchiguLeadersBoardJson.miniModeAllTime(1));
+		displayHiScores(LeadersBoardJsonCache.getLeadersBoard(Score.ModeMini, Score.AllTime, 1));
 		System.out.println("Mini Last Month For Player 1");
-		displayHiScores(IchiguLeadersBoardJson.miniModeLastMonth(1));
+		displayHiScores(LeadersBoardJsonCache.getLeadersBoard(Score.ModeMini, Score.Monthly, 1));
 		System.out.println("Mini Last Week For Player 1");
-		displayHiScores(IchiguLeadersBoardJson.miniModeLastWeek(1));
+		displayHiScores(LeadersBoardJsonCache.getLeadersBoard(Score.ModeMini, Score.Weekly, 1));
 		System.out.println("Mini Today For Player 1");
-		displayHiScores(IchiguLeadersBoardJson.miniModeToday(1));
+		displayHiScores(LeadersBoardJsonCache.getLeadersBoard(Score.ModeMini, Score.Daily, 1));
 
 		System.out.println("Standard All Time For Player 1");
-		displayHiScores(IchiguLeadersBoardJson.standartModeAllTime(1));
+		displayHiScores(LeadersBoardJsonCache.getLeadersBoard(Score.ModeStandard, Score.AllTime, 1));
 		System.out.println("Standard Last Month For Player 1");
-		displayHiScores(IchiguLeadersBoardJson.standartModeLastMonth(1));
+		displayHiScores(LeadersBoardJsonCache.getLeadersBoard(Score.ModeStandard, Score.Monthly, 1));
 		System.out.println("Standard Last Week For Player 1");
-		displayHiScores(IchiguLeadersBoardJson.standartModeLastWeek(1));
+		displayHiScores(LeadersBoardJsonCache.getLeadersBoard(Score.ModeStandard, Score.Weekly, 1));
 		System.out.println("Standard Today For Player 1");
-		displayHiScores(IchiguLeadersBoardJson.standartModeToday(1));
+		displayHiScores(LeadersBoardJsonCache.getLeadersBoard(Score.ModeStandard, Score.Daily, 1));
 
 		System.out.println("Time All Time For Player 1");
-		displayHiScores(IchiguLeadersBoardJson.timeModeAllTime(1));
+		displayHiScores(LeadersBoardJsonCache.getLeadersBoard(Score.ModeTime, Score.AllTime, 1));
 		System.out.println("Time Last Month For Player 1");
-		displayHiScores(IchiguLeadersBoardJson.timeModeLastMonth(1));
+		displayHiScores(LeadersBoardJsonCache.getLeadersBoard(Score.ModeTime, Score.Monthly, 1));
 		System.out.println("Time Last Week For Player 1");
-		displayHiScores(IchiguLeadersBoardJson.timeModeLastWeek(1));
+		displayHiScores(LeadersBoardJsonCache.getLeadersBoard(Score.ModeTime, Score.Weekly, 1));
 		System.out.println("Time Today For Player 1");
-		displayHiScores(IchiguLeadersBoardJson.timeModeToday(1));
+		displayHiScores(LeadersBoardJsonCache.getLeadersBoard(Score.ModeTime, Score.Daily, 1));
 	}
 
 	private final static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss,SSSZ");

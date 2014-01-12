@@ -43,7 +43,8 @@ public final class R {
 		public final static float blinkDuration = 1f;
 		public final static int hintNotificationInterval = 30;
 		public final static float miniModeBlockDuration = 2f;
-		public final static int miniModeChallengeDuration = 60;
+		public final static int miniModeChallengeDuration = Game.isDebug() ? 5 : 60;
+		public final static int timeChallengeModeDuration = Game.isDebug() ? 5 : 5 * 60;
 		public final static float toastSlideDuration = 0.2f;
 		public final static float toastDisplayDurationPerWord = 0.15f;
 		public final static float toastDisplayDurationBuffer = 1.5f;
@@ -294,6 +295,10 @@ public final class R {
 		public final static String tryAgain = "tryAgain";
 		public final static String wait = "wait";
 
+		public final static String miniChallengeMode = "miniChallenge";
+		public final static String standardMode = "normalMode";
+		public final static String timeChallengeMode = "fullChallenge";
+		
 		public final static String miniChallengeResult = "miniChallengeResult";
 		public final static String fullChallengeResult = "fullChallengeResult";
 		public final static String normalResult = "normalResult";
@@ -374,6 +379,15 @@ public final class R {
 		public final static String loggingIn = "loggingIn";
 		public final static String registeringPlayer = "registeringPlayer";
 		public final static String loggingOut = "loggingOut";
+
+		public final static String daily = "daily";
+		public final static String weekly = "weekly";
+		public final static String monthly = "monthly";
+		public final static String allTime = "allTime";
+		
+		public final static String myScores = "myScores";
+		public final static String general = "general";
+		public final static String leadersBoardError = "leadersBoardError";
 	}
 
 	public static final class symbolpositions {

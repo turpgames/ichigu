@@ -41,16 +41,16 @@ v1.2
 		+login
 		+logout
 		-share (score api'siz normal link share)
-	-Ichigu Server
-		-Test/Prod kurulumları (tomcat, mysql)
+	+Ichigu Server
+		+Test/Prod kurulumları (tomcat, h2db)
 		+register
 		+sendScore
 		+getHiScores
 	-HiScores
-		-OnlineHiscoreScreen
-		-Günlük, Haftalık, Aylık, Genel
+		+OnlineHiscoreScreen
+		+Günlük, Haftalık, Aylık, Genel
 		-Arkadaşlarımın rekorları
-		-Kendi rekorlarım
+		+Kendi rekorlarım
 	+Sudoku mode
 		+Score Toast
 	+Üçlü Hint
@@ -74,12 +74,14 @@ v1.2
 		-Türkçe
 		-İtalyanca
 		-Çince
-	+Update Process
+	-Update Process
 		+Yeni featureları settings e yaz
+		-Mevcut hi scoreları server a gönder
 	-Bug
 		-Mini mod ve Time Challenge zaman hızlı başlıyor, muhtemelen CountDownTimer'da bir bug var.
 		+FullModlarda deste bitince hata veriyor.
 		+TimeChallenge deste bitince oyun devam etsin.
+		-Full mode bittikten sonra new game diyince yeni dağıtılan kartlar açık dağıtılıyor
 TODO:
 	Achievements
 	Multiplayer

@@ -2,15 +2,18 @@ package com.turpgames.ichigu.model.game.mode.singlegame;
 
 import com.turpgames.framework.v0.impl.Settings;
 import com.turpgames.framework.v0.impl.Text;
+import com.turpgames.framework.v0.social.ICallback;
 import com.turpgames.framework.v0.util.CountDownTimer;
 import com.turpgames.framework.v0.util.Game;
 import com.turpgames.framework.v0.util.Timer;
+import com.turpgames.ichigu.entity.Score;
 import com.turpgames.ichigu.model.display.FoundInfo;
 import com.turpgames.ichigu.model.display.IResultScreenButtonsListener;
 import com.turpgames.ichigu.model.display.IchiguToast;
 import com.turpgames.ichigu.model.display.ResultScreenButtons;
 import com.turpgames.ichigu.model.display.SingleGameQuestion;
 import com.turpgames.ichigu.model.display.TimerText;
+import com.turpgames.ichigu.social.Facebook;
 import com.turpgames.ichigu.utils.Ichigu;
 import com.turpgames.ichigu.utils.R;
 
@@ -65,7 +68,7 @@ public class MiniGame extends SingleGameMode implements IResultScreenButtonsList
 		// Center reset button
 		resetButton.getLocation().set((Game.getScreenWidth() - resetButton.getWidth()) / 2, Game.viewportToScreenY(50));
 	}
-	
+
 	@Override
 	public void concreteIchiguFound() {
 		foundInfo.increaseFound();
@@ -202,6 +205,25 @@ public class MiniGame extends SingleGameMode implements IResultScreenButtonsList
 
 		resultInfo.setText(String.format(Ichigu.getString(R.strings.miniChallengeResult),
 				ichigusFound, (ichigusFound > hiScore ? Ichigu.getString(R.strings.newHiscore) : "")));
+		
+		sendScore(ichigusFound);
+	}
+
+	private void sendScore(int score) {
+		if (!Facebook.canLogin())
+			return;
+
+		Facebook.sendScore(Score.ModeMini, score, new ICallback() {
+			@Override
+			public void onSuccess() {
+				IchiguToast.showInfo(R.strings.sendScoreSuccess);
+			}
+
+			@Override
+			public void onFail(Throwable t) {
+				IchiguToast.showError(R.strings.sendScoreFail);
+			}
+		});
 	}
 
 	@Override

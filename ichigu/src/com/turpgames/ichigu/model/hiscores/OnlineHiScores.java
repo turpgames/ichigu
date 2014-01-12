@@ -1,5 +1,8 @@
 package com.turpgames.ichigu.model.hiscores;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.turpgames.framework.v0.component.Button;
 import com.turpgames.framework.v0.component.IButtonListener;
 import com.turpgames.framework.v0.component.ImageButton;
@@ -7,27 +10,30 @@ import com.turpgames.framework.v0.impl.Text;
 import com.turpgames.framework.v0.social.ICallback;
 import com.turpgames.framework.v0.util.Game;
 import com.turpgames.ichigu.entity.LeadersBoard;
+import com.turpgames.ichigu.entity.Player;
 import com.turpgames.ichigu.entity.Score;
 import com.turpgames.ichigu.model.display.IchiguToast;
 import com.turpgames.ichigu.social.Facebook;
 import com.turpgames.ichigu.utils.Ichigu;
 import com.turpgames.ichigu.utils.R;
+import com.turpgames.utils.Util;
 
-
-class OnlineHiScores implements IHiScores {	
+class OnlineHiScores implements IHiScores {
 	private Text pageTitle;
 	private final HiScores parent;
 	private ImageButton logoutOfFacebook;
+	private volatile List<LeadersBoardRow> rows;
+	private LeadersBoardButtons buttons;
 
 	OnlineHiScores(HiScores parent) {
-		this.parent = parent;	
-		
+		this.parent = parent;
+
 		pageTitle = new Text();
 		pageTitle.setAlignment(Text.HAlignCenter, Text.VAlignTop);
 		pageTitle.getColor().set(R.colors.ichiguYellow);
 		pageTitle.setFontScale(1.5f);
 		pageTitle.setPadding(0, 85);
-		
+
 		logoutOfFacebook = new ImageButton(R.sizes.loginWidth, R.sizes.loginHeight, R.game.textures.fb_logout);
 		logoutOfFacebook.setLocation(Button.AlignS, 0, Game.viewportToScreenY(50));
 		logoutOfFacebook.listenInput(false);
@@ -37,9 +43,24 @@ class OnlineHiScores implements IHiScores {
 				logoutOfFacebook();
 			}
 		});
-		
-		setLanguageSensitiveInfo();
+
+		rows = new ArrayList<LeadersBoardRow>();
+
+		buttons = new LeadersBoardButtons();
+		buttons.setY(550);
+		buttons.setDays(Score.Weekly);
+		buttons.setMode(Score.ModeTime);
+		buttons.setPlayerId(-1);
+		buttons.setListener(new LeadersBoardButtons.IListener() {
+			@Override
+			public void onLeadersBoardModeChange() {
+				loadHiScores();
+			}
+		});
+
 		Game.getLanguageManager().register(this);
+
+		setLanguageSensitiveInfo();
 	}
 
 	private void logoutOfFacebook() {
@@ -48,23 +69,26 @@ class OnlineHiScores implements IHiScores {
 			public void onSuccess() {
 				parent.updateView();
 			}
-			
+
 			@Override
 			public void onFail(Throwable t) {
 				IchiguToast.showError(R.strings.logoutError);
 			}
 		});
 	}
-	
+
 	@Override
 	public void draw() {
 		pageTitle.draw();
-		logoutOfFacebook.draw();	
+		logoutOfFacebook.draw();
+		buttons.draw();
+		for (LeadersBoardRow row : rows)
+			row.draw();
 	}
 
 	@Override
 	public void onLanguageChanged() {
-		
+		setLanguageSensitiveInfo();
 	}
 
 	@Override
@@ -72,10 +96,39 @@ class OnlineHiScores implements IHiScores {
 		logoutOfFacebook.listenInput(true);
 		loadHiScores();
 	}
- 
+
 	private void loadHiScores() {
-		LeadersBoard hiscores = Facebook.getLeadersBoard(Score.ModeStandard, false);
-		
+		final int mode = buttons.getMode();
+		int days = buttons.getDays();
+		int playerId = buttons.getPlayerId();
+
+		Facebook.getLeadersBoard(mode, days, playerId, new Facebook.ILeadersBoardCallback() {
+			@Override
+			public void onSuccess(LeadersBoard leadersBoard) {
+				List<LeadersBoardRow> r = new ArrayList<LeadersBoardRow>();
+
+				int rank = 1;
+				for (Score score : leadersBoard.getScores()) {
+					Player player = leadersBoard.getPlayer(score.getPlayerId());
+
+					String scoreStr;
+					if (mode == Score.ModeStandard)
+						scoreStr = Util.Strings.getTimeString(score.getScore());
+					else
+						scoreStr = "" + score.getScore();
+
+					r.add(new LeadersBoardRow(rank++, scoreStr, player));
+				}
+
+				rows = r;
+			}
+
+			@Override
+			public void onFail(Throwable t) {
+				IchiguToast.showError(R.strings.leadersBoardError + (Game.isDebug() && t != null ? ": " + t.getMessage() : ""));
+				rows = new ArrayList<LeadersBoardRow>();
+			}
+		});
 	}
 
 	@Override
