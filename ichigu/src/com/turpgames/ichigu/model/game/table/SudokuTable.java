@@ -72,7 +72,6 @@ public class SudokuTable extends Table {
 		}
 	}
 
-	private SudokuDeck deck;
 	private List<IchiguMark> marks;
 	private boolean marksVisible;
 
@@ -214,7 +213,7 @@ public class SudokuTable extends Table {
 	@Override
 	protected List<Card> getCardsToDealIn() {
 		toDealIn.clear();
-		toDealIn.addAll(deck.get9Cards());
+		toDealIn.addAll(((SudokuDeck)deck).get9Cards());
 
 		Util.Random.shuffle(toDealIn);
 

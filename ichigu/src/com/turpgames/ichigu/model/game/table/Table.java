@@ -4,12 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.turpgames.ichigu.model.game.Card;
+import com.turpgames.ichigu.model.game.Deck;
 import com.turpgames.ichigu.model.game.ICardListener;
 import com.turpgames.ichigu.model.game.dealer.Dealer;
 import com.turpgames.ichigu.model.game.dealer.IDealerListener;
 
 public abstract class Table implements IDealerListener, ICardListener {
 	protected Dealer dealer;
+	protected Deck deck;
 	
 	protected List<Card> cardsOnTable;
 	protected List<Card> selectedCards;
@@ -65,7 +67,10 @@ public abstract class Table implements IDealerListener, ICardListener {
 	}
 	
 	@Override
-	public final void onDealEnded() {
+	public final void onDealEnded(List<Card> out) {
+		for (Card used : out) {
+			deck.usedCard(used);
+		}
 		concreteDealEnded();
 		listener.onDealEnded();
 		for(Card card : selectedCards)

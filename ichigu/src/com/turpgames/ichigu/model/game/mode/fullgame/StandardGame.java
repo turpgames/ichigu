@@ -4,6 +4,8 @@ import com.turpgames.framework.v0.impl.Settings;
 import com.turpgames.framework.v0.impl.Text;
 import com.turpgames.framework.v0.util.Timer;
 import com.turpgames.ichigu.entity.Score;
+import com.turpgames.ichigu.model.game.table.FullGameTable;
+import com.turpgames.ichigu.model.game.table.Table;
 import com.turpgames.ichigu.utils.Ichigu;
 import com.turpgames.ichigu.utils.R;
 
@@ -49,5 +51,10 @@ public class StandardGame extends FullGameMode {
 				(isNewRecord ? Ichigu.getString(R.strings.newHiscore) : "")));
 
 		super.sendScore(completeTime, Score.ModeStandard);
+	}
+
+	@Override
+	protected Table createTable() {
+		return new FullGameTable();
 	}
 }

@@ -12,23 +12,17 @@ public class Deck {
 	private static int[] counts = new int[] { CardAttributes.count1, CardAttributes.count2, CardAttributes.count3 };
 	private static int[] patterns = new int[] { CardAttributes.patternEmpty, CardAttributes.patternFilled, CardAttributes.patternStriped };
 	
+	public static int numberOfCards = colors.length * shapes.length * counts.length * patterns.length;
+	
 	private List<Card> unusedCards;
+	protected List<Card> usingCards;
 	private List<Card> usedCards;
-
-	private boolean isInfinite;
-		
+	
 	public Deck(ICardListener table) {
 		unusedCards = new ArrayList<Card>();
+		usingCards = new ArrayList<Card>();
 		usedCards = new ArrayList<Card>();
 		createDeck(table);
-	}
-	
-	public void setInfinite(boolean isInfinite) {
-		this.isInfinite = isInfinite;
-	}
-	
-	public boolean isInfinite() {
-		return isInfinite;
 	}
 	
 	public void end() {
@@ -38,7 +32,7 @@ public class Deck {
 	public Card getCardWithAttributes(CardAttributes att) {
 		for (Card card : unusedCards)
 			if (card.getAttributes().equals(att)) {
-				useCard(card);
+				usingCard(card);
 				return card;
 			}
 		return null;
@@ -46,27 +40,31 @@ public class Deck {
 
 	public Card getRandomCard() {
 		if (unusedCards.size() == 0) {
-			if (!isInfinite)
-				return null;
-			recycleDeck();
+			return null;
 		}
 		int rIndex = Util.Random.randInt(unusedCards.size());
 		if (Game.isDebug())
 			rIndex = 0;
 		Card card = unusedCards.get(rIndex);
-		useCard(card);
+		usingCard(card);
 		return card;
 	}
 
-	public void giveBackRandomCard(Card card) {
+	public void giveBackUnusedCard(Card card) {
 		unuseCard(card);
+	}
+	
+	public void giveBackUsedCard(Card card) {
+		usedCard(card);
 	}
 	
 	public void recycleDeck() {
 		unusedCards.addAll(usedCards);
+		unusedCards.addAll(usingCards);
 		for (Card card : unusedCards)
 			card.reset();
 		usedCards.clear();
+		usingCards.clear();
 	}
 	
 	public void reset() {
@@ -75,6 +73,7 @@ public class Deck {
 	}
 	
 	public void start() {
+		end();
 		recycleDeck();
 	}
 	
@@ -93,18 +92,28 @@ public class Deck {
 
 	private void finishDeck() {
 		usedCards.addAll(unusedCards);
+		usedCards.addAll(usingCards);
 		for (Card card : usedCards)
 			card.reset();
 		unusedCards.clear();
-	}
-	
-	private void unuseCard(Card card) {
-		usedCards.remove(card);
-		unusedCards.add(card);
+		usingCards.clear();
 	}
 
-	private void useCard(Card card) {
+	protected void unuseCard(Card card) {
+		usingCards.remove(card);
+		usedCards.remove(card);
+		unusedCards.add(card);
+		card.reset();
+	}
+	
+	protected void usingCard(Card card) {
 		unusedCards.remove(card);
+		usingCards.add(card);
+	}
+	
+	public void usedCard(Card card) {
+		usingCards.remove(card);
 		usedCards.add(card);
+		card.reset();
 	}
 }

@@ -6,28 +6,24 @@ import java.util.List;
 import com.turpgames.framework.v0.util.Game;
 import com.turpgames.ichigu.model.game.Card;
 import com.turpgames.ichigu.model.game.Deck;
+import com.turpgames.ichigu.model.game.dealer.FullGameCardsIn;
 import com.turpgames.ichigu.model.game.dealer.FullGameDealer;
 
 public class FullGameTable extends RegularGameTable {
 	
-	private Deck deck;
 	private List<Card> extraCards;
 	private boolean areExtraCardsOpened;
 	private FullGameHint hint;
 	
 	private List<Card> toDealOut;
-	private List<Card> toDealIn;
+	private FullGameCardsIn toDealIn;
 	public FullGameTable() {
 		super();
 		deck = new Deck(this);
 		hint = new FullGameHint(this);
 		extraCards = new ArrayList<Card>();
 		toDealOut = new ArrayList<Card>();
-		toDealIn = new ArrayList<Card>();
-	}
-	
-	public void setAsInfiniteDeal() {
-		deck.setInfinite(true);
+		toDealIn = new FullGameCardsIn();
 	}
 	
 	@Override
@@ -48,39 +44,27 @@ public class FullGameTable extends RegularGameTable {
 		cardsOnTable.removeAll(toDealOut);
 		for(Card card : toDealOut)
 			card.deactivate();
-
-		// dealt-in cards are first removed than added back to prevent having two of each extra card
-		cardsOnTable.removeAll(toDealIn);
-		cardsOnTable.addAll(toDealIn);
-		
-		
-		for(Card card : cardsOnTable)
-			card.activate();
 		
 		extraCards.clear();
+		for(Card card : toDealIn.getExtras())
+			extraCards.add(card);
 		
-		if (toDealIn.size() > 3) {
-			for(Card card : toDealIn.subList(0, toDealIn.size() - 3))
-				card.open(true);
+		for(Card card : toDealIn.getOthers())
+			card.open(true);
 
-			// calculate dealt-in cards
-			if (isFirstDeal) {
-				dealtCardCount += 15;
-				isFirstDeal = false;
-			}
-			else {
-				dealtCardCount += 3;
-			}
-			
-			for(Card card : toDealIn.subList(toDealIn.size() - 3, toDealIn.size())) {
-				if (card != null) {
-					extraCards.add(card);
-				}
-			}	
+		// calculate dealt-in cards
+		if (isFirstDeal) {
+			cardsOnTable.addAll(toDealIn);
+			dealtCardCount += toDealIn.size();
+			isFirstDeal = false;
+			for(Card card : toDealIn)
+				card.activate();
 		}
 		else {
-			for(Card card : toDealIn)
-				card.open(true);
+			dealtCardCount += toDealIn.getExtras().size();
+			cardsOnTable.addAll(toDealIn.getExtras());
+			for(Card card : toDealIn.getExtras())
+				card.activate();
 		}
 		
 		areExtraCardsOpened = false;
@@ -114,39 +98,38 @@ public class FullGameTable extends RegularGameTable {
 			if (Game.isDebug())
 				discardFirst66();
 			do {
-				for(Card card : toDealIn)
-					deck.giveBackRandomCard(card);
-				for (int i = 0; i < 15; i++)
-					toDealIn.add(deck.getRandomCard());
+				for(Card card : toDealIn.getOthers())
+					deck.giveBackUnusedCard(card);
+				toDealIn.clear();
+				for (int i = 0; i < 12; i++)
+					toDealIn.addOther(deck.getRandomCard());
+				for (int i = 0; i < 3; i++)
+					toDealIn.addExtra(deck.getRandomCard());
 				ichiguCount = Card.getIchiguCount(toDealIn);
 			}
 			while(ichiguCount == 0);
 		}
 		else {
-			toDealIn.addAll(cardsOnTable);
-			toDealIn.removeAll(selectedCards);
-			
+			toDealIn.addAllOthers(extraCards);
+			toDealIn.removeAllOthers(selectedCards);
 			int dealingIn = 0;
 			do {
 				for (Card card : toDealIn.subList(toDealIn.size() - dealingIn, toDealIn.size())) {
-					deck.giveBackRandomCard(card);
-					toDealIn.remove(card);
+					deck.giveBackUnusedCard(card);
+					toDealIn.removeExtra(card);
 				}
 				dealingIn = 0;
 				for (int i = 0; i < 3; i++) {
 					Card card = deck.getRandomCard();
 					if (card != null) {
 						dealingIn++;
-						toDealIn.add(card);
+						toDealIn.addExtra(card);
 					}
 				}
 				ichiguCount = Card.getIchiguCount(toDealIn);
 			}
 			while(ichiguCount == 0 && dealingIn != 0);
 			
-			toDealIn.removeAll(cardsOnTable);
-			toDealIn.addAll(0, extraCards);
-			toDealIn.removeAll(selectedCards);
 		}
 		return toDealIn;
 	}
@@ -255,8 +238,9 @@ public class FullGameTable extends RegularGameTable {
 	}
 
 	protected void discardFirst66() {
-		for(int i = 0; i < 66; i++)
-			deck.getRandomCard();
+		for(int i = 0; i < 66; i++) {
+			deck.usedCard(deck.getRandomCard());
+		}
 		dealtCardCount = 66;
 	}
 	

@@ -10,8 +10,6 @@ import com.turpgames.ichigu.model.game.dealer.SingleGameDealer;
 import com.turpgames.utils.Util;
 
 public class SingleGameTable extends RegularGameTable {
-	private Deck deck;
-
 	private SingleGameHint hint;
 	
 	private List<Card> toDealIn;
