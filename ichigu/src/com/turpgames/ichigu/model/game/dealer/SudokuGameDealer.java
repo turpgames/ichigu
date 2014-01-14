@@ -106,8 +106,8 @@ public class SudokuGameDealer extends Dealer {
 		if (isSwapping) {
 			drawCards(swappingCards);
 		} else {
-			drawCards(cardsDealingIn);
-			drawCards(cardsDealingOut);
+			drawCards(getInList());
+			drawCards(getOutList());
 		}
 	}
 
@@ -118,6 +118,7 @@ public class SudokuGameDealer extends Dealer {
 
 	@Override
 	protected void setInEffects() {
+		List<Card> cardsDealingIn = getInList();
 		for (int i = 0; i < cardsDealingIn.size(); i++)
 			cardsDealingIn.get(i).getLocation().set(inPosition);
 		MoveWithSpeedEffect moveEffect;
@@ -131,6 +132,7 @@ public class SudokuGameDealer extends Dealer {
 
 	@Override
 	protected void setOutEffects() {
+		List<Card> cardsDealingOut = getOutList();
 		MoveWithSpeedEffect moveEffect;
 		for (int i = 0; i < cardsDealingOut.size(); i++) {
 			moveEffect = new MoveWithSpeedEffect(cardsDealingOut.get(i));
