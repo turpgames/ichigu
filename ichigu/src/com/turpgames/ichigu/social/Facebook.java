@@ -115,27 +115,43 @@ public class Facebook {
 
 	public static void getLeadersBoard(int mode, int days, int whose, final ILeadersBoardCallback callback) {
 		int playerId = Util.Strings.parseInt(getPlayer().getId());
-		String url = String.format(getLeadersBoardUrlFormat, playerId, mode, days, whose);
+		final String url = String.format(getLeadersBoardUrlFormat, playerId, mode, days, whose);
 
-		InputStream contentStream = null;
-		int contentLength = 0;
 		if (whose == Score.FriendsScores) {
-			ensureFriendList();
-			String friendIds = "";
+			ensureFriendList(new ICallback() {
+				@Override
+				public void onSuccess() {
 
-			Player player = getPlayer();
-			Player[] friends = player.getFriends();
-			for (int i = 0; i < friends.length; i++) {
-				friendIds += friends[i].getSocialId();
-				if (i < friends.length - 1)
-					friendIds += ",";
-			}
+					String friendIds = "";
 
-			byte[] contentData = Util.Strings.toUtf8BytesArray(friendIds);
-			contentStream = new ByteArrayInputStream(contentData);
-			contentLength = contentData.length;
+					Player player = getPlayer();
+					Player[] friends = player.getFriends();
+					for (int i = 0; i < friends.length; i++) {
+						friendIds += friends[i].getSocialId();
+						if (i < friends.length - 1)
+							friendIds += ",";
+					}
+
+					byte[] contentData = Util.Strings.toUtf8BytesArray(friendIds);
+					InputStream contentStream = new ByteArrayInputStream(contentData);
+					int contentLength = contentData.length;
+					
+					doGetLeadersBoard(callback, url, contentStream, contentLength);
+				}
+
+				@Override
+				public void onFail(Throwable t) {
+					callback.onFail(t);
+				}
+			});
+			return;
 		}
+		else {
+			doGetLeadersBoard(callback, url, null, 0);
+		}
+	}
 
+	private static void doGetLeadersBoard(final ILeadersBoardCallback callback, final String url, InputStream contentStream, int contentLength) {
 		blockUI("Getting Scores...");
 
 		HttpRequest.newPostRequestBuilder()
@@ -169,23 +185,13 @@ public class Facebook {
 					}
 				});
 	}
-
-	private static void ensureFriendList() {
+	
+	private static void ensureFriendList(ICallback callback) {
 		final Player player = getPlayer();
 		if (player.getFriends() != null)
 			return;
 
-		facebook.loadFriends(player, new ICallback() {
-			@Override
-			public void onSuccess() {
-
-			}
-
-			@Override
-			public void onFail(Throwable t) {
-
-			}
-		});
+		facebook.loadFriends(player, callback);
 	}
 
 	private static void doSendScore(int mode, int score, final ICallback callback) {
