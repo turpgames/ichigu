@@ -7,7 +7,7 @@
 
         <param
             key="debug"
-            value="true" />
+            value="false" />
 
         <param
             key="server"

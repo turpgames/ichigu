@@ -6,6 +6,8 @@ import com.turpgames.framework.v0.util.CountDownTimer;
 import com.turpgames.framework.v0.util.Timer;
 import com.turpgames.ichigu.entity.Score;
 import com.turpgames.ichigu.model.display.FoundInfo;
+import com.turpgames.ichigu.model.game.table.Table;
+import com.turpgames.ichigu.model.game.table.TimeChallengeTable;
 import com.turpgames.ichigu.utils.Ichigu;
 import com.turpgames.ichigu.utils.R;
 
@@ -17,8 +19,6 @@ public class TimeChallenge extends FullGameMode {
 		foundInfo = new FoundInfo();		
 		foundInfo.setAlignment(Text.HAlignLeft, Text.VAlignTop);
 		foundInfo.setPadding(10, 110);
-		
-		getTable().setAsInfiniteDeal();
 	}
 
 	@Override
@@ -71,5 +71,10 @@ public class TimeChallenge extends FullGameMode {
 				score, (score > hiScore ? Ichigu.getString(R.strings.newHiscore) : "")));
 		
 		super.sendScore(score, Score.ModeTime);
+	}
+
+	@Override
+	protected Table createTable() {
+		return new TimeChallengeTable();
 	}
 }

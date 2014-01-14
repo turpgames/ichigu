@@ -13,7 +13,6 @@ import com.turpgames.ichigu.model.game.BonusFeature;
 import com.turpgames.ichigu.model.game.Card;
 import com.turpgames.ichigu.model.game.mode.RegularMode;
 import com.turpgames.ichigu.model.game.table.FullGameTable;
-import com.turpgames.ichigu.model.game.table.Table;
 import com.turpgames.ichigu.social.Facebook;
 import com.turpgames.ichigu.utils.R;
 
@@ -139,11 +138,6 @@ public abstract class FullGameMode extends RegularMode implements IResultScreenB
 	}
 
 	protected abstract Timer getTimer();
-
-	@Override
-	protected Table createTable() {
-		return new FullGameTable();
-	}
 
 	protected void notifyModeEnd() {
 		prepareResultInfoAndSaveHiscore();

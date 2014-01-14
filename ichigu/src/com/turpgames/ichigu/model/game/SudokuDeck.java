@@ -10,7 +10,6 @@ public class SudokuDeck extends Deck {
 	}
 
 	public List<Card> get9Cards() {
-		recycleDeck();
 		List<Card> list = new ArrayList<Card>();
 		Card card1, card2, card3;
 		Card card4;

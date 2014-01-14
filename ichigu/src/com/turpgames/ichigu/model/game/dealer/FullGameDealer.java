@@ -12,6 +12,7 @@ import com.turpgames.framework.v0.effects.MoveWithSpeedEffect;
 import com.turpgames.framework.v0.effects.fading.FadeOutEffect;
 import com.turpgames.framework.v0.util.Game;
 import com.turpgames.framework.v0.util.Vector;
+import com.turpgames.ichigu.model.game.Card;
 import com.turpgames.ichigu.model.game.table.Table;
 import com.turpgames.ichigu.utils.R;
 
@@ -70,12 +71,13 @@ public class FullGameDealer extends Dealer {
 
 	public FullGameDealer(Table table) {
 		super(table);
+		cardsDealingIn = new FullGameCardsIn();
 	}
 
 	@Override
 	protected void concreteDrawCards() {
-		drawCards(cardsDealingIn);
-		drawCards(cardsDealingOut);
+		drawCards(getInList());
+		drawCards(getOutList());
 	}
 
 	@Override
@@ -94,37 +96,42 @@ public class FullGameDealer extends Dealer {
 	}
 
 	@Override
+	protected FullGameCardsIn getInList() {
+		return (FullGameCardsIn)cardsDealingIn;
+	}
+	
+	@Override
 	protected void setInEffects() {
+		FullGameCardsIn cardsDealingIn = getInList();
+		List<Card> cardsDealingOut = getOutList();
+		List<Card> others = cardsDealingIn.getOthers();
+		List<Card> extras = cardsDealingIn.getExtras();
 		if (table.isFirstDeal()) {
 			MoveWithSpeedEffect moveEffect;
+			
 			for (int i = 0; i < R.counts.fullModeActiveCardCount; i++) {
-				cardsDealingIn.get(i).getLocation().set(inPosition);
-				moveEffect = new MoveWithSpeedEffect(cardsDealingIn.get(i));
+				others.get(i).getLocation().set(inPosition);
+				moveEffect = new MoveWithSpeedEffect(others.get(i));
 				moveEffect.setLooping(false);
 				moveEffect.setDestinationAndSpeed(cardLocations.get(i), cardSpeed);
-				cardsDealingIn.get(i).setDealerEffect(moveEffect);
+				others.get(i).setDealerEffect(moveEffect);
 			}
 
 			for (int i = 0; i < R.counts.fullModeExtraCardCount; i++) {
-				cardsDealingIn.get(i + R.counts.fullModeActiveCardCount)
-						.getLocation().set(extraStart.get(i));
-				moveEffect = new MoveWithSpeedEffect(cardsDealingIn.get(i + R.counts.fullModeActiveCardCount));
+				extras.get(i).getLocation().set(extraStart.get(i));
+				moveEffect = new MoveWithSpeedEffect(extras.get(i));
 				moveEffect.setLooping(false);
 				moveEffect.setDestinationAndSpeed(extraCardLocations.get(i), cardSpeed);
-				cardsDealingIn.get(i + R.counts.fullModeActiveCardCount)
-						.setDealerEffect(moveEffect);
+				extras.get(i).setDealerEffect(moveEffect);
 			}
 		} else {
-			// last three of cardsToDealIn are new cards, the first cards are
-			// unused extra cards repositioned
-
 			if (cardsDealingIn.size() == 0)
 				return;
 			
 			List<Vector> destinations = new ArrayList<Vector>();
 			// the destinations for unused extra cards are added.
 			List<Vector> dealtOutDestinations = new ArrayList<Vector>();
-			for (int i = 0; i < ((cardsDealingIn.size() % 3) == 0 ? 3 : (cardsDealingIn.size() % 3)); i++) {
+			for (int i = 0; i < others.size(); i++) {
 				dealtOutDestinations.add(cardsDealingOut.get(i).getLocation());
 			}
 			Collections.sort(dealtOutDestinations, new DealtOutComparator());
@@ -134,9 +141,8 @@ public class FullGameDealer extends Dealer {
 
 			destinations.addAll(extraCardLocations);
 
-			for (int i = Math.max(0, cardsDealingIn.size() - 3); i < cardsDealingIn.size(); i++) {
-				cardsDealingIn.get(i).getLocation()
-						.set(extraStart.get(i - (cardsDealingIn.size() - 3)));
+			for (int i = 0; i < extras.size(); i++) {
+				extras.get(i).getLocation().set(extraStart.get(i));
 			}
 
 			MoveEffect moveEffect;
@@ -152,6 +158,7 @@ public class FullGameDealer extends Dealer {
 
 	@Override
 	protected void setOutEffects() {
+		List<Card> cardsDealingOut = getOutList();
 		FadeOutEffect fadeEffect;
 		for (int i = 0; i < cardsDealingOut.size(); i++) {
 			fadeEffect = new FadeOutEffect(cardsDealingOut.get(i));

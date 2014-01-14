@@ -6,6 +6,7 @@ import java.util.List;
 import com.turpgames.framework.v0.effects.MoveEffect;
 import com.turpgames.framework.v0.util.Game;
 import com.turpgames.framework.v0.util.Vector;
+import com.turpgames.ichigu.model.game.Card;
 import com.turpgames.ichigu.model.game.table.Table;
 import com.turpgames.ichigu.utils.R;
 
@@ -54,8 +55,8 @@ public class SingleGameDealer extends Dealer {
 
 	@Override
 	protected void concreteDrawCards() {
-		drawCards(cardsDealingIn);
-		drawCards(cardsDealingOut);
+		drawCards(getInList());
+		drawCards(getOutList());
 	}
 
 	@Override
@@ -70,6 +71,7 @@ public class SingleGameDealer extends Dealer {
 
 	@Override
 	protected void setInEffects() {
+		List<Card> cardsDealingIn = getInList();
 		for (int i = 0; i < cardsDealingIn.size(); i++)
 			cardsDealingIn.get(i).getLocation().set(inPositions.get(0).get(i));
 		MoveEffect moveEffect;
@@ -84,6 +86,7 @@ public class SingleGameDealer extends Dealer {
 	
 	@Override
 	protected void setOutEffects() {
+		List<Card> cardsDealingOut = getOutList();
 		MoveEffect moveEffect;
 		for (int i = 0; i < cardsDealingOut.size(); i++) {
 			moveEffect = new MoveEffect(cardsDealingOut.get(i));

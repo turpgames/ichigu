@@ -34,7 +34,7 @@ public abstract class Dealer {
 	private IEffectEndListener inListener;
 	
 	protected List<Card> cardsDealingIn;
-	protected List<Card> cardsDealingOut;
+	private List<Card> cardsDealingOut;
 
 	protected Timer dealInTimer;
 	protected Timer dealOutTimer;
@@ -64,6 +64,14 @@ public abstract class Dealer {
 		
 		this.effectsToFinish = cardsToDealIn.size() + cardsDealingOut.size();
 		selectDeal();
+	}
+	
+	protected List<Card> getInList() {
+		return cardsDealingIn;
+	}
+	
+	protected List<Card> getOutList() {
+		return cardsDealingOut;
 	}
 	
 	public void draw() {
@@ -102,7 +110,7 @@ public abstract class Dealer {
 				card.resetDealerEffect();
 			for(Card card : cardsDealingOut)
 				card.resetDealerEffect();
-			table.onDealEnded();
+			table.onDealEnded(cardsDealingOut);
 			dealInTimer.stop();
 			dealOutTimer.stop();
 		}
