@@ -11,7 +11,7 @@
 
         <param
             key="server"
-            value="local" />
+            value="test" />
 
         <param
             key="provider"
