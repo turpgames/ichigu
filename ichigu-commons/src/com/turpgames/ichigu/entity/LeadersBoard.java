@@ -4,6 +4,8 @@ public class LeadersBoard {
 	private int scoreMode;
 	private int days;
 	private int playerId;
+	private int ownRank;
+	private Score ownScore;
 	private Score[] scores;
 	private Player[] players;
 
@@ -29,6 +31,22 @@ public class LeadersBoard {
 
 	public void setPlayerId(int playerId) {
 		this.playerId = playerId;
+	}
+
+	public int getOwnRank() {
+		return ownRank;
+	}
+
+	public void setOwnRank(int ownRank) {
+		this.ownRank = ownRank;
+	}
+
+	public Score getOwnScore() {
+		return ownScore;
+	}
+
+	public void setOwnScore(Score ownScore) {
+		this.ownScore = ownScore;
 	}
 
 	public Score[] getScores() {

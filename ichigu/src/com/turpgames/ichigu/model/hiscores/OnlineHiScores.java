@@ -50,7 +50,7 @@ class OnlineHiScores implements IHiScores {
 		buttons.setY(550);
 		buttons.setDays(Score.Weekly);
 		buttons.setMode(Score.ModeTime);
-		buttons.setPlayerId(-1);
+		buttons.setWhose(Score.General);
 		buttons.setListener(new LeadersBoardButtons.IListener() {
 			@Override
 			public void onLeadersBoardModeChange() {
@@ -100,9 +100,9 @@ class OnlineHiScores implements IHiScores {
 	private void loadHiScores() {
 		final int mode = buttons.getMode();
 		int days = buttons.getDays();
-		int playerId = buttons.getPlayerId();
+		int whose = buttons.getWhose();
 
-		Facebook.getLeadersBoard(mode, days, playerId, new Facebook.ILeadersBoardCallback() {
+		Facebook.getLeadersBoard(mode, days, whose, new Facebook.ILeadersBoardCallback() {
 			@Override
 			public void onSuccess(LeadersBoard leadersBoard) {
 				List<LeadersBoardRow> r = new ArrayList<LeadersBoardRow>();

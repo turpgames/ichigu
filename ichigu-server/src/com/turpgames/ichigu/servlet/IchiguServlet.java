@@ -26,6 +26,7 @@ public class IchiguServlet extends TurpServlet {
 			public final static String email = "e";
 			public final static String username = "u";
 			public final static String score = "s";
+			public final static String whose = "w";
 			public final static String days = "d";
 		}
 

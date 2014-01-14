@@ -23,6 +23,7 @@ public class LeadersBoardButtons implements IDrawable, ILanguageListener {
 
 	private TextButton myScores;
 	private TextButton generalScores;
+	private TextButton friendsScores;
 
 	private TextButton dailyScores;
 	private TextButton weeklyScores;
@@ -31,7 +32,7 @@ public class LeadersBoardButtons implements IDrawable, ILanguageListener {
 
 	private int mode;
 	private int days;
-	private int playerId;
+	private int whose;
 
 	private float y;
 
@@ -45,7 +46,7 @@ public class LeadersBoardButtons implements IDrawable, ILanguageListener {
 				setActive(modeStandard, false);
 				setActive(modeTimeChallenge, false);
 
-				notifyChange(Score.ModeMini, days, playerId);
+				notifyChange(Score.ModeMini, days, whose);
 			}
 		});
 
@@ -56,7 +57,7 @@ public class LeadersBoardButtons implements IDrawable, ILanguageListener {
 				setActive(modeStandard, true);
 				setActive(modeTimeChallenge, false);
 
-				notifyChange(Score.ModeStandard, days, playerId);
+				notifyChange(Score.ModeStandard, days, whose);
 			}
 		});
 
@@ -67,7 +68,7 @@ public class LeadersBoardButtons implements IDrawable, ILanguageListener {
 				setActive(modeStandard, false);
 				setActive(modeTimeChallenge, true);
 
-				notifyChange(Score.ModeTime, days, playerId);
+				notifyChange(Score.ModeTime, days, whose);
 			}
 		});
 
@@ -75,9 +76,10 @@ public class LeadersBoardButtons implements IDrawable, ILanguageListener {
 			@Override
 			public void onButtonTapped() {
 				setActive(myScores, true);
+				setActive(friendsScores, false);
 				setActive(generalScores, false);
 
-				notifyChange(mode, days, Util.Strings.parseInt(Facebook.getPlayer().getId()));
+				notifyChange(mode, days, Score.MyScores);
 			}
 		});
 
@@ -85,9 +87,21 @@ public class LeadersBoardButtons implements IDrawable, ILanguageListener {
 			@Override
 			public void onButtonTapped() {
 				setActive(myScores, false);
+				setActive(friendsScores, false);
 				setActive(generalScores, true);
 
-				notifyChange(mode, days, -1);
+				notifyChange(mode, days, Score.General);
+			}
+		});
+
+		friendsScores = createTextButton(new IButtonListener() {
+			@Override
+			public void onButtonTapped() {
+				setActive(myScores, false);
+				setActive(friendsScores, true);
+				setActive(generalScores, false);
+
+				notifyChange(mode, days, Score.FriendsScores);
 			}
 		});
 
@@ -99,7 +113,7 @@ public class LeadersBoardButtons implements IDrawable, ILanguageListener {
 				setActive(monhtlyScores, false);
 				setActive(allTimeScores, false);
 
-				notifyChange(mode, 1, playerId);
+				notifyChange(mode, 1, whose);
 			}
 		});
 
@@ -111,7 +125,7 @@ public class LeadersBoardButtons implements IDrawable, ILanguageListener {
 				setActive(monhtlyScores, false);
 				setActive(allTimeScores, false);
 
-				notifyChange(mode, 7, playerId);
+				notifyChange(mode, 7, whose);
 			}
 		});
 
@@ -123,7 +137,7 @@ public class LeadersBoardButtons implements IDrawable, ILanguageListener {
 				setActive(monhtlyScores, true);
 				setActive(allTimeScores, false);
 
-				notifyChange(mode, 30, playerId);
+				notifyChange(mode, 30, whose);
 			}
 		});
 
@@ -135,7 +149,7 @@ public class LeadersBoardButtons implements IDrawable, ILanguageListener {
 				setActive(monhtlyScores, false);
 				setActive(allTimeScores, true);
 
-				notifyChange(mode, -1, playerId);
+				notifyChange(mode, -1, whose);
 			}
 		});
 
@@ -149,6 +163,7 @@ public class LeadersBoardButtons implements IDrawable, ILanguageListener {
 		setActive(monhtlyScores, false);
 		setActive(allTimeScores, false);
 		setActive(myScores, false);
+		setActive(friendsScores, false);
 
 		setLaguageSensitiveInfo();
 	}
@@ -170,11 +185,11 @@ public class LeadersBoardButtons implements IDrawable, ILanguageListener {
 		setButtonLocations();
 	}
 
-	private void notifyChange(int mode, int days, int playerId) {
-		if (this.mode != mode || this.days != days || this.playerId != playerId) {
+	private void notifyChange(int mode, int days, int whose) {
+		if (this.mode != mode || this.days != days || this.whose != whose) {
 			this.mode = mode;
 			this.days = days;
-			this.playerId = playerId;
+			this.whose = whose;
 			listener.onLeadersBoardModeChange();
 		}
 	}
@@ -195,12 +210,12 @@ public class LeadersBoardButtons implements IDrawable, ILanguageListener {
 		this.days = days;
 	}
 
-	public int getPlayerId() {
-		return playerId;
+	public int getWhose() {
+		return whose;
 	}
 
-	public void setPlayerId(int playerId) {
-		this.playerId = playerId;
+	public void setWhose(int whose) {
+		this.whose = whose;
 	}
 
 	private static void setActive(TextButton btn, boolean isActive) {
@@ -219,6 +234,7 @@ public class LeadersBoardButtons implements IDrawable, ILanguageListener {
 
 		myScores.draw();
 		generalScores.draw();
+		friendsScores.draw();
 
 		dailyScores.draw();
 		weeklyScores.draw();
@@ -238,6 +254,7 @@ public class LeadersBoardButtons implements IDrawable, ILanguageListener {
 
 		myScores.setText(Ichigu.getString(R.strings.myScores));
 		generalScores.setText(Ichigu.getString(R.strings.general));
+		friendsScores.setText(Ichigu.getString(R.strings.friends));
 
 		dailyScores.setText(Ichigu.getString(R.strings.daily));
 		weeklyScores.setText(Ichigu.getString(R.strings.weekly));
@@ -252,8 +269,9 @@ public class LeadersBoardButtons implements IDrawable, ILanguageListener {
 		modeStandard.getLocation().set((Game.getVirtualWidth() - modeStandard.getWidth()) / 2, y + 80);
 		modeTimeChallenge.getLocation().set((Game.getVirtualWidth() - modeTimeChallenge.getWidth() - 20), y + 80);
 
-		myScores.getLocation().set(150, y + 40);
-		generalScores.getLocation().set((Game.getVirtualWidth() - generalScores.getWidth() - 150), y + 40);
+		myScores.getLocation().set(20, y + 40);
+		generalScores.getLocation().set((Game.getVirtualWidth() - generalScores.getWidth()) / 2, y + 40);
+		friendsScores.getLocation().set((Game.getVirtualWidth() - friendsScores.getWidth() - 20), y + 40);
 
 		dailyScores.getLocation().set(50, y);
 		weeklyScores.getLocation().set(150, y);

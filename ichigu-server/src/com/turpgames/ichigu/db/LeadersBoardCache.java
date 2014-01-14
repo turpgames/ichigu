@@ -4,36 +4,31 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.turpgames.db.Cache;
-import com.turpgames.ichigu.entity.JsonEncoders;
 import com.turpgames.ichigu.entity.LeadersBoard;
 import com.turpgames.ichigu.entity.Score;
 import com.turpgames.ichigu.server.ServerConfig;
 
-public final class LeadersBoardJsonCache extends Cache<String> {
-	private static Map<String, LeadersBoardJsonCache> cache = new HashMap<String, LeadersBoardJsonCache>();
+public final class LeadersBoardCache extends Cache<LeadersBoard> {
+	private static Map<String, LeadersBoardCache> cache = new HashMap<String, LeadersBoardCache>();
 
-	private static String toJson(LeadersBoard leadersBoard) {
-		return JsonEncoders.leadersBoard.encode(leadersBoard);
-	}
-
-	public static String getLeadersBoard(int mode, int days, int playerId) {
+	public static LeadersBoard getLeadersBoard(int mode, int days, int playerId) {
 		if (mode != Score.ModeMini && mode != Score.ModeStandard && mode != Score.ModeTime &&
 				days != Score.Daily && days != Score.Weekly && days != Score.Monthly && days != Score.AllTime) {
-			return "[]";
+			return new LeadersBoard();
 		}
 		
 		if (playerId > 0) {
-			return toJson(Db.LeadersBoards.getLeadersBoard(mode, days, playerId));
+			return Db.LeadersBoards.getLeadersBoard(mode, days, playerId, 10);
 		}
 		else {
-			String key = mode + "|" + days + "|" + playerId;
+			String key = mode + "|" + days;
 
-			LeadersBoardJsonCache jsonCache;
+			LeadersBoardCache jsonCache;
 			if (cache.containsKey(key)) {
 				jsonCache = cache.get(key);
 			}
 			else {
-				jsonCache = new LeadersBoardJsonCache(mode, days, playerId);
+				jsonCache = new LeadersBoardCache(mode, days, playerId);
 				cache.put(key, jsonCache);
 			}
 			return jsonCache.getData();
@@ -44,7 +39,7 @@ public final class LeadersBoardJsonCache extends Cache<String> {
 	private final int days;
 	private final int playerId;
 
-	private LeadersBoardJsonCache(int mode, int days, int playerId) {
+	private LeadersBoardCache(int mode, int days, int playerId) {
 		super(ServerConfig.getCacheTimeout());
 		this.mode = mode;
 		this.days = days;
@@ -52,7 +47,7 @@ public final class LeadersBoardJsonCache extends Cache<String> {
 	}
 
 	@Override
-	protected String load() {
-		return toJson(Db.LeadersBoards.getLeadersBoard(mode, days, playerId));
+	protected LeadersBoard load() {
+		return Db.LeadersBoards.getLeadersBoard(mode, days, playerId, 10);
 	}
 }

@@ -1,6 +1,8 @@
 package com.turpgames.ichigu.social;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URLEncoder;
 
 import com.turpgames.framework.v0.IHttpResponse;
@@ -15,6 +17,7 @@ import com.turpgames.framework.v0.util.Debug;
 import com.turpgames.framework.v0.util.Game;
 import com.turpgames.ichigu.entity.JsonEncoders;
 import com.turpgames.ichigu.entity.LeadersBoard;
+import com.turpgames.ichigu.entity.Score;
 import com.turpgames.ichigu.utils.Ichigu;
 import com.turpgames.ichigu.utils.R;
 import com.turpgames.utils.Util;
@@ -110,15 +113,36 @@ public class Facebook {
 		}, callbackInterceptor);
 	}
 
-	public static void getLeadersBoard(int mode, int days, int playerId, final ILeadersBoardCallback callback) {
-		String url = String.format(getLeadersBoardUrlFormat, mode, days, playerId);
+	public static void getLeadersBoard(int mode, int days, int whose, final ILeadersBoardCallback callback) {
+		int playerId = Util.Strings.parseInt(getPlayer().getId());
+		String url = String.format(getLeadersBoardUrlFormat, playerId, mode, days, whose);
+
+		InputStream contentStream = null;
+		int contentLength = 0;
+		if (whose == Score.FriendsScores) {
+			ensureFriendList();
+			String friendIds = "";
+
+			Player player = getPlayer();
+			Player[] friends = player.getFriends();
+			for (int i = 0; i < friends.length; i++) {
+				friendIds += friends[i].getSocialId();
+				if (i < friends.length - 1)
+					friendIds += ",";
+			}
+
+			byte[] contentData = Util.Strings.toUtf8BytesArray(friendIds);
+			contentStream = new ByteArrayInputStream(contentData);
+			contentLength = contentData.length;
+		}
 
 		blockUI("Getting Scores...");
-		
-		HttpRequest.newGetRequestBuilder()
+
+		HttpRequest.newPostRequestBuilder()
 				.setUrl(url)
 				.setTimeout(5000)
 				.setAsync(true)
+				.setContent(contentStream, contentLength)
 				.build()
 				.send(new IHttpResponseListener() {
 					@Override
@@ -146,9 +170,27 @@ public class Facebook {
 				});
 	}
 
+	private static void ensureFriendList() {
+		final Player player = getPlayer();
+		if (player.getFriends() != null)
+			return;
+
+		facebook.loadFriends(player, new ICallback() {
+			@Override
+			public void onSuccess() {
+
+			}
+
+			@Override
+			public void onFail(Throwable t) {
+
+			}
+		});
+	}
+
 	private static void doSendScore(int mode, int score, final ICallback callback) {
 		blockUI(R.strings.sendingScore);
-		String url = String.format(sendScoreUrlFormat, mode, getPlayer().getId(), score);
+		String url = String.format(sendScoreUrlFormat, getPlayer().getId(), mode, score);
 
 		Debug.println("doSendScore, sending score...");
 		HttpRequest.newPostRequestBuilder()

@@ -10,6 +10,10 @@
             value="true" />
 
         <param
+            key="server"
+            value="local" />
+
+        <param
             key="provider"
             value="com.turpgames.framework.v0.impl.libgdx.GdxGameProvider" />
 
@@ -82,10 +86,6 @@
             value="http://www.facebook.com/turpgames" />
 
         <param
-            key="server"
-            value="test" />
-
-        <param
             key="prod-server"
             value="http://ichigu.turpgam.es/" />
 
@@ -99,11 +99,11 @@
 
         <param
             key="send-score-params"
-            value="?a=h&amp;m=%d&amp;p=%s&amp;s=%d" />
+            value="?a=h&amp;p=%s&amp;m=%d&amp;s=%d" />
 
         <param
             key="get-leadersboard-params"
-            value="?a=l&amp;m=%d&amp;d=%d&amp;p=%d" />
+            value="?a=l&amp;p=%d&amp;m=%d&amp;d=%d&amp;w=%d" />
 
         <param
             key="register-player-params"
