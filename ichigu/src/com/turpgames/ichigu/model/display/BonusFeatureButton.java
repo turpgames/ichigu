@@ -20,7 +20,7 @@ public class BonusFeatureButton implements IDrawable {
 
 		void onBonusFeatureAlreadyUsed();
 	}
-	
+
 	private final BlinkingImageButton button;
 	private final Text featureCountText;
 
@@ -75,7 +75,7 @@ public class BonusFeatureButton implements IDrawable {
 	public void draw() {
 		if (!isActive)
 			return;
-		
+
 		button.draw();
 		featureCountText.draw();
 	}
@@ -95,9 +95,11 @@ public class BonusFeatureButton implements IDrawable {
 		}
 
 		if (listener.onUseBonusFeature()) {
-//			feature.used();	
-//			if (singleUse)
-//				setAsUsed();
+			if (!Game.isDebug()) {
+				feature.used();
+				if (singleUse)
+					setAsUsed();
+			}
 		}
 	}
 
@@ -129,7 +131,7 @@ public class BonusFeatureButton implements IDrawable {
 	public static Builder newBuilder() {
 		return new Builder();
 	}
-	
+
 	public static final class Builder {
 		private final BonusFeatureButton featureButton;
 
@@ -154,13 +156,15 @@ public class BonusFeatureButton implements IDrawable {
 			featureButton.button.setBlinkDuration(R.durations.blinkDuration);
 			featureButton.button.setBlinksPerSecond(R.counts.blinkPerSecond);
 			featureButton.notificationTimer = new Timer();
-			featureButton.notificationTimer.setInterval(R.durations.hintNotificationInterval);
-			featureButton.notificationTimer.setTickListener(new Timer.ITimerTickListener() {
-				@Override
-				public void timerTick(Timer timer) {
-					featureButton.button.blink();
-				}
-			});
+			featureButton.notificationTimer
+					.setInterval(R.durations.hintNotificationInterval);
+			featureButton.notificationTimer
+					.setTickListener(new Timer.ITimerTickListener() {
+						@Override
+						public void timerTick(Timer timer) {
+							featureButton.button.blink();
+						}
+					});
 			return this;
 		}
 
@@ -170,13 +174,13 @@ public class BonusFeatureButton implements IDrawable {
 		}
 
 		public Builder setLocation(float x, float y) {
-			featureButton.button.getLocation().set(
-					Game.viewportToScreenX(x),
+			featureButton.button.getLocation().set(Game.viewportToScreenX(x),
 					Game.viewportToScreenY(y));
 
 			featureButton.featureCountText.setLocation(
-					Game.viewportToScreenX(x) + R.sizes.menuButtonSizeToScreen * 0.8f,
-					Game.viewportToScreenY(y) + R.sizes.menuButtonSizeToScreen * 0.8f);
+					Game.viewportToScreenX(x) + R.sizes.menuButtonSizeToScreen
+							* 0.8f, Game.viewportToScreenY(y)
+							+ R.sizes.menuButtonSizeToScreen * 0.8f);
 
 			return this;
 		}
