@@ -7,10 +7,8 @@ import com.turpgames.framework.v0.component.IButtonListener;
 import com.turpgames.framework.v0.component.TextButton;
 import com.turpgames.framework.v0.util.Game;
 import com.turpgames.ichigu.entity.Score;
-import com.turpgames.ichigu.social.Facebook;
 import com.turpgames.ichigu.utils.Ichigu;
 import com.turpgames.ichigu.utils.R;
-import com.turpgames.utils.Util;
 
 public class LeadersBoardButtons implements IDrawable, ILanguageListener {
 	public static interface IListener {
