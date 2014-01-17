@@ -223,6 +223,29 @@ public class LeadersBoardButtons implements IDrawable, ILanguageListener {
 			btn.getColor().a = 0.5f;
 		}
 	}
+	
+	public void activate() {
+		listenInput(true);
+	}
+	
+	public void deactivate() {
+		listenInput(false);
+	}
+	
+	private void listenInput(boolean listen) {
+		modeMini.listenInput(listen);
+		modeStandard.listenInput(listen);
+		modeTimeChallenge.listenInput(listen);
+
+		myScores.listenInput(listen);
+		generalScores.listenInput(listen);
+		friendsScores.listenInput(listen);
+
+		dailyScores.listenInput(listen);
+		weeklyScores.listenInput(listen);
+		monhtlyScores.listenInput(listen);
+		allTimeScores.listenInput(listen);
+	}
 
 	@Override
 	public void draw() {

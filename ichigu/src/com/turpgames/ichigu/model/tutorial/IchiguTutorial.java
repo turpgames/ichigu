@@ -7,6 +7,7 @@ import com.turpgames.framework.v0.component.ImageButton;
 import com.turpgames.framework.v0.component.Tutorial;
 import com.turpgames.framework.v0.component.TutorialPage;
 import com.turpgames.framework.v0.impl.Text;
+import com.turpgames.framework.v0.impl.TouchSlidingViewSwitcher;
 import com.turpgames.framework.v0.util.Game;
 import com.turpgames.ichigu.model.game.Card;
 import com.turpgames.ichigu.model.game.CardAttributes;
@@ -15,10 +16,36 @@ import com.turpgames.ichigu.utils.R;
 
 class IchiguTutorial extends Tutorial {
 
+	private TouchSlidingViewSwitcher tp = new TouchSlidingViewSwitcher();
+
 	IchiguTutorial(ITutorialListener listener) {
 		super(listener);
+		tp.setArea(0, 0, Game.getVirtualWidth(), Game.getVirtualHeight());
+		for (TutorialPage page : pages)
+			tp.addView(page);
 	}
 	
+	@Override
+
+	protected void drawPage() {
+		pageTitle.draw();
+		pagesInfo.draw();
+		tp.draw();
+	}
+
+	
+	@Override
+	public void activate() {
+		super.activate();
+		tp.activate();
+	}
+	
+	@Override
+	public void deactivate() {
+		super.deactivate();
+		tp.deactivate();
+	}
+
 	@Override
 	protected void addPagesInfo() {
 		pagesInfo.setAlignment(Text.HAlignCenter, Text.VAlignTop);
@@ -32,7 +59,7 @@ class IchiguTutorial extends Tutorial {
 		pageTitle.setText(Ichigu.getString(R.strings.howToPlay));
 		pageTitle.getColor().set(R.colors.ichiguYellow);
 		pageTitle.setFontScale(1.5f);
-		pageTitle.setPadding(0, 85);	
+		pageTitle.setPadding(0, 85);
 	}
 
 	@Override
@@ -155,7 +182,7 @@ class IchiguTutorial extends Tutorial {
 		page.addInfo("- " + Ichigu.getString(R.strings.tutSamePattern), Text.HAlignLeft, 20).setPadX(50);
 		page.addInfo("- " + Ichigu.getString(R.strings.tutSameCount), Text.HAlignLeft, 20).setPadX(50);
 		pages.add(page);
-		
+
 		page = new TutorialPage("10", R.fontSize.medium);
 		page.addInfo(Ichigu.getString(R.strings.tutGameModesTitle), Text.HAlignCenter, R.sizes.tutorialMarginTop).getColor().set(R.colors.ichiguYellow);
 		page.addInfo("- " + Ichigu.getString(R.strings.tutSingleIchiguModes), Text.HAlignLeft, 50).setPadX(50);
@@ -175,17 +202,17 @@ class IchiguTutorial extends Tutorial {
 		page.addInfo(Ichigu.getString(R.strings.tutMiniChallengeModeTitle), Text.HAlignCenter, R.sizes.tutorialMarginTop).getColor().set(R.colors.ichiguYellow);
 		page.addInfo(Ichigu.getString(R.strings.tutMiniChallengeMode), Text.HAlignLeft, 50).setPadX(10);
 		pages.add(page);
-		
+
 		page = new TutorialPage("13", R.fontSize.medium);
 		page.addInfo(Ichigu.getString(R.strings.tutFullModesTitle), Text.HAlignCenter, R.sizes.tutorialMarginTop).getColor().set(R.colors.ichiguYellow);
 		page.addInfo(Ichigu.getString(R.strings.tutFullModes), Text.HAlignLeft, 50).setPadX(10);
 		pages.add(page);
-		
+
 		page = new TutorialPage("14", R.fontSize.medium);
 		page.addInfo(Ichigu.getString(R.strings.tutNormalModeTitle), Text.HAlignCenter, R.sizes.tutorialMarginTop).getColor().set(R.colors.ichiguYellow);
 		page.addInfo(Ichigu.getString(R.strings.tutNormalMode), Text.HAlignLeft, 50).setPadX(10);
 		pages.add(page);
-		
+
 		page = new TutorialPage("15", R.fontSize.medium);
 		page.addInfo(Ichigu.getString(R.strings.tutFullChallengeModeTitle), Text.HAlignCenter, R.sizes.tutorialMarginTop).getColor().set(R.colors.ichiguYellow);
 		page.addInfo(Ichigu.getString(R.strings.tutFullChallengeMode), Text.HAlignLeft, 30).setPadX(10);

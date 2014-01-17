@@ -135,7 +135,7 @@ public class Facebook {
 					byte[] contentData = Util.Strings.toUtf8BytesArray(friendIds);
 					InputStream contentStream = new ByteArrayInputStream(contentData);
 					int contentLength = contentData.length;
-					
+
 					doGetLeadersBoard(callback, url, contentStream, contentLength);
 				}
 
@@ -185,13 +185,15 @@ public class Facebook {
 					}
 				});
 	}
-	
+
 	private static void ensureFriendList(ICallback callback) {
 		final Player player = getPlayer();
-		if (player.getFriends() != null)
-			return;
-
-		facebook.loadFriends(player, callback);
+		if (player.getFriends() != null) {
+			callback.onSuccess();
+		}
+		else {
+			facebook.loadFriends(player, callback);
+		}
 	}
 
 	private static void doSendScore(int mode, int score, final ICallback callback) {

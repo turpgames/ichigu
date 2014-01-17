@@ -23,7 +23,7 @@ class OnlineHiScores implements IHiScores {
 	private final HiScores parent;
 	private ImageButton logoutOfFacebook;
 	private volatile List<LeadersBoardRow> rows;
-	private LeadersBoardButtons buttons;
+	private LeadersBoardButtons2 buttons;
 
 	OnlineHiScores(HiScores parent) {
 		this.parent = parent;
@@ -46,12 +46,9 @@ class OnlineHiScores implements IHiScores {
 
 		rows = new ArrayList<LeadersBoardRow>();
 
-		buttons = new LeadersBoardButtons();
+		buttons = new LeadersBoardButtons2();
 		buttons.setY(550);
-		buttons.setDays(Score.Weekly);
-		buttons.setMode(Score.ModeTime);
-		buttons.setWhose(Score.General);
-		buttons.setListener(new LeadersBoardButtons.IListener() {
+		buttons.setListener(new LeadersBoardButtons2.IListener() {
 			@Override
 			public void onLeadersBoardModeChange() {
 				loadHiScores();
@@ -94,9 +91,21 @@ class OnlineHiScores implements IHiScores {
 	@Override
 	public void activate() {
 		logoutOfFacebook.listenInput(true);
+		buttons.activate();
 		loadHiScores();
 	}
 
+	@Override
+	public boolean deactivate() {
+		logoutOfFacebook.listenInput(false);
+		buttons.deactivate();
+		return true;
+	}
+
+	@Override
+	public String getId() {
+		return "OnlineHiScores";
+	}
 	private void loadHiScores() {
 		final int mode = buttons.getMode();
 		int days = buttons.getDays();
@@ -129,17 +138,6 @@ class OnlineHiScores implements IHiScores {
 				rows = new ArrayList<LeadersBoardRow>();
 			}
 		});
-	}
-
-	@Override
-	public boolean deactivate() {
-		logoutOfFacebook.listenInput(false);
-		return true;
-	}
-
-	@Override
-	public String getId() {
-		return "OnlineHiScores";
 	}
 
 	private void setLanguageSensitiveInfo() {

@@ -18,7 +18,7 @@ public class TutorialMode implements IDrawable {
 	}
 
 	public void beginTutorial() {
-		tutorial.start();
+		tutorial.activate();
 	}
 	
 	@Override
@@ -27,7 +27,7 @@ public class TutorialMode implements IDrawable {
 	}
 
 	public void endTutorial() {
-		tutorial.end();
+		tutorial.deactivate();
 		// Change to practice screen
 	}
 	
