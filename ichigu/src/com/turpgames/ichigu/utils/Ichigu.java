@@ -81,6 +81,18 @@ public final class Ichigu {
 	public static void playSoundWait() {
 		soundWait.play();
 	}
+	
+	public static String getStoreUrl() {
+		if (Game.isIOS()) {
+			if (Game.getOSVersion().getMajor() < 7)
+				return Game.getParam(R.game.params.appStoreAddressOld);
+			else
+				return Game.getParam(R.game.params.appStoreAddressIOS7);
+		}
+		else {
+			return Game.getParam(R.game.params.playStoreAddress);
+		}
+	}
 
 	private Ichigu() {
 

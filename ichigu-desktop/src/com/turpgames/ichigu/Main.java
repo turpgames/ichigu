@@ -82,6 +82,7 @@ public class Main {
 
 							@Override
 							public void loadFriends(Player player, ICallback callback) {
+								player.setFriends(new Player[0]);
 								callback.onSuccess();
 							}
 						};

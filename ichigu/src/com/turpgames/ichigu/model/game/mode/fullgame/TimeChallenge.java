@@ -14,6 +14,7 @@ import com.turpgames.ichigu.utils.R;
 public class TimeChallenge extends FullGameMode {
 	private FoundInfo foundInfo;
 	private CountDownTimer timer;
+	private int score;
 
 	public TimeChallenge() {
 		foundInfo = new FoundInfo();		
@@ -62,19 +63,29 @@ public class TimeChallenge extends FullGameMode {
 
 	@Override
 	protected void prepareResultInfoAndSaveHiscore() {
-		int hiScore = Settings.getInteger(R.settings.hiscores.fullchallenge, 0);
-		int score = foundInfo.getFound();
+		int hiScore = Settings.getInteger(R.settings.hiscores.timeChallenge, 0);
+		score = foundInfo.getFound();
 		if (score > hiScore)
-			Settings.putInteger(R.settings.hiscores.fullchallenge, score);
+			Settings.putInteger(R.settings.hiscores.timeChallenge, score);
 
 		resultInfo.setText(String.format(Ichigu.getString(R.strings.fullChallengeResult),
 				score, (score > hiScore ? Ichigu.getString(R.strings.newHiscore) : "")));
 		
-		super.sendScore(score, Score.ModeTime);
+		super.sendScore();
 	}
 
 	@Override
 	protected Table createTable() {
 		return new TimeChallengeTable();
+	}
+
+	@Override
+	protected int getRoundScore() {
+		return score;
+	}
+
+	@Override
+	protected int getScoreMode() {
+		return Score.ModeTime;
 	}
 }

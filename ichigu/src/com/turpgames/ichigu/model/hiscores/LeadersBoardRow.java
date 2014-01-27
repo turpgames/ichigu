@@ -5,6 +5,8 @@ import com.turpgames.framework.v0.impl.Image;
 import com.turpgames.framework.v0.impl.Text;
 import com.turpgames.framework.v0.util.Vector;
 import com.turpgames.ichigu.entity.Player;
+import com.turpgames.ichigu.social.Facebook;
+import com.turpgames.ichigu.utils.R;
 
 public class LeadersBoardRow implements IDrawable {
 	private final float profilePictureSize = 35f;
@@ -15,9 +17,9 @@ public class LeadersBoardRow implements IDrawable {
 	private float nameWidth = 0.7f;
 	// private float scoreWidth = 0.1f;
 
-	// LeadersBoard (25, 100) x (525, 500) karesine çizilecek
+	// LeadersBoard (25, 100) x (525, 525) karesine çizilecek
 	private final Vector bottomLeft = new Vector(25, 100);
-	private final Vector topRight = new Vector(525, 500);
+	private final Vector topRight = new Vector(525, 525);
 
 	private final Text rank;
 	private final Image profilePicture;
@@ -33,8 +35,13 @@ public class LeadersBoardRow implements IDrawable {
 		this.profilePicture.setHeight(profilePictureSize);
 
 		this.playerName = createText(player.getUsername());
-
 		this.score = createText(score);
+
+		if (Facebook.getPlayer().getSocialId().equals(player.getFacebookId())) {
+			this.rank.getColor().set(R.colors.ichiguYellow);
+			this.playerName.getColor().set(R.colors.ichiguYellow);
+			this.score.getColor().set(R.colors.ichiguYellow);
+		}
 
 		setLocations(rank - 1);
 	}

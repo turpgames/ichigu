@@ -197,10 +197,10 @@ public final class R {
 
 	public static final class settings {
 		public static final class hiscores {
-			public static final String minichallenge = "hiscore_practice";
+			public static final String miniChallenge = "hiscore_practice";
 			public static final String normal = "hiscore_normal";
-			public static final String normaltime = "hiscore_normal_time";
-			public static final String fullchallenge = "hiscore_challenge";
+			public static final String standard = "hiscore_normal_time";
+			public static final String timeChallenge = "hiscore_challenge";
 		}
 
 		public static final String music = "music";
@@ -389,6 +389,10 @@ public final class R {
 		public final static String general = "general";
 		public final static String friends = "friends";
 		public final static String leadersBoardError = "leadersBoardError";
+		
+		public final static String sendScore = "sendScore";
+		public final static String shareScore = "shareScore";
+		public final static String shareScoreFail = "shareScoreFail";
 	}
 
 	public static final class symbolpositions {

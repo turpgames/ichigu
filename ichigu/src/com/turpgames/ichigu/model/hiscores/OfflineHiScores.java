@@ -129,17 +129,16 @@ class OfflineHiScores implements IHiScores, IView {
 	}
 
 	private void resetHiscores() {
-		Settings.putInteger(R.settings.hiscores.minichallenge, 0);
-		Settings.putInteger(R.settings.hiscores.normal, 0);
-		Settings.putInteger(R.settings.hiscores.normaltime, 0);
-		Settings.putInteger(R.settings.hiscores.fullchallenge, 0);
+		Settings.putInteger(R.settings.hiscores.miniChallenge, 0);
+		Settings.putInteger(R.settings.hiscores.standard, 0);
+		Settings.putInteger(R.settings.hiscores.timeChallenge, 0);
 		setInfo();
 	}
 
 	private void setInfo() {
-		int minichallengeScore = Settings.getInteger(R.settings.hiscores.minichallenge, 0);
-		int normalTime = Settings.getInteger(R.settings.hiscores.normaltime, 0);
-		int fullchallengeScore = Settings.getInteger(R.settings.hiscores.fullchallenge, 0);
+		int minichallengeScore = Settings.getInteger(R.settings.hiscores.miniChallenge, 0);
+		int normalTime = Settings.getInteger(R.settings.hiscores.standard, 0);
+		int fullchallengeScore = Settings.getInteger(R.settings.hiscores.timeChallenge, 0);
 
 		info.setText(String.format(Ichigu.getString(R.strings.hiscoreInfo),
 				minichallengeScore,

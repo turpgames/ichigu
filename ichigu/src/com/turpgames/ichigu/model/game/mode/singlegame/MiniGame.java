@@ -198,15 +198,48 @@ public class MiniGame extends SingleGameMode implements IResultScreenButtonsList
 
 	@Override
 	protected void prepareResultInfoAndSaveHiscore() {
-		int hiScore = Settings.getInteger(R.settings.hiscores.minichallenge, 0);
+		int hiScore = Settings.getInteger(R.settings.hiscores.miniChallenge, 0);
 		int ichigusFound = foundInfo.getFound();
 		if (ichigusFound > hiScore)
-			Settings.putInteger(R.settings.hiscores.minichallenge, ichigusFound);
+			Settings.putInteger(R.settings.hiscores.miniChallenge, ichigusFound);
 
 		resultInfo.setText(String.format(Ichigu.getString(R.strings.miniChallengeResult),
 				ichigusFound, (ichigusFound > hiScore ? Ichigu.getString(R.strings.newHiscore) : "")));
 		
+		MiniGame.this.resultScreenButtons.activateScoreButton();
+		
 		sendScore(ichigusFound);
+	}
+
+	@Override
+	public void onSendScore() {
+		if (Facebook.isLoggedIn()) {
+			Facebook.shareScore(Score.ModeMini, foundInfo.getFound(), new ICallback() {				
+				@Override
+				public void onSuccess() {
+					MiniGame.this.resultScreenButtons.deactivateScoreButton();
+				}
+				
+				@Override
+				public void onFail(Throwable t) {
+					IchiguToast.showError(R.strings.shareScoreFail);
+				}
+			});
+		}
+		else {
+			Facebook.login(new ICallback() {				
+				@Override
+				public void onSuccess() {
+					MiniGame.this.resultScreenButtons.updateButtons();
+					MiniGame.this.sendScore(foundInfo.getFound());
+				}
+				
+				@Override
+				public void onFail(Throwable t) {
+					IchiguToast.showError(R.strings.loginError);
+				}
+			});
+		}
 	}
 
 	private void sendScore(int score) {

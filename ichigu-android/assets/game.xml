@@ -95,7 +95,7 @@
 
         <param
             key="local-server"
-            value="http://192.168.2.4:8080/ichigu-server/" />
+            value="http://192.168.2.3:8080/ichigu-server/" />
 
         <param
             key="send-score-params"

@@ -114,15 +114,51 @@ public abstract class FullGameMode extends RegularMode implements IResultScreenB
 		if (getModeListener() != null)
 			getModeListener().onNewGame();
 	}
+	
+	protected abstract int getRoundScore();
+	
+	protected abstract int getScoreMode();
 
-	protected void sendScore(int score, int mode) {
+	@Override
+	public void onSendScore() {
+		if (Facebook.isLoggedIn()) {
+			Facebook.shareScore(getScoreMode(), getRoundScore(), new ICallback() {				
+				@Override
+				public void onSuccess() {
+					FullGameMode.this.resultScreenButtons.deactivateScoreButton();
+				}
+				
+				@Override
+				public void onFail(Throwable t) {
+					IchiguToast.showError(R.strings.shareScoreFail);
+				}
+			});
+		}
+		else {
+			Facebook.login(new ICallback() {				
+				@Override
+				public void onSuccess() {
+					FullGameMode.this.resultScreenButtons.updateButtons();
+					FullGameMode.this.sendScore();
+				}
+				
+				@Override
+				public void onFail(Throwable t) {
+					IchiguToast.showError(R.strings.loginError);
+				}
+			});
+		}
+	}
+
+	protected void sendScore() {
 		if (!Facebook.canLogin())
 			return;
 				
-		Facebook.sendScore(mode, score, new ICallback() {
+		Facebook.sendScore(getScoreMode(), getRoundScore(), new ICallback() {
 			@Override
 			public void onSuccess() {
-				IchiguToast.showInfo(R.strings.sendScoreSuccess);				
+				IchiguToast.showInfo(R.strings.sendScoreSuccess);	
+				FullGameMode.this.resultScreenButtons.updateButtons();			
 			}
 			
 			@Override

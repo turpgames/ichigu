@@ -10,7 +10,7 @@ public class V1_1_2 implements IUpdateProcess {
 
 	@Override
 	public void execute() {
-		Settings.putInteger(R.settings.hiscores.normaltime, 0);
+		Settings.putInteger(R.settings.hiscores.standard, 0);
 	}
 
 	@Override

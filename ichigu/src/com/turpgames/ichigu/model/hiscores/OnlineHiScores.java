@@ -6,6 +6,7 @@ import java.util.List;
 import com.turpgames.framework.v0.component.Button;
 import com.turpgames.framework.v0.component.IButtonListener;
 import com.turpgames.framework.v0.component.ImageButton;
+import com.turpgames.framework.v0.impl.Settings;
 import com.turpgames.framework.v0.impl.Text;
 import com.turpgames.framework.v0.social.ICallback;
 import com.turpgames.framework.v0.util.Game;
@@ -23,7 +24,7 @@ class OnlineHiScores implements IHiScores {
 	private final HiScores parent;
 	private ImageButton logoutOfFacebook;
 	private volatile List<LeadersBoardRow> rows;
-	private LeadersBoardButtons2 buttons;
+	private LeadersBoardButtons buttons;
 
 	OnlineHiScores(HiScores parent) {
 		this.parent = parent;
@@ -46,9 +47,9 @@ class OnlineHiScores implements IHiScores {
 
 		rows = new ArrayList<LeadersBoardRow>();
 
-		buttons = new LeadersBoardButtons2();
+		buttons = new LeadersBoardButtons();
 		buttons.setY(550);
-		buttons.setListener(new LeadersBoardButtons2.IListener() {
+		buttons.setListener(new LeadersBoardButtons.IListener() {
 			@Override
 			public void onLeadersBoardModeChange() {
 				loadHiScores();
@@ -106,6 +107,7 @@ class OnlineHiScores implements IHiScores {
 	public String getId() {
 		return "OnlineHiScores";
 	}
+
 	private void loadHiScores() {
 		final int mode = buttons.getMode();
 		int days = buttons.getDays();
@@ -117,10 +119,10 @@ class OnlineHiScores implements IHiScores {
 				List<LeadersBoardRow> r = new ArrayList<LeadersBoardRow>();
 
 				int rank = 1;
+				String scoreStr;
 				for (Score score : leadersBoard.getScores()) {
 					Player player = leadersBoard.getPlayer(score.getPlayerId());
 
-					String scoreStr;
 					if (mode == Score.ModeStandard)
 						scoreStr = Util.Strings.getTimeString(score.getScore());
 					else
@@ -129,7 +131,26 @@ class OnlineHiScores implements IHiScores {
 					r.add(new LeadersBoardRow(rank++, scoreStr, player));
 				}
 
+				if (leadersBoard.getOwnScore() != null) {
+
+					if (mode == Score.ModeStandard)
+						scoreStr = Util.Strings.getTimeString(leadersBoard.getOwnScore().getScore());
+					else
+						scoreStr = "" + leadersBoard.getOwnScore().getScore();
+
+					com.turpgames.framework.v0.social.Player f = Facebook.getPlayer();
+					Player p = new Player();
+					p.setEmail(f.getEmail());
+					p.setFacebookId(f.getSocialId());
+					p.setId(Util.Strings.parseInt(f.getId(), 0));
+					p.setUsername(f.getName());
+
+					r.add(new LeadersBoardRow(leadersBoard.getOwnRank(), scoreStr, p));
+				}
+
 				rows = r;
+
+				sendHiScoresToServer();
 			}
 
 			@Override
@@ -142,5 +163,40 @@ class OnlineHiScores implements IHiScores {
 
 	private void setLanguageSensitiveInfo() {
 		pageTitle.setText(Ichigu.getString(R.strings.hiScores));
+	}
+
+	private void sendHiScoresToServer() {
+		Util.Threading.runInBackground(new Runnable() {
+			@Override
+			public void run() {
+				sendScoreToServer(Score.ModeMini, R.settings.hiscores.miniChallenge);
+				sendScoreToServer(Score.ModeStandard, R.settings.hiscores.standard);
+				sendScoreToServer(Score.ModeTime, R.settings.hiscores.timeChallenge);
+			}
+		});
+	}
+
+	private static void sendScoreToServer(int mode, String scoreSettingsKey) {
+		final String flagSettingsKey = scoreSettingsKey + "-sent-to-server";
+
+		boolean scoreAlreadySent = Settings.getBoolean(flagSettingsKey, false);
+		if (scoreAlreadySent)
+			return;
+
+		int score = Settings.getInteger(scoreSettingsKey, 0);
+		if (score < 1)
+			return;
+
+		Facebook.sendScore(mode, score, new ICallback() {
+			@Override
+			public void onSuccess() {
+				Settings.putBoolean(flagSettingsKey, true);
+			}
+
+			@Override
+			public void onFail(Throwable t) {
+
+			}
+		});
 	}
 }

@@ -36,23 +36,24 @@
 	+BugFix: standart mode reset yapınca o anki süre hi-score a yazılıyor
 	+Resource text düzeltmeleri
 	+ios launch image
+	
 v1.2
-	-Login with Facebook	
+	+Login with Facebook	
 		+login
 		+logout
-		-share (score api'siz normal link share)
+		+share (score api'siz normal link share)
 	+Ichigu Server
 		+Test/Prod kurulumları (tomcat, h2db)
 		+register
 		+sendScore
 		+getHiScores
-	-HiScores
+	+HiScores
 		+OnlineHiscoreScreen
 		+Günlük, Haftalık, Aylık, Genel
-		-Arkadaşlarımın rekorları
+		+Arkadaşlarımın rekorları
 		+Kendi rekorlarım
-		-Rank'ını söyle, ilk 10'da kendini sarı görsün
-		-Facebook login olmamışsa result screende send score buttonu
+		+Rank'ını söyle, ilk 10'da kendini sarı görsün
+		+Facebook login olmamışsa result screende send score buttonu
 	+Sudoku mode
 		+Score Toast
 	+Üçlü Hint
@@ -76,16 +77,16 @@ v1.2
 		-Türkçe
 		-İtalyanca
 		-Çince
-	-Update Process
+	+Update Process
 		+Yeni featureları settings e yaz
-		-Mevcut hi scoreları server a gönder
+		+Mevcut hi scoreları server a gönder
 	-Genel
 		-UIBlokcer a şekil yapılması lazım
 	-Bug
 		-Mini mod ve Time Challenge zaman hızlı başlıyor, muhtemelen CountDownTimer'da bir bug var.
 		+FullModlarda deste bitince hata veriyor.
 		+TimeChallenge deste bitince oyun devam etsin.
-		-Full mode bittikten sonra new game diyince yeni dağıtılan kartlar açık dağıtılıyor
+		+Full mode bittikten sonra new game diyince yeni dağıtılan kartlar açık dağıtılıyor
 		-Online hiscores'ta logout olup tekrar login olunca beyaz resim çıkıyor (Android'de, oluyor, ios ve desktop'ta olmuyor)
 TODO:
 	Achievements

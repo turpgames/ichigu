@@ -13,6 +13,7 @@ import com.turpgames.framework.v0.impl.Settings;
 import com.turpgames.framework.v0.social.ICallback;
 import com.turpgames.framework.v0.social.ISocializer;
 import com.turpgames.framework.v0.social.Player;
+import com.turpgames.framework.v0.social.SocialFeed;
 import com.turpgames.framework.v0.util.Debug;
 import com.turpgames.framework.v0.util.Game;
 import com.turpgames.ichigu.entity.JsonEncoders;
@@ -109,6 +110,17 @@ public class Facebook {
 			@Override
 			public void execute() {
 				doSendScore(mode, score, callbackInterceptor);
+			}
+		}, callbackInterceptor);
+	}
+
+	public static void shareScore(final int mode, final int score, ICallback callback) {
+		final CallbackInterceptor callbackInterceptor = new CallbackInterceptor(callback);
+		Debug.println("sendScore, execute...");
+		executeSafe(new IAction() {
+			@Override
+			public void execute() {
+				doShareScore(mode, score, callbackInterceptor);
 			}
 		}, callbackInterceptor);
 	}
@@ -221,6 +233,34 @@ public class Facebook {
 						callback.onFail(t);
 					}
 				});
+	}
+
+	private static void doShareScore(int mode, int score, ICallback callback) {
+		try {
+			SocialFeed scoreFeed = SocialFeed.newBuilder()
+					.setTitle(prepareScoreMessage(mode, score))
+					.setSubtitle("turpgames")
+					.setMessage("Ichigu")
+					.setHref("http://www.turpgames.com/ichiguredirect.html")
+				    .setImageUrl("http://www.turpgames.com/res/img/ichigu_logo.png")
+					.build();
+			facebook.postFeed(scoreFeed, callback);
+		} catch (Throwable t) {
+			callback.onFail(t);
+		}
+	}
+
+	private static String prepareScoreMessage(int mode, int score) {
+		if (mode == Score.ModeMini) {
+			return String.format("%s just found %d ichigu%s in Mini Mode", getPlayer().getName().split(" ")[0], score, score > 1 ? "s" : "");
+		}
+		else if (mode == Score.ModeStandard) {
+			return String.format("%s completed Standard Mode in %s", getPlayer().getName().split(" ")[0], Util.Strings.getTimeString(score));
+		}
+		else if (mode == Score.ModeTime) {
+			return String.format("%s just found %d ichigu%s in Time Challenge Mode", getPlayer().getName().split(" ")[0], score, score > 1 ? "s" : "");
+		}
+		return "";
 	}
 
 	/**
