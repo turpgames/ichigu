@@ -1,6 +1,7 @@
 package com.turpgames.ichigu.model.game.dealer;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import com.turpgames.ichigu.model.game.Card;
@@ -60,10 +61,10 @@ public class FullGameCardsIn extends ArrayList<Card> {
 	}
 	
 	public List<Card> getOthers() {
-		return others;
+		return Collections.unmodifiableList(others);
 	}
 	
 	public List<Card> getExtras() {
-		return extras;
+		return Collections.unmodifiableList(extras);
 	}
 }
