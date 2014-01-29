@@ -250,6 +250,7 @@ public class MiniGame extends SingleGameMode implements IResultScreenButtonsList
 			@Override
 			public void onSuccess() {
 				IchiguToast.showInfo(R.strings.sendScoreSuccess);
+				MiniGame.this.resultScreenButtons.updateButtons();
 			}
 
 			@Override
