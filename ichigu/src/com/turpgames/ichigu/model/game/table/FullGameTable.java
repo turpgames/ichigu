@@ -114,10 +114,10 @@ public class FullGameTable extends RegularGameTable {
 			toDealIn.removeAllOthers(selectedCards);
 			int dealingIn = 0;
 			do {
-				for (Card card : toDealIn.subList(toDealIn.size() - dealingIn, toDealIn.size())) {
+				for (Card card : toDealIn.getExtras()) {
 					deck.giveBackUnusedCard(card);
-					toDealIn.removeExtra(card);
 				}
+				toDealIn.clearExtras();
 				dealingIn = 0;
 				for (int i = 0; i < 3; i++) {
 					Card card = deck.getRandomCard();

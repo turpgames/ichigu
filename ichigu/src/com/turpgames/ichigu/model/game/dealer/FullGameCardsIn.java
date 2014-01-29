@@ -40,6 +40,18 @@ public class FullGameCardsIn extends ArrayList<Card> {
 		this.removeAll(list);
 	}
 	
+	public void clearExtras() {
+		for (Card card : extras)
+			remove(card);
+		extras.clear();
+	}
+
+	public void clearOthers() {
+		for (Card card : extras)
+			remove(card);
+		extras.clear();
+	}
+	
 	@Override
 	public void clear() {
 		extras.clear();
