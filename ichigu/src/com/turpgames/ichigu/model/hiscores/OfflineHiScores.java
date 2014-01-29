@@ -77,8 +77,7 @@ class OfflineHiScores implements IHiScores, IView {
 	}
 
 	private void loginWithFacebook() {
-		Ichigu.blockUI(R.strings.loggingIn);
-		
+		Ichigu.blockUI(R.strings.loggingIn);		
 		Facebook.login(new ICallback() {			
 			@Override
 			public void onSuccess() {

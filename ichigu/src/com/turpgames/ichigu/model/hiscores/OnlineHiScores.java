@@ -62,8 +62,7 @@ class OnlineHiScores implements IHiScores {
 	}
 
 	private void logoutOfFacebook() {
-		Ichigu.blockUI(R.strings.loggingOut);
-		
+		Ichigu.blockUI(R.strings.loggingOut);		
 		Facebook.logout(new ICallback() {
 			@Override
 			public void onSuccess() {
@@ -117,8 +116,7 @@ class OnlineHiScores implements IHiScores {
 		int days = buttons.getDays();
 		int whose = buttons.getWhose();
 
-		Ichigu.blockUI(R.strings.loadingScores);
-		
+		Ichigu.blockUI(R.strings.loadingScores);		
 		Facebook.getLeadersBoard(mode, days, whose, new Facebook.ILeadersBoardCallback() {
 			@Override
 			public void onSuccess(LeadersBoard leadersBoard) {
