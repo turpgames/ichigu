@@ -1,6 +1,7 @@
 package com.turpgames.ichigu.model.game;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import com.turpgames.framework.v0.util.Game;
@@ -115,5 +116,9 @@ public class Deck {
 		usingCards.remove(card);
 		usedCards.add(card);
 		card.reset();
+	}
+	
+	public List<Card> getUnusedCards() {
+		return Collections.unmodifiableList(unusedCards);
 	}
 }

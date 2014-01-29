@@ -33,6 +33,8 @@ public abstract class Table implements IDealerListener, ICardListener {
 	public void deal() {
 		List<Card> out = getCardsToDealOut();
 		List<Card> in = getCardsToDealIn();
+		if (in == null)
+			return;
 		for (int i = 0; i < out.size(); i++) {
 			if (in.contains(out.get(i))) {
 				in = getCardsToDealIn();
@@ -76,7 +78,6 @@ public abstract class Table implements IDealerListener, ICardListener {
 		for(Card card : selectedCards)
 			card.deselect();
 		selectedCards.clear();
-		checkIfTableFinished();
 	}
 	
 	@Override
@@ -94,10 +95,6 @@ public abstract class Table implements IDealerListener, ICardListener {
 		
 	abstract public void start();
 
-	protected void checkIfTableFinished() {
-		
-	}
-	
 	abstract protected void concreteCardTapped(Card card);
 
 	abstract protected void concreteDealEnded();

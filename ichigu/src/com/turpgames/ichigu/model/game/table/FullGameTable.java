@@ -10,6 +10,7 @@ import com.turpgames.ichigu.model.game.dealer.FullGameCardsIn;
 import com.turpgames.ichigu.model.game.dealer.FullGameDealer;
 
 public class FullGameTable extends RegularGameTable {
+	private List<Card> restCards;
 	
 	private List<Card> extraCards;
 	private boolean areExtraCardsOpened;
@@ -24,6 +25,8 @@ public class FullGameTable extends RegularGameTable {
 		extraCards = new ArrayList<Card>();
 		toDealOut = new ArrayList<Card>();
 		toDealIn = new FullGameCardsIn();
+		
+		restCards = new ArrayList<Card>();
 	}
 	
 	@Override
@@ -110,6 +113,16 @@ public class FullGameTable extends RegularGameTable {
 			while(ichiguCount == 0);
 		}
 		else {
+			restCards.clear();
+			restCards.addAll(cardsOnTable);
+			restCards.removeAll(selectedCards);
+			restCards.addAll(deck.getUnusedCards());
+			ichiguCount = Card.getIchiguCount(restCards);
+			if (ichiguCount == 0) {
+				listener.onTableFinished();
+				return null;
+			}
+			
 			toDealIn.addAllOthers(extraCards);
 			toDealIn.removeAllOthers(selectedCards);
 			int dealingIn = 0;
@@ -126,7 +139,11 @@ public class FullGameTable extends RegularGameTable {
 						toDealIn.addExtra(card);
 					}
 				}
-				ichiguCount = Card.getIchiguCount(toDealIn);
+				cardsOnTable.addAll(toDealIn.getExtras());
+				cardsOnTable.removeAll(selectedCards);
+				ichiguCount = Card.getIchiguCount(cardsOnTable);
+				cardsOnTable.removeAll(toDealIn.getExtras());
+				cardsOnTable.addAll(selectedCards);
 			}
 			while(ichiguCount == 0 && dealingIn != 0);
 			
@@ -193,12 +210,6 @@ public class FullGameTable extends RegularGameTable {
 		deck.start();
 		isFirstDeal = true;
 		dealtCardCount = 0;
-	}
-
-	@Override
-	protected void checkIfTableFinished() {
-		if (Card.getIchiguCount(cardsOnTable) == 0)
-			listener.onTableFinished();
 	}
 
 	@Override
