@@ -8,7 +8,6 @@ import java.net.URLEncoder;
 import com.turpgames.framework.v0.IHttpResponse;
 import com.turpgames.framework.v0.IHttpResponseListener;
 import com.turpgames.framework.v0.ITexture;
-import com.turpgames.framework.v0.component.UIBlocker;
 import com.turpgames.framework.v0.impl.HttpRequest;
 import com.turpgames.framework.v0.impl.Settings;
 import com.turpgames.framework.v0.social.ICallback;
@@ -20,7 +19,6 @@ import com.turpgames.framework.v0.util.Game;
 import com.turpgames.ichigu.entity.JsonEncoders;
 import com.turpgames.ichigu.entity.LeadersBoard;
 import com.turpgames.ichigu.entity.Score;
-import com.turpgames.ichigu.utils.Ichigu;
 import com.turpgames.ichigu.utils.R;
 import com.turpgames.utils.Util;
 
@@ -48,14 +46,14 @@ public class Facebook {
 		getLeadersBoardUrlFormat = baseUrl + Game.getParam("get-leadersboard-params");
 		registerPlayerUrlFormat = baseUrl + Game.getParam("register-player-params");
 	}
-	
+
 	public static ITexture getDefaultProfilePicture() {
 		if (defaultProfilePicture == null) {
 			defaultProfilePicture = Game.getResourceManager().getTexture(R.game.textures.fb_default);
 		}
 		return defaultProfilePicture;
 	}
-	
+
 	private static String getPlayerId() {
 		return Settings.getString("player-id", "");
 	}
@@ -77,61 +75,53 @@ public class Facebook {
 	}
 
 	public static void login(final ICallback callback) {
-		final CallbackInterceptor callbackInterceptor = new CallbackInterceptor(callback);
-		blockUI(R.strings.loggingIn);
 		facebook.login(new ICallback() {
 			@Override
 			public void onSuccess() {
-				onLoginSuccess(callbackInterceptor);
+				onLoginSuccess(callback);
 			}
 
 			@Override
 			public void onFail(Throwable t) {
-				unblockUI();
 				callback.onFail(t);
 			}
 		});
 	}
 
 	public static void logout(final ICallback callback) {
-		blockUI(R.strings.loggingOut);
 		facebook.logout(new ICallback() {
 			@Override
 			public void onSuccess() {
 				Settings.putString("player-facebook-id", "");
 				Settings.putString("player-id", "");
-				unblockUI();
 				callback.onSuccess();
 			}
 
 			@Override
 			public void onFail(Throwable t) {
-				unblockUI();
 				callback.onFail(t);
 			}
 		});
 	}
 
 	public static void sendScore(final int mode, final int score, final ICallback callback) {
-		final CallbackInterceptor callbackInterceptor = new CallbackInterceptor(callback);
 		Debug.println("sendScore, execute...");
 		executeSafe(new IAction() {
 			@Override
 			public void execute() {
-				doSendScore(mode, score, callbackInterceptor);
+				doSendScore(mode, score, callback);
 			}
-		}, callbackInterceptor);
+		}, callback);
 	}
 
-	public static void shareScore(final int mode, final int score, ICallback callback) {
-		final CallbackInterceptor callbackInterceptor = new CallbackInterceptor(callback);
+	public static void shareScore(final int mode, final int score, final ICallback callback) {
 		Debug.println("sendScore, execute...");
 		executeSafe(new IAction() {
 			@Override
 			public void execute() {
-				doShareScore(mode, score, callbackInterceptor);
+				doShareScore(mode, score, callback);
 			}
-		}, callbackInterceptor);
+		}, callback);
 	}
 
 	public static void getLeadersBoard(int mode, int days, int whose, final ILeadersBoardCallback callback) {
@@ -173,8 +163,6 @@ public class Facebook {
 	}
 
 	private static void doGetLeadersBoard(final ILeadersBoardCallback callback, final String url, InputStream contentStream, int contentLength) {
-		blockUI("Getting Scores...");
-
 		HttpRequest.newPostRequestBuilder()
 				.setUrl(url)
 				.setTimeout(5000)
@@ -188,20 +176,17 @@ public class Facebook {
 							try {
 								String json = Util.IO.readUtf8String(response.getInputStream());
 								LeadersBoard lb = JsonEncoders.leadersBoard.decode(json);
-								unblockUI();
 								callback.onSuccess(lb);
 							} catch (IOException e) {
 								callback.onFail(e);
-								unblockUI();
 							}
 						} else {
-							unblockUI();
+							callback.onFail(null);
 						}
 					}
 
 					@Override
 					public void onError(Throwable t) {
-						unblockUI();
 						callback.onFail(t);
 					}
 				});
@@ -218,7 +203,6 @@ public class Facebook {
 	}
 
 	private static void doSendScore(int mode, int score, final ICallback callback) {
-		blockUI(R.strings.sendingScore);
 		String url = String.format(sendScoreUrlFormat, getPlayer().getId(), mode, score);
 
 		Debug.println("doSendScore, sending score...");
@@ -251,7 +235,7 @@ public class Facebook {
 					.setSubtitle("turpgames")
 					.setMessage("Ichigu")
 					.setHref("http://www.turpgames.com/ichiguredirect.html")
-				    .setImageUrl("http://www.turpgames.com/res/img/ichigu_logo.png")
+					.setImageUrl("http://www.turpgames.com/res/img/ichigu_logo.png")
 					.build();
 			facebook.postFeed(scoreFeed, callback);
 		} catch (Throwable t) {
@@ -285,7 +269,6 @@ public class Facebook {
 			return;
 		}
 
-		updateBlockMessage(R.strings.loggingIn);
 		Debug.println("user not logged in, logging in...");
 		facebook.login(new ICallback() {
 			@Override
@@ -321,7 +304,6 @@ public class Facebook {
 		final Player player = getPlayer();
 
 		if (player == null) {
-			updateBlockMessage(R.strings.loginError);
 			Debug.println("unable to get player, logging out...");
 			logout(new ICallback() {
 				@Override
@@ -374,7 +356,6 @@ public class Facebook {
 
 	private static void registerPlayer(final ICallback callback) {
 		try {
-			updateBlockMessage(R.strings.registeringPlayer);
 			Debug.println("registerPlayer, getting player...");
 			final Player player = getPlayer();
 
@@ -416,38 +397,6 @@ public class Facebook {
 					});
 		} catch (Throwable t) {
 			Debug.println("register player failed");
-			callback.onFail(t);
-		}
-	}
-
-	private static void blockUI(String message) {
-		UIBlocker.instance.block(Ichigu.getString(message));
-	}
-
-	private static void unblockUI() {
-		UIBlocker.instance.unblock();
-	}
-
-	private static void updateBlockMessage(String message) {
-		UIBlocker.instance.setMessage(Ichigu.getString(message));
-	}
-
-	private static class CallbackInterceptor implements ICallback {
-		private final ICallback callback;
-
-		private CallbackInterceptor(ICallback callback) {
-			this.callback = callback;
-		}
-
-		@Override
-		public void onSuccess() {
-			unblockUI();
-			callback.onSuccess();
-		}
-
-		@Override
-		public void onFail(Throwable t) {
-			unblockUI();
 			callback.onFail(t);
 		}
 	}

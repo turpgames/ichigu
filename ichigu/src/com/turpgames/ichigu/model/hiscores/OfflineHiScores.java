@@ -77,11 +77,13 @@ class OfflineHiScores implements IHiScores, IView {
 	}
 
 	private void loginWithFacebook() {
-		Facebook.login(new ICallback() {
-			
+		Ichigu.blockUI(R.strings.loggingIn);
+		
+		Facebook.login(new ICallback() {			
 			@Override
 			public void onSuccess() {
 				parent.updateView();
+				Ichigu.unblockUI();
 			}
 			
 			@Override
@@ -89,9 +91,9 @@ class OfflineHiScores implements IHiScores, IView {
 				IchiguToast.showError(R.strings.loginError);
 				if (t != null)
 					t.printStackTrace();
+				Ichigu.unblockUI();
 			}
-		});
-		
+		});		
 	}
 
 	@Override

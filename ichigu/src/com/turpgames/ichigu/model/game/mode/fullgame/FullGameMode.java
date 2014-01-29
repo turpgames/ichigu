@@ -14,6 +14,7 @@ import com.turpgames.ichigu.model.game.Card;
 import com.turpgames.ichigu.model.game.mode.RegularMode;
 import com.turpgames.ichigu.model.game.table.FullGameTable;
 import com.turpgames.ichigu.social.Facebook;
+import com.turpgames.ichigu.utils.Ichigu;
 import com.turpgames.ichigu.utils.R;
 
 public abstract class FullGameMode extends RegularMode implements IResultScreenButtonsListener {
@@ -122,29 +123,36 @@ public abstract class FullGameMode extends RegularMode implements IResultScreenB
 	@Override
 	public void onSendScore() {
 		if (Facebook.isLoggedIn()) {
+			Ichigu.blockUI(R.strings.sharingScore);
 			Facebook.shareScore(getScoreMode(), getRoundScore(), new ICallback() {
 				@Override
 				public void onSuccess() {
+					IchiguToast.showInfo(R.strings.shareScoreSuccess);
 					FullGameMode.this.resultScreenButtons.deactivateScoreButton();
+					Ichigu.unblockUI();
 				}
 				
 				@Override
 				public void onFail(Throwable t) {
 					IchiguToast.showError(R.strings.shareScoreFail);
+					Ichigu.unblockUI();
 				}
 			});
 		}
 		else {
+			Ichigu.blockUI(R.strings.loggingIn);
 			Facebook.login(new ICallback() {
 				@Override
 				public void onSuccess() {
 					FullGameMode.this.resultScreenButtons.updateButtons();
 					FullGameMode.this.sendScore();
+					Ichigu.unblockUI();
 				}
 				
 				@Override
 				public void onFail(Throwable t) {
 					IchiguToast.showError(R.strings.loginError);
+					Ichigu.unblockUI();
 				}
 			});
 		}
@@ -154,16 +162,19 @@ public abstract class FullGameMode extends RegularMode implements IResultScreenB
 		if (!Facebook.canLogin())
 			return;
 				
+		Ichigu.blockUI(R.strings.sendingScore);
 		Facebook.sendScore(getScoreMode(), getRoundScore(), new ICallback() {
 			@Override
 			public void onSuccess() {
 				IchiguToast.showInfo(R.strings.sendScoreSuccess);	
-				FullGameMode.this.resultScreenButtons.updateButtons();			
+				FullGameMode.this.resultScreenButtons.updateButtons();
+				Ichigu.unblockUI();
 			}
 			
 			@Override
 			public void onFail(Throwable t) {
-				IchiguToast.showError(R.strings.sendScoreFail);				
+				IchiguToast.showError(R.strings.sendScoreFail);
+				Ichigu.unblockUI();
 			}
 		});
 	}

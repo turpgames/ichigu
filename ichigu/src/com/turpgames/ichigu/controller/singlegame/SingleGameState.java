@@ -53,8 +53,6 @@ public abstract class SingleGameState extends IchiguState implements ISingleGame
 
 	@Override
 	public void onModeEnd() {
-		Ichigu.playSoundTimeUp();
-		Game.vibrate(100);
 		controller.setModeEndState();
 	}	
 	

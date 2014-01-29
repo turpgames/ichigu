@@ -4,6 +4,7 @@ import com.turpgames.framework.v0.IDrawingInfo;
 import com.turpgames.framework.v0.IResourceManager;
 import com.turpgames.framework.v0.ISound;
 import com.turpgames.framework.v0.ITexture;
+import com.turpgames.framework.v0.component.UIBlocker;
 import com.turpgames.framework.v0.util.Game;
 import com.turpgames.framework.v0.util.TextureDrawer;
 import com.turpgames.ichigu.model.game.CardAttributes;
@@ -92,6 +93,18 @@ public final class Ichigu {
 		else {
 			return Game.getParam(R.game.params.playStoreAddress);
 		}
+	}
+	
+	public static void blockUI(String message) {
+		UIBlocker.instance.block(Ichigu.getString(message));
+	}
+
+	public static void unblockUI() {
+		UIBlocker.instance.unblock();
+	}
+
+	public static void updateBlockMessage(String message) {
+		UIBlocker.instance.setMessage(Ichigu.getString(message));
 	}
 
 	private Ichigu() {

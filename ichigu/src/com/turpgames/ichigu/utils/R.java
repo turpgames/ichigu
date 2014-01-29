@@ -372,14 +372,27 @@ public final class R {
 		public final static String buy = "buy";
 
 		public final static String sudoku = "sudoku";
+		
+		public final static String loggingIn = "loggingIn";
 		public final static String loginError = "loginError";
+		
+		public final static String loggingOut = "loggingOut";
 		public final static String logoutError = "logoutError";
+		
+		public final static String registeringPlayer = "registeringPlayer";
+
+		public final static String sendScore = "sendScore";
 		public final static String sendingScore = "sendingScore";
 		public final static String sendScoreFail = "sendScoreFail";
 		public final static String sendScoreSuccess = "sendScoreSuccess";
-		public final static String loggingIn = "loggingIn";
-		public final static String registeringPlayer = "registeringPlayer";
-		public final static String loggingOut = "loggingOut";
+
+		public final static String shareScore = "shareScore";
+		public final static String sharingScore = "sharingScore";
+		public final static String shareScoreFail = "shareScoreFail";
+		public final static String shareScoreSuccess = "shareScoreSuccess";
+
+		public final static String loadingScores = "loadingScores";
+		public final static String loadScoreFail = "loadScoreFail";
 
 		public final static String daily = "daily";
 		public final static String weekly = "weekly";
@@ -388,12 +401,7 @@ public final class R {
 		
 		public final static String myScores = "myScores";
 		public final static String general = "general";
-		public final static String friends = "friends";
-		public final static String leadersBoardError = "leadersBoardError";
-		
-		public final static String sendScore = "sendScore";
-		public final static String shareScore = "shareScore";
-		public final static String shareScoreFail = "shareScoreFail";
+		public final static String friends = "friends";		
 	}
 
 	public static final class symbolpositions {
