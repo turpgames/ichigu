@@ -182,9 +182,9 @@ public final class R {
 
 			public static final String libgdx = "libgdx";
 
-			public final static String backgroundPixel = "backgroundPixel";
+			public static final String backgroundPixel = "backgroundPixel";
 
-			public static String questionCard = "question-card";
+			public static final String questionCard = "question-card";
 
 			public static final String hintSingle = "hint_single";
 			public static final String hintTriple = "hint_triple";
@@ -192,6 +192,7 @@ public final class R {
 			
 			public static final String fb_login = "fb_login";
 			public static final String fb_logout = "fb_logout";
+			public static final String fb_default = "fb_default";
 		}
 	}
 

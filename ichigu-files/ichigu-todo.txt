@@ -82,13 +82,15 @@ v1.2
 		+Mevcut hi scoreları server a gönder
 	-Genel
 		-UIBlokcer a şekil yapılması lazım
-	-Bug
+	+Bug
 		-Mini mod ve Time Challenge zaman hızlı başlıyor, muhtemelen CountDownTimer'da bir bug var.
 		+FullModlarda deste bitince hata veriyor.
 		+TimeChallenge deste bitince oyun devam etsin.
 		+Full mode bittikten sonra new game diyince yeni dağıtılan kartlar açık dağıtılıyor
-		-Online hiscores'ta logout olup tekrar login olunca beyaz resim çıkıyor (Android'de, oluyor, ios ve desktop'ta olmuyor)
+		+Full modlarda ilk set bulununca patlıyor
+		+Online hiscores'ta logout olup tekrar login olunca beyaz resim çıkıyor (Android'de, oluyor, ios ve desktop'ta olmuyor)
 TODO:
+	TextureAtlas
 	Achievements
 	Multiplayer
 	Ads

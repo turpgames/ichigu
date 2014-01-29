@@ -122,7 +122,7 @@ public abstract class FullGameMode extends RegularMode implements IResultScreenB
 	@Override
 	public void onSendScore() {
 		if (Facebook.isLoggedIn()) {
-			Facebook.shareScore(getScoreMode(), getRoundScore(), new ICallback() {				
+			Facebook.shareScore(getScoreMode(), getRoundScore(), new ICallback() {
 				@Override
 				public void onSuccess() {
 					FullGameMode.this.resultScreenButtons.deactivateScoreButton();
@@ -135,7 +135,7 @@ public abstract class FullGameMode extends RegularMode implements IResultScreenB
 			});
 		}
 		else {
-			Facebook.login(new ICallback() {				
+			Facebook.login(new ICallback() {
 				@Override
 				public void onSuccess() {
 					FullGameMode.this.resultScreenButtons.updateButtons();

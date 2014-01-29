@@ -30,7 +30,7 @@ public class LeadersBoardRow implements IDrawable {
 		this.rank = createText(rank + ".");
 
 		this.profilePicture = new Image();
-		this.profilePicture.setTextureFromUrl(player.getFacebookProfilePictureUrl());
+		this.profilePicture.setTextureFromUrl(player.getFacebookProfilePictureUrl(), Facebook.getDefaultProfilePicture());
 		this.profilePicture.setWidth(profilePictureSize);
 		this.profilePicture.setHeight(profilePictureSize);
 

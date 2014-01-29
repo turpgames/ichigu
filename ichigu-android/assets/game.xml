@@ -444,6 +444,10 @@
             <texture
                 id="fb_logout"
                 path="img/fb_logout.png" />
+
+            <texture
+                id="fb_default"
+                path="img/fb_default.png" />
         </textures>
 
         <sounds>

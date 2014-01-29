@@ -7,6 +7,7 @@ import java.net.URLEncoder;
 
 import com.turpgames.framework.v0.IHttpResponse;
 import com.turpgames.framework.v0.IHttpResponseListener;
+import com.turpgames.framework.v0.ITexture;
 import com.turpgames.framework.v0.component.UIBlocker;
 import com.turpgames.framework.v0.impl.HttpRequest;
 import com.turpgames.framework.v0.impl.Settings;
@@ -35,6 +36,7 @@ public class Facebook {
 	}
 
 	private static ISocializer facebook;
+	private static ITexture defaultProfilePicture;
 
 	static {
 		facebook = Game.getSocializer("facebook");
@@ -46,7 +48,14 @@ public class Facebook {
 		getLeadersBoardUrlFormat = baseUrl + Game.getParam("get-leadersboard-params");
 		registerPlayerUrlFormat = baseUrl + Game.getParam("register-player-params");
 	}
-
+	
+	public static ITexture getDefaultProfilePicture() {
+		if (defaultProfilePicture == null) {
+			defaultProfilePicture = Game.getResourceManager().getTexture(R.game.textures.fb_default);
+		}
+		return defaultProfilePicture;
+	}
+	
 	private static String getPlayerId() {
 		return Settings.getString("player-id", "");
 	}
