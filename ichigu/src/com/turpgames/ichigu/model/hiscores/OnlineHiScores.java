@@ -62,15 +62,18 @@ class OnlineHiScores implements IHiScores {
 	}
 
 	private void logoutOfFacebook() {
+		Ichigu.blockUI(R.strings.loggingOut);		
 		Facebook.logout(new ICallback() {
 			@Override
 			public void onSuccess() {
 				parent.updateView();
+				Ichigu.unblockUI();
 			}
 
 			@Override
 			public void onFail(Throwable t) {
 				IchiguToast.showError(R.strings.logoutError);
+				Ichigu.unblockUI();
 			}
 		});
 	}
@@ -113,6 +116,7 @@ class OnlineHiScores implements IHiScores {
 		int days = buttons.getDays();
 		int whose = buttons.getWhose();
 
+		Ichigu.blockUI(R.strings.loadingScores);		
 		Facebook.getLeadersBoard(mode, days, whose, new Facebook.ILeadersBoardCallback() {
 			@Override
 			public void onSuccess(LeadersBoard leadersBoard) {
@@ -151,12 +155,14 @@ class OnlineHiScores implements IHiScores {
 				rows = r;
 
 				sendHiScoresToServer();
+				Ichigu.unblockUI();
 			}
 
 			@Override
 			public void onFail(Throwable t) {
-				IchiguToast.showError(R.strings.leadersBoardError + (Game.isDebug() && t != null ? ": " + t.getMessage() : ""));
+				IchiguToast.showError(R.strings.loadScoreFail + (Game.isDebug() && t != null ? ": " + t.getMessage() : ""));
 				rows = new ArrayList<LeadersBoardRow>();
+				Ichigu.unblockUI();
 			}
 		});
 	}
@@ -195,7 +201,6 @@ class OnlineHiScores implements IHiScores {
 
 			@Override
 			public void onFail(Throwable t) {
-
 			}
 		});
 	}
