@@ -175,6 +175,7 @@ public abstract class IchiguMode implements IDrawable {
 	protected void onEndMode() {
 		isExitConfirmed = true;
 		resetConfirmDialog.close();
+		resetButton.listenInput(false);
 	}
 
 	protected boolean onExitMode() {
