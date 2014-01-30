@@ -13,9 +13,10 @@ import com.turpgames.ichigu.model.display.IchiguToast;
 import com.turpgames.ichigu.model.display.ResultScreenButtons;
 import com.turpgames.ichigu.model.display.SingleGameQuestion;
 import com.turpgames.ichigu.model.display.TimerText;
-import com.turpgames.ichigu.social.Facebook;
+import com.turpgames.ichigu.utils.Facebook;
 import com.turpgames.ichigu.utils.Ichigu;
 import com.turpgames.ichigu.utils.R;
+import com.turpgames.ichigu.utils.ScoreManager;
 
 public class MiniGame extends SingleGameMode implements IResultScreenButtonsListener {
 
@@ -128,13 +129,13 @@ public class MiniGame extends SingleGameMode implements IResultScreenButtonsList
 
 	private void notifyModeEnd() {
 		prepareResultInfoAndSaveHiscore();
-		resultScreenButtons.listenInput(true);
+		resultScreenButtons.activate();
 		if (getModeListener() != null)
 			getModeListener().onModeEnd();
 	}
 
 	private void notifyNewGame() {
-		resultScreenButtons.listenInput(false);
+		resultScreenButtons.deactivate();
 		if (getModeListener() != null)
 			getModeListener().onNewGame();
 	}
@@ -170,7 +171,7 @@ public class MiniGame extends SingleGameMode implements IResultScreenButtonsList
 		blockTimer.stop();
 		challengeTimer.stop();
 		timeInfo.syncText();
-		resultScreenButtons.listenInput(false);
+		resultScreenButtons.deactivate();
 		return true;
 	}
 
@@ -205,69 +206,27 @@ public class MiniGame extends SingleGameMode implements IResultScreenButtonsList
 
 		resultInfo.setText(String.format(Ichigu.getString(R.strings.miniChallengeResult),
 				ichigusFound, (ichigusFound > hiScore ? Ichigu.getString(R.strings.newHiscore) : "")));
-		
-		MiniGame.this.resultScreenButtons.activateScoreButton();
-		
+
 		sendScore(ichigusFound);
 	}
 
 	@Override
-	public void onSendScore() {
-		if (Facebook.isLoggedIn()) {
-			Ichigu.blockUI(R.strings.sharingScore);
-			Facebook.shareScore(Score.ModeMini, foundInfo.getFound(), new ICallback() {
-				@Override
-				public void onSuccess() {
-					IchiguToast.showInfo(R.strings.shareScoreSuccess);
-					MiniGame.this.resultScreenButtons.deactivateScoreButton();
-					Ichigu.unblockUI();
-				}
-				
-				@Override
-				public void onFail(Throwable t) {
-					IchiguToast.showError(R.strings.shareScoreFail);
-					Ichigu.unblockUI();
-				}
-			});
-		}
-		else {
-			Ichigu.blockUI(R.strings.loggingIn);
-			Facebook.login(new ICallback() {
-				@Override
-				public void onSuccess() {
-					MiniGame.this.resultScreenButtons.updateButtons();
-					MiniGame.this.sendScore(foundInfo.getFound());
-					Ichigu.unblockUI();
-				}
-				
-				@Override
-				public void onFail(Throwable t) {
-					IchiguToast.showError(R.strings.loginError);
-					Ichigu.unblockUI();
-				}
-			});
-		}
-	}
-
-	private void sendScore(int score) {
-		if (!Facebook.canLogin())
-			return;
-
-		Ichigu.blockUI(R.strings.sendingScore);
-		Facebook.sendScore(Score.ModeMini, score, new ICallback() {
+	public void onShareScore() {
+		Facebook.shareScore(Score.ModeMini, foundInfo.getFound(), new ICallback() {
 			@Override
 			public void onSuccess() {
-				IchiguToast.showInfo(R.strings.sendScoreSuccess);
-				MiniGame.this.resultScreenButtons.updateButtons();
-				Ichigu.unblockUI();
+				MiniGame.this.resultScreenButtons.deactivateShareScoreButton();
 			}
 
 			@Override
 			public void onFail(Throwable t) {
-				IchiguToast.showError(R.strings.sendScoreFail);
-				Ichigu.unblockUI();
+
 			}
 		});
+	}
+
+	private void sendScore(int score) {
+		ScoreManager.instance.sendScore(Score.ModeMini, score);
 	}
 
 	@Override

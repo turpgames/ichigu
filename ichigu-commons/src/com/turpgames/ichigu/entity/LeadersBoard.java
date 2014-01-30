@@ -1,6 +1,10 @@
 package com.turpgames.ichigu.entity;
 
-public class LeadersBoard {
+import java.io.Serializable;
+
+public class LeadersBoard implements Serializable {
+	private static final long serialVersionUID = -4240123239003434143L;
+	
 	private int scoreMode;
 	private int days;
 	private int playerId;

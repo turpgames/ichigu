@@ -54,6 +54,7 @@ v1.2
 		+Kendi rekorlarım
 		+Rank'ını söyle, ilk 10'da kendini sarı görsün
 		+Facebook login olmamışsa result screende send score buttonu
+		+Gönderilemeyen skorlar listeye alınıp sonra tekrar denenecek
 	+Sudoku mode
 		+Score Toast
 	+Üçlü Hint
@@ -82,6 +83,7 @@ v1.2
 		+Mevcut hi scoreları server a gönder
 	-Genel
 		-UIBlokcer a şekil yapılması lazım
+		-Android için iki ayrı update yapılması lazım. İlk update manuel update edin dialogu açacak
 	+Bug
 		-Mini mod ve Time Challenge zaman hızlı başlıyor, muhtemelen CountDownTimer'da bir bug var.
 		+FullModlarda deste bitince hata veriyor.

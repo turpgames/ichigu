@@ -22,3 +22,7 @@ CREATE INDEX MODE ON scores(mode);
 CREATE INDEX MODE ON scores(score);
 
 
+select count(1) from scores;
+select * from scores order by time desc
+
+update scores set player_id = MOD (mode + score + time, 9) + 1, time = 1391118883197 - cast(rand() * 1612743725 as bigint)

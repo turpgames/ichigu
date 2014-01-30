@@ -216,6 +216,7 @@ public final class R {
 		public static final String singleHintCount = "single-hint-count";
 		public static final String tripleHintCount = "triple-hint-count";
 		public static final String timerPauseCount = "timer-pause-count";
+		public static final String scoresToSend = "scores-to-send";
 	}
 
 	public static final class singleGameMode {
@@ -372,9 +373,11 @@ public final class R {
 		public final static String buy = "buy";
 
 		public final static String sudoku = "sudoku";
-		
-		public final static String loggingIn = "loggingIn";
-		public final static String loginError = "loginError";
+
+		public final static String login = "login";
+		public final static String loggingIn = "loggingIn";	
+		public final static String loginFail = "loginFail";
+		public final static String loginSuccess = "loginSuccess";
 		
 		public final static String loggingOut = "loggingOut";
 		public final static String logoutError = "logoutError";

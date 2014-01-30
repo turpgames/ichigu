@@ -1,6 +1,10 @@
 package com.turpgames.ichigu.entity;
 
-public class Player {
+import java.io.Serializable;
+
+public class Player implements Serializable {
+	private static final long serialVersionUID = 7212302611654853700L;
+	
 	private int id;
 	private String username;
 	private String password;

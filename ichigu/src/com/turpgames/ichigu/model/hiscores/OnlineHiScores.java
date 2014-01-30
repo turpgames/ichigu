@@ -6,7 +6,6 @@ import java.util.List;
 import com.turpgames.framework.v0.component.Button;
 import com.turpgames.framework.v0.component.IButtonListener;
 import com.turpgames.framework.v0.component.ImageButton;
-import com.turpgames.framework.v0.impl.Settings;
 import com.turpgames.framework.v0.impl.Text;
 import com.turpgames.framework.v0.social.ICallback;
 import com.turpgames.framework.v0.util.Game;
@@ -14,9 +13,10 @@ import com.turpgames.ichigu.entity.LeadersBoard;
 import com.turpgames.ichigu.entity.Player;
 import com.turpgames.ichigu.entity.Score;
 import com.turpgames.ichigu.model.display.IchiguToast;
-import com.turpgames.ichigu.social.Facebook;
+import com.turpgames.ichigu.utils.Facebook;
 import com.turpgames.ichigu.utils.Ichigu;
 import com.turpgames.ichigu.utils.R;
+import com.turpgames.ichigu.utils.ScoreManager;
 import com.turpgames.utils.Util;
 
 class OnlineHiScores implements IHiScores {
@@ -117,7 +117,7 @@ class OnlineHiScores implements IHiScores {
 		int whose = buttons.getWhose();
 
 		Ichigu.blockUI(R.strings.loadingScores);		
-		Facebook.getLeadersBoard(mode, days, whose, new Facebook.ILeadersBoardCallback() {
+		ScoreManager.instance.getLeadersBoard(mode, days, whose, new ScoreManager.ILeadersBoardCallback() {
 			@Override
 			public void onSuccess(LeadersBoard leadersBoard) {
 				List<LeadersBoardRow> r = new ArrayList<LeadersBoardRow>();
@@ -154,7 +154,6 @@ class OnlineHiScores implements IHiScores {
 
 				rows = r;
 
-				sendHiScoresToServer();
 				Ichigu.unblockUI();
 			}
 
@@ -169,39 +168,5 @@ class OnlineHiScores implements IHiScores {
 
 	private void setLanguageSensitiveInfo() {
 		pageTitle.setText(Ichigu.getString(R.strings.hiScores));
-	}
-
-	private void sendHiScoresToServer() {
-		Util.Threading.runInBackground(new Runnable() {
-			@Override
-			public void run() {
-				sendScoreToServer(Score.ModeMini, R.settings.hiscores.miniChallenge);
-				sendScoreToServer(Score.ModeStandard, R.settings.hiscores.standard);
-				sendScoreToServer(Score.ModeTime, R.settings.hiscores.timeChallenge);
-			}
-		});
-	}
-
-	private static void sendScoreToServer(int mode, String scoreSettingsKey) {
-		final String flagSettingsKey = scoreSettingsKey + "-sent-to-server";
-
-		boolean scoreAlreadySent = Settings.getBoolean(flagSettingsKey, false);
-		if (scoreAlreadySent)
-			return;
-
-		int score = Settings.getInteger(scoreSettingsKey, 0);
-		if (score < 1)
-			return;
-
-		Facebook.sendScore(mode, score, new ICallback() {
-			@Override
-			public void onSuccess() {
-				Settings.putBoolean(flagSettingsKey, true);
-			}
-
-			@Override
-			public void onFail(Throwable t) {
-			}
-		});
 	}
 }

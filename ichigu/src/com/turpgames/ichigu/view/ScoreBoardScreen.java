@@ -6,16 +6,13 @@ import com.turpgames.ichigu.model.hiscores.HiScores;
 
 public class ScoreBoardScreen extends IchiguScreen {
 	private HiScores hiScores;
-
-	@Override
-	public void init() {
-		super.init();
-		hiScores = new HiScores();
-		registerDrawable(hiScores, Game.LAYER_SCREEN);
-	}
 	
 	@Override
 	protected void onAfterActivate() {
+		if (hiScores == null) {
+			hiScores = new HiScores();
+			registerDrawable(hiScores, Game.LAYER_SCREEN);
+		}
 		hiScores.activate();
 		IchiguToolbar.getInstance().activateBackButton();
 	}

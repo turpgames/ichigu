@@ -11,8 +11,7 @@ import com.turpgames.framework.v0.impl.Text;
 import com.turpgames.framework.v0.social.ICallback;
 import com.turpgames.framework.v0.util.Game;
 import com.turpgames.ichigu.model.display.IchiguDialog;
-import com.turpgames.ichigu.model.display.IchiguToast;
-import com.turpgames.ichigu.social.Facebook;
+import com.turpgames.ichigu.utils.Facebook;
 import com.turpgames.ichigu.utils.Ichigu;
 import com.turpgames.ichigu.utils.R;
 import com.turpgames.utils.Util;
@@ -76,21 +75,16 @@ class OfflineHiScores implements IHiScores, IView {
 		Game.getLanguageManager().register(this);
 	}
 
-	private void loginWithFacebook() {
-		Ichigu.blockUI(R.strings.loggingIn);		
+	private void loginWithFacebook() {		
 		Facebook.login(new ICallback() {			
 			@Override
 			public void onSuccess() {
 				parent.updateView();
-				Ichigu.unblockUI();
 			}
 			
 			@Override
 			public void onFail(Throwable t) {
-				IchiguToast.showError(R.strings.loginError);
-				if (t != null)
-					t.printStackTrace();
-				Ichigu.unblockUI();
+
 			}
 		});		
 	}

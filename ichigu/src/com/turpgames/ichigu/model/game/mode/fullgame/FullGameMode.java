@@ -13,9 +13,9 @@ import com.turpgames.ichigu.model.game.BonusFeature;
 import com.turpgames.ichigu.model.game.Card;
 import com.turpgames.ichigu.model.game.mode.RegularMode;
 import com.turpgames.ichigu.model.game.table.FullGameTable;
-import com.turpgames.ichigu.social.Facebook;
-import com.turpgames.ichigu.utils.Ichigu;
+import com.turpgames.ichigu.utils.Facebook;
 import com.turpgames.ichigu.utils.R;
+import com.turpgames.ichigu.utils.ScoreManager;
 
 public abstract class FullGameMode extends RegularMode implements IResultScreenButtonsListener {
 
@@ -115,68 +115,27 @@ public abstract class FullGameMode extends RegularMode implements IResultScreenB
 		if (getModeListener() != null)
 			getModeListener().onNewGame();
 	}
-	
+
 	protected abstract int getRoundScore();
-	
+
 	protected abstract int getScoreMode();
 
 	@Override
-	public void onSendScore() {
-		if (Facebook.isLoggedIn()) {
-			Ichigu.blockUI(R.strings.sharingScore);
-			Facebook.shareScore(getScoreMode(), getRoundScore(), new ICallback() {
-				@Override
-				public void onSuccess() {
-					IchiguToast.showInfo(R.strings.shareScoreSuccess);
-					FullGameMode.this.resultScreenButtons.deactivateScoreButton();
-					Ichigu.unblockUI();
-				}
-				
-				@Override
-				public void onFail(Throwable t) {
-					IchiguToast.showError(R.strings.shareScoreFail);
-					Ichigu.unblockUI();
-				}
-			});
-		}
-		else {
-			Ichigu.blockUI(R.strings.loggingIn);
-			Facebook.login(new ICallback() {
-				@Override
-				public void onSuccess() {
-					FullGameMode.this.resultScreenButtons.updateButtons();
-					FullGameMode.this.sendScore();
-					Ichigu.unblockUI();
-				}
-				
-				@Override
-				public void onFail(Throwable t) {
-					IchiguToast.showError(R.strings.loginError);
-					Ichigu.unblockUI();
-				}
-			});
-		}
+	public void onShareScore() {
+		Facebook.shareScore(getScoreMode(), getRoundScore(), new ICallback() {
+			@Override
+			public void onSuccess() {
+				FullGameMode.this.resultScreenButtons.deactivateShareScoreButton();
+			}
+
+			@Override
+			public void onFail(Throwable t) {
+			}
+		});
 	}
 
 	protected void sendScore() {
-		if (!Facebook.canLogin())
-			return;
-				
-		Ichigu.blockUI(R.strings.sendingScore);
-		Facebook.sendScore(getScoreMode(), getRoundScore(), new ICallback() {
-			@Override
-			public void onSuccess() {
-				IchiguToast.showInfo(R.strings.sendScoreSuccess);	
-				FullGameMode.this.resultScreenButtons.updateButtons();
-				Ichigu.unblockUI();
-			}
-			
-			@Override
-			public void onFail(Throwable t) {
-				IchiguToast.showError(R.strings.sendScoreFail);
-				Ichigu.unblockUI();
-			}
-		});
+		ScoreManager.instance.sendScore(getScoreMode(), getRoundScore());
 	}
 
 	@Override
@@ -202,7 +161,7 @@ public abstract class FullGameMode extends RegularMode implements IResultScreenB
 	@Override
 	protected void onEndMode() {
 		getTimer().stop();
-		resultScreenButtons.listenInput(true);
+		resultScreenButtons.activate();
 		deactivateFeatureButtons();
 		super.onEndMode();
 	}
@@ -212,7 +171,7 @@ public abstract class FullGameMode extends RegularMode implements IResultScreenB
 		if (!super.onExitMode())
 			return false;
 		getTimer().stop();
-		resultScreenButtons.listenInput(false);
+		resultScreenButtons.deactivate();
 		deactivateFeatureButtons();
 		return true;
 	}
@@ -230,7 +189,7 @@ public abstract class FullGameMode extends RegularMode implements IResultScreenB
 	protected void onStartMode() {
 		getTimer().restart();
 		timerText.syncText();
-		resultScreenButtons.listenInput(false);
+		resultScreenButtons.deactivate();
 		resetFeatureButtons();
 		super.onStartMode();
 	}

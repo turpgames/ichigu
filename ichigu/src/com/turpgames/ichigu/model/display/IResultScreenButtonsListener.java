@@ -5,5 +5,5 @@ public interface IResultScreenButtonsListener {
 
 	void onNewGameTapped();
 
-	void onSendScore();
+	void onShareScore();
 }

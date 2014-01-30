@@ -1,9 +1,12 @@
 package com.turpgames.ichigu.entity;
 
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
 
-public class Score {
+public class Score implements Serializable {
+	private static final long serialVersionUID = 3869159083949235971L;
+	
 	public static final int ModeMini = 1;
 	public static final int ModeStandard = 2;
 	public static final int ModeTime = 3;

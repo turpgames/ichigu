@@ -5,7 +5,7 @@ import com.turpgames.framework.v0.impl.Image;
 import com.turpgames.framework.v0.impl.Text;
 import com.turpgames.framework.v0.util.Vector;
 import com.turpgames.ichigu.entity.Player;
-import com.turpgames.ichigu.social.Facebook;
+import com.turpgames.ichigu.utils.Facebook;
 import com.turpgames.ichigu.utils.R;
 
 public class LeadersBoardRow implements IDrawable {
@@ -43,7 +43,7 @@ public class LeadersBoardRow implements IDrawable {
 			this.score.getColor().set(R.colors.ichiguYellow);
 		}
 
-		setLocations(rank - 1);
+		setLocations(Math.min(10, rank - 1));
 	}
 
 	private void setLocations(int rowIndex) {

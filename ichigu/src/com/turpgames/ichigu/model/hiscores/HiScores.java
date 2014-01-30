@@ -4,10 +4,7 @@ import com.turpgames.framework.v0.IView;
 import com.turpgames.framework.v0.IViewFinder;
 import com.turpgames.framework.v0.IViewSwitcher;
 import com.turpgames.framework.v0.impl.FadingViewSwitcher;
-import com.turpgames.framework.v0.social.ICallback;
-import com.turpgames.ichigu.social.Facebook;
-import com.turpgames.ichigu.utils.Ichigu;
-import com.turpgames.ichigu.utils.R;
+import com.turpgames.ichigu.utils.Facebook;
 
 public class HiScores implements IHiScores {
 	private IHiScores hiscores = IHiScores.NULL;
@@ -27,25 +24,7 @@ public class HiScores implements IHiScores {
 
 	@Override
 	public void activate() {
-		if (!Facebook.isLoggedIn() && Facebook.canLogin()) {
-			Ichigu.blockUI(R.strings.loggingIn);
-			Facebook.login(new ICallback() {
-				@Override
-				public void onSuccess() {
-					updateView();
-					Ichigu.unblockUI();
-				}
-
-				@Override
-				public void onFail(Throwable t) {
-					updateView();
-					Ichigu.unblockUI();
-				}
-			});
-		}
-		else {
-			updateView();
-		}
+		updateView();
 	}
 
 	@Override
