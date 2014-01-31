@@ -83,7 +83,7 @@ v1.2
 		+Mevcut hi scoreları server a gönder
 	-Genel
 		-UIBlokcer a şekil yapılması lazım
-		-Android için iki ayrı update yapılması lazım. İlk update manuel update edin dialogu açacak
+		+Android için iki ayrı update yapılması lazım. İlk update manuel update edin dialogu açacak
 	+Bug
 		-Mini mod ve Time Challenge zaman hızlı başlıyor, muhtemelen CountDownTimer'da bir bug var.
 		+FullModlarda deste bitince hata veriyor.
@@ -91,6 +91,7 @@ v1.2
 		+Full mode bittikten sonra new game diyince yeni dağıtılan kartlar açık dağıtılıyor
 		+Full modlarda ilk set bulununca patlıyor
 		+Online hiscores'ta logout olup tekrar login olunca beyaz resim çıkıyor (Android'de, oluyor, ios ve desktop'ta olmuyor)
+		-Sudoku modda bazen kartlar ters ve eksik dağıtılıyor
 TODO:
 	TextureAtlas
 	Achievements

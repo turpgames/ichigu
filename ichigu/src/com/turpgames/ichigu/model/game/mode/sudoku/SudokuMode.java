@@ -1,10 +1,11 @@
-package com.turpgames.ichigu.model.game.mode;
+package com.turpgames.ichigu.model.game.mode.sudoku;
 
 import com.turpgames.framework.v0.impl.Text;
 import com.turpgames.framework.v0.util.Timer;
 import com.turpgames.ichigu.model.display.IchiguToast;
 import com.turpgames.ichigu.model.display.TimerText;
 import com.turpgames.ichigu.model.game.Card;
+import com.turpgames.ichigu.model.game.mode.IchiguMode;
 import com.turpgames.ichigu.model.game.table.SudokuTable;
 import com.turpgames.ichigu.model.game.table.Table;
 

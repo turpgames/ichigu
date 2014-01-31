@@ -67,7 +67,7 @@
 
         <param
             key="play-store-address"
-            value="https://play.google.com/store/apps/details?id=com.turpgames.ichigu" />
+            value="market://details?id=com.turpgames.ichigu" />
 
         <param
             key="app-store-address-ios7"

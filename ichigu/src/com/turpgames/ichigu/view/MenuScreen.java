@@ -21,10 +21,13 @@ import com.turpgames.ichigu.utils.R;
 public class MenuScreen extends FormScreen implements IGameExitListener {
 	private Dialog exitConfirm;
 	private LanguageMenu languageBar;
+	private boolean isFirstActivate;
 
 	@Override
 	public void init() {
 		super.init();
+
+		isFirstActivate = true;
 
 		languageBar = new IchiguLanguageMenu();
 		languageBar.setListener(new LanguageMenu.ILanguageMenuListener() {
@@ -104,15 +107,51 @@ public class MenuScreen extends FormScreen implements IGameExitListener {
 	@Override
 	protected void onAfterActivate() {
 		super.onAfterActivate();
+
 		registerDrawable(languageBar, Game.LAYER_SCREEN);
 		languageBar.listenInput(true);
+
 		if (getCurrentForm().getId().equals(R.game.forms.playMenu)) {
 			IchiguToolbar.getInstance().activateBackButton();
 		}
 		else if (getCurrentForm().getId().equals(R.game.forms.mainMenu)) {
 			IchiguToolbar.getInstance().deactivateBackButton();
 		}
+
+		if (isFirstActivate) {
+			isFirstActivate = false;
+			forceUpgrade();
+			loginWithFacebook();
+		}
+	}
+
+	private void forceUpgrade() {
+		if (!Game.isAndroid())
+			return;
 		
+		if (!"1.1.3".equals(Game.getVersion().toString()))
+			return;
+		
+		Dialog dlg = new Dialog();
+		dlg.addButton("ok", R.strings.ok);
+		dlg.setListener(new Dialog.IDialogListener() {			
+			@Override
+			public void onDialogClosed() {
+				Game.exitListener = null;
+				Game.exit();
+			}
+			
+			@Override
+			public void onDialogButtonClicked(String id) {
+				Game.openUrl(Ichigu.getStoreUrl());
+				Game.exitListener = null;
+				Game.exit();
+			}
+		});
+		dlg.open(Ichigu.getString(R.strings.forceUpgrade));
+	}
+
+	private void loginWithFacebook() {
 		if (Facebook.canLogin() && !Facebook.isLoggedIn()) {
 			Facebook.login(new ICallback() {
 				@Override

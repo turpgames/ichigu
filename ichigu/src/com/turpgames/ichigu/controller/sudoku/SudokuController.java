@@ -1,7 +1,7 @@
 package com.turpgames.ichigu.controller.sudoku;
 
 import com.turpgames.ichigu.controller.IchiguController;
-import com.turpgames.ichigu.model.game.mode.SudokuMode;
+import com.turpgames.ichigu.model.game.mode.sudoku.SudokuMode;
 import com.turpgames.ichigu.model.game.table.ISudokuTableListener;
 import com.turpgames.ichigu.view.IchiguScreen;
 

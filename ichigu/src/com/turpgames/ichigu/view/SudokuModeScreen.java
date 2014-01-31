@@ -1,7 +1,7 @@
 package com.turpgames.ichigu.view;
 
 import com.turpgames.ichigu.controller.sudoku.SudokuController;
-import com.turpgames.ichigu.model.game.mode.SudokuMode;
+import com.turpgames.ichigu.model.game.mode.sudoku.SudokuMode;
 
 public class SudokuModeScreen extends IchiguScreen {
 	@Override
