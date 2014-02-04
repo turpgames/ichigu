@@ -34,7 +34,7 @@ public class SingleGameTable extends RegularGameTable {
 	
 	@Override
 	public void end() {
-		deck.end();
+		deck.reset();
 		selectedCards.clear();
 		cardsOnTable.clear();
 	}

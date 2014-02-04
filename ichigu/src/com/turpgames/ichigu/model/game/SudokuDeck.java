@@ -9,7 +9,7 @@ public class SudokuDeck extends Deck {
 		super(table);
 	}
 
-	public List<Card> get9Cards() {
+	public List<Card> get9Cards(List<Card> last9Cards) {
 		List<Card> list = new ArrayList<Card>();
 		Card card1, card2, card3;
 		Card card4;
@@ -56,6 +56,14 @@ public class SudokuDeck extends Deck {
 		list.add(card7);
 		list.add(card8);
 		list.add(card9);
+		
+		for (Card cardCheck : list) {
+			if (last9Cards.contains(cardCheck)) {
+				for (Card cardBack : list)
+					giveBackUnusedCard(cardBack);
+				return get9Cards(last9Cards);
+			}
+		}
 		
 		return list;
 	}

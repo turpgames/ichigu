@@ -102,7 +102,7 @@ public class SudokuTable extends Table {
 
 	@Override
 	public void end() {
-		deck.end();
+		deck.reset();
 		selectedCards.clear();
 		cardsOnTable.clear();
 	}
@@ -213,7 +213,7 @@ public class SudokuTable extends Table {
 	@Override
 	protected List<Card> getCardsToDealIn() {
 		toDealIn.clear();
-		toDealIn.addAll(((SudokuDeck)deck).get9Cards());
+		toDealIn.addAll(((SudokuDeck)deck).get9Cards(cardsOnTable));
 
 		Util.Random.shuffle(toDealIn);
 

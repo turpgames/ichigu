@@ -18,16 +18,13 @@ public class Deck {
 	private List<Card> unusedCards;
 	protected List<Card> usingCards;
 	private List<Card> usedCards;
+	private ICardListener table;
 	
 	public Deck(ICardListener table) {
+		this.table = table;
 		unusedCards = new ArrayList<Card>();
 		usingCards = new ArrayList<Card>();
 		usedCards = new ArrayList<Card>();
-		createDeck(table);
-	}
-	
-	public void end() {
-		finishDeck();
 	}
 	
 	public Card getCardWithAttributes(CardAttributes att) {
@@ -59,23 +56,16 @@ public class Deck {
 		usedCard(card);
 	}
 	
-	public void recycleDeck() {
-		unusedCards.addAll(usedCards);
-		unusedCards.addAll(usingCards);
-		for (Card card : unusedCards)
-			card.reset();
-		usedCards.clear();
-		usingCards.clear();
-	}
-	
 	public void reset() {
-		end();
+		finishDeck();
 		recycleDeck();
 	}
 	
 	public void start() {
-		end();
-		recycleDeck();
+		unusedCards.clear();
+		usingCards.clear();
+		usedCards.clear();
+		createDeck(table);
 	}
 	
 	private void createDeck(ICardListener table) {
@@ -100,6 +90,15 @@ public class Deck {
 		usingCards.clear();
 	}
 
+	public void recycleDeck() {
+		unusedCards.addAll(usedCards);
+		unusedCards.addAll(usingCards);
+		for (Card card : unusedCards)
+			card.reset();
+		usedCards.clear();
+		usingCards.clear();
+	}
+	
 	protected void unuseCard(Card card) {
 		usingCards.remove(card);
 		usedCards.remove(card);
