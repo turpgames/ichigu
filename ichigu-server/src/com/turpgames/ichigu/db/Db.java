@@ -36,7 +36,7 @@ public final class Db {
 
 		public static boolean insert(Player player) {
 			try {
-				int id = (int) DbManager
+				int id = (Integer) DbManager
 						.executeInsert(new SqlQuery(
 								"insert into players (username,password,email,facebook_id) values (?,?,?,?)")
 								.addParameter(player.getUsername(), Types.VARCHAR)
