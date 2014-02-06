@@ -7,6 +7,7 @@ import com.turpgames.framework.v0.ITexture;
 import com.turpgames.framework.v0.component.UIBlocker;
 import com.turpgames.framework.v0.util.Game;
 import com.turpgames.framework.v0.util.TextureDrawer;
+import com.turpgames.ichigu.model.display.LoadingAnimation;
 import com.turpgames.ichigu.model.game.CardAttributes;
 
 public final class Ichigu {
@@ -21,6 +22,7 @@ public final class Ichigu {
 	private static final ITexture textureCardClosed;
 	private static final ITexture textureCardEmpty;
 	private static final ITexture[][] textureSymbols;
+	
 	static {
 		IResourceManager r = Game.getResourceManager();
 
@@ -96,7 +98,8 @@ public final class Ichigu {
 	}
 	
 	public static void blockUI(String message) {
-		UIBlocker.instance.block(Ichigu.getString(message));
+		LoadingAnimation.instance.setMessage(Ichigu.getString(message));
+		UIBlocker.instance.block(LoadingAnimation.instance);
 	}
 
 	public static void unblockUI() {
@@ -104,7 +107,7 @@ public final class Ichigu {
 	}
 
 	public static void updateBlockMessage(String message) {
-		UIBlocker.instance.setMessage(Ichigu.getString(message));
+		LoadingAnimation.instance.setMessage(Ichigu.getString(message));
 	}
 
 	private Ichigu() {

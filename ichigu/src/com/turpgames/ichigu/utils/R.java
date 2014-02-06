@@ -122,6 +122,11 @@ public final class R {
 			public static final String wait = "wait";
 			public static final String flip = "flip";
 		}
+		
+
+		public static final class animations {
+			public static final String loading = "loading";
+		}
 
 		public static final class textures {
 			public static final class points {

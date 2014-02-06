@@ -1,4 +1,4 @@
-﻿v1.1 
+v1.1 
 	+Relax Modu 
 		+kaldır
 	+Normal mod 
@@ -71,19 +71,20 @@ v1.2
 		+Market menü
 		+Tek kullanımlık
 		-30 saniyeden kalanı göster
-	-Yeni deal effectler
-		-Sound bul
 	-Çeviriler
 		-İngilizce
 		-Türkçe
 		-İtalyanca
 		-Çince
-	+Update Process
+	-Update Process
 		+Yeni featureları settings e yaz
 		+Mevcut hi scoreları server a gönder
-	-Genel
-		-UIBlokcer a şekil yapılması lazım
 		+Android için iki ayrı update yapılması lazım. İlk update manuel update edin dialogu açacak
+		-Facebook entegrasyonu yapıldığını duyuran bir dialog aç
+	-Genel
+		+UIBlokcer a şekil yapılması lazım
+		-Facebook Ichigu app'inde android keyleri düzelt
+		-Deal effectlere ses
 	+Bug
 		-Mini mod ve Time Challenge zaman hızlı başlıyor, muhtemelen CountDownTimer'da bir bug var.
 		+FullModlarda deste bitince hata veriyor.
@@ -92,6 +93,9 @@ v1.2
 		+Full modlarda ilk set bulununca patlıyor
 		+Online hiscores'ta logout olup tekrar login olunca beyaz resim çıkıyor (Android'de, oluyor, ios ve desktop'ta olmuyor)
 		-Sudoku modda bazen kartlar ters ve eksik dağıtılıyor
+		-Share score'dan sonra geri buttonu çiziliyor ama deactive kalıyor
+		-Share score'da cancel derse takılıp kalıyor (ios)
+
 TODO:
 	TextureAtlas
 	Achievements

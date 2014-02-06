@@ -10,27 +10,30 @@ public final class IchiguSettings {
 	public static int getHintCount() {
 		return Settings.getInteger(R.settings.singleHintCount, 0);
 	}
-	
+
 	public static int getIchiguBalance() {
 		return Settings.getInteger(R.settings.ichiguBalance, 0);
 	}
 
 	@SuppressWarnings("unchecked")
 	public static ArrayList<Score> getScoresToSend() {
+		ArrayList<Score> scores = new ArrayList<Score>();
 		try {
 			String encoded = Settings.getString(R.settings.scoresToSend, "");
-			byte[] serialized = Util.Strings.fromBase64String(encoded);
-			return (ArrayList<Score>) Util.IO.deserialize(serialized);
+			if (!Util.Strings.isNullOrWhitespace(encoded)) {
+				byte[] serialized = Util.Strings.fromBase64String(encoded);
+				return (ArrayList<Score>) Util.IO.deserialize(serialized);
+			}
 		} catch (Throwable t) {
 			t.printStackTrace();
-			return new ArrayList<Score>();
 		}
+		return scores;
 	}
 
 	public static void setSingleHintCount(int hintCount) {
 		Settings.putInteger(R.settings.singleHintCount, hintCount);
 	}
-	
+
 	public static void setIchiguBalance(int balance) {
 		Settings.putInteger(R.settings.ichiguBalance, balance);
 	}
@@ -40,8 +43,8 @@ public final class IchiguSettings {
 		String encoded = Util.Strings.toBase64String(serialized);
 		Settings.putString(R.settings.scoresToSend, encoded);
 	}
-	
+
 	private IchiguSettings() {
-		
+
 	}
 }

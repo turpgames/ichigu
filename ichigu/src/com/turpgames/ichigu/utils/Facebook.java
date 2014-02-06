@@ -104,7 +104,7 @@ public class Facebook {
 	
 	public static void shareScore(final int mode, final int score, final ICallback callback) {
 		if (Facebook.isLoggedIn()) {
-			shareScoreImpl(mode, score, callback);
+			doShareScore(mode, score, callback);
 		}
 		else {
 			Facebook.login(new ICallback() {				

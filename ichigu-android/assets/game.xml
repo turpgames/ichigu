@@ -253,6 +253,14 @@
     </forms>
 
     <animations>
+
+        <animation
+            id="loading"
+            frame-duration="0.040"
+            frame-height="74"
+            frame-width="74"
+            loop="true"
+            texture="loading" />
     </animations>
 
     <resources>
@@ -448,6 +456,10 @@
             <texture
                 id="fb_default"
                 path="img/fb_default.png" />
+
+            <texture
+                id="loading"
+                path="img/loading.png" />
         </textures>
 
         <sounds>

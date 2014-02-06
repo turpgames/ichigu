@@ -31,7 +31,6 @@ public class MenuScreen extends FormScreen implements IGameExitListener {
 
 		languageBar = new IchiguLanguageMenu();
 		languageBar.setListener(new LanguageMenu.ILanguageMenuListener() {
-
 			@Override
 			public void onLanguageMenuActivated() {
 				getCurrentForm().disable();
@@ -42,6 +41,7 @@ public class MenuScreen extends FormScreen implements IGameExitListener {
 			public void onLanguageMenuDeactivated() {
 				getCurrentForm().enable();
 				IchiguToolbar.getInstance().enable();
+				ensureBackButton(getCurrentForm());
 			}
 		});
 		registerDrawable(languageBar, Game.LAYER_SCREEN);
@@ -111,12 +111,7 @@ public class MenuScreen extends FormScreen implements IGameExitListener {
 		registerDrawable(languageBar, Game.LAYER_SCREEN);
 		languageBar.listenInput(true);
 
-		if (getCurrentForm().getId().equals(R.game.forms.playMenu)) {
-			IchiguToolbar.getInstance().activateBackButton();
-		}
-		else if (getCurrentForm().getId().equals(R.game.forms.mainMenu)) {
-			IchiguToolbar.getInstance().deactivateBackButton();
-		}
+		ensureBackButton(getCurrentForm());
 
 		if (isFirstActivate) {
 			isFirstActivate = false;
@@ -174,12 +169,16 @@ public class MenuScreen extends FormScreen implements IGameExitListener {
 
 	@Override
 	protected void onFormActivated(Form activatedForm) {
-		if (activatedForm.getId().equals(R.game.forms.playMenu)) {
+		ensureBackButton(activatedForm);
+		super.onFormActivated(activatedForm);
+	}
+
+	private static void ensureBackButton(Form currentForm) {
+		if (currentForm.getId().equals(R.game.forms.playMenu)) {
 			IchiguToolbar.getInstance().activateBackButton();
 		}
-		else if (activatedForm.getId().equals(R.game.forms.mainMenu)) {
+		else if (currentForm.getId().equals(R.game.forms.mainMenu)) {
 			IchiguToolbar.getInstance().deactivateBackButton();
 		}
-		super.onFormActivated(activatedForm);
 	}
 }

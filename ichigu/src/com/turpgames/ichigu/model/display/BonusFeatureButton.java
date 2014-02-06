@@ -96,9 +96,10 @@ public class BonusFeatureButton implements IDrawable {
 
 		if (listener.onUseBonusFeature()) {
 			if (!Game.isDebug()) {
-				feature.used();
-				if (singleUse)
-					setAsUsed();
+				// TODO: UNCOMMENT
+//				feature.used();
+//				if (singleUse)
+//					setAsUsed();
 			}
 		}
 	}
