@@ -56,11 +56,6 @@ public class Deck {
 		usedCard(card);
 	}
 	
-	public void reset() {
-		finishDeck();
-		recycleDeck();
-	}
-	
 	public void start() {
 		unusedCards.clear();
 		usingCards.clear();
@@ -79,15 +74,6 @@ public class Deck {
 				}
 			}
 		}
-	}
-
-	private void finishDeck() {
-		usedCards.addAll(unusedCards);
-		usedCards.addAll(usingCards);
-		for (Card card : usedCards)
-			card.reset();
-		unusedCards.clear();
-		usingCards.clear();
 	}
 
 	public void recycleDeck() {

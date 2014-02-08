@@ -77,7 +77,7 @@ public class FullGameTable extends RegularGameTable {
 	
 	@Override
 	public void end() {
-		deck.reset();
+		deck.start();
 		cardsOnTable.clear();
 		selectedCards.clear();
 		extraCards.clear();
@@ -193,7 +193,7 @@ public class FullGameTable extends RegularGameTable {
 
 	@Override
 	public void reset() {
-		deck.reset();
+		deck.start();
 		cardsOnTable.clear();
 		selectedCards.clear();
 		extraCards.clear();

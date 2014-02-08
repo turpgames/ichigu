@@ -102,7 +102,7 @@ public class SudokuTable extends Table {
 
 	@Override
 	public void end() {
-		deck.reset();
+		deck.start();
 		selectedCards.clear();
 		cardsOnTable.clear();
 	}
@@ -121,7 +121,7 @@ public class SudokuTable extends Table {
 
 	@Override
 	public void reset() {
-		deck.reset();
+		deck.start();
 		selectedCards.clear();
 		cardsOnTable.clear();
 		marksVisible = false;
@@ -177,22 +177,24 @@ public class SudokuTable extends Table {
 
 	@Override
 	protected void concreteCardTapped(Card card) {
-		if (selectedCards.contains(card)) {
-			selectedCards.remove(card);
-			card.deselect();
-		}
-		else {
-			selectedCards.add(card);
-			card.select();
-		}
-
-		if (selectedCards.size() == 2)
-		{
-			selectedCards.get(0).deselect();
-			selectedCards.get(1).deselect();
-			getListener().onSwapStarted();
-			((SudokuGameDealer) dealer).swap(selectedCards);
-		}
+		getListener().onTableFinished();
+		
+//		if (selectedCards.contains(card)) {
+//			selectedCards.remove(card);
+//			card.deselect();
+//		}
+//		else {
+//			selectedCards.add(card);
+//			card.select();
+//		}
+//
+//		if (selectedCards.size() == 2)
+//		{
+//			selectedCards.get(0).deselect();
+//			selectedCards.get(1).deselect();
+//			getListener().onSwapStarted();
+//			((SudokuGameDealer) dealer).swap(selectedCards);
+//		}
 	}
 
 	@Override
