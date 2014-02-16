@@ -91,7 +91,7 @@ public class SudokuTable extends Table {
 	@Override
 	public void draw() {
 		for (Card card : cardsOnTable) {
-			if (!(dealer.isWorking() && selectedCards.contains(card)))
+			if (!(dealer.isDealing() && selectedCards.contains(card)))
 				card.draw();
 		}
 		if (marksVisible)
@@ -135,18 +135,18 @@ public class SudokuTable extends Table {
 
 	public void swapEnded() {
 		swapSelectedInList();
-		if (checkForIchigus())
+		if (updateIchiguMarks())
 			getListener().onTableFinished();
 		selectedCards.clear();
 		getListener().onSwapEnded();
 	}
 
-	private boolean checkForIchigus() {
-		boolean returning = true;
+	private boolean updateIchiguMarks() {
+		boolean allCompleted = true;
 		for (int i = 0; i < 9; i += 3) {
 			if (!CardAttributes.isIchigu(cardsOnTable.get(i).getAttributes(), cardsOnTable.get(i + 1).getAttributes(), cardsOnTable.get(i + 2).getAttributes())) {
 				marks.get(i / 3 + 3).deactivate();
-				returning = false;
+				allCompleted = false;
 			}
 			else
 				marks.get(i / 3 + 3).activate();
@@ -154,12 +154,12 @@ public class SudokuTable extends Table {
 		for (int j = 0; j < 3; j++) {
 			if (!CardAttributes.isIchigu(cardsOnTable.get(j).getAttributes(), cardsOnTable.get(j + 3).getAttributes(), cardsOnTable.get(j + 6).getAttributes())) {
 				marks.get(j).deactivate();
-				returning = false;
+				allCompleted = false;
 			}
 			else
 				marks.get(j).activate();
 		}
-		return returning;
+		return allCompleted;
 	}
 
 	private void swapSelectedInList() {
@@ -177,24 +177,22 @@ public class SudokuTable extends Table {
 
 	@Override
 	protected void concreteCardTapped(Card card) {
-		getListener().onTableFinished();
-		
-//		if (selectedCards.contains(card)) {
-//			selectedCards.remove(card);
-//			card.deselect();
-//		}
-//		else {
-//			selectedCards.add(card);
-//			card.select();
-//		}
-//
-//		if (selectedCards.size() == 2)
-//		{
-//			selectedCards.get(0).deselect();
-//			selectedCards.get(1).deselect();
-//			getListener().onSwapStarted();
-//			((SudokuGameDealer) dealer).swap(selectedCards);
-//		}
+		if (selectedCards.contains(card)) {
+			selectedCards.remove(card);
+			card.deselect();
+		}
+		else {
+			selectedCards.add(card);
+			card.select();
+		}
+
+		if (selectedCards.size() == 2)
+		{
+			selectedCards.get(0).deselect();
+			selectedCards.get(1).deselect();
+			getListener().onSwapStarted();
+			((SudokuGameDealer) dealer).swap(selectedCards);
+		}
 	}
 
 	@Override
@@ -203,12 +201,13 @@ public class SudokuTable extends Table {
 			cardsOnTable.remove(card);
 			card.deactivate();
 		}
+		
 		for (Card card : toDealIn) {
 			cardsOnTable.add(card);
 			card.open(true);
 			card.activate();
 		}
-		checkForIchigus();
+		updateIchiguMarks();
 		marksVisible = true;
 	}
 

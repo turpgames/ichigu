@@ -62,7 +62,7 @@ public abstract class Table implements IDealerListener, ICardListener {
 	
 	@Override
 	public final void onCardTapped(Card card) {
-		if (dealer.isWorking())
+		if (dealer.isDealing())
 			return;
 		concreteCardTapped(card);
 		listener.onCardTapped(card);

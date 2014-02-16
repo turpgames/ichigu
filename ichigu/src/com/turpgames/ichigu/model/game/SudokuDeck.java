@@ -21,32 +21,28 @@ public class SudokuDeck extends Deck {
 		do {
 			do {
 				recycleDeck();
-				
+
 				card1 = getRandomCard();
 				card2 = getRandomCard();
-	
 				card4 = getRandomCard();
-				
+
 				third = CardAttributes.getThirdCardAttributes(card1.getAttributes(), card2.getAttributes());
 				seventh = CardAttributes.getThirdCardAttributes(card1.getAttributes(), card4.getAttributes());
-			}
-			while((card3 = getCardWithAttributes(third)) == null ||
+			} while ((card3 = getCardWithAttributes(third)) == null ||
 					(card7 = getCardWithAttributes(seventh)) == null);
-	
+
 			do {
 				card5 = getRandomCard();
-				
+
 				sixth = CardAttributes.getThirdCardAttributes(card4.getAttributes(), card5.getAttributes());
 				eighth = CardAttributes.getThirdCardAttributes(card2.getAttributes(), card5.getAttributes());
 				ninth = CardAttributes.getThirdCardAttributes(card7.getAttributes(), eighth);
-			}
-			while(card5 != null && (!CardAttributes.isIchigu(card3.getAttributes(), sixth, ninth) ||
-				(card6 = getCardWithAttributes(sixth)) == null ||
-				(card8 = getCardWithAttributes(eighth)) == null ||
-				(card9 = getCardWithAttributes(ninth)) == null));
-		}
-		while(card5 == null);
-		
+			} while (card5 != null && (!CardAttributes.isIchigu(card3.getAttributes(), sixth, ninth) ||
+					(card6 = getCardWithAttributes(sixth)) == null ||
+					(card8 = getCardWithAttributes(eighth)) == null ||
+					(card9 = getCardWithAttributes(ninth)) == null));
+		} while (card5 == null);
+
 		list.add(card1);
 		list.add(card2);
 		list.add(card3);
@@ -56,7 +52,7 @@ public class SudokuDeck extends Deck {
 		list.add(card7);
 		list.add(card8);
 		list.add(card9);
-		
+
 		for (Card cardCheck : list) {
 			if (last9Cards.contains(cardCheck)) {
 				for (Card cardBack : list)
@@ -64,7 +60,15 @@ public class SudokuDeck extends Deck {
 				return get9Cards(last9Cards);
 			}
 		}
-		
+
+		for (int i = 0; i < list.size(); i++) {
+			if (list.indexOf(list.get(i)) != i) {
+				for (Card cardBack : list)
+					giveBackUnusedCard(cardBack);
+				return get9Cards(last9Cards);
+			}
+		}
+
 		return list;
 	}
 }

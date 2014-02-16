@@ -9,17 +9,18 @@ import com.turpgames.ichigu.model.game.Card;
 import com.turpgames.ichigu.model.game.table.Table;
 
 public abstract class Dealer {
-	class DealListener implements ITimerTickListener {
+	class DealTimerListener implements ITimerTickListener {
 
 		private List<Card> cards;
 		private IEffectEndListener listener;
 		private int i;
-		public DealListener(List<Card> cards, IEffectEndListener listener){
+
+		public DealTimerListener(List<Card> cards, IEffectEndListener listener) {
 			this.cards = cards;
 			this.listener = listener;
 			this.i = 0;
 		}
-		
+
 		@Override
 		public void timerTick(Timer timer) {
 			if (i >= cards.size())
@@ -28,22 +29,22 @@ public abstract class Dealer {
 			i++;
 		}
 	}
-	
+
 	protected Table table;
 	private IEffectEndListener outListener;
 	private IEffectEndListener inListener;
-	
+
 	protected List<Card> cardsDealingIn;
 	private List<Card> cardsDealingOut;
 
 	protected Timer dealInTimer;
 	protected Timer dealOutTimer;
 
-	private DealListener inTickListener;
-	private DealListener outTickListener;
-	
+	private DealTimerListener inTickListener;
+	private DealTimerListener outTickListener;
+
 	private int effectsToFinish;
-	
+
 	public Dealer(Table table) {
 		this.table = table;
 		this.dealInTimer = new Timer();
@@ -51,88 +52,88 @@ public abstract class Dealer {
 	}
 
 	public final void deal(List<Card> cardsToDealIn, List<Card> cardsToDealOut) {
-		for(Card card : cardsToDealIn)
-			card.resetDealerEffect();
-		for(Card card : cardsToDealOut)
-			card.resetDealerEffect();
+		for (Card card : cardsToDealIn)
+			card.stopDealerEffect();
+		for (Card card : cardsToDealOut)
+			card.stopDealerEffect();
 
 		this.cardsDealingIn = cardsToDealIn;
 		this.cardsDealingOut = cardsToDealOut;
-		
+
 		setOutEffects();
 		setInEffects();
-		
-		this.effectsToFinish = cardsToDealIn.size() + cardsDealingOut.size();
+
+		this.effectsToFinish = cardsDealingIn.size() + cardsDealingOut.size();
 		selectDeal();
 	}
-	
+
 	protected List<Card> getInList() {
 		return cardsDealingIn;
 	}
-	
+
 	protected List<Card> getOutList() {
 		return cardsDealingOut;
 	}
-	
+
 	public void draw() {
-		if (!isWorking())
+		if (!isDealing())
 			return;
 		concreteDrawCards();
 	}
-	
+
 	protected final static void drawCards(List<Card> cards) {
 		for (Card card : cards)
 			card.draw();
 	}
 
-	public boolean isWorking() {
+	public boolean isDealing() {
 		return effectsToFinish != 0;
 	}
 
 	private final void dealIn() {
-		inTickListener = new DealListener(cardsDealingIn, inListener);
+		inTickListener = new DealTimerListener(cardsDealingIn, inListener);
 		dealInTimer.setInterval(getDealInInterval());
 		dealInTimer.setTickListener(inTickListener);
 		dealInTimer.start();
 	}
-	
+
 	private final void dealOut() {
-		outTickListener = new DealListener(cardsDealingOut, outListener);
+		outTickListener = new DealTimerListener(cardsDealingOut, outListener);
 		dealOutTimer.setInterval(getDealOutInterval());
 		dealOutTimer.setTickListener(outTickListener);
 		dealOutTimer.start();
 	}
-	
-	private synchronized void finishEffect() {
+
+	private synchronized void onEffectEnd() {
 		effectsToFinish--;
-		if (effectsToFinish == 0) {
-			for(Card card : cardsDealingIn)
-				card.resetDealerEffect();
-			for(Card card : cardsDealingOut)
-				card.resetDealerEffect();
-			table.onDealEnded(cardsDealingOut);
-			dealInTimer.stop();
-			dealOutTimer.stop();
-		}
+		
+		if (effectsToFinish != 0)
+			return;
+		
+		for (Card card : cardsDealingIn)
+			card.stopDealerEffect();
+		for (Card card : cardsDealingOut)
+			card.stopDealerEffect();
+		table.onDealEnded(cardsDealingOut);
+		dealInTimer.stop();
+		dealOutTimer.stop();
 	}
-	
+
 	abstract protected void concreteDrawCards();
-	
+
 	protected void dealConsecutive() {
 		inListener = new IEffectEndListener() {
-			
 			@Override
 			public boolean onEffectEnd(Object obj) {
-				finishEffect();
+				Dealer.this.onEffectEnd();
 				return false;
 			}
 		};
-		
+
 		outListener = new IEffectEndListener() {
-			
 			@Override
 			public boolean onEffectEnd(Object obj) {
-				finishEffect();
+				Dealer.this.onEffectEnd();
 				if (effectsToFinish == cardsDealingIn.size())
 					dealIn();
 				return false;
@@ -148,16 +149,15 @@ public abstract class Dealer {
 		inListener = new IEffectEndListener() {
 			@Override
 			public boolean onEffectEnd(Object obj) {
-				finishEffect();
+				Dealer.this.onEffectEnd();
 				return false;
 			}
 		};
-		
+
 		outListener = new IEffectEndListener() {
-			
 			@Override
 			public boolean onEffectEnd(Object obj) {
-				finishEffect();
+				Dealer.this.onEffectEnd();
 				return false;
 			}
 		};
@@ -177,6 +177,6 @@ public abstract class Dealer {
 	abstract protected void selectDeal();
 
 	abstract protected void setInEffects();
-	
+
 	abstract protected void setOutEffects();
 }

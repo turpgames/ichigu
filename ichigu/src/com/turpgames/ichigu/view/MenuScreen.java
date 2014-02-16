@@ -32,27 +32,25 @@ public class MenuScreen extends FormScreen implements IGameExitListener {
 		languageBar = new IchiguLanguageMenu();
 		languageBar.setListener(new LanguageMenu.ILanguageMenuListener() {
 			@Override
-			public void onLanguageMenuActivated() {
+			public void onLanguageMenuShown() {
 				getCurrentForm().disable();
 				IchiguToolbar.getInstance().disable();
 			}
 
 			@Override
-			public void onLanguageMenuDeactivated() {
+			public void onLanguageMenuHidden() {
 				getCurrentForm().enable();
 				IchiguToolbar.getInstance().enable();
 				ensureBackButton(getCurrentForm());
 			}
 		});
-		registerDrawable(languageBar, Game.LAYER_SCREEN);
-		languageBar.listenInput(true);
 
 		Dialog.clickSound = Game.getResourceManager().getSound(R.game.sounds.flip);
 
 		Game.exitListener = this;
 
 		Logo logo = new Logo();
-		logo.getColor().a = 0.55f;
+		logo.getColor().a = 0.50f;
 		GameObject bg = new GameObject() {
 			ITexture texture = Game.getResourceManager().getTexture(R.game.textures.backgroundPixel);
 
@@ -94,22 +92,15 @@ public class MenuScreen extends FormScreen implements IGameExitListener {
 
 	@Override
 	public boolean onGameExit() {
-		if (languageBar.isActive()) {
-			languageBar.deactivate();
-			return false;
-		}
-		else {
-			exitConfirm.open(Ichigu.getString(R.strings.exitProgramConfirm));
-			return false;
-		}
+		exitConfirm.open(Ichigu.getString(R.strings.exitProgramConfirm));
+		return false;
 	}
 
 	@Override
 	protected void onAfterActivate() {
 		super.onAfterActivate();
 
-		registerDrawable(languageBar, Game.LAYER_SCREEN);
-		languageBar.listenInput(true);
+		languageBar.activate();
 
 		ensureBackButton(getCurrentForm());
 
@@ -162,8 +153,7 @@ public class MenuScreen extends FormScreen implements IGameExitListener {
 
 	@Override
 	protected boolean onBeforeDeactivate() {
-		unregisterDrawable(languageBar);
-		languageBar.listenInput(false);
+		languageBar.deactivate();
 		return super.onBeforeDeactivate();
 	}
 

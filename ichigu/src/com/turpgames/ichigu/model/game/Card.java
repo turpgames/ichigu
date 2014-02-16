@@ -132,7 +132,7 @@ public class Card extends IchiguObject {
 		getColor().set(Color.white());
 	}
 
-	public void resetDealerEffect() {
+	public void stopDealerEffect() {
 		dealerEffect = null;
 	}
 

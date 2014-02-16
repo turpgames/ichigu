@@ -31,4 +31,10 @@ public class CyclicDeck extends Deck {
 		}
 		return rndCard;
 	}
+	
+	@Override
+	public void start() {
+		super.start();
+		used.clear();
+	}
 }

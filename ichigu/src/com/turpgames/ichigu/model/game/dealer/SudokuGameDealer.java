@@ -46,8 +46,8 @@ public class SudokuGameDealer extends Dealer {
 	}
 
 	@Override
-	public boolean isWorking() {
-		return isSwapping || super.isWorking();
+	public boolean isDealing() {
+		return isSwapping || super.isDealing();
 	}
 
 	public void swap(List<Card> cards) {
