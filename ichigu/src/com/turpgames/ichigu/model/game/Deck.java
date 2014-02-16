@@ -96,20 +96,19 @@ public class Deck {
 	}
 
 	protected void unuseCard(Card card) {
-		usingCards.remove(card);
-		usedCards.remove(card);
-		unusedCards.add(card);
+		if (usingCards.remove(card) || usedCards.remove(card))
+			unusedCards.add(card);
 		card.reset();
 	}
 
 	private void usingCard(Card card) {
-		unusedCards.remove(card);
-		usingCards.add(card);
+		if (unusedCards.remove(card))
+			usingCards.add(card);
 	}
 
 	public void usedCard(Card card) {
-		usingCards.remove(card);
-		usedCards.add(card);
+		if (usingCards.remove(card))
+			usedCards.add(card);
 		card.reset();
 	}
 
