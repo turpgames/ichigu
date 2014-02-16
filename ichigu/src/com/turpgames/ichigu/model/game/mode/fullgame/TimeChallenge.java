@@ -31,7 +31,7 @@ public class TimeChallenge extends FullGameMode {
 	@Override
 	protected Timer getTimer() {
 		if (timer == null) {
-			timer = new CountDownTimer(R.durations.timeChallengeModeDuration * 0.1f);
+			timer = new CountDownTimer(R.durations.timeChallengeModeDuration);
 			timer.setInterval(0.5f);
 			timer.setCountDownListener(new CountDownTimer.ICountDownListener() {
 				@Override
