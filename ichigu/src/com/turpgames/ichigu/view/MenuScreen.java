@@ -7,9 +7,11 @@ import com.turpgames.framework.v0.forms.xml.Dialog;
 import com.turpgames.framework.v0.forms.xml.Form;
 import com.turpgames.framework.v0.impl.FormScreen;
 import com.turpgames.framework.v0.impl.GameObject;
+import com.turpgames.framework.v0.impl.Settings;
 import com.turpgames.framework.v0.social.ICallback;
 import com.turpgames.framework.v0.util.Game;
 import com.turpgames.framework.v0.util.TextureDrawer;
+import com.turpgames.framework.v0.util.Version;
 import com.turpgames.ichigu.model.display.IchiguDialog;
 import com.turpgames.ichigu.model.display.IchiguLanguageMenu;
 import com.turpgames.ichigu.model.display.IchiguToolbar;
@@ -106,11 +108,51 @@ public class MenuScreen extends FormScreen implements IGameExitListener {
 
 		if (isFirstActivate) {
 			isFirstActivate = false;
+			announceFacebook();
 			forceUpgrade();
 			loginWithFacebook();
 		}
 	}
+	
+	private void announceFacebook() {
+		Version v120 = new Version("1.2.0");
+		if (Game.getVersion().compareTo(v120) < 0)
+			return;
+		
+		boolean facebookAnnounced = Settings.getBoolean("facebook-announced", false);
+		if (facebookAnnounced)
+			return;
+		
+		Dialog dlg = new Dialog();
+		dlg.addButton("yes", R.strings.yes);
+		dlg.addButton("no", R.strings.no);
+		dlg.setFontScale(R.fontSize.medium);
+		dlg.setListener(new Dialog.IDialogListener() {			
+			@Override
+			public void onDialogClosed() {
 
+			}
+			
+			@Override
+			public void onDialogButtonClicked(String id) {
+				if (!"yes".equals(id))
+					return;
+				Facebook.login(new ICallback() {
+					@Override
+					public void onSuccess() {
+						Settings.putBoolean("facebook-announced", true);
+					}
+					
+					@Override
+					public void onFail(Throwable t) {
+						
+					}
+				});
+			}
+		});
+		dlg.open(Ichigu.getString(R.strings.announceFacebook));
+	}
+	
 	private void forceUpgrade() {
 		if (!Game.isAndroid())
 			return;

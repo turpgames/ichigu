@@ -76,11 +76,11 @@ v1.1
 		-Türkçe
 		-İtalyanca
 		-Çince
-	-Update Process
+	+Update Process
 		+Yeni featureları settings e yaz
 		+Mevcut hi scoreları server a gönder
 		+Android için iki ayrı update yapılması lazım. İlk update manuel update edin dialogu açacak
-		-Facebook entegrasyonu yapıldığını duyuran bir dialog aç
+		+Facebook entegrasyonu yapıldığını duyuran bir dialog aç
 	-Genel
 		+UIBlokcer a şekil yapılması lazım
 		-Facebook Ichigu app'inde android keyleri düzelt

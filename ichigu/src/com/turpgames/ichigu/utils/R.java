@@ -410,7 +410,8 @@ public final class R {
 		public final static String myScores = "myScores";
 		public final static String general = "general";
 		public final static String friends = "friends";
-		public final static String forceUpgrade = "forceUpgrade";		
+		public final static String forceUpgrade = "forceUpgrade";
+		public final static String announceFacebook = "announceFacebook";		
 	}
 
 	public static final class symbolpositions {
