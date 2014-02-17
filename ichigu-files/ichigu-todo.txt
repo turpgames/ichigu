@@ -85,6 +85,9 @@ v1.1
 		+UIBlokcer a şekil yapılması lazım
 		-Facebook Ichigu app'inde android keyleri düzelt
 		-Deal effectlere ses
+		-HiScores menü combobox
+		-Ana menü facebook login/logout button
+		-Marketten al toastuna basınca market menusu açılsın
 	-Bug
 		-Mini mod ve Time Challenge zaman hızlı başlıyor, muhtemelen CountDownTimer'da bir bug var.
 		+FullModlarda deste bitince hata veriyor.

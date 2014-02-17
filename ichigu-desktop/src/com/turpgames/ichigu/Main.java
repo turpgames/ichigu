@@ -63,7 +63,7 @@ public class Main {
 								isLoggedin = true;
 
 								player = new Player();
-								player.setName("Seda Çetinkaya");
+								player.setName("Seda Ã‡etinkaya");
 								player.setSocialId("718801914");
 								player.setEmail("player@test.com");
 
