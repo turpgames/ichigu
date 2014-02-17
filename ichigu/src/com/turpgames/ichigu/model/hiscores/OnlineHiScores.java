@@ -116,7 +116,8 @@ class OnlineHiScores implements IHiScores {
 		int days = buttons.getDays();
 		int whose = buttons.getWhose();
 
-		Ichigu.blockUI(R.strings.loadingScores);		
+		Ichigu.blockUI(R.strings.loadingScores);
+		Facebook.getDefaultProfilePicture();	
 		ScoreManager.instance.getLeadersBoard(mode, days, whose, new ScoreManager.ILeadersBoardCallback() {
 			@Override
 			public void onSuccess(LeadersBoard leadersBoard) {
