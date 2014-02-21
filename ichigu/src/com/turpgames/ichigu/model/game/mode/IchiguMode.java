@@ -6,7 +6,6 @@ import com.turpgames.framework.v0.component.ImageButton;
 import com.turpgames.framework.v0.forms.xml.Dialog;
 import com.turpgames.framework.v0.util.Game;
 import com.turpgames.ichigu.model.display.IchiguDialog;
-import com.turpgames.ichigu.model.display.IchiguToolbar;
 import com.turpgames.ichigu.model.game.table.ITableListener;
 import com.turpgames.ichigu.model.game.table.Table;
 import com.turpgames.ichigu.utils.Ichigu;
