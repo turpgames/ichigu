@@ -387,6 +387,7 @@ public final class R {
 		public final static String loggingOut = "loggingOut";
 		public final static String logoutFail = "logoutFail";
 		public final static String logoutSuccess = "logoutSuccess";
+		public static final String logoutConfirm = "logoutConfirm";
 		
 		public final static String registeringPlayer = "registeringPlayer";
 
