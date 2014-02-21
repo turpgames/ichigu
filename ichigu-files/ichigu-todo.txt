@@ -85,7 +85,7 @@ v1.1
 		+UIBlokcer a şekil yapılması lazım
 		-Facebook Ichigu app'inde android keyleri düzelt
 		-Deal effectlere ses
-		-HiScores menü combobox
+		+HiScores menü combobox
 		+Ana menü facebook login/logout button
 		+Marketten al toastuna basınca market menusu açılsın
 	-Bug
