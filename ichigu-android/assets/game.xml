@@ -446,16 +446,12 @@
                 path="img/pause-timer-64.png" />
 
             <texture
-                id="fb_login"
-                path="img/fb_login.png" />
-
-            <texture
-                id="fb_logout"
-                path="img/fb_logout.png" />
-
-            <texture
                 id="fb_default"
                 path="img/fb_default.png" />
+
+            <texture
+                id="facebook"
+                path="img/facebook.png" />
 
             <texture
                 id="loading"

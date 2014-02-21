@@ -3,11 +3,7 @@ package com.turpgames.ichigu.model.hiscores;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.turpgames.framework.v0.component.Button;
-import com.turpgames.framework.v0.component.IButtonListener;
-import com.turpgames.framework.v0.component.ImageButton;
 import com.turpgames.framework.v0.impl.Text;
-import com.turpgames.framework.v0.social.ICallback;
 import com.turpgames.framework.v0.util.Game;
 import com.turpgames.ichigu.entity.LeadersBoard;
 import com.turpgames.ichigu.entity.Player;
@@ -21,29 +17,15 @@ import com.turpgames.utils.Util;
 
 class OnlineHiScores implements IHiScores {
 	private Text pageTitle;
-	private final HiScores parent;
-	private ImageButton logoutOfFacebook;
 	private volatile List<LeadersBoardRow> rows;
 	private LeadersBoardButtons buttons;
 
-	OnlineHiScores(HiScores parent) {
-		this.parent = parent;
-
+	OnlineHiScores() {
 		pageTitle = new Text();
 		pageTitle.setAlignment(Text.HAlignCenter, Text.VAlignTop);
 		pageTitle.getColor().set(R.colors.ichiguYellow);
 		pageTitle.setFontScale(1.5f);
 		pageTitle.setPadding(0, 85);
-
-		logoutOfFacebook = new ImageButton(R.sizes.loginWidth, R.sizes.loginHeight, R.game.textures.fb_logout);
-		logoutOfFacebook.setLocation(Button.AlignS, 0, Game.viewportToScreenY(50));
-		logoutOfFacebook.listenInput(false);
-		logoutOfFacebook.setListener(new IButtonListener() {
-			@Override
-			public void onButtonTapped() {
-				logoutOfFacebook();
-			}
-		});
 
 		rows = new ArrayList<LeadersBoardRow>();
 
@@ -61,27 +43,9 @@ class OnlineHiScores implements IHiScores {
 		setLanguageSensitiveInfo();
 	}
 
-	private void logoutOfFacebook() {
-		Ichigu.blockUI(R.strings.loggingOut);		
-		Facebook.logout(new ICallback() {
-			@Override
-			public void onSuccess() {
-				parent.updateView();
-				Ichigu.unblockUI();
-			}
-
-			@Override
-			public void onFail(Throwable t) {
-				IchiguToast.showError(R.strings.logoutError);
-				Ichigu.unblockUI();
-			}
-		});
-	}
-
 	@Override
 	public void draw() {
 		pageTitle.draw();
-		logoutOfFacebook.draw();
 		buttons.draw();
 		for (LeadersBoardRow row : rows)
 			row.draw();
@@ -94,14 +58,12 @@ class OnlineHiScores implements IHiScores {
 
 	@Override
 	public void activate() {
-		logoutOfFacebook.listenInput(true);
 		buttons.activate();
 		loadHiScores();
 	}
 
 	@Override
 	public boolean deactivate() {
-		logoutOfFacebook.listenInput(false);
 		buttons.deactivate();
 		return true;
 	}

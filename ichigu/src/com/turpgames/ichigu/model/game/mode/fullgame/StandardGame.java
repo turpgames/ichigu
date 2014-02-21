@@ -2,6 +2,7 @@ package com.turpgames.ichigu.model.game.mode.fullgame;
 
 import com.turpgames.framework.v0.impl.Settings;
 import com.turpgames.framework.v0.impl.Text;
+import com.turpgames.framework.v0.util.Game;
 import com.turpgames.framework.v0.util.Timer;
 import com.turpgames.ichigu.entity.Score;
 import com.turpgames.ichigu.model.game.table.FullGameTable;
@@ -18,6 +19,11 @@ public class StandardGame extends FullGameMode {
 		remaingCardInfo = new Text();
 		remaingCardInfo.setAlignment(Text.HAlignLeft, Text.VAlignTop);
 		remaingCardInfo.setPadding(10, 110);
+	}
+	
+	@Override
+	protected String getScreenId() {
+		return R.game.screens.standard;
 	}
 
 	@Override
@@ -51,6 +57,10 @@ public class StandardGame extends FullGameMode {
 				timer.getText(),
 				(isNewRecord ? Ichigu.getString(R.strings.newHiscore) : "")));
 
+		// Workaround: InputManager bir şekilde deactivated kalıyor. 
+		// Neden olduğunu aramak yerine burda tekrar activate etmeyi tercih ettim :p
+		Game.getInputManager().activate();
+		
 		super.sendScore();
 	}
 

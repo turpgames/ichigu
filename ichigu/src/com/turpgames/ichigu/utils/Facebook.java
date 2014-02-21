@@ -63,6 +63,7 @@ public class Facebook {
 				onLoginSuccess(new ICallback() {
 					@Override
 					public void onSuccess() {
+						IchiguSettings.setAsFacebookAnnouned();
 						Ichigu.unblockUI();
 						IchiguToast.showInfo(R.strings.loginSuccess);
 						callback.onSuccess();
@@ -87,16 +88,24 @@ public class Facebook {
 	}
 
 	public static void logout(final ICallback callback) {
+		Ichigu.blockUI(R.strings.loggingOut);
 		facebook.logout(new ICallback() {
 			@Override
 			public void onSuccess() {
 				Settings.putString("player-facebook-id", "");
 				Settings.putString("player-id", "");
+				
+				Ichigu.unblockUI();
+				IchiguToast.showInfo(R.strings.logoutSuccess);
+				
 				callback.onSuccess();
 			}
 
 			@Override
 			public void onFail(Throwable t) {
+				Ichigu.unblockUI();
+				IchiguToast.showInfo(R.strings.logoutFail);
+				
 				callback.onFail(t);
 			}
 		});

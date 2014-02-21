@@ -14,8 +14,8 @@ public class HiScores implements IHiScores {
 	private final IViewSwitcher viewSwitcher;
 
 	public HiScores() {
-		onlineHiScores = new OnlineHiScores(this);
-		offlineHiScores = new OfflineHiScores(this);
+		onlineHiScores = new OnlineHiScores();
+		offlineHiScores = new OfflineHiScores();
 
 		viewSwitcher = new FadingViewSwitcher(0.5f);
 		viewSwitcher.setViewFinder(viewFinder);

@@ -69,14 +69,12 @@ public abstract class IchiguMode implements IDrawable {
 	
 	public void dealEnded() {
 		startTimer();
-		resetButton.listenInput(true);
-		IchiguToolbar.getInstance().getBackButton().listenInput(true);
+		Game.getInputManager().activate();
 	}
 	
 	public void dealStarted() {
 		pauseTimer();
-		resetButton.listenInput(false);
-		IchiguToolbar.getInstance().getBackButton().listenInput(false);
+		Game.getInputManager().deactivate();
 	}
 
 	@Override
@@ -113,7 +111,6 @@ public abstract class IchiguMode implements IDrawable {
 
 	private void confirmModeExit() {
 		pause();
-		openCloseCards(false);
 		confirmExitDialog.open(Ichigu.getString(R.strings.exitConfirm));
 	}
 
@@ -124,7 +121,6 @@ public abstract class IchiguMode implements IDrawable {
 	private void onConfirmResetMode() {
 		pause();
 		resetConfirmDialog.open(Ichigu.getString(R.strings.resetConfirm));
-		openCloseCards(false);
 	}
 
 	private void onExitConfirmed(boolean exit) {
@@ -146,13 +142,14 @@ public abstract class IchiguMode implements IDrawable {
 		}
 	}
 
-	private void pause() {
+	protected void pause() {
 		pauseTimer();
-		resetConfirmDialog.close();
 		resetButton.listenInput(false);
+		openCloseCards(false);
+		resetConfirmDialog.close();
 	}
 
-	private void resume() {
+	protected void resume() {
 		startTimer();
 		resetButton.listenInput(true);
 		openCloseCards(true);

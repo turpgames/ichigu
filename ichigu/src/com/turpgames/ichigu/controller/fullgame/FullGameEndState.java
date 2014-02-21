@@ -2,7 +2,7 @@ package com.turpgames.ichigu.controller.fullgame;
 
 import com.turpgames.ichigu.utils.Ichigu;
 
-public class FullGameEndState extends FullGameState {
+class FullGameEndState extends FullGameState {
 	public FullGameEndState(FullGameController controller) {
 		super(controller);
 	}

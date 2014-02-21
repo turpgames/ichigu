@@ -167,6 +167,16 @@ public class FullGameTable extends RegularGameTable {
 		return toDealOut;
 	}
 
+	public void disableCardsOnTable() {
+		for (Card card : cardsOnTable)
+			card.listenInput(false);
+	}
+
+	public void enableCardsOnTable() {
+		for (Card card : cardsOnTable)
+			card.listenInput(true);
+	}
+	
 	@Override
 	public boolean isIchiguAttempted() {
 		return selectedCards.size() == 3;

@@ -21,6 +21,11 @@ public class TimeChallenge extends FullGameMode {
 		foundInfo.setAlignment(Text.HAlignLeft, Text.VAlignTop);
 		foundInfo.setPadding(10, 110);
 	}
+	
+	@Override
+	protected String getScreenId() {
+		return R.game.screens.timeChallenge;
+	}
 
 	@Override
 	public void concreteIchiguFound() {
@@ -31,7 +36,8 @@ public class TimeChallenge extends FullGameMode {
 	@Override
 	protected Timer getTimer() {
 		if (timer == null) {
-			timer = new CountDownTimer(R.durations.timeChallengeModeDuration);
+			// TODO: REMOVE * 0.1f!!!
+			timer = new CountDownTimer(R.durations.timeChallengeModeDuration * 0.1f);
 			timer.setInterval(0.5f);
 			timer.setCountDownListener(new CountDownTimer.ICountDownListener() {
 				@Override

@@ -15,6 +15,10 @@ public final class IchiguSettings {
 		return Settings.getInteger(R.settings.ichiguBalance, 0);
 	}
 
+	public static boolean isFacebookAnnounced() {
+		return Settings.getBoolean(R.settings.facebookAnnounced, false);
+	}
+
 	@SuppressWarnings("unchecked")
 	public static ArrayList<Score> getScoresToSend() {
 		ArrayList<Score> scores = new ArrayList<Score>();
@@ -36,6 +40,10 @@ public final class IchiguSettings {
 
 	public static void setIchiguBalance(int balance) {
 		Settings.putInteger(R.settings.ichiguBalance, balance);
+	}
+
+	public static void setAsFacebookAnnouned() {
+		Settings.putBoolean(R.settings.facebookAnnounced, true);
 	}
 
 	public static void setScoresToSend(ArrayList<Score> scoresToSend) {

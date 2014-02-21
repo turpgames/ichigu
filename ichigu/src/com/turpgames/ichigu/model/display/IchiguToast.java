@@ -19,7 +19,11 @@ public class IchiguToast {
 	}
 
 	public static void showWarning(String text) {
-		show(text, R.colors.ichiguYellow);
+		showWarning(text, null);
+	}
+	
+	public static void showWarning(String text, Toast.IListener listener) {
+		showWarning(text, -1, listener);
 	}
 
 	public static void showInfo(String text) {
@@ -31,7 +35,11 @@ public class IchiguToast {
 	}
 
 	public static void showWarning(String text, float fontScale) {
-		show(text, fontScale, R.colors.ichiguYellow);
+		showWarning(text, fontScale, null);
+	}
+
+	public static void showWarning(String text, float fontScale, Toast.IListener listener) {
+		show(text, fontScale, R.colors.ichiguYellow, listener);
 	}
 
 	public static void showInfo(String text, float fontScale) {
@@ -39,25 +47,30 @@ public class IchiguToast {
 	}
 
 	public static void show(String text, Color backColor) {
-		String message = Ichigu.getString(text);
-		float fontScale = calculateFontScale(message);
-		show(message, fontScale, backColor);
+		show(text, -1, backColor);
 	}
 
 	public static void show(String text, float fontScale, Color backColor) {
-		String message = Ichigu.getString(text);
-		show(message, fontScale, backColor, R.colors.ichiguWhite, true, 1.0f,
-				30f, 30f, calculateDuration(message), R.durations.toastSlideDuration);
+		show(text, fontScale, backColor, null);
 	}
 
-	private static void show(String message, float fontScale, Color backColor, Color foreColor,
-			boolean hideOnTap, float alpha, float padX, float padY, float displayDuration, float slideDuration) {
+	public static void show(String text, float fontScale, Color backColor, Toast.IListener listener) {
+		String message = Ichigu.getString(text);
+		if (fontScale < 0)
+			fontScale = calculateFontScale(message);
+		show(message, fontScale, backColor, R.colors.ichiguWhite, true, 1.0f,
+				30f, 30f, calculateDuration(message), R.durations.toastSlideDuration, listener);
+	}
+
+	private static void show(String message, float fontScale, Color backColor, Color foreColor, boolean hideOnTap, 
+			float alpha, float padX, float padY, float displayDuration, float slideDuration, Toast.IListener listener) {
 		preapreToast()
 				.setAlpha(alpha)
 				.setDisplayDuration(displayDuration)
 				.setFontScale(fontScale)
 				.setHideOnTap(hideOnTap)
 				.setMessage(message)
+				.setListener(listener)
 				.setPadding(padX, padY)
 				.setSlideDuration(slideDuration)
 				.setTextColor(foreColor)
@@ -99,6 +112,7 @@ public class IchiguToast {
 				.setFontScale(R.fontSize.medium)
 				.setHideOnTap(true)
 				.setMessage("")
+				.setListener(null)
 				.setPadding(30f, 30f)
 				.setSlideDuration(R.durations.toastSlideDuration)
 				.setTextColor(R.colors.ichiguWhite)
@@ -148,6 +162,11 @@ public class IchiguToast {
 
 	public IchiguToast setMessage(String message) {
 		toast.setMessage(message);
+		return this;
+	}
+
+	public IchiguToast setListener(Toast.IListener listener) {
+		toast.setListener(listener);
 		return this;
 	}
 
