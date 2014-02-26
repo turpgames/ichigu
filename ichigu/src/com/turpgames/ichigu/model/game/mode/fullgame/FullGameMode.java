@@ -24,6 +24,8 @@ public abstract class FullGameMode extends RegularMode implements IResultScreenB
 	private BonusFeatureButton singleHintFeatureButton;
 	private BonusFeatureButton tripleHintFeatureButton;
 	private BonusFeatureButton timerPauseFeatureButton;
+	
+	private BonusFeature insufficientFeature;
 
 	protected TimerText timerText;
 
@@ -132,7 +134,7 @@ public abstract class FullGameMode extends RegularMode implements IResultScreenB
 
 	public void pauseForMarketMenu() {
 		pause();
-		MarketScreen.show(getScreenId());
+		MarketScreen.show(getScreenId(), insufficientFeature);
 	}
 
 	protected abstract String getScreenId();
@@ -275,7 +277,8 @@ public abstract class FullGameMode extends RegularMode implements IResultScreenB
 		timerPauseFeatureButton.draw();
 	}
 
-	private void toastInsufficientFeature() {
+	private void toastInsufficientFeature(BonusFeature feature) {
+		this.insufficientFeature = feature;
 		IchiguToast.showWarning(R.strings.buyFromMarket, new Toast.IListener() {
 			@Override
 			public boolean onToastTapped(Toast toast) {
@@ -302,7 +305,7 @@ public abstract class FullGameMode extends RegularMode implements IResultScreenB
 
 		@Override
 		public void onInsufficientBonusFeature() {
-			toastInsufficientFeature();
+			toastInsufficientFeature(BonusFeature.singleHint);
 		}
 
 		@Override
@@ -319,7 +322,7 @@ public abstract class FullGameMode extends RegularMode implements IResultScreenB
 
 		@Override
 		public void onInsufficientBonusFeature() {
-			toastInsufficientFeature();
+			toastInsufficientFeature(BonusFeature.tripleHint);
 		}
 
 		@Override
@@ -337,7 +340,7 @@ public abstract class FullGameMode extends RegularMode implements IResultScreenB
 
 		@Override
 		public void onInsufficientBonusFeature() {
-			toastInsufficientFeature();
+			toastInsufficientFeature(BonusFeature.timerPause);
 		}
 
 		@Override

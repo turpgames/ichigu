@@ -1,11 +1,15 @@
 package com.turpgames.ichigu.server.test;
 
+import java.io.File;
+import java.io.FileFilter;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import com.turpgames.db.DbManager;
 import com.turpgames.ichigu.db.Db;
@@ -24,20 +28,63 @@ public class TestMain {
 		try {
 			DbManager.setConnectionProvider(new IchiguConnectionProvider());
 
+			// prepareFakeUserScripts();
+			
 			// testEncoding();
 			// insertRandomData();
-			displayHiscores();
+			// displayHiscores();
 
 			System.out.println("OK!");
 		} catch (Throwable t) {
 			t.printStackTrace();
 		}
 	}
+	
+	protected static void prepareFakeUserScripts() {
+		File dir = new File("/Users/mehmet/Downloads/fb");
+		FileFilter filter = new FileFilter() {
+			@Override
+			public boolean accept(File file) {
+				return file.getName().endsWith(".jpg");
+			}
+		};
+		File[] jpgFiles = dir.listFiles(filter);
+
+		List<String> facebookIds = new ArrayList<String>();
+		List<String> names = new ArrayList<String>();
+		List<String> surnames = new ArrayList<String>();
+		
+		for (File file : jpgFiles) {
+			String fileName = file.getName();
+			
+			String[] ss = fileName.split("_");
+
+			facebookIds.add(ss[0]);
+			names.add(ss[1]);
+			surnames.add(ss[2].substring(0, ss[2].length() - 4));
+		}
+		
+		while (names.size() > 0) {
+			int idIndex = Util.Random.randInt(facebookIds.size());
+			int nameIndex = Util.Random.randInt(names.size());
+			int surnameIndex = Util.Random.randInt(surnames.size());
+			
+			System.out.println(String.format("insert into players (username, password, email, facebook_id)"
+					+ " values ('%s %s', '', '', '%s');", 
+					names.get(nameIndex), 
+					surnames.get(surnameIndex), 
+					facebookIds.get(idIndex)));
+
+			facebookIds.remove(idIndex);
+			names.remove(nameIndex);
+			surnames.remove(surnameIndex);
+		}
+	}
 
 	protected static void testEncoding() {
 		HttpURLConnection conn = null;
 		try {
-			String uri = String.format("http://localhost:8080/ichigu-server/ichigu?p=%s", URLEncoder.encode("ýðüþöçÖÇÞÝÐÜ", "utf-8"));
+			String uri = String.format("http://localhost:8080/ichigu-server/ichigu?p=%s", URLEncoder.encode("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½", "utf-8"));
 
 			URL url = new URL(uri);
 			conn = (HttpURLConnection) url.openConnection();

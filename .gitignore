@@ -33,6 +33,9 @@ local.properties
 gen/
 *.keystore
 project.properties
+ichigu.properties
+ichigu-test.properties
+ichigu-local.properties
 
 #################
 ## Visual Studio

@@ -100,18 +100,18 @@ public class IchiguMarket implements IDrawable, ILanguageListener {
 		}
 	}
 
-	public void activate() {
+	public void activate(BonusFeature feature) {
 		setLanguageSensitiveInfo();
 		btnSingleHint.activate();
 		btnTripleHint.activate();
 		btnTimerPause.activate();
 		btnBuy.activate();
 
-		setActive(btnSingleHint, false);
-		setActive(btnTripleHint, true);
-		setActive(btnTimerPause, false);
+		setActive(btnSingleHint, feature == BonusFeature.singleHint);
+		setActive(btnTripleHint, feature == BonusFeature.tripleHint);
+		setActive(btnTimerPause, feature == BonusFeature.timerPause);
 		
-		setCurrentFeature(BonusFeature.tripleHint);
+		setCurrentFeature(feature);
 	}
 
 	public void deactivate() {

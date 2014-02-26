@@ -1,7 +1,9 @@
 package com.turpgames.ichigu.servlet;
 
+import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 
+import com.turpgames.ichigu.server.FakeScoreGenerator;
 import com.turpgames.servlet.TurpServlet;
 
 @WebServlet("/")
@@ -10,6 +12,12 @@ public class IchiguServlet extends TurpServlet {
 
 	public IchiguServlet() {
 		super(new IchiguServletProvider());
+	}
+	
+	@Override
+	public void init() throws ServletException {
+		super.init();
+		FakeScoreGenerator.start();
 	}
 
 	public static final class request {
