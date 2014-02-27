@@ -60,7 +60,11 @@ public class ServerConfig {
 	public static boolean isFakeScoreGeneratorEnabled() {
 		return Util.Strings.parseBoolean(getProp("enableFakeScoreGenerator"));
 	}
-
+	
+	public static int getFakeScoresPerDay() {
+		return Util.Strings.parseInt(getProp("fakeScoresPerDay"));
+	}
+	
 	private static String getProp(String key) {
 		return props.get(key);
 	}

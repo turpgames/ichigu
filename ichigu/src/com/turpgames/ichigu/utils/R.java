@@ -11,7 +11,7 @@ public final class R {
 		public final static float menuButtonSpacing = Game.scale(15);
 
 		public final static float tutorialMarginTop = 220f;
-		public final static float logoSize = Game.scale(140f);
+		public final static float logoSize = 140f;
 		public final static int scoreImageSize = 64;
 
 		public final static float tutorialbuttonSpacing = Game.scale(10);

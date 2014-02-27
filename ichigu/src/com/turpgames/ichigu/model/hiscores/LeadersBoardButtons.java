@@ -90,6 +90,10 @@ public class LeadersBoardButtons implements IDrawable {
 				notifyChange(mode, Score.Daily, whose);
 			}
 		});
+		
+		mode = Score.ModeTime;
+		days = Score.AllTime;
+		whose = Score.General;
 	}
 
 	public void setListener(IListener listener) {
@@ -124,10 +128,6 @@ public class LeadersBoardButtons implements IDrawable {
 	}
 	
 	public void activate() {
-		mode = Score.ModeTime;
-		days = Score.AllTime;
-		whose = Score.General;
-		
 		modeOptions.activate();
 		whoseOptions.activate();
 		dayOptions.activate();

@@ -14,16 +14,13 @@ public class Logo extends GameObject {
 
 		setWidth(R.sizes.logoSize);
 		setHeight(R.sizes.logoSize);
-		getLocation().set((Game.getScreenWidth() - R.sizes.logoSize) / 2, Game.getScreenHeight() - R.sizes.logoSize - Game.getScreenHeight() / 32);
+		getLocation().set(
+				(Game.getVirtualWidth() - R.sizes.logoSize) / 2, 
+				Game.screenToViewportY((Game.getScreenHeight() - Game.scale(R.sizes.logoSize) - Game.getScreenHeight() / 32)));
 	}
 
 	@Override
 	public void draw() {
 		TextureDrawer.draw(logo, this);
-	}
-
-	@Override
-	public boolean ignoreViewport() {
-		return true;
 	}
 }

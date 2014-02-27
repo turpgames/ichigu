@@ -5,7 +5,7 @@ import com.turpgames.ichigu.entity.Score;
 import com.turpgames.utils.Util;
 
 public class FakeScoreGenerator {
-	private final static long insertInterval = (24 * 60 * 60 * 1000) / 10; // 10 scores per day
+	private final static long insertInterval = (24 * 60 * 60 * 1000) / ServerConfig.getFakeScoresPerDay(); // 10 scores per day
 	private final static int minFakeUserId = 1;
 	private final static int maxFakeUserId = 736;
 	private final static int minMiniChallengeScore = 1;
