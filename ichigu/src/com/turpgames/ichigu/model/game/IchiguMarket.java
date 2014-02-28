@@ -3,6 +3,7 @@ package com.turpgames.ichigu.model.game;
 import com.turpgames.framework.v0.IDrawable;
 import com.turpgames.framework.v0.ILanguageListener;
 import com.turpgames.framework.v0.component.IButtonListener;
+import com.turpgames.framework.v0.component.ImageButton;
 import com.turpgames.framework.v0.component.TextButton;
 import com.turpgames.framework.v0.impl.Text;
 import com.turpgames.framework.v0.util.Game;
@@ -14,9 +15,9 @@ public class IchiguMarket implements IDrawable, ILanguageListener {
 	private Text pageTitle;
 	private Text priceInfo;
 	private Text balanceInfo;
-	private TextButton btnSingleHint;
-	private TextButton btnTripleHint;
-	private TextButton btnTimerPause;
+	private ImageButton btnSingleHint;
+	private ImageButton btnTripleHint;
+	private ImageButton btnTimerPause;
 	private TextButton btnBuy;
 
 	private BonusFeature currentFeature = BonusFeature.singleHint;
@@ -38,8 +39,7 @@ public class IchiguMarket implements IDrawable, ILanguageListener {
 		balanceInfo.setFontScale(R.fontSize.medium);
 		balanceInfo.setPadding(0, 425);
 
-		btnSingleHint = new TextButton(R.colors.ichiguYellow, R.colors.ichiguBlack);
-		btnSingleHint.setFontScale(R.fontSize.small);
+		btnSingleHint = new ImageButton(Game.scale(R.sizes.menuButtonSize), Game.scale(R.sizes.menuButtonSize), R.game.textures.hintSingle);
 		btnSingleHint.setListener(new IButtonListener() {
 			@Override
 			public void onButtonTapped() {
@@ -51,8 +51,7 @@ public class IchiguMarket implements IDrawable, ILanguageListener {
 			}
 		});
 
-		btnTripleHint = new TextButton(R.colors.ichiguYellow, R.colors.ichiguBlack);
-		btnTripleHint.setFontScale(R.fontSize.small);
+		btnTripleHint = new ImageButton(Game.scale(R.sizes.menuButtonSize), Game.scale(R.sizes.menuButtonSize), R.game.textures.hintTriple);
 		btnTripleHint.setListener(new IButtonListener() {
 			@Override
 			public void onButtonTapped() {
@@ -64,8 +63,7 @@ public class IchiguMarket implements IDrawable, ILanguageListener {
 			}
 		});
 
-		btnTimerPause = new TextButton(R.colors.ichiguYellow, R.colors.ichiguBlack);
-		btnTimerPause.setFontScale(R.fontSize.small);
+		btnTimerPause = new ImageButton(Game.scale(R.sizes.menuButtonSize), Game.scale(R.sizes.menuButtonSize), R.game.textures.timerPause);
 		btnTimerPause.setListener(new IButtonListener() {
 			@Override
 			public void onButtonTapped() {
@@ -94,7 +92,7 @@ public class IchiguMarket implements IDrawable, ILanguageListener {
 		IchiguToast.showInfo(feature.getInfo(), R.fontSize.small);
 	}
 
-	private void setActive(TextButton btn, boolean isActive) {
+	private void setActive(ImageButton btn, boolean isActive) {
 		if (isActive) {
 			btn.getColor().a = 1f;
 		} else {
@@ -102,18 +100,18 @@ public class IchiguMarket implements IDrawable, ILanguageListener {
 		}
 	}
 
-	public void activate() {
+	public void activate(BonusFeature feature) {
 		setLanguageSensitiveInfo();
 		btnSingleHint.activate();
 		btnTripleHint.activate();
 		btnTimerPause.activate();
 		btnBuy.activate();
 
-		setActive(btnSingleHint, false);
-		setActive(btnTripleHint, true);
-		setActive(btnTimerPause, false);
+		setActive(btnSingleHint, feature == BonusFeature.singleHint);
+		setActive(btnTripleHint, feature == BonusFeature.tripleHint);
+		setActive(btnTimerPause, feature == BonusFeature.timerPause);
 		
-		setCurrentFeature(BonusFeature.tripleHint);
+		setCurrentFeature(feature);
 	}
 
 	public void deactivate() {
@@ -151,9 +149,6 @@ public class IchiguMarket implements IDrawable, ILanguageListener {
 	private void setLanguageSensitiveInfo() {
 		pageTitle.setText(Ichigu.getString(R.strings.market));
 		
-		btnSingleHint.setText(Ichigu.getString(R.strings.singleHint));
-		btnTripleHint.setText(Ichigu.getString(R.strings.tripleHint));
-		btnTimerPause.setText(Ichigu.getString(R.strings.pauseTimer));
 		btnBuy.setText(Ichigu.getString(R.strings.buy));
 
 		priceInfo.setText(String.format(
@@ -172,9 +167,14 @@ public class IchiguMarket implements IDrawable, ILanguageListener {
 	}
 
 	private void setButtonLocations() {
-		btnSingleHint.getLocation().set(20, Game.getVirtualHeight() - 250);
-		btnTripleHint.getLocation().set((Game.getVirtualWidth() - btnTripleHint.getWidth()) / 2, Game.getVirtualHeight() - 250);
-		btnTimerPause.getLocation().set((Game.getVirtualWidth() - btnTimerPause.getWidth() - 20), Game.getVirtualHeight() - 250);
+		float y = Game.viewportToScreenY(Game.getVirtualHeight() - 250);
+		float x = (Game.getScreenWidth() - btnSingleHint.getWidth()) / 2;
+		float dx = btnSingleHint.getWidth() * 1.5f;
+		
+		btnSingleHint.getLocation().set(x - dx, y);
+		btnTripleHint.getLocation().set(x, y);
+		btnTimerPause.getLocation().set(x + dx, y);
+		
 		btnBuy.getLocation().set((Game.getVirtualWidth() - btnBuy.getWidth()) / 2, 100);
 	}
 }

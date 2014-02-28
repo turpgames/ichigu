@@ -31,8 +31,30 @@ public class ScoreManager {
 			sendScores();
 	}
 
-	public void getLeadersBoard(int mode, int days, int whose, ILeadersBoardCallback callback) {
-		IchiguClient.getLeadersBoard(mode, days, whose, callback);
+	public void getLeadersBoard(final int mode, final int days, final int whose, final ILeadersBoardCallback callback) {		
+		LeadersBoard leadersBoard = LeadersBoardCache.getLeadersBoard(mode, days, whose, false);
+		if (leadersBoard != null) {
+			callback.onSuccess(leadersBoard);
+			return;
+		}
+		
+		IchiguClient.getLeadersBoard(mode, days, whose, new ILeadersBoardCallback() {
+			@Override
+			public void onSuccess(LeadersBoard leadersBoard) {
+				LeadersBoardCache.putLeadersBoard(mode, days, whose, leadersBoard);
+				callback.onSuccess(leadersBoard);
+			}
+			
+			@Override
+			public void onFail(Throwable t) {
+				LeadersBoard leadersBoard = LeadersBoardCache.getLeadersBoard(mode, days, whose, true);
+				if (leadersBoard == null) {
+					callback.onFail(t);
+				} else {
+					callback.onSuccess(leadersBoard);
+				}
+			}
+		});
 	}
 
 	public void sendScores() {

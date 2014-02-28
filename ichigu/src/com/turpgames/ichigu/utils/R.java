@@ -8,10 +8,10 @@ import com.turpgames.framework.v0.util.Vector;
 public final class R {	
 	public final static class sizes {
 		public final static float maxScale = 0.2f;
-		public final static float menuButtonSpacing = Game.scale(30);
+		public final static float menuButtonSpacing = Game.scale(15);
 
 		public final static float tutorialMarginTop = 220f;
-		public final static float logoSize = Game.scale(140f);
+		public final static float logoSize = 140f;
 		public final static int scoreImageSize = 64;
 
 		public final static float tutorialbuttonSpacing = Game.scale(10);
@@ -33,9 +33,6 @@ public final class R {
 
 		public final static float menuButtonSizeToScreen = Game.scale(menuButtonSize);
 		public final static float langFlagButtonSizeToScreen = Game.scale(flagButtonSize);
-		
-		public final static float loginWidth = Game.scale(312);
-		public final static float loginHeight = Game.scale(40);
 	}
 
 	public final static class durations {
@@ -113,6 +110,9 @@ public final class R {
 		public static final class screens {
 			public static final String menu = "menu";
 			public static final String practice = "practice";
+			public static final String market = "market";
+			public static final String timeChallenge = "time-challenge";
+			public static final String standard = "standard";
 		}
 
 		public static final class sounds {
@@ -195,9 +195,8 @@ public final class R {
 			public static final String hintTriple = "hint_triple";
 			public static final String timerPause = "pause_timer";
 			
-			public static final String fb_login = "fb_login";
-			public static final String fb_logout = "fb_logout";
 			public static final String fb_default = "fb_default";
+			public static final String facebook = "facebook";
 		}
 	}
 
@@ -222,6 +221,7 @@ public final class R {
 		public static final String tripleHintCount = "triple-hint-count";
 		public static final String timerPauseCount = "timer-pause-count";
 		public static final String scoresToSend = "scores-to-send";
+		public static final String facebookAnnounced = "facebook-announced";
 	}
 
 	public static final class singleGameMode {
@@ -385,7 +385,9 @@ public final class R {
 		public final static String loginSuccess = "loginSuccess";
 		
 		public final static String loggingOut = "loggingOut";
-		public final static String logoutError = "logoutError";
+		public final static String logoutFail = "logoutFail";
+		public final static String logoutSuccess = "logoutSuccess";
+		public static final String logoutConfirm = "logoutConfirm";
 		
 		public final static String registeringPlayer = "registeringPlayer";
 

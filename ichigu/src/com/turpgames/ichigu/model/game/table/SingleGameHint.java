@@ -3,7 +3,6 @@ package com.turpgames.ichigu.model.game.table;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.turpgames.framework.v0.component.Toast;
 import com.turpgames.framework.v0.util.Color;
 import com.turpgames.ichigu.model.display.IchiguToast;
 import com.turpgames.ichigu.model.game.Card;
@@ -11,7 +10,7 @@ import com.turpgames.ichigu.model.game.CardAttributes;
 import com.turpgames.ichigu.utils.Ichigu;
 import com.turpgames.ichigu.utils.R;
 
-class SingleGameHint implements Toast.IListener {
+class SingleGameHint {
 	private List<String> hints;
 	private int index;
 	private Card thirdCard;
@@ -23,11 +22,6 @@ class SingleGameHint implements Toast.IListener {
 		this.hints = new ArrayList<String>();
 		this.table= table;
 		this.hintCards = new ArrayList<Card>();
-	}
-
-	@Override
-	public void onToastHidden(Toast toast) {
-		thirdCard.stopBlinking();
 	}
 
 	public void showNextHint() {

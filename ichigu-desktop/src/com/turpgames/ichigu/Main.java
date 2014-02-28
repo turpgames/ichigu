@@ -20,7 +20,7 @@ public class Main {
 
 		float w = 9f;
 		float h = 16f;
-		float x = 35f;
+		float x = 40;
 
 		cfg.width = (int) (x * w);
 		cfg.height = (int) (x * h);
@@ -63,7 +63,7 @@ public class Main {
 								isLoggedin = true;
 
 								player = new Player();
-								player.setName("Seda Çetinkaya");
+								player.setName("Seda Ã‡etinkaya");
 								player.setSocialId("718801914");
 								player.setEmail("player@test.com");
 

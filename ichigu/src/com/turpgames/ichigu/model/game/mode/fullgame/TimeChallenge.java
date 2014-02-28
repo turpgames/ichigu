@@ -21,6 +21,11 @@ public class TimeChallenge extends FullGameMode {
 		foundInfo.setAlignment(Text.HAlignLeft, Text.VAlignTop);
 		foundInfo.setPadding(10, 110);
 	}
+	
+	@Override
+	protected String getScreenId() {
+		return R.game.screens.timeChallenge;
+	}
 
 	@Override
 	public void concreteIchiguFound() {

@@ -1,5 +1,6 @@
 package com.turpgames.ichigu.model.game.mode.fullgame;
 
+import com.turpgames.framework.v0.component.Toast;
 import com.turpgames.framework.v0.impl.Text;
 import com.turpgames.framework.v0.social.ICallback;
 import com.turpgames.framework.v0.util.Game;
@@ -16,12 +17,15 @@ import com.turpgames.ichigu.model.game.table.FullGameTable;
 import com.turpgames.ichigu.utils.Facebook;
 import com.turpgames.ichigu.utils.R;
 import com.turpgames.ichigu.utils.ScoreManager;
+import com.turpgames.ichigu.view.MarketScreen;
 
 public abstract class FullGameMode extends RegularMode implements IResultScreenButtonsListener {
 
 	private BonusFeatureButton singleHintFeatureButton;
 	private BonusFeatureButton tripleHintFeatureButton;
 	private BonusFeatureButton timerPauseFeatureButton;
+	
+	private BonusFeature insufficientFeature;
 
 	protected TimerText timerText;
 
@@ -104,6 +108,10 @@ public abstract class FullGameMode extends RegularMode implements IResultScreenB
 		resultInfo.draw();
 		resultScreenButtons.draw();
 	}
+	
+	private IFullGameModeListener getFullGameModeListener() {
+		return (IFullGameModeListener)getModeListener();
+	}
 
 	@Override
 	public void onBackToMenuTapped() {
@@ -115,10 +123,39 @@ public abstract class FullGameMode extends RegularMode implements IResultScreenB
 		if (getModeListener() != null)
 			getModeListener().onNewGame();
 	}
+	
+	private void switchToMarketMenu() {
+		getFullGameModeListener().onPauseForMarketMenu();
+	}
+
+	public void resumeFromMarketMenu() {
+		resume();
+	}
+
+	public void pauseForMarketMenu() {
+		pause();
+		MarketScreen.show(getScreenId(), insufficientFeature);
+	}
+
+	protected abstract String getScreenId();
 
 	protected abstract int getRoundScore();
 
 	protected abstract int getScoreMode();
+	
+	@Override
+	protected void pause() {
+		super.pause();
+		disableFeatureButtons();
+		getTable().disableCardsOnTable();
+	}
+	
+	@Override
+	protected void resume() {
+		super.resume();
+		enableFeatureButtons();
+		getTable().enableCardsOnTable();
+	}
 
 	@Override
 	public void onShareScore() {
@@ -197,13 +234,11 @@ public abstract class FullGameMode extends RegularMode implements IResultScreenB
 	@Override
 	protected void pauseTimer() {
 		getTimer().pause();
-		disableFeatureButtons();
 	}
 
 	@Override
 	protected void startTimer() {
 		getTimer().start();
-		enableFeatureButtons();
 	}
 
 	private void enableFeatureButtons() {
@@ -242,8 +277,20 @@ public abstract class FullGameMode extends RegularMode implements IResultScreenB
 		timerPauseFeatureButton.draw();
 	}
 
-	private void toastInsufficientFeature() {
-		IchiguToast.showError(R.strings.buyFromMarket);
+	private void toastInsufficientFeature(BonusFeature feature) {
+		this.insufficientFeature = feature;
+		IchiguToast.showWarning(R.strings.buyFromMarket, new Toast.IListener() {
+			@Override
+			public boolean onToastTapped(Toast toast) {
+				switchToMarketMenu();
+				return true;
+			}
+
+			@Override
+			public void onToastHidden(Toast toast) {
+
+			}
+		});
 	}
 
 	private void toastFeatureAlreadyUsed() {
@@ -258,7 +305,7 @@ public abstract class FullGameMode extends RegularMode implements IResultScreenB
 
 		@Override
 		public void onInsufficientBonusFeature() {
-			toastInsufficientFeature();
+			toastInsufficientFeature(BonusFeature.singleHint);
 		}
 
 		@Override
@@ -275,7 +322,7 @@ public abstract class FullGameMode extends RegularMode implements IResultScreenB
 
 		@Override
 		public void onInsufficientBonusFeature() {
-			toastInsufficientFeature();
+			toastInsufficientFeature(BonusFeature.tripleHint);
 		}
 
 		@Override
@@ -293,7 +340,7 @@ public abstract class FullGameMode extends RegularMode implements IResultScreenB
 
 		@Override
 		public void onInsufficientBonusFeature() {
-			toastInsufficientFeature();
+			toastInsufficientFeature(BonusFeature.timerPause);
 		}
 
 		@Override

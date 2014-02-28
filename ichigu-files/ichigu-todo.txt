@@ -85,6 +85,9 @@ v1.1
 		+UIBlokcer a şekil yapılması lazım
 		-Facebook Ichigu app'inde android keyleri düzelt
 		-Deal effectlere ses
+		+HiScores menü combobox
+		+Ana menü facebook login/logout button
+		+Marketten al toastuna basınca market menusu açılsın
 	-Bug
 		-Mini mod ve Time Challenge zaman hızlı başlıyor, muhtemelen CountDownTimer'da bir bug var.
 		+FullModlarda deste bitince hata veriyor.
@@ -94,7 +97,7 @@ v1.1
 		+Online hiscores'ta logout olup tekrar login olunca beyaz resim çıkıyor (Android'de, oluyor, ios ve desktop'ta olmuyor)
 		+Sudoku modda bazen kartlar ters ve eksik dağıtılıyor
 		+Timechallenge'da 15 kart içinde aynı karttan birden fazla tane olabiliyor
-		-ResultScreen'de bazen geri buttonu çiziliyor ama deactive kalıyor
+		+ResultScreen'de bazen geri buttonu çiziliyor ama deactive kalıyor
 		-Share score'da cancel derse takılıp kalıyor (ios)
 		+Play menüsünde dil aç, back e bas saçmalıyor 
 

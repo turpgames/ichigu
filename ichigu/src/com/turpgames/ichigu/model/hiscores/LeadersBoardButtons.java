@@ -11,9 +11,9 @@ public class LeadersBoardButtons implements IDrawable {
 		void onLeadersBoardModeChange();
 	}
 
-	private OptionsButton modeOptions;
-	private OptionsButton whoseOptions;
-	private OptionsButton dayOptions;
+	private Combobox modeOptions;
+	private Combobox whoseOptions;
+	private Combobox dayOptions;
 
 	private int mode;
 	private int days;
@@ -24,7 +24,7 @@ public class LeadersBoardButtons implements IDrawable {
 	private IListener listener;
 
 	public LeadersBoardButtons() {		
-		modeOptions = new OptionsButton();
+		modeOptions = new Combobox();
 		modeOptions.addOption(R.strings.timeChallengeMode, new IButtonListener() {
 			@Override
 			public void onButtonTapped() {
@@ -45,7 +45,7 @@ public class LeadersBoardButtons implements IDrawable {
 		});
 		
 
-		whoseOptions = new OptionsButton();
+		whoseOptions = new Combobox();
 		whoseOptions.addOption(R.strings.general, new IButtonListener() {
 			@Override
 			public void onButtonTapped() {
@@ -65,7 +65,7 @@ public class LeadersBoardButtons implements IDrawable {
 			}
 		});
 
-		dayOptions = new OptionsButton();
+		dayOptions = new Combobox();
 		dayOptions.addOption(R.strings.allTime, new IButtonListener() {
 			@Override
 			public void onButtonTapped() {
@@ -90,6 +90,10 @@ public class LeadersBoardButtons implements IDrawable {
 				notifyChange(mode, Score.Daily, whose);
 			}
 		});
+		
+		mode = Score.ModeTime;
+		days = Score.AllTime;
+		whose = Score.General;
 	}
 
 	public void setListener(IListener listener) {
@@ -124,10 +128,6 @@ public class LeadersBoardButtons implements IDrawable {
 	}
 	
 	public void activate() {
-		mode = Score.ModeTime;
-		days = Score.AllTime;
-		whose = Score.General;
-		
 		modeOptions.activate();
 		whoseOptions.activate();
 		dayOptions.activate();

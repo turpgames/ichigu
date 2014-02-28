@@ -3,13 +3,13 @@ package com.turpgames.ichigu.controller.fullgame;
 import com.turpgames.framework.v0.util.Game;
 import com.turpgames.ichigu.controller.IchiguState;
 import com.turpgames.ichigu.model.game.IchiguBank;
-import com.turpgames.ichigu.model.game.mode.IIchiguModeListener;
 import com.turpgames.ichigu.model.game.mode.fullgame.FullGameMode;
+import com.turpgames.ichigu.model.game.mode.fullgame.IFullGameModeListener;
 import com.turpgames.ichigu.model.game.table.IFullGameTableListener;
 import com.turpgames.ichigu.utils.Ichigu;
 import com.turpgames.ichigu.view.IchiguScreen;
 
-public abstract class FullGameState extends IchiguState implements IIchiguModeListener, IFullGameTableListener {
+abstract class FullGameState extends IchiguState implements IFullGameModeListener, IFullGameTableListener {
 	final FullGameMode model;
 	final IchiguScreen view;
 	final FullGameController controller;
@@ -65,8 +65,19 @@ public abstract class FullGameState extends IchiguState implements IIchiguModeLi
 	}
 	
 	@Override
+	public void onScreenActivated() {
+		model.startMode();
+		controller.setDealingState();
+	}
+	
+	@Override
 	public void onOpenedExtraCardsWhileThereIsIchigu() {
 		model.applyTimePenalty();
+	}
+	
+	@Override
+	public void onPauseForMarketMenu() {
+		
 	}
 
 	@Override
