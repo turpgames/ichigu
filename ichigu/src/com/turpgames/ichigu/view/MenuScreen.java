@@ -111,12 +111,12 @@ public class MenuScreen extends FormScreen implements IGameExitListener {
 				Facebook.login(new ICallback() {
 					@Override
 					public void onSuccess() {
-						
+						loginButton.update();
 					}
 					
 					@Override
 					public void onFail(Throwable t) {
-						
+						loginButton.update();
 					}
 				});
 			}
