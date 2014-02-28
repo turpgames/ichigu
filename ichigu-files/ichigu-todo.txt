@@ -64,16 +64,16 @@ v1.1
 		+Tek kullanımlık
 	+Tekli hint
 		+10 puan
-	-Zaman durdurma
+	+Zaman durdurma
 		+30 saniye
 		+Full Mode'a button
 		+25 puan
 		+Market menü
 		+Tek kullanımlık
-		-30 saniyeden kalanı göster
+		+30 saniyeden kalanı göster
 	-Çeviriler
-		-İngilizce
-		-Türkçe
+		+İngilizce
+		+Türkçe
 		-İtalyanca
 		-Çince
 	+Update Process
@@ -83,7 +83,7 @@ v1.1
 		+Facebook entegrasyonu yapıldığını duyuran bir dialog aç
 	-Genel
 		+UIBlokcer a şekil yapılması lazım
-		-Facebook Ichigu app'inde android keyleri düzelt
+		+Facebook Ichigu app'inde android keyleri düzelt
 		-Deal effectlere ses
 		+HiScores menü combobox
 		+Ana menü facebook login/logout button

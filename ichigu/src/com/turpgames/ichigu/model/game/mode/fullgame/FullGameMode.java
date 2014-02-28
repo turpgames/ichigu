@@ -3,6 +3,7 @@ package com.turpgames.ichigu.model.game.mode.fullgame;
 import com.turpgames.framework.v0.component.Toast;
 import com.turpgames.framework.v0.impl.Text;
 import com.turpgames.framework.v0.social.ICallback;
+import com.turpgames.framework.v0.util.CountDownTimer;
 import com.turpgames.framework.v0.util.Game;
 import com.turpgames.framework.v0.util.Timer;
 import com.turpgames.ichigu.model.display.BonusFeatureButton;
@@ -28,6 +29,9 @@ public abstract class FullGameMode extends RegularMode implements IResultScreenB
 	private BonusFeature insufficientFeature;
 
 	protected TimerText timerText;
+	
+	private TimerText pauseTimerText;
+	private CountDownTimer pauseTimer; 
 
 	protected Text resultInfo;
 	private ResultScreenButtons resultScreenButtons;
@@ -62,6 +66,21 @@ public abstract class FullGameMode extends RegularMode implements IResultScreenB
 		timerText = new TimerText(getTimer());
 		timerText.setAlignment(Text.HAlignLeft, Text.VAlignTop);
 		timerText.setPadding(Game.getVirtualWidth() - 115, 110);
+		
+		pauseTimer = new CountDownTimer(R.durations.fullModeTimerPauseDuration);
+		pauseTimer.setCountDownListener(new CountDownTimer.ICountDownListener() {
+			@Override
+			public void onCountDownEnd(CountDownTimer timer) {
+				onTimerPauseEnd();
+			}
+		});
+		pauseTimer.setInterval(0.2f);
+		
+		pauseTimerText = new TimerText(pauseTimer);
+		pauseTimerText.setAlignment(Text.HAlignCenter, Text.VAlignTop);
+		pauseTimerText.setPadding(Game.getVirtualWidth() - 115, 115);
+		pauseTimerText.getColor().set(R.colors.ichiguYellow);
+		pauseTimerText.setFontScale(R.fontSize.small);
 
 		resultInfo = new Text();
 		resultInfo.setAlignment(Text.HAlignCenter, Text.VAlignTop);
@@ -191,6 +210,8 @@ public abstract class FullGameMode extends RegularMode implements IResultScreenB
 	@Override
 	protected void onDraw() {
 		timerText.draw();
+		if (pauseTimer.isRunning())
+			pauseTimerText.draw();
 		drawFeatureButtons();
 		super.onDraw();
 	}
@@ -297,6 +318,15 @@ public abstract class FullGameMode extends RegularMode implements IResultScreenB
 		IchiguToast.showError(R.strings.bonusFeatureOnceWarning);
 	}
 
+	private void onPauseTimerFeatureUsed() {
+		getTimer().pauseFor(R.durations.fullModeTimerPauseDuration);
+		pauseTimer.restart();
+	}
+	
+	private void onTimerPauseEnd() {
+		pauseTimer.stop();
+	} 
+	
 	private BonusFeatureButton.IListener singleHintFeatureListener = new BonusFeatureButton.IListener() {
 		@Override
 		public boolean onUseBonusFeature() {
@@ -334,7 +364,7 @@ public abstract class FullGameMode extends RegularMode implements IResultScreenB
 	private BonusFeatureButton.IListener timerPauseFeatureListener = new BonusFeatureButton.IListener() {
 		@Override
 		public boolean onUseBonusFeature() {
-			getTimer().pauseFor(R.durations.fullModeTimerPauseDuration);
+			onPauseTimerFeatureUsed();
 			return true;
 		}
 
