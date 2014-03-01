@@ -1,0 +1,28 @@
+truncate table players;
+truncate table scores;
+ALTER SEQUENCE SYSTEM_SEQUENCE_66AA87D7_D921_43DB_B3F9_379A4359F683 RESTART WITH 1
+
+CREATE TABLE `players` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `username` varchar(45) DEFAULT NULL,
+  `password` varchar(45) DEFAULT NULL,
+  `email` varchar(45) DEFAULT NULL,
+  `facebook_id` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+);
+
+CREATE TABLE `scores` (
+  `player_id` int(11) NOT NULL,
+  `mode` int(11) NOT NULL,
+  `score` int(11) NOT NULL,
+  `time` bigint(20) NOT NULL,
+);
+
+CREATE INDEX MODE ON scores(mode);
+CREATE INDEX SCORE ON scores(score);
+
+
+select count(1) from scores;
+select * from scores order by time desc
+
+update scores set player_id = MOD (mode + score + time, 9) + 1, time = 1391118883197 - cast(rand() * 1612743725 as bigint)

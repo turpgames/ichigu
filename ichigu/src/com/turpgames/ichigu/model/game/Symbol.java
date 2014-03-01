@@ -1,38 +1,33 @@
 package com.turpgames.ichigu.model.game;
 
-import com.turpgames.framework.v0.ITexture;
 import com.turpgames.framework.v0.impl.GameObject;
-import com.turpgames.framework.v0.util.Game;
 import com.turpgames.framework.v0.util.Rotation;
-import com.turpgames.framework.v0.util.TextureDrawer;
-import com.turpgames.framework.v0.util.Utils;
 import com.turpgames.framework.v0.util.Vector;
+import com.turpgames.ichigu.utils.Ichigu;
 import com.turpgames.ichigu.utils.R;
 
 class Symbol extends GameObject {
 	private Card parent;
-	private ITexture texture;
 
-	public Symbol(ITexture texture, int colorAttribute, Vector location, Card parent) {
-		this.texture = texture;
+	public Symbol(Vector location, Card parent) {
 		this.parent = parent;
 
-		setWidth(Card.SymbolWidth);
-		setHeight(Card.SymbolHeight);
+		setWidth(R.sizes.symbolWidth);
+		setHeight(R.sizes.symbolHeight);
 
 		super.getLocation().set(location);
 
-		if (colorAttribute == CardAttributes.Color_Red)
+		if (parent.getAttributes().getColor() == CardAttributes.colorRed)
 			getColor().set(R.colors.ichiguRed);
-		if (colorAttribute == CardAttributes.Color_Green)
+		if (parent.getAttributes().getColor() == CardAttributes.colorGreen)
 			getColor().set(R.colors.ichiguGreen);
-		if (colorAttribute == CardAttributes.Color_Blue)
+		if (parent.getAttributes().getColor() == CardAttributes.colorBlue)
 			getColor().set(R.colors.ichiguBlue);
 	}
 
 	@Override
 	public void draw() {
-		TextureDrawer.draw(texture, this);
+		Ichigu.drawSymbol(parent.getAttributes().getShape(), parent.getAttributes().getPattern(), this);
 	}
 
 	@Override
@@ -41,17 +36,12 @@ class Symbol extends GameObject {
 	}
 
 	@Override
-	public Vector getScale() {
-		return parent.getScale();
-	}
-
-	@Override
 	public Rotation getRotation() {
 		return parent.getRotation();
 	}
 
 	@Override
-	public void registerSelf() {
-		Game.getInputManager().register(this, Utils.LAYER_GAME);
+	public Vector getScale() {
+		return parent.getScale();
 	}
 }

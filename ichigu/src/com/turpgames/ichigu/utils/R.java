@@ -4,133 +4,66 @@ import com.turpgames.framework.v0.util.Color;
 import com.turpgames.framework.v0.util.FontManager;
 import com.turpgames.framework.v0.util.Game;
 import com.turpgames.framework.v0.util.Vector;
-import com.turpgames.ichigu.model.game.Card;
 
-public final class R {
-	/**
-	 * game.xml yapýsýndaki id ve key'ler
-	 */
-	public static final class game {
-		public static final class controls {
-			public static final class mainMenu {
-				public static final String btnSound = "btnSound";
-			}
-		}
+public final class R {	
+	public final static class sizes {
+		public final static float maxScale = 0.2f;
+		public final static float menuButtonSpacing = Game.scale(15);
 
-		public static final class forms {
-			public static final String mainMenu = "mainMenu";
-			public static final String playMenu = "playMenu";
-		}
+		public final static float tutorialMarginTop = 220f;
+		public final static float logoSize = 140f;
+		public final static int scoreImageSize = 64;
 
-		public static final class screens {
-			public static final String menu = "menu";
-			public static final String practice = "practice";
-		}
+		public final static float tutorialbuttonSpacing = Game.scale(10);
+		public final static float toolbarMargin = Game.scale(15);
+		public final static int singleModeDividerHeight = 10;
+		public final static int singleModeDividerWidth = 420;
 
-		public static final class sounds {
-			public static final String error = "error";
-			public static final String success = "success";
-			public static final String timeUp = "time-up";
-			public static final String wait = "wait";
-			public static final String flip = "flip";
-		}
+		public final static int cardWidth = 100;
+		public final static int cardHeight = 174;
+		public final static int cardSpace = 7;
+		public final static int symbolHeight = 45;
+		public final static int symbolWidth = 45;
 
-		public static final class textures {
-			public static final String logo = "logo";
-			public static final String splashLogo = "splash_logo";
+		public final static float questionMarkSize = 128;
+		public final static float menuButtonSize = 64;
+		public final static float flagButtonSize = 128;
+		public final static float libgdxLogoWidth = 200;
+		public final static float libgdxLogoHeight = 33;
 
-			public static final String cardBorder = "card-border";
-			public static final String cardClosed = "card-closed";
-			public static final String cardEmpty = "card-empty";
-
-			public static final String hint = "hint";
-			public static final String next = "next";
-			public static final String prev = "prev";
-			public static final String skip = "play";
-			public static final String refresh = "refresh";
-
-			public static final String stripedCircle = "card-14";
-			public static final String filledSquare = "card-22";
-			public static final String emptyTriangle = "card-41";
-
-			public static final String libgdx = "libgdx";
-			
-			public final static String backgroundPixel = "backgroundPixel";
-
-			public static final class toolbar {
-				public static final String back = "tb_back";
-				public static final String settings = "tb_settings";
-				public static final String musicPlay = "tb_music_play";
-				public static final String musicStop = "tb_music_stop";
-				public static final String vibrationOn = "tb_vibration_on";
-				public static final String vibrationOff = "tb_vibration_off";
-				public static final String soundOn = "tb_sound_on";
-				public static final String soundOff = "tb_sound_off";
-			}
-
-			public static final class points {
-				public static final String shapecircle = "shapecircle";
-				public static final String shaperectangle = "shaperectangle";
-				public static final String shapetriangle = "shapetriangle";
-				public static final String shapeall = "shapeall";
-
-				public static final String countone = "countone";
-				public static final String counttwo = "counttwo";
-				public static final String countthree = "countthree";
-				public static final String countall = "countall";
-
-				public static final String fillempty = "fillempty";
-				public static final String fillstriped = "fillstriped";
-				public static final String fillfull = "fillfull";
-				public static final String fillall = "fillall";
-
-				public static final String colorone = "colorone";
-				public static final String colorall = "colorall";
-			}
-		}
+		public final static float menuButtonSizeToScreen = Game.scale(menuButtonSize);
+		public final static float langFlagButtonSizeToScreen = Game.scale(flagButtonSize);
 	}
 
-	public static final class settings {
-		public static final String music = "music";
-		public static final String sound = "sound";
-		public static final String vibration = "vibration";
-
-		public static final class hiscores {
-			public static final String minichallenge = "hiscore_practice";
-			public static final String normal = "hiscore_normal";
-			public static final String normaltime = "hiscore_normal_time";
-			public static final String fullchallenge = "hiscore_challenge";
-		}
-
-		public static final String language = "language";
-		public static final String country = "country";
-
-		public static final String ichiguBalance = "ichigu-points";
-		public static final String hintCount = "hint-count";
+	public final static class durations {
+		public final static float fadingDuration = 0.25f;
+		public final static float blinkDuration = 1f;
+		public final static int hintNotificationInterval = 30;
+		public final static float miniModeBlockDuration = 2f;
+		public final static int miniModeChallengeDuration = Game.isDebug() ? 5 : 60;
+		public final static int timeChallengeModeDuration = Game.isDebug() ? 5 : 5 * 60;
+		public final static float toastSlideDuration = 0.2f;
+		public final static float toastDisplayDurationPerWord = 0.15f;
+		public final static float toastDisplayDurationBuffer = 1.5f;
+		public final static float sudokuModeSwapDuration = 0.5f;
+		public final static float fullModeTimerPauseDuration = 30f;
 	}
 
-	public static final class learningModeScreen {
-		public static final class layout {
-			public static final Vector cardOnTable1Pos = new Vector(Game.getVirtualWidth() / 2 - Card.Width - 20, 4 * Game.getVirtualHeight() / 7 - 50);
-			public static final Vector cardOnTable2Pos = new Vector(Game.getVirtualWidth() / 2 + 20, 4 * Game.getVirtualHeight() / 7 - 50);
-
-			public static final Vector cardToSelect1Pos = new Vector(Game.getVirtualWidth() / 2 - Card.Width * 1.5f - 40, 2 * Game.getVirtualHeight() / 7 - 50);
-			public static final Vector cardToSelect2Pos = new Vector(Game.getVirtualWidth() / 2 - Card.Width * 0.5f, 2 * Game.getVirtualHeight() / 7 - 50);
-			public static final Vector cardToSelect3Pos = new Vector(Game.getVirtualWidth() / 2 + Card.Width * 0.5f + 40, 2 * Game.getVirtualHeight() / 7 - 50);
-
-			public static final Vector[] positions = new Vector[] { cardOnTable1Pos, cardOnTable2Pos, cardToSelect1Pos, cardToSelect2Pos, cardToSelect3Pos };
-		}
+	public final static class counts {
+		public final static int ichiguCardCount = 3;
+		public final static int ichiguDeckCardCount = 81;
+		public final static int fullModeCols = 5;
+		public final static int fullModeActiveCardCount = 12;
+		public final static int fullModeExtraCardCount = 3;
+		public final static int fullModeTotalCardsOnTable = fullModeActiveCardCount + fullModeExtraCardCount;
+		public final static float fullModeSecondPerPenalty = 10f;
+		public final static int blinkPerSecond = 10;
 	}
 
-	public static final class symbolpositions {
-		public static final Vector firstOfOne = new Vector((Card.Width - Card.SymbolWidth) / 2, (Card.Height - Card.SymbolHeight) / 2);
-
-		public static final Vector firstOfTwo = new Vector((Card.Width - Card.SymbolWidth) / 2, Card.Height / 2 - Card.SymbolHeight * 1.1f);
-		public static final Vector secondOfTwo = new Vector((Card.Width - Card.SymbolWidth) / 2, Card.Height / 2 + Card.SymbolHeight * 0.1f);
-
-		public static final Vector firstOfThree = new Vector((Card.Width - Card.SymbolWidth) / 2, 2 + Card.Height / 2 - Card.SymbolHeight * 1.65f);
-		public static final Vector secondOfThree = new Vector((Card.Width - Card.SymbolWidth) / 2, 2 + Card.Height / 2 - Card.SymbolHeight * 0.5f);
-		public static final Vector thirdOfThree = new Vector((Card.Width - Card.SymbolWidth) / 2, 2 + Card.Height / 2 + Card.SymbolHeight * 0.65f);
+	public final static class prices {
+		public final static int singleHintPrice = 10;
+		public final static int tripleHintPrice = 25;
+		public final static int timerPausePrice = 25;
 	}
 
 	public static final class colors {
@@ -154,16 +87,172 @@ public final class R {
 		public static final float large = FontManager.defaultFontSize * 1f;
 		public static final float xLarge = FontManager.defaultFontSize * 1.25f;
 	}
+	
+	/**
+	 * game.xml yapisindaki id ve key'ler
+	 */
+	public static final class game {
+		public static final class params {
+			public final static String turpAddress = "turp-address";
+			public final static String libgdxAddress = "libgdx-address";
+			public final static String playStoreAddress = "play-store-address";
+			public final static String appStoreAddressIOS7 = "app-store-address-ios7";
+			public final static String appStoreAddressOld = "app-store-address-old";
+			public final static String twitterAddress = "twitter-address";
+			public final static String facebookAddress = "facebook-address";
+		}
 
-	public static final class ui {
-		public final static float imageButtonWidth = 64;
-		public final static float imageButtonHeight = 64;
-		public final static float flagButtonWidth = 128;
-		public final static float flagButtonHeight = 128;
-		public final static float flagControlButtonWidth = 64;
-		public final static float flagControlButtonHeight = 64;
-		public final static float libgdxLogoWidth = 200;
-		public final static float libgdxLogoHeight = 33;
+		public static final class forms {
+			public static final String mainMenu = "mainMenu";
+			public static final String playMenu = "playMenu";
+		}
+
+		public static final class screens {
+			public static final String menu = "menu";
+			public static final String practice = "practice";
+			public static final String market = "market";
+			public static final String timeChallenge = "time-challenge";
+			public static final String standard = "standard";
+		}
+
+		public static final class sounds {
+			public static final String error = "error";
+			public static final String success = "success";
+			public static final String timeUp = "time-up";
+			public static final String wait = "wait";
+			public static final String flip = "flip";
+		}
+		
+
+		public static final class animations {
+			public static final String loading = "loading";
+		}
+
+		public static final class textures {
+			public static final class points {
+				public static final String shapecircle = "shapecircle";
+				public static final String shaperectangle = "shaperectangle";
+				public static final String shapetriangle = "shapetriangle";
+				public static final String shapeall = "shapeall";
+
+				public static final String countone = "countone";
+				public static final String counttwo = "counttwo";
+				public static final String countthree = "countthree";
+				public static final String countall = "countall";
+
+				public static final String fillempty = "fillempty";
+				public static final String fillstriped = "fillstriped";
+				public static final String fillfull = "fillfull";
+				public static final String fillall = "fillall";
+
+				public static final String colorone = "colorone";
+				public static final String colorall = "colorall";
+			}
+
+			public static final class singlegame {
+				public static final String questionmark = "question-mark";
+				public static final String correctmark = "correct-mark";
+				public static final String incorrectmark = "incorrect-mark";
+			}
+
+			public static final class toolbar {
+				public static final String back = "tb_back";
+				public static final String settings = "tb_settings";
+				public static final String musicPlay = "tb_music_play";
+				public static final String musicStop = "tb_music_stop";
+				public static final String vibrationOn = "tb_vibration_on";
+				public static final String vibrationOff = "tb_vibration_off";
+				public static final String soundOn = "tb_sound_on";
+				public static final String soundOff = "tb_sound_off";
+			}
+
+			public static final String logo = "logo";
+			public static final String splashLogo = "splash_logo";
+
+			public static final String cardBorder = "card-border";
+			public static final String cardClosed = "card-closed";
+			public static final String cardEmpty = "card-empty";
+			public static final String hint = "hint";
+			public static final String next = "next";
+
+			public static final String prev = "prev";
+			public static final String skip = "play";
+			public static final String refresh = "refresh";
+
+			public static final String stripedCircle = "card-14";
+
+			public static final String filledSquare = "card-22";
+
+			public static final String emptyTriangle = "card-41";
+
+			public static final String libgdx = "libgdx";
+
+			public static final String backgroundPixel = "backgroundPixel";
+
+			public static final String questionCard = "question-card";
+
+			public static final String hintSingle = "hint_single";
+			public static final String hintTriple = "hint_triple";
+			public static final String timerPause = "pause_timer";
+			
+			public static final String fb_default = "fb_default";
+			public static final String facebook = "facebook";
+		}
+	}
+
+	public static final class settings {
+		public static final class hiscores {
+			public static final String miniChallenge = "hiscore_practice";
+			public static final String normal = "hiscore_normal";
+			public static final String standard = "hiscore_normal_time";
+			public static final String timeChallenge = "hiscore_challenge";
+		}
+
+		public static final String music = "music";
+		public static final String sound = "sound";
+
+		public static final String vibration = "vibration";
+
+		public static final String language = "language";
+		public static final String country = "country";
+
+		public static final String ichiguBalance = "ichigu-points";
+		public static final String singleHintCount = "single-hint-count";
+		public static final String tripleHintCount = "triple-hint-count";
+		public static final String timerPauseCount = "timer-pause-count";
+		public static final String scoresToSend = "scores-to-send";
+		public static final String facebookAnnounced = "facebook-announced";
+	}
+
+	public static final class singleGameMode {
+		public static final Vector cardOnTable1Pos = new Vector(
+				Game.getVirtualWidth() / 2 - R.sizes.cardWidth * 1.5f - 40,
+				4 * Game.getVirtualHeight() / 7 - 50);
+		public static final Vector cardOnTable2Pos = new Vector(
+				Game.getVirtualWidth() / 2 - R.sizes.cardWidth * 0.5f,
+				4 * Game.getVirtualHeight() / 7 - 50);
+		public static final Vector cardOnTable3Pos = new Vector(
+				Game.getVirtualWidth() / 2 + R.sizes.cardWidth * 0.5f + 40,
+				4 * Game.getVirtualHeight() / 7 - 50);
+		public static final Vector markPos = new Vector(Game.getVirtualWidth()
+				/ 2 + R.sizes.cardWidth * 0.5f + 40
+				+ (R.sizes.cardWidth - R.sizes.questionMarkSize) / 2, 4
+				* Game.getVirtualHeight() / 7 - 50
+				+ (R.sizes.cardHeight - R.sizes.questionMarkSize) / 2);
+
+		public static final Vector cardToSelect1Pos = new Vector(
+				Game.getVirtualWidth() / 2 - R.sizes.cardWidth * 1.5f - 40,
+				2 * Game.getVirtualHeight() / 7 - 50);
+		public static final Vector cardToSelect2Pos = new Vector(
+				Game.getVirtualWidth() / 2 - R.sizes.cardWidth * 0.5f,
+				2 * Game.getVirtualHeight() / 7 - 50);
+		public static final Vector cardToSelect3Pos = new Vector(
+				Game.getVirtualWidth() / 2 + R.sizes.cardWidth * 0.5f + 40,
+				2 * Game.getVirtualHeight() / 7 - 50);
+
+		public static final Vector[] positions = new Vector[] {
+				cardOnTable1Pos, cardOnTable2Pos, cardToSelect1Pos,
+				cardToSelect2Pos, cardToSelect3Pos };
 	}
 
 	public static final class strings {
@@ -209,14 +298,18 @@ public final class R {
 		public final static String oneIchigu = "oneIchigu";
 		public final static String someIchigu = "someIchigu";
 
-		public final static String noTip = "noTip";
+		public final static String buyFromMarket = "buyFromMarket";
 		public final static String tryAgain = "tryAgain";
 		public final static String wait = "wait";
 
+		public final static String miniChallengeMode = "miniChallenge";
+		public final static String standardMode = "normalMode";
+		public final static String timeChallengeMode = "fullChallenge";
+		
 		public final static String miniChallengeResult = "miniChallengeResult";
 		public final static String fullChallengeResult = "fullChallengeResult";
 		public final static String normalResult = "normalResult";
-		
+
 		public final static String newHiscore = "newHiscore";
 
 		public final static String resetHiscore = "resetHiscore";
@@ -254,10 +347,10 @@ public final class R {
 
 		public final static String tutMiniChallengeModeTitle = "tutMiniChallengeModeTitle";
 		public final static String tutMiniChallengeMode = "tutMiniChallengeMode";
-				
+
 		public final static String tutFullModesTitle = "tutFullModesTitle";
 		public final static String tutFullModes = "tutFullModes";
-		
+
 		public final static String tutNormalModeTitle = "tutNormalModeTitle";
 		public final static String tutNormalMode = "tutNormalMode";
 
@@ -271,22 +364,78 @@ public final class R {
 
 		public final static String insufficientIchiguBalance = "insufficientIchiguBalance";
 		public final static String market = "market";
-		public final static String marketInfo = "marketInfo";
-		public final static String bankInfo = "bankInfo";
+		public final static String marketPriceInfo = "marketPriceInfo";
+		public final static String marketFeatureStatus = "marketFeatureStatus";
+		public final static String singleHint = "singleHint";
+		public final static String tripleHint = "tripleHint";
+		public final static String pauseTimer = "pauseTimer";
+		public final static String singleHintInfo = "singleHintInfo";
+		public final static String tripleHintInfo = "tripleHintInfo";
+		public final static String pauseTimerInfo = "pauseTimerInfo";
+		public final static String bonusFeatureOnceWarning = "bonusFeatureOnceWarning";
+
 		public final static String ok = "ok";
 		public final static String buy = "buy";
+
+		public final static String sudoku = "sudoku";
+
+		public final static String login = "login";
+		public final static String loggingIn = "loggingIn";	
+		public final static String loginFail = "loginFail";
+		public final static String loginSuccess = "loginSuccess";
+		
+		public final static String loggingOut = "loggingOut";
+		public final static String logoutFail = "logoutFail";
+		public final static String logoutSuccess = "logoutSuccess";
+		public static final String logoutConfirm = "logoutConfirm";
+		
+		public final static String registeringPlayer = "registeringPlayer";
+
+		public final static String sendScore = "sendScore";
+		public final static String sendingScore = "sendingScore";
+		public final static String sendScoreFail = "sendScoreFail";
+		public final static String sendScoreSuccess = "sendScoreSuccess";
+
+		public final static String shareScore = "shareScore";
+		public final static String sharingScore = "sharingScore";
+		public final static String shareScoreFail = "shareScoreFail";
+		public final static String shareScoreSuccess = "shareScoreSuccess";
+
+		public final static String loadingScores = "loadingScores";
+		public final static String loadScoreFail = "loadScoreFail";
+
+		public final static String daily = "daily";
+		public final static String weekly = "weekly";
+		public final static String monthly = "monthly";
+		public final static String allTime = "allTime";
+		
+		public final static String myScores = "myScores";
+		public final static String general = "general";
+		public final static String friends = "friends";
+		public final static String forceUpgrade = "forceUpgrade";
+		public final static String announceFacebook = "announceFacebook";		
 	}
 
-	public static final class links {
-		public final static String turpAddress = "turp-address";
-		public final static String libgdxAddress = "libgdx-address";
-		public final static String playStoreAddress = "play-store-address";
-		public final static String appStoreAddressIOS7 = "app-store-address-ios7";
-		public final static String appStoreAddressOld = "app-store-address-old";
-		public final static String twitterAddress = "twitter-address";
-		public final static String facebookAddress = "facebook-address";
+	public static final class symbolpositions {
+		public static final Vector firstOfOne = new Vector(
+				(R.sizes.cardWidth - R.sizes.symbolWidth) / 2, (R.sizes.cardHeight - R.sizes.symbolHeight) / 2);
+
+		public static final Vector firstOfTwo = new Vector(
+				(R.sizes.cardWidth - R.sizes.symbolWidth) / 2, R.sizes.cardHeight / 2 - R.sizes.symbolHeight * 1.1f);
+
+		public static final Vector secondOfTwo = new Vector(
+				(R.sizes.cardWidth - R.sizes.symbolWidth) / 2, R.sizes.cardHeight / 2 + R.sizes.symbolHeight * 0.1f);
+
+		public static final Vector firstOfThree = new Vector(
+				(R.sizes.cardWidth - R.sizes.symbolWidth) / 2, 2 + R.sizes.cardHeight / 2 - R.sizes.symbolHeight * 1.65f);
+
+		public static final Vector secondOfThree = new Vector(
+				(R.sizes.cardWidth - R.sizes.symbolWidth) / 2, 2 + R.sizes.cardHeight / 2 - R.sizes.symbolHeight * 0.5f);
+
+		public static final Vector thirdOfThree = new Vector(
+				(R.sizes.cardWidth - R.sizes.symbolWidth) / 2, 2 + R.sizes.cardHeight / 2 + R.sizes.symbolHeight * 0.65f);
 	}
-	
+
 	private R() {
 	}
 }

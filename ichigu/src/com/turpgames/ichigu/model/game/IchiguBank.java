@@ -7,85 +7,60 @@ public final class IchiguBank {
 	public static interface IIchiguBankListener {
 		void update();
 	}
-	
-	private static final int hintPrice = 20; // 20 ichigus = 1 hint
 
-	private static volatile int ichiguBalance;
-	private static volatile int hintCount;
+	private static volatile int balance;
 
 	static {
-		ichiguBalance = IchiguSettings.getIchiguBalance();
-		hintCount = IchiguSettings.getHintCount();
+		balance = IchiguSettings.getIchiguBalance();
 	}
-	
-	private static Manager<IchiguBank.IIchiguBankListener> listeners = new Manager<IchiguBank.IIchiguBankListener>() {		
-		@Override
-		protected void execute(IIchiguBankListener item) {
-			item.update();			
-		}
-	};
 
 	private IchiguBank() {
 
 	}
-	
-	public static void registerListener(IIchiguBankListener listener) {
-		listeners.register(listener);
-	}
-	
-	public static void unregisterListener(IIchiguBankListener listener) {
-		listeners.unregister(listener);
-	}
-	
+
+	private static Manager<IchiguBank.IIchiguBankListener> listeners = new Manager<IchiguBank.IIchiguBankListener>() {
+		@Override
+		protected void execute(IIchiguBankListener item) {
+			item.update();
+		}
+	};
+
 	private static void notifyListeners() {
 		listeners.execute();
 	}
 
-	public static synchronized int getBalance() {
-		return ichiguBalance;
+	public static void registerListener(IIchiguBankListener listener) {
+		listeners.register(listener);
 	}
 
-	public static int getHintCount() {
-		return hintCount;
-	}
-	
-	public static int getPointsPerHint() {
-		return hintPrice;
-	}
-	
-	public static synchronized boolean canBuyHintWithBalance() {
-		return ichiguBalance >= hintPrice;
+	public static void unregisterListener(IIchiguBankListener listener) {
+		listeners.unregister(listener);
 	}
 
-	public static boolean hasHint() {
-		return hintCount > 0;
-	}
-	
-	public static synchronized boolean buyHintWithBalance() {
-		if (!canBuyHintWithBalance())
+	public static boolean buy(BonusFeature feature) {
+		if (balance < feature.getPrice())
 			return false;
-
-		ichiguBalance -= hintPrice;
-		hintCount++;
 		
+		balance -= feature.getPrice();
+		feature.bought();
+		
+		saveData();
 		notifyListeners();
 		
 		return true;
 	}
 
-	public static synchronized void increaseBalance() {
-		ichiguBalance++;
-		notifyListeners();
+	public static synchronized int getBalance() {
+		return balance;
 	}
-	
-	public static synchronized void decreaseHintCount() {
-		if (hasHint())
-			hintCount--;
+
+	public static synchronized void increaseBalance() {
+		balance++;
+		saveData();
 		notifyListeners();
 	}
 
-	public static synchronized void saveData() {
-		IchiguSettings.setIchiguBalance(ichiguBalance);
-		IchiguSettings.setHintCount(hintCount);
+	private static synchronized void saveData() {
+		IchiguSettings.setIchiguBalance(balance);
 	}
 }

@@ -15,14 +15,14 @@ public class TimerText extends Text {
 				syncText();
 			}
 		});
-		flasher = new TextFlasher(this);
-	}
-	
-	public void syncText() {
-		setText(timer.getText());		
+		this.flasher = new TextFlasher(this);
 	}
 	
 	public void flash() {
 		flasher.flash();
+	}
+	
+	public void syncText() {
+		setText(timer.getText());		
 	}
 }

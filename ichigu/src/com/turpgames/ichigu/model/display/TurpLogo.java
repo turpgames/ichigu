@@ -4,7 +4,6 @@ import com.turpgames.framework.v0.ITexture;
 import com.turpgames.framework.v0.impl.GameObject;
 import com.turpgames.framework.v0.util.Game;
 import com.turpgames.framework.v0.util.TextureDrawer;
-import com.turpgames.framework.v0.util.Utils;
 import com.turpgames.ichigu.utils.R;
 
 public class TurpLogo extends GameObject {
@@ -19,20 +18,15 @@ public class TurpLogo extends GameObject {
 		getLocation().set(25f, 50f + (Game.getVirtualHeight() - logoSize) / 2f); // Splash position
 	}
 
-	public void setLogoSize(float f) {
-		logoSize = f;
-		
-		setWidth(logoSize);
-		setHeight(logoSize);
-	}
-	
 	@Override
 	public void draw() {
 		TextureDrawer.draw(logo, this);
 	}
 
-	@Override
-	public void registerSelf() {
-		Game.getInputManager().register(this, Utils.LAYER_SCREEN);
+	public void setLogoSize(float f) {
+		logoSize = f;
+		
+		setWidth(logoSize);
+		setHeight(logoSize);
 	}
 }
