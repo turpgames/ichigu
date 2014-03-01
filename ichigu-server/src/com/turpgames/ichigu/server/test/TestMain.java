@@ -28,7 +28,7 @@ public class TestMain {
 		try {
 			DbManager.setConnectionProvider(new IchiguConnectionProvider());
 
-			// prepareFakeUserScripts();
+			prepareFakeUserScripts();
 			
 			// testEncoding();
 			// insertRandomData();

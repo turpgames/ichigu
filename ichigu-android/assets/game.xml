@@ -11,7 +11,7 @@
 
         <param
             key="server"
-            value="test" />
+            value="prod" />
 
         <param
             key="provider"
@@ -281,7 +281,7 @@
 
             <texture
                 id="splash_logo"
-                path="img/logo_gold_on_black-320.png"
+                path="img/logo_gold_on_black-1024.png"
                 resource-load="primary" />
 
             <texture

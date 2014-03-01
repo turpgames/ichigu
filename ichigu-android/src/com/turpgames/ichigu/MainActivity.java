@@ -32,7 +32,7 @@ public class MainActivity extends AndroidApplication {
 		cfg.useAccelerometer = false;
 		cfg.useCompass = false;
 		
-		logSigningKeyHash();
+		// logSigningKeyHash();
 
 		AndroidProvider prov = AndroidProvider.getInstance();
 		prov.init(this, savedInstanceState);

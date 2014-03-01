@@ -42,7 +42,7 @@ public final class IchiguSettings {
 		Settings.putInteger(R.settings.ichiguBalance, balance);
 	}
 
-	public static void setAsFacebookAnnouned() {
+	public static void setAsFacebookAnnounced() {
 		Settings.putBoolean(R.settings.facebookAnnounced, true);
 	}
 

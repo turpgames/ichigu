@@ -64,6 +64,38 @@ public class ServerConfig {
 	public static int getFakeScoresPerDay() {
 		return Util.Strings.parseInt(getProp("fakeScoresPerDay"));
 	}
+
+	public static int getMinFakeUserId() {
+		return Util.Strings.parseInt(getProp("minFakeUserId"));
+	}
+
+	public static int getMaxFakeUserId() {
+		return Util.Strings.parseInt(getProp("maxFakeUserId"));
+	}
+
+	public static int getMinMiniChallengeScore() {
+		return Util.Strings.parseInt(getProp("minMiniChallengeScore"));
+	}
+
+	public static int getMaxMiniChallengeScore() {
+		return Util.Strings.parseInt(getProp("maxMiniChallengeScore"));
+	}
+
+	public static int getMinStandardScore() {
+		return Util.Strings.parseInt(getProp("minStandardScore"));
+	}
+
+	public static int getMaxStandardScore() {
+		return Util.Strings.parseInt(getProp("maxStandardScore"));
+	}
+
+	public static int getMinTimeChallengeScore() {
+		return Util.Strings.parseInt(getProp("minTimeChallengeScore"));
+	}
+
+	public static int getMaxTimeChallengeScore() {
+		return Util.Strings.parseInt(getProp("maxTimeChallengeScore"));
+	}
 	
 	private static String getProp(String key) {
 		return props.get(key);

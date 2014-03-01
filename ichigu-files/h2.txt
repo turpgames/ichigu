@@ -9,7 +9,7 @@ CREATE TABLE `players` (
   `email` varchar(45) DEFAULT NULL,
   `facebook_id` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) 
+);
 
 CREATE TABLE `scores` (
   `player_id` int(11) NOT NULL,
@@ -19,7 +19,7 @@ CREATE TABLE `scores` (
 );
 
 CREATE INDEX MODE ON scores(mode);
-CREATE INDEX MODE ON scores(score);
+CREATE INDEX SCORE ON scores(score);
 
 
 select count(1) from scores;

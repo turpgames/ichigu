@@ -63,7 +63,7 @@ public class Facebook {
 				onLoginSuccess(new ICallback() {
 					@Override
 					public void onSuccess() {
-						IchiguSettings.setAsFacebookAnnouned();
+						IchiguSettings.setAsFacebookAnnounced();
 						Ichigu.unblockUI();
 						IchiguToast.showInfo(R.strings.loginSuccess);
 						callback.onSuccess();

@@ -1,19 +1,18 @@
 package com.turpgames.ichigu.server;
-
 import com.turpgames.ichigu.db.Db;
 import com.turpgames.ichigu.entity.Score;
 import com.turpgames.utils.Util;
 
 public class FakeScoreGenerator {
 	private final static long insertInterval = (24 * 60 * 60 * 1000) / ServerConfig.getFakeScoresPerDay(); // 10 scores per day
-	private final static int minFakeUserId = 1;
-	private final static int maxFakeUserId = 736;
-	private final static int minMiniChallengeScore = 1;
-	private final static int maxMiniChallengeScore = 40;
-	private final static int minStadardScore = 300;
-	private final static int maxStadardScore = 1500;
-	private final static int minTimeChallengeScore = 1;
-	private final static int maxTimeChallengeScore = 20;
+	private final static int minFakeUserId = ServerConfig.getMinFakeUserId();
+	private final static int maxFakeUserId = ServerConfig.getMaxFakeUserId();
+	private final static int minMiniChallengeScore = ServerConfig.getMinMiniChallengeScore();
+	private final static int maxMiniChallengeScore = ServerConfig.getMaxMiniChallengeScore();
+	private final static int minStandardScore = ServerConfig.getMinStandardScore();
+	private final static int maxStandardScore = ServerConfig.getMaxStandardScore();
+	private final static int minTimeChallengeScore = ServerConfig.getMinTimeChallengeScore();
+	private final static int maxTimeChallengeScore = ServerConfig.getMaxTimeChallengeScore();
 
 	private static Thread thread;
 
@@ -52,27 +51,26 @@ public class FakeScoreGenerator {
 	}
 
 	private static void insertFakeMiniChallengeScore() {
-		Score score = createScore(Score.ModeMini, minMiniChallengeScore, maxMiniChallengeScore);
-		Db.Scores.insert(score);
+		insertFakeScore(Score.ModeMini, minMiniChallengeScore, maxMiniChallengeScore);
 	}
 
 	private static void insertFakeStandardModeScore() {
-		Score score = createScore(Score.ModeStandard, minStadardScore, maxStadardScore);
-		Db.Scores.insert(score);
+		insertFakeScore(Score.ModeStandard, minStandardScore, maxStandardScore);
 	}
 
 	private static void insertFakeTimeChallengeScore() {
-		Score score = createScore(Score.ModeTime, minTimeChallengeScore, maxTimeChallengeScore);
-		Db.Scores.insert(score);
+		insertFakeScore(Score.ModeTime, minTimeChallengeScore, maxTimeChallengeScore);
 	}
 
-	private static Score createScore(int mode, int min, int max) {
+	private static void insertFakeScore(int mode, int min, int max) {
 		Score score = new Score();
+		
 		score.setMode(mode);
 		score.setPlayerId(getRandom(minFakeUserId, maxFakeUserId));
 		score.setTime(System.currentTimeMillis());
 		score.setScore(getRandom(min, max));
-		return score;
+		
+		Db.Scores.insert(score);
 	}
 
 	private static int getRandom(int min, int max) {

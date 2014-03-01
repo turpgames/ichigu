@@ -27,10 +27,11 @@ public class AboutInfo implements IDrawable, ILanguageListener {
 		version.setFontScale(1.5f);
 		version.setText("Ichigu v" + Game.getVersion().toString());
 
-		turpLink = new ImageButton(R.sizes.logoSize, R.sizes.logoSize, R.game.textures.splashLogo);
+		float size = Game.scale(R.sizes.logoSize);
+		turpLink = new ImageButton(size, size, R.game.textures.splashLogo);
 		turpLink.getLocation().set(
-				(Game.getScreenWidth() - R.sizes.logoSize) / 2,
-				Game.scale(140f) + (Game.getScreenHeight() - R.sizes.logoSize) / 2);
+				(Game.getScreenWidth() - size) / 2,
+				size + (Game.getScreenHeight() - size) / 2);
 		turpLink.deactivate();
 		turpLink.setListener(new IButtonListener() {
 			@Override
