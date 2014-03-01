@@ -2,15 +2,14 @@ package com.turpgames.ichigu.controller.fullgame;
 
 import com.turpgames.ichigu.utils.Ichigu;
 
-public class FullGameEndState extends FullGameState {
+class FullGameEndState extends FullGameState {
 	public FullGameEndState(FullGameController controller) {
 		super(controller);
 	}
 
 	@Override
-	protected void activated() {
-		Ichigu.playSoundTimeUp();
-		model.endMode();
+	public void draw() {
+		model.drawResult();
 	}
 
 	@Override
@@ -20,7 +19,8 @@ public class FullGameEndState extends FullGameState {
 	}
 	
 	@Override
-	public void draw() {
-		model.drawResult();
+	protected void activated() {
+		Ichigu.playSoundTimeUp();
+		model.endMode();
 	}
 }

@@ -12,14 +12,6 @@ import com.turpgames.ichigu.utils.R;
 public class IchiguGame extends BaseGame {
 	public static Toolbar toolbar;
 
-	@Override
-	public void init() {		
-		super.init();
-		
-		Dialog.activeButtonColor.set(R.colors.ichiguYellow);
-		Dialog.closeButtonFocusColor.set(R.colors.ichiguRed);
-	}
-
 	public static Toolbar getToolbar() {
 		if (toolbar == null) {
 			toolbar = IchiguToolbar.getInstance();
@@ -40,5 +32,13 @@ public class IchiguGame extends BaseGame {
 	@Override
 	public void draw() {
 		super.draw();
+	}
+
+	@Override
+	public void init() {		
+		super.init();
+		
+		Dialog.activeButtonColor.set(R.colors.ichiguYellow);
+		Dialog.closeButtonFocusColor.set(R.colors.ichiguRed);
 	}
 }

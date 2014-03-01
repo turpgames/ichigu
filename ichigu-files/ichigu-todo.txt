@@ -1,0 +1,108 @@
+v1.1 
+	+Relax Modu 
+		+kaldır
+	+Normal mod 
+		+Skor yok
+		+Extra card açma 10 saniye ceza
+	+Challenge mod
+		+Skor yerine adet
+		+Extra card açma 10 saniye ceza
+		+deste bitince devam et
+	+Practice Mode
+		+Skor yok
+	+MiniChallenge Mode
+		+Skor yok
+		+Reset Buttonu
+	+Full Mod İpucu
+		+Challenge + Normal modda bulunan ichigu sayıları toplanacak
+		+Kaç ichigu olduğu söylenmeyecek, sadece yoksa yok denecek.
+		+Toplam ichigu sayısına göre ipucu alabilecek
+		+MarketScreen
+		+ipucu adetli
+	+Genel
+		-10 saniye ekleme düşme olaylarına animasyon, fading +10
+		+Tutorial düzeltmeleri
+		+İngilizce/Türkçe çevirileri düzelt
+	+Bug
+		+full mode'da reset gameden sonra kartlar seçilemiyor
+		+ichigu yokken extra kartları açınca saniye yanıp sönmesin
+		+Practice mode turorialdan gelip back buttonun olduğu yere basınca sıçıyor
+		+Practice mode reset button düzgün deactive olmuyor
+	+IOS
+		+Sound workaround
++v1.1.1
+	+version exception workaround
++v1.1.2
+	+BugFix: standart mode reset yapınca o anki süre hi-score a yazılıyor
+	+Resource text düzeltmeleri
+	+ios launch image
+	
+-v1.2
+	+Login with Facebook	
+		+login
+		+logout
+		+share (score api'siz normal link share)
+	+Ichigu Server
+		+Test/Prod kurulumları (tomcat, h2db)
+		+register
+		+sendScore
+		+getHiScores
+	+HiScores
+		+OnlineHiscoreScreen
+		+Günlük, Haftalık, Aylık, Genel
+		+Arkadaşlarımın rekorları
+		+Kendi rekorlarım
+		+Rank'ını söyle, ilk 10'da kendini sarı görsün
+		+Facebook login olmamışsa result screende send score buttonu
+		+Gönderilemeyen skorlar listeye alınıp sonra tekrar denenecek
+	+Sudoku mode
+		+Score Toast
+	+Üçlü Hint
+		+25 puan
+		+Full Mode'a button
+		+Market menü
+		+Tek kullanımlık
+	+Tekli hint
+		+10 puan
+	+Zaman durdurma
+		+30 saniye
+		+Full Mode'a button
+		+25 puan
+		+Market menü
+		+Tek kullanımlık
+		+30 saniyeden kalanı göster
+	-Çeviriler
+		+İngilizce
+		+Türkçe
+		-İtalyanca
+		-Çince
+	+Update Process
+		+Yeni featureları settings e yaz
+		+Mevcut hi scoreları server a gönder
+		+Android için iki ayrı update yapılması lazım. İlk update manuel update edin dialogu açacak
+		+Facebook entegrasyonu yapıldığını duyuran bir dialog aç
+	-Genel
+		+UIBlokcer a şekil yapılması lazım
+		+Facebook Ichigu app'inde android keyleri düzelt
+		-Deal effectlere ses
+		+HiScores menü combobox
+		+Ana menü facebook login/logout button
+		+Marketten al toastuna basınca market menusu açılsın
+	-Bug
+		-Mini mod ve Time Challenge zaman hızlı başlıyor, muhtemelen CountDownTimer'da bir bug var.
+		+FullModlarda deste bitince hata veriyor.
+		+TimeChallenge deste bitince oyun devam etsin.
+		+Full mode bittikten sonra new game diyince yeni dağıtılan kartlar açık dağıtılıyor
+		+Full modlarda ilk set bulununca patlıyor
+		+Online hiscores'ta logout olup tekrar login olunca beyaz resim çıkıyor (Android'de, oluyor, ios ve desktop'ta olmuyor)
+		+Sudoku modda bazen kartlar ters ve eksik dağıtılıyor
+		+Timechallenge'da 15 kart içinde aynı karttan birden fazla tane olabiliyor
+		+ResultScreen'de bazen geri buttonu çiziliyor ama deactive kalıyor
+		-Share score'da cancel derse takılıp kalıyor (ios)
+		+Play menüsünde dil aç, back e bas saçmalıyor 
+
+TODO:
+	TextureAtlas
+	Achievements
+	Multiplayer
+	Ads

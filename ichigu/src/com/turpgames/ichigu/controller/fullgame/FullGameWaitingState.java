@@ -4,7 +4,7 @@ import com.turpgames.framework.v0.util.Game;
 import com.turpgames.ichigu.model.game.Card;
 import com.turpgames.ichigu.utils.Ichigu;
 
-public class FullGameWaitingState extends FullGameState {
+class FullGameWaitingState extends FullGameState {
 	public FullGameWaitingState(FullGameController controller) {
 		super(controller);
 	}
@@ -19,7 +19,6 @@ public class FullGameWaitingState extends FullGameState {
 	@Override
 	public void onIchiguFound() {
 		super.onIchiguFound();
-		model.ichiguFound();
 		controller.setDealingState();
 	}
 	
@@ -27,5 +26,10 @@ public class FullGameWaitingState extends FullGameState {
 	public void onInvalidIchiguSelected() {
 		super.onInvalidIchiguSelected();
 		model.invalidIchiguSelected();
+	}
+	
+	@Override
+	public void onPauseForMarketMenu() {
+		controller.setPausedForMarketState();
 	}
 }

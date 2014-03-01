@@ -1,17 +1,19 @@
 package com.turpgames.ichigu.controller.fullgame;
 
 import com.turpgames.ichigu.controller.IchiguController;
-import com.turpgames.ichigu.model.fullgame.FullGameMode;
-import com.turpgames.ichigu.model.game.IIchiguModeListener;
+import com.turpgames.ichigu.model.game.mode.fullgame.FullGameMode;
+import com.turpgames.ichigu.model.game.mode.fullgame.IFullGameModeListener;
+import com.turpgames.ichigu.model.game.table.IFullGameTableListener;
 import com.turpgames.ichigu.view.IchiguScreen;
 
-public class FullGameController extends IchiguController<FullGameState> implements IIchiguModeListener {
+public class FullGameController extends IchiguController<FullGameState> implements IFullGameModeListener, IFullGameTableListener {
 	final FullGameMode model;
 	final IchiguScreen view;
 
 	private FullGameState waitingState;
 	private FullGameState dealingState;
 	private FullGameState endState;
+	private FullGamePausedForMarketState pausedForMarketState;
 
 	public FullGameController(IchiguScreen screen, FullGameMode model) {
 		this.view = screen;
@@ -22,12 +24,32 @@ public class FullGameController extends IchiguController<FullGameState> implemen
 		waitingState = new FullGameWaitingState(this);
 		dealingState = new FullGameDealingState(this);
 		endState = new FullGameEndState(this);
+		pausedForMarketState = new FullGamePausedForMarketState(this);
 	}
 
 	@Override
-	public void onScreenActivated() {
-		model.startMode();
-		setDealingState();
+	public void onDealEnded() {
+		currentState.onDealEnded();
+	}
+
+	@Override
+	public void onDealStarted() {
+		currentState.onDealStarted();
+	}
+
+	@Override
+	public void onExitConfirmed() {
+		currentState.onExitConfirmed();
+	}
+
+	@Override
+	public void onIchiguFound() {
+		currentState.onIchiguFound();
+	}
+
+	@Override
+	public void onInvalidIchiguSelected() {
+		currentState.onInvalidIchiguSelected();
 	}
 
 	@Override
@@ -41,29 +63,44 @@ public class FullGameController extends IchiguController<FullGameState> implemen
 	}
 
 	@Override
-	public void onDealEnded() {
-		currentState.onDealEnded();		
+	public void onOpenedExtraCardsWhileThereIsIchigu() {
+		currentState.onOpenedExtraCardsWhileThereIsIchigu();
 	}
-	
+
 	@Override
-	public void onDeckFinished() {
-		currentState.onDeckFinished();	
+	public void onPauseForMarketMenu() {
+		currentState.onPauseForMarketMenu();
 	}
-	
+
 	@Override
-	public void onExitConfirmed() {
-		currentState.onExitConfirmed();
+	public void onScreenActivated() {
+		if (currentState == null) {
+			model.startMode();
+			setDealingState();
+		}
+		else {
+			currentState.onScreenActivated();
+		}
+	}
+
+	@Override
+	public void onTableFinished() {
+		currentState.onTableFinished();
 	}
 
 	void setDealingState() {
 		setState(dealingState);
 	}
 
+	void setEndState() {
+		setState(endState);
+	}
+
 	void setWaitingState() {
 		setState(waitingState);
 	}
 
-	void setEndState() {
-		setState(endState);
+	void setPausedForMarketState() {
+		setState(pausedForMarketState);
 	}
 }

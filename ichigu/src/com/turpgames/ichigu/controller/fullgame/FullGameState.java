@@ -1,12 +1,15 @@
 package com.turpgames.ichigu.controller.fullgame;
 
+import com.turpgames.framework.v0.util.Game;
 import com.turpgames.ichigu.controller.IchiguState;
-import com.turpgames.ichigu.model.fullgame.FullGameMode;
-import com.turpgames.ichigu.model.game.IIchiguModeListener;
 import com.turpgames.ichigu.model.game.IchiguBank;
+import com.turpgames.ichigu.model.game.mode.fullgame.FullGameMode;
+import com.turpgames.ichigu.model.game.mode.fullgame.IFullGameModeListener;
+import com.turpgames.ichigu.model.game.table.IFullGameTableListener;
+import com.turpgames.ichigu.utils.Ichigu;
 import com.turpgames.ichigu.view.IchiguScreen;
 
-public abstract class FullGameState extends IchiguState implements IIchiguModeListener {
+abstract class FullGameState extends IchiguState implements IFullGameModeListener, IFullGameTableListener {
 	final FullGameMode model;
 	final IchiguScreen view;
 	final FullGameController controller;
@@ -18,13 +21,8 @@ public abstract class FullGameState extends IchiguState implements IIchiguModeLi
 	}
 
 	@Override
-	public void onModeEnd() {
-		controller.setEndState();
-	}
-
-	@Override
-	public void onNewGame() {
-
+	public void draw() {
+		model.draw();
 	}
 
 	@Override
@@ -33,8 +31,8 @@ public abstract class FullGameState extends IchiguState implements IIchiguModeLi
 	}
 	
 	@Override
-	public void onDeckFinished() {
-		model.deckFinished();	
+	public void onDealStarted() {
+		model.dealStarted();
 	}
 	
 	@Override
@@ -43,20 +41,52 @@ public abstract class FullGameState extends IchiguState implements IIchiguModeLi
 	}
 
 	@Override
-	public void draw() {
-		model.draw();
+	public void onIchiguFound() {
+		IchiguBank.increaseBalance();
+		model.ichiguFound();
+		Ichigu.playSoundSuccess();
+		Game.vibrate(100);
+	}
+
+	@Override
+	public void onInvalidIchiguSelected() {
+		Ichigu.playSoundError();
+		Game.vibrate(0, 50, 50, 100);
+	}
+
+	@Override
+	public void onModeEnd() {
+		controller.setEndState();
+	}
+	
+	@Override
+	public void onNewGame() {
+
+	}
+	
+	@Override
+	public void onScreenActivated() {
+		model.startMode();
+		controller.setDealingState();
+	}
+	
+	@Override
+	public void onOpenedExtraCardsWhileThereIsIchigu() {
+		model.applyTimePenalty();
+	}
+	
+	@Override
+	public void onPauseForMarketMenu() {
+		
 	}
 
 	@Override
 	public boolean onScreenDeactivated() {
 		return model.exitMode();
 	}
-	
+
 	@Override
-	public void onIchiguFound() {
-		IchiguBank.increaseBalance();
-		IchiguBank.saveData();
-		model.ichiguFound();
-		super.onIchiguFound();
+	public void onTableFinished() {
+		model.deckFinished();	
 	}
 }

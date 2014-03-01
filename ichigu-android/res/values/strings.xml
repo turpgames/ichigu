@@ -1,5 +1,6 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:locale="en">
 
-    <string name="app_name">Ichigu</string>
+    <string name="app_name" translatable="false">Ichigu</string>
+    <string name="app_id" translatable="false">548861391863567</string>
 
 </resources>

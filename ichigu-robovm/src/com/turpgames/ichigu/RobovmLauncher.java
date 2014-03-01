@@ -1,6 +1,9 @@
 package com.turpgames.ichigu;
 
+import org.robovm.bindings.facebook.manager.FacebookManager;
 import org.robovm.cocoatouch.foundation.NSAutoreleasePool;
+import org.robovm.cocoatouch.foundation.NSObject;
+import org.robovm.cocoatouch.foundation.NSURL;
 import org.robovm.cocoatouch.uikit.UIApplication;
 
 import com.badlogic.gdx.backends.iosrobovm.IOSApplication;
@@ -25,5 +28,10 @@ public class RobovmLauncher extends IOSApplication.Delegate {
 		NSAutoreleasePool pool = new NSAutoreleasePool();
 		UIApplication.main(argv, null, RobovmLauncher.class);
 		pool.drain();
+	}
+	
+	@Override
+	public boolean openURL (UIApplication application, NSURL url, String sourceApplication, NSObject annotation) {
+		return FacebookManager.getInstance().handleOpenUrl(url, sourceApplication);
 	}
 }

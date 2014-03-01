@@ -4,24 +4,25 @@ import com.turpgames.framework.v0.IDrawingInfo;
 import com.turpgames.framework.v0.IResourceManager;
 import com.turpgames.framework.v0.ISound;
 import com.turpgames.framework.v0.ITexture;
+import com.turpgames.framework.v0.component.UIBlocker;
 import com.turpgames.framework.v0.util.Game;
 import com.turpgames.framework.v0.util.TextureDrawer;
+import com.turpgames.ichigu.model.display.LoadingAnimation;
+import com.turpgames.ichigu.model.game.CardAttributes;
 
 public final class Ichigu {
-	private Ichigu() {
-
-	}
-
 	private static final ISound soundError;
+
 	private static final ISound soundSuccess;
 	private static final ISound soundTimeUp;
 	private static final ISound soundWait;
 	private static final ISound soundFlip;
-
 	private static final ITexture textureCardBorder;
+
 	private static final ITexture textureCardClosed;
 	private static final ITexture textureCardEmpty;
-
+	private static final ITexture[][] textureSymbols;
+	
 	static {
 		IResourceManager r = Game.getResourceManager();
 
@@ -34,6 +35,14 @@ public final class Ichigu {
 		textureCardEmpty = r.getTexture(R.game.textures.cardEmpty);
 		textureCardClosed = r.getTexture(R.game.textures.cardClosed);
 		textureCardBorder = r.getTexture(R.game.textures.cardBorder);
+		
+		textureSymbols = new ITexture[3][3];
+		
+		for (int i = 0, shape = 1; shape < CardAttributes.allDiff; shape = shape << 1, i++) {
+			for (int j = 0, pattern = 1; pattern < CardAttributes.allDiff; pattern = pattern << 1, j++) {
+				textureSymbols[i][j] =  r.getTexture("card-" + shape + pattern);
+			}
+		}
 	}
 
 	public static void drawTextureCardBorder(IDrawingInfo info) {
@@ -48,8 +57,20 @@ public final class Ichigu {
 		TextureDrawer.draw(textureCardEmpty, info);
 	}
 
+	public static void drawSymbol(int shape, int pattern, IDrawingInfo info) {
+		TextureDrawer.draw(textureSymbols[shape/2][pattern/2], info);
+	}
+	
+	public static String getString(String resourceKey) {
+		return Game.getLanguageManager().getString(resourceKey);
+	}
+
 	public static void playSoundError() {
 		soundError.play();
+	}
+
+	public static void playSoundFlip() {
+		soundFlip.play();
 	}
 
 	public static void playSoundSuccess() {
@@ -63,12 +84,33 @@ public final class Ichigu {
 	public static void playSoundWait() {
 		soundWait.play();
 	}
-
-	public static void playSoundFlip() {
-		soundFlip.play();
+	
+	public static String getStoreUrl() {
+		if (Game.isIOS()) {
+			if (Game.getOSVersion().getMajor() < 7)
+				return Game.getParam(R.game.params.appStoreAddressOld);
+			else
+				return Game.getParam(R.game.params.appStoreAddressIOS7);
+		}
+		else {
+			return Game.getParam(R.game.params.playStoreAddress);
+		}
+	}
+	
+	public static void blockUI(String message) {
+		LoadingAnimation.instance.setMessage(Ichigu.getString(message));
+		UIBlocker.instance.block(LoadingAnimation.instance);
 	}
 
-	public static String getString(String resourceKey) {
-		return Game.getLanguageManager().getString(resourceKey);
+	public static void unblockUI() {
+		UIBlocker.instance.unblock();
+	}
+
+	public static void updateBlockMessage(String message) {
+		LoadingAnimation.instance.setMessage(Ichigu.getString(message));
+	}
+
+	private Ichigu() {
+
 	}
 }
