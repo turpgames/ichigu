@@ -210,7 +210,7 @@ public abstract class FullGameMode extends RegularMode implements IResultScreenB
 	@Override
 	protected void onDraw() {
 		timerText.draw();
-		if (pauseTimer.isRunning())
+		if (!pauseTimer.isStopped())
 			pauseTimerText.draw();
 		drawFeatureButtons();
 		super.onDraw();
@@ -219,6 +219,7 @@ public abstract class FullGameMode extends RegularMode implements IResultScreenB
 	@Override
 	protected void onEndMode() {
 		getTimer().stop();
+		pauseTimer.stop();
 		resultScreenButtons.activate();
 		deactivateFeatureButtons();
 		super.onEndMode();
@@ -231,11 +232,13 @@ public abstract class FullGameMode extends RegularMode implements IResultScreenB
 		getTimer().stop();
 		resultScreenButtons.deactivate();
 		deactivateFeatureButtons();
+		pauseTimer.stop();
 		return true;
 	}
 
 	@Override
 	protected void onResetMode() {
+		pauseTimer.stop();
 		getTimer().restart();
 		timerText.syncText();
 		deactivateFeatureButtons();
@@ -245,6 +248,7 @@ public abstract class FullGameMode extends RegularMode implements IResultScreenB
 
 	@Override
 	protected void onStartMode() {
+		pauseTimer.stop();
 		getTimer().restart();
 		timerText.syncText();
 		resultScreenButtons.deactivate();
@@ -254,11 +258,15 @@ public abstract class FullGameMode extends RegularMode implements IResultScreenB
 
 	@Override
 	protected void pauseTimer() {
+		if (pauseTimer.isRunning())
+			pauseTimer.pause();
 		getTimer().pause();
 	}
 
 	@Override
 	protected void startTimer() {
+		if (pauseTimer.isPaused())
+			pauseTimer.start();
 		getTimer().start();
 	}
 
@@ -321,6 +329,7 @@ public abstract class FullGameMode extends RegularMode implements IResultScreenB
 	private void onPauseTimerFeatureUsed() {
 		getTimer().pauseFor(R.durations.fullModeTimerPauseDuration);
 		pauseTimer.restart();
+		pauseTimerText.syncText();
 	}
 	
 	private void onTimerPauseEnd() {

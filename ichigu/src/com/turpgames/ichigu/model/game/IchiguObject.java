@@ -9,7 +9,6 @@ import com.turpgames.framework.v0.effects.blink.IBlinkEffectSubject;
 import com.turpgames.framework.v0.effects.fading.FadeOutEffect;
 import com.turpgames.framework.v0.effects.fading.IFadingEffectSubject;
 import com.turpgames.framework.v0.impl.GameObject;
-import com.turpgames.framework.v0.util.Vector;
 import com.turpgames.ichigu.utils.R;
 
 public abstract class IchiguObject extends GameObject implements IFadingEffectSubject, IBlinkEffectSubject {
@@ -31,12 +30,6 @@ public abstract class IchiguObject extends GameObject implements IFadingEffectSu
 	@Override
 	public float getAlpha() {
 		return getColor().a;
-	}
-	
-	public void moveTo(IEffectEndListener listener, Vector destination, float duration) {
-		getMoveEffect().setDestination(destination);
-		getMoveAndScaleEffect().setDuration(duration);
-		getMoveAndScaleEffect().start(listener);
 	}
 	
 	@Override
