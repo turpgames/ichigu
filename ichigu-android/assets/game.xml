@@ -11,7 +11,7 @@
 
         <param
             key="server"
-            value="prod" />
+            value="test" />
 
         <param
             key="provider"
