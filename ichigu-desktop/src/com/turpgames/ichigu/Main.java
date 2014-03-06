@@ -28,7 +28,7 @@ public class Main {
 		Game.setEnvironmentProvider(new IEnvironmentProvider() {
 			@Override
 			public Version getAppVersion() {
-				return new Version("1.2.0");
+				return new Version("1.2.1");
 			}
 
 			@Override
