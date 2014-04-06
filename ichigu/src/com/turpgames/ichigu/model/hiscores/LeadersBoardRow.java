@@ -17,7 +17,7 @@ public class LeadersBoardRow implements IDrawable {
 	private float nameWidth = 0.7f;
 	// private float scoreWidth = 0.1f;
 
-	// LeadersBoard (25, 100) x (525, 525) karesine çizilecek
+	// LeadersBoard (25, 100) x (525, 525) karesine ï¿½izilecek
 	private final Vector bottomLeft = new Vector(25, 100);
 	private final Vector topRight = new Vector(525, 525);
 
@@ -37,7 +37,7 @@ public class LeadersBoardRow implements IDrawable {
 		this.playerName = createText(player.getUsername());
 		this.score = createText(score);
 
-		if (Facebook.getPlayer().getSocialId().equals(player.getFacebookId())) {
+		if (Facebook.getUser().getSocialId().equals(player.getFacebookId())) {
 			this.rank.getColor().set(R.colors.ichiguYellow);
 			this.playerName.getColor().set(R.colors.ichiguYellow);
 			this.score.getColor().set(R.colors.ichiguYellow);

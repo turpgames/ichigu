@@ -105,14 +105,7 @@ class OnlineHiScores implements IHiScores {
 					else
 						scoreStr = "" + leadersBoard.getOwnScore().getScore();
 
-					com.turpgames.framework.v0.social.Player f = Facebook.getPlayer();
-					Player p = new Player();
-					p.setEmail(f.getEmail());
-					p.setFacebookId(f.getSocialId());
-					p.setId(Util.Strings.parseInt(f.getId(), 0));
-					p.setUsername(f.getName());
-
-					r.add(new LeadersBoardRow(leadersBoard.getOwnRank(), scoreStr, p));
+					r.add(new LeadersBoardRow(leadersBoard.getOwnRank(), scoreStr, Facebook.getPlayer()));
 				}
 
 				rows = r;

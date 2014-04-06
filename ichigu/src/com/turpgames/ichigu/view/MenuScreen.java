@@ -1,6 +1,6 @@
 package com.turpgames.ichigu.view;
 
-import com.turpgames.framework.v0.IGameExitListener;
+import com.turpgames.framework.v0.IGameListener;
 import com.turpgames.framework.v0.component.LanguageMenu;
 import com.turpgames.framework.v0.forms.xml.Dialog;
 import com.turpgames.framework.v0.forms.xml.Form;
@@ -18,7 +18,7 @@ import com.turpgames.ichigu.utils.Ichigu;
 import com.turpgames.ichigu.utils.IchiguSettings;
 import com.turpgames.ichigu.utils.R;
 
-public class MenuScreen extends FormScreen implements IGameExitListener {
+public class MenuScreen extends FormScreen implements IGameListener {
 	private Dialog exitConfirm;
 	private LanguageMenu languageBar;
 	private FacebookLoginButton loginButton;
@@ -49,7 +49,7 @@ public class MenuScreen extends FormScreen implements IGameExitListener {
 
 		Dialog.clickSound = Game.getResourceManager().getSound(R.game.sounds.flip);
 
-		Game.exitListener = this;
+		Game.gameListener = this;
 		
 		loginButton = new FacebookLoginButton();
 
@@ -65,7 +65,7 @@ public class MenuScreen extends FormScreen implements IGameExitListener {
 			@Override
 			public void onDialogButtonClicked(String id) {
 				if (R.strings.yes.equals(id)) {
-					Game.exitListener = null;
+					Game.gameListener = null;
 					Game.exit();
 				}
 			}
@@ -136,14 +136,14 @@ public class MenuScreen extends FormScreen implements IGameExitListener {
 		dlg.setListener(new Dialog.IDialogListener() {			
 			@Override
 			public void onDialogClosed() {
-				Game.exitListener = null;
+				Game.gameListener = null;
 				Game.exit();
 			}
 			
 			@Override
 			public void onDialogButtonClicked(String id) {
 				Game.openUrl(Ichigu.getStoreUrl());
-				Game.exitListener = null;
+				Game.gameListener = null;
 				Game.exit();
 			}
 		});

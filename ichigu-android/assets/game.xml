@@ -11,7 +11,7 @@
 
         <param
             key="server"
-            value="test" />
+            value="prod" />
 
         <param
             key="provider"
@@ -99,7 +99,7 @@
 
         <param
             key="send-score-params"
-            value="?a=h&amp;p=%s&amp;m=%d&amp;s=%d" />
+            value="?a=h&amp;p=%d&amp;m=%d&amp;s=%d" />
 
         <param
             key="get-leadersboard-params"

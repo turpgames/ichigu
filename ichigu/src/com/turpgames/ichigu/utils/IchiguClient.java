@@ -10,11 +10,12 @@ import com.turpgames.framework.v0.IHttpResponseListener;
 import com.turpgames.framework.v0.impl.HttpRequest;
 import com.turpgames.framework.v0.impl.Settings;
 import com.turpgames.framework.v0.social.ICallback;
-import com.turpgames.framework.v0.social.Player;
+import com.turpgames.framework.v0.social.SocialUser;
 import com.turpgames.framework.v0.util.Debug;
 import com.turpgames.framework.v0.util.Game;
 import com.turpgames.ichigu.entity.JsonEncoders;
 import com.turpgames.ichigu.entity.LeadersBoard;
+import com.turpgames.ichigu.entity.Player;
 import com.turpgames.ichigu.entity.Score;
 import com.turpgames.ichigu.utils.ScoreManager.ILeadersBoardCallback;
 import com.turpgames.utils.Util;
@@ -56,6 +57,11 @@ class IchiguClient {
 					public void onError(Throwable t) {
 						callback.onFail(t);
 					}
+
+					@Override
+					public void requestCancelled() {
+						callback.onFail(null);
+					}
 				});
 	}
 
@@ -65,9 +71,9 @@ class IchiguClient {
 			final Player player = Facebook.getPlayer();
 
 			String url = String.format(registerPlayerUrlFormat,
-					player.getSocialId(),
+					player.getFacebookId(),
 					URLEncoder.encode(player.getEmail(), "UTF-8"),
-					URLEncoder.encode(player.getName(), "UTF-8"));
+					URLEncoder.encode(player.getUsername(), "UTF-8"));
 
 			Debug.println("sending http request...");
 			HttpRequest.newPostRequestBuilder()
@@ -80,12 +86,12 @@ class IchiguClient {
 							if (response.getStatus() == 200) {
 								try {
 									String idStr = Util.IO.readUtf8String(response.getInputStream());
-									player.setId(idStr);
+									player.setId(Util.Strings.parseInt(idStr));
 
 									Debug.println("register player succeeded...");
 
-									Settings.putString("player-facebook-id", player.getSocialId());
-									Settings.putString("player-id", player.getId());
+									Settings.putString("player-facebook-id", player.getFacebookId());
+									Settings.putString("player-id", idStr);
 
 									callback.onSuccess();
 								} catch (Throwable t) {
@@ -103,6 +109,11 @@ class IchiguClient {
 							Debug.println("register player http request failed");
 							callback.onFail(t);
 						}
+
+						@Override
+						public void requestCancelled() {
+							callback.onFail(null);
+						}
 					});
 		} catch (Throwable t) {
 			Debug.println("register player failed");
@@ -111,11 +122,11 @@ class IchiguClient {
 	}
 
 	public static void getLeadersBoard(int mode, int days, int whose, final ILeadersBoardCallback callback) {
-		int playerId = Util.Strings.parseInt(Facebook.getPlayer().getId());
+		int playerId = Facebook.getPlayer().getId();
 		final String url = String.format(getLeadersBoardUrlFormat, playerId, mode, days, whose);
 
 		if (whose == Score.FriendsScores) {
-			ensureFriends(new ICallback() {
+			Facebook.loadFriendList(new ICallback() {
 				@Override
 				public void onSuccess() {
 					byte[] contentData = getRequestContentForFriendsHiScores();
@@ -138,19 +149,11 @@ class IchiguClient {
 		}
 	}
 
-	private static void ensureFriends(ICallback callback) {
-		Player player = Facebook.getPlayer();
-		if (player.getFriends() == null)
-			Facebook.loadFriendList(callback);
-		else
-			callback.onSuccess();
-	}
-
 	private static byte[] getRequestContentForFriendsHiScores() {
 		String friendIds = "";
 
-		Player player = Facebook.getPlayer();
-		Player[] friends = player.getFriends();
+		SocialUser user = Facebook.getUser();
+		SocialUser[] friends = user.getFriends();
 		for (int i = 0; i < friends.length; i++) {
 			friendIds += friends[i].getSocialId();
 			if (i < friends.length - 1)
@@ -186,6 +189,11 @@ class IchiguClient {
 					@Override
 					public void onError(Throwable t) {
 						callback.onFail(t);
+					}
+
+					@Override
+					public void requestCancelled() {
+						callback.onFail(null);
 					}
 				});
 	}
