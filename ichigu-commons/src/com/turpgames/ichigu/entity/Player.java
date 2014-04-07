@@ -55,7 +55,7 @@ public class Player implements Serializable {
 
 	public String getFacebookProfilePictureUrl() {
 		if (profilePictureUrl == null)
-			profilePictureUrl = "http://graph.facebook.com/" + facebookId + "/picture";
+			profilePictureUrl = "http://graph.facebook.com/" + facebookId + "/picture?width=64&height=64";
 		return profilePictureUrl;
 	}
 

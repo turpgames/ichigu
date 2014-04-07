@@ -7,11 +7,11 @@
 
         <param
             key="debug"
-            value="false" />
+            value="true" />
 
         <param
             key="server"
-            value="prod" />
+            value="test" />
 
         <param
             key="provider"
