@@ -10,6 +10,7 @@ import com.badlogic.gdx.backends.iosrobovm.IOSApplication;
 import com.badlogic.gdx.backends.iosrobovm.IOSApplicationConfiguration;
 import com.turpgames.framework.v0.impl.ios.IOSProvider;
 import com.turpgames.framework.v0.impl.libgdx.GdxGame;
+import com.turpgames.framework.v0.util.Debug;
 import com.turpgames.framework.v0.util.Game;
 
 public class RobovmLauncher extends IOSApplication.Delegate {
@@ -18,6 +19,7 @@ public class RobovmLauncher extends IOSApplication.Delegate {
 		IOSApplicationConfiguration config = new IOSApplicationConfiguration();
 		config.orientationLandscape = false;
 		config.orientationPortrait = true;
+		config.allowIpod = true;
 		
 		Game.setEnvironmentProvider(new IOSProvider());
 		
@@ -32,6 +34,7 @@ public class RobovmLauncher extends IOSApplication.Delegate {
 	
 	@Override
 	public boolean openURL (UIApplication application, NSURL url, String sourceApplication, NSObject annotation) {
+		Debug.println("RobovmLauncher.openURL");
 		return FacebookManager.getInstance().handleOpenUrl(url, sourceApplication);
 	}
 }

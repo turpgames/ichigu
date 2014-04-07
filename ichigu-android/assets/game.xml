@@ -108,6 +108,14 @@
         <param
             key="register-player-params"
             value="?a=r&amp;f=%s&amp;e=%s&amp;u=%s" />
+
+        <param
+            key="fb-app-id"
+            value="548861391863567" />
+
+        <param
+            key="fb-app-namespace"
+            value="turpgames-ichigu" />
     </params>
 
     <screens>
